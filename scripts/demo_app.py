@@ -253,13 +253,11 @@ with st.sidebar:
                      padding:14px 16px;border-radius:12px;">
         <div style="color:{COL_INK};font-weight:500;font-size:13px;margin-bottom:8px;
                     letter-spacing:-0.01em;">
-        Nguyên tắc vận hành</div>
+        Phạm vi sử dụng</div>
         <div style="color:{COL_MUTED};font-size:12px;line-height:1.6;">
-        Hệ thống cung cấp bằng chứng khách quan ở quy mô đội tàu, phục vụ công
-        tác quản lý nhà nước về khai thác hải sản.
-        <br><br>
-        Không truy vết cá nhân. Không công bố danh sách vi phạm. Không thay
-        thế thẩm quyền của cơ quan chức năng.
+        Hệ thống dành cho cơ quan quản lý nhà nước về khai thác hải sản. Kết
+        quả phát hiện, ghép cặp và phân loại chỉ mang tính hỗ trợ nghiệp vụ;
+        quyết định xử lý thuộc thẩm quyền cơ quan chức năng.
         </div></div>""",
         unsafe_allow_html=True,
     )
@@ -309,23 +307,55 @@ with tab_sim:
         unsafe_allow_html=True,
     )
 
-    # Sinh dữ liệu tàu 1 lần — phân bố theo 6 ngư trường trọng điểm
+    # Sinh dữ liệu tàu 1 lần — phân bố theo 7 ngư trường trọng điểm
     @st.cache_data
     def build_fleet_json(seed: int = 20260916):
         rng = np.random.default_rng(seed)
-        # 6 ngư trường trọng điểm của Việt Nam: (lon, lat, bán kính rải)
         zones = [
-            ("Vịnh Bắc Bộ (Hải Phòng – Quảng Ninh)", 107.60, 20.40, 0.55),
-            ("Ven biển Bắc Trung Bộ (Thanh Hoá – Hà Tĩnh)", 106.60, 18.30, 0.60),
-            ("Ven biển Trung Trung Bộ (Đà Nẵng – Quảng Ngãi)", 109.20, 15.80, 0.70),
-            ("Ngư trường Hoàng Sa", 112.20, 16.50, 0.80),
-            ("Ngư trường Trường Sa", 113.80, 10.20, 0.90),
-            ("Ngoài khơi Bình Thuận – Bà Rịa", 108.60, 10.20, 0.65),
-            ("Vịnh Thái Lan (Cà Mau – Kiên Giang)", 104.60, 8.90, 0.55),
+            ("Vịnh Bắc Bộ (Hải Phòng – Quảng Ninh)", 107.60, 20.40, 0.55,
+             [("HP", "Hải Phòng"), ("QN", "Vân Đồn, Quảng Ninh"),
+              ("TB", "Thái Thuỵ, Thái Bình"), ("NĐ", "Hải Hậu, Nam Định")]),
+            ("Ven biển Bắc Trung Bộ (Thanh Hoá – Hà Tĩnh)", 106.60, 18.30, 0.60,
+             [("TH", "Sầm Sơn, Thanh Hoá"), ("NA", "Cửa Lò, Nghệ An"),
+              ("HT", "Nghi Xuân, Hà Tĩnh")]),
+            ("Ven biển Trung Trung Bộ (Đà Nẵng – Quảng Ngãi)", 109.20, 15.80, 0.70,
+             [("ĐNa", "Thọ Quang, Đà Nẵng"), ("QNa", "Núi Thành, Quảng Nam"),
+              ("QNg", "Sa Kỳ, Quảng Ngãi"), ("QNg", "Lý Sơn, Quảng Ngãi")]),
+            ("Ngư trường Hoàng Sa", 112.20, 16.50, 0.80,
+             [("QNg", "Lý Sơn, Quảng Ngãi"), ("ĐNa", "Thọ Quang, Đà Nẵng"),
+              ("KH", "Vĩnh Lương, Khánh Hoà"), ("BĐ", "Quy Nhơn, Bình Định")]),
+            ("Ngư trường Trường Sa", 113.80, 10.20, 0.90,
+             [("KH", "Nha Trang, Khánh Hoà"), ("PY", "Tuy Hoà, Phú Yên"),
+              ("BĐ", "Quy Nhơn, Bình Định"), ("BR-VT", "Vũng Tàu")]),
+            ("Ngoài khơi Bình Thuận – Bà Rịa", 108.60, 10.20, 0.65,
+             [("BTh", "Phan Thiết, Bình Thuận"), ("BTh", "La Gi, Bình Thuận"),
+              ("BR-VT", "Vũng Tàu"), ("BR-VT", "Long Hải, Bà Rịa – Vũng Tàu")]),
+            ("Vịnh Thái Lan (Cà Mau – Kiên Giang)", 104.60, 8.90, 0.55,
+             [("KG", "Rạch Giá, Kiên Giang"), ("KG", "Phú Quốc, Kiên Giang"),
+              ("CM", "Sông Đốc, Cà Mau"), ("CM", "Năm Căn, Cà Mau")]),
         ]
-        # Trọng số phân bố tàu theo cường độ đánh bắt thực tế
         zone_weights = np.array([0.14, 0.10, 0.18, 0.13, 0.15, 0.18, 0.12])
         zone_weights /= zone_weights.sum()
+
+        # Kho tên phương tiện và chủ sở hữu (danh mục mô phỏng)
+        ship_names = [
+            "Bình Minh", "Đại Dương", "Biển Đông", "Hải Đăng", "Ngọc Rồng",
+            "Đại Phát", "Thắng Lợi", "Hồng Hạc", "Phú Quý", "Long Hải",
+            "Thái Bình Dương", "Sao Biển", "Đại Thành", "Đông Hải", "Hoàng Long",
+            "Quang Trung", "Trần Hưng Đạo", "Tiến Phát", "An Bình", "Lộc Phát",
+            "Kim Ngân", "Song Ngư", "Phú Hải", "Vạn Chài", "Thanh Long",
+        ]
+        owners_individual = [
+            "Nguyễn Văn Bình", "Trần Văn Cường", "Lê Thanh Hải", "Phạm Đình Sơn",
+            "Võ Văn Thắng", "Hoàng Minh Đức", "Đặng Xuân Trường", "Bùi Văn Hải",
+            "Ngô Quang Hưng", "Đinh Văn Dũng", "Trương Công Định", "Phan Thanh Tùng",
+            "Lý Quốc Hùng", "Vũ Anh Tuấn", "Đỗ Văn Long",
+        ]
+        owners_org = [
+            "HTX Đánh cá Bình Minh", "HTX Nghề cá Đại Dương",
+            "Công ty TNHH Thuỷ sản Hải Đăng", "HTX Ngư nghiệp Đông Hải",
+            "HTX Đoàn kết", "Công ty CP Thuỷ sản Phú Quý",
+        ]
 
         n_ships = 48
         labels = ["AIS_OK"] * 31 + ["AIS_MISMATCH"] * 8 + ["DARK"] * 9
@@ -334,9 +364,10 @@ with tab_sim:
         bhv_labels = {"cau": "Câu", "keo_luoi": "Kéo lưới",
                        "qua_canh": "Quá cảnh", "neo_dau": "Neo đậu"}
         fleet = []
+        used_regs = set()
         for i in range(n_ships):
             zone_idx = int(rng.choice(len(zones), p=zone_weights))
-            zone_name, zlon, zlat, zrad = zones[zone_idx]
+            zone_name, zlon, zlat, zrad, ports = zones[zone_idx]
             bhv = rng.choice(behaviours, p=[0.36, 0.28, 0.22, 0.14])
             if bhv == "neo_dau":
                 radius = rng.uniform(0.005, 0.015); speed = rng.uniform(0.1, 0.4)
@@ -350,14 +381,44 @@ with tab_sim:
             else:
                 radius = rng.uniform(0.18, 0.35); speed = rng.uniform(8, 11)
                 pattern = 3
-            # Rải ngẫu nhiên quanh tâm ngư trường
             cx = float(zlon + rng.uniform(-zrad, zrad))
             cy = float(zlat + rng.uniform(-zrad, zrad))
+
+            # Sinh số hiệu đăng ký, MMSI, tên phương tiện, chủ sở hữu
+            port_code, port_name = ports[int(rng.integers(len(ports)))]
+            while True:
+                reg_num = int(rng.integers(10000, 99999))
+                reg = f"{port_code}-{reg_num}-TS"
+                if reg not in used_regs:
+                    used_regs.add(reg); break
+            mmsi = int(574000000 + rng.integers(100000, 999999))
+            ship_name = f"{ship_names[int(rng.integers(len(ship_names)))]} {int(rng.integers(1, 99)):02d}"
+            if rng.random() < 0.2:
+                owner = owners_org[int(rng.integers(len(owners_org)))]
+            else:
+                owner = owners_individual[int(rng.integers(len(owners_individual)))]
+
+            length_true = float(
+                (rng.uniform(60, 95) if pattern == 3 else
+                 rng.uniform(28, 55) if pattern == 2 else
+                 rng.uniform(14, 32))
+            )
+            # AIS_MISMATCH: khai báo lệch đáng kể so với chiều dài thật đo bằng radar
+            length_declared = (length_true * float(rng.uniform(0.35, 0.55))
+                                if labels[i] == "AIS_MISMATCH" else length_true)
+
             fleet.append({
                 "id": f"tàu {i+1:02d}",
                 "state": labels[i],
                 "behaviour": bhv_labels[bhv],
                 "zone": zone_name,
+                "port": port_name,
+                "reg": reg,
+                "mmsi": mmsi,
+                "ship_name": ship_name,
+                "owner": owner,
+                "length_true": round(length_true, 1),
+                "length_declared": round(length_declared, 1),
                 "cx": cx,
                 "cy": cy,
                 "radius": float(radius),
@@ -420,7 +481,7 @@ with tab_sim:
     <div class="legend-row"><span class="legend-dot" style="background:{COL_MISMATCH};"></span>AIS sai lệch</div>
     <div class="legend-row"><span class="legend-dot" style="background:{COL_DARK};"></span>Không có AIS</div>
 </div>
-<div class="timer"><span class="timer-label">Giờ mô phỏng</span><span id="timer">00:00</span></div>
+<div class="timer"><span class="timer-label">Thời gian phiên</span><span id="timer">00:00</span></div>
 
 <script>
     var FLEET = {fleet_json};
@@ -489,7 +550,7 @@ with tab_sim:
     }});
 
     var startTime = Date.now();
-    var TIME_SCALE = 45.0;
+    var TIME_SCALE = 1.0; // thời gian thực — mỗi giây tương ứng 1 giây trên biển
 
     function vesselPos(v, t) {{
         var p = v.pattern, sp = v.speed, r = v.radius;
@@ -544,43 +605,63 @@ with tab_sim:
         var confidenceScore = (0.65 + Math.random() * 0.32).toFixed(2);
         var lengthEst = (v.pattern === 3 ? (55 + Math.random()*35) : (v.pattern === 2 ? (28 + Math.random()*22) : (15 + Math.random()*18))).toFixed(1);
         var heading = ((v.direction * 180 / Math.PI) % 360).toFixed(0);
+        var identityRows = "";
+        if (v.state === "DARK") {{
+            identityRows =
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Số hiệu đăng ký</td><td style='padding:5px 0;color:#8E8E93;font-style:italic;'>Chưa xác định — không có AIS</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>MMSI</td><td style='padding:5px 0;color:#8E8E93;font-style:italic;'>Không có tín hiệu</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Tên phương tiện</td><td style='padding:5px 0;color:#8E8E93;font-style:italic;'>Chưa xác định</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Chủ sở hữu</td><td style='padding:5px 0;color:#8E8E93;font-style:italic;'>Chưa xác định</td></tr>";
+        }} else {{
+            identityRows =
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Số hiệu đăng ký</td><td style='padding:5px 0;font-weight:500;'>" + v.reg + "</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>MMSI</td><td style='padding:5px 0;font-variant-numeric:tabular-nums;'>" + v.mmsi + "</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Tên phương tiện</td><td style='padding:5px 0;'>" + v.ship_name + "</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Chủ sở hữu</td><td style='padding:5px 0;'>" + v.owner + "</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Cảng đăng ký</td><td style='padding:5px 0;'>" + v.port + "</td></tr>";
+        }}
+
         var mismatchNote = "";
         if (v.state === "AIS_MISMATCH") {{
-            var declared = (parseFloat(lengthEst) * (0.35 + Math.random()*0.15)).toFixed(1);
             mismatchNote = "<div style='margin-top:10px;padding:10px 12px;background:#FFF8E1;" +
                            "border:1px solid #F6E7B8;border-radius:8px;font-size:12px;color:#7A5A0F;line-height:1.5;'>" +
-                           "AIS khai báo chiều dài <b>" + declared + " m</b>, radar đo <b>" + lengthEst +
-                           " m</b>. Sai lệch vượt ngưỡng, đề nghị đối chiếu.</div>";
+                           "<b>Cảnh báo AIS sai lệch.</b> Bản khai AIS ghi chiều dài <b>" + v.length_declared.toFixed(1) +
+                           " m</b>, radar đo <b>" + v.length_true.toFixed(1) + " m</b>. Đề nghị đối chiếu hồ sơ đăng ký " +
+                           "và cử lực lượng kiểm tra hiện trường.</div>";
         }} else if (v.state === "DARK") {{
             mismatchNote = "<div style='margin-top:10px;padding:10px 12px;background:#FDECEC;" +
                            "border:1px solid #F5CACA;border-radius:8px;font-size:12px;color:#8A2323;line-height:1.5;'>" +
-                           "Radar phát hiện phương tiện nhưng không có bản ghi AIS trong cửa sổ ±15 phút. Đề nghị xác minh.</div>";
+                           "<b>Cảnh báo DARK.</b> Radar phát hiện phương tiện nhưng không có bản ghi AIS trong " +
+                           "cửa sổ ±15 phút. Có thể là tắt AIS chủ động. Đề nghị điều tra hiện trường và truy vết " +
+                           "quỹ đạo trước – sau thời điểm quan sát.</div>";
         }} else {{
             mismatchNote = "<div style='margin-top:10px;padding:10px 12px;background:#EFF8F7;" +
                            "border:1px solid #C6E6E2;border-radius:8px;font-size:12px;color:#1B5568;line-height:1.5;'>" +
-                           "Radar và AIS khớp trong ngưỡng cho phép (sai số vị trí dưới 150 m).</div>";
+                           "Radar và AIS khớp trong ngưỡng cho phép (sai số vị trí dưới 150 m). Phương tiện tuân thủ.</div>";
         }}
         core.bindPopup(
-            "<div style='min-width:280px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:#1D1D1F;'>" +
+            "<div style='min-width:320px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:#1D1D1F;'>" +
             "<div style='display:flex;align-items:center;gap:10px;margin-bottom:12px;'>" +
                 "<div style='width:10px;height:10px;border-radius:50%;background:" + col + ";'></div>" +
                 "<div style='font-size:15px;font-weight:600;color:#1D1D1F;letter-spacing:-0.01em;'>Đối tượng quan sát " + v.id + "</div>" +
             "</div>" +
+            "<div style='font-size:11px;color:#6E6E73;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;'>Định danh phương tiện</div>" +
+            "<table style='font-size:13px;border-collapse:collapse;width:100%;margin-bottom:10px;'>" +
+                identityRows +
+            "</table>" +
+            "<div style='font-size:11px;color:#6E6E73;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;'>Quan sát radar</div>" +
             "<table style='font-size:13px;border-collapse:collapse;width:100%;'>" +
                 "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;font-weight:400;'>Trạng thái</td><td style='padding:5px 0;font-weight:500;color:" + col + ";'>" + STATE_LABEL[v.state] + "</td></tr>" +
                 "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Hành vi ước lượng</td><td style='padding:5px 0;'>" + v.behaviour + "</td></tr>" +
                 "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Ngư trường</td><td style='padding:5px 0;'>" + v.zone + "</td></tr>" +
                 "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Tốc độ</td><td style='padding:5px 0;'>" + v.speed.toFixed(1) + " hải lý/h</td></tr>" +
                 "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Hướng</td><td style='padding:5px 0;'>" + heading + "°</td></tr>" +
-                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Kích thước</td><td style='padding:5px 0;'>khoảng " + lengthEst + " m</td></tr>" +
+                "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Chiều dài đo bằng radar</td><td style='padding:5px 0;'>" + v.length_true.toFixed(1) + " m</td></tr>" +
                 "<tr><td style='color:#6E6E73;padding:5px 12px 5px 0;'>Độ tin cậy phát hiện</td><td style='padding:5px 0;'>" + confidenceScore + "</td></tr>" +
             "</table>" +
             mismatchNote +
-            "<div style='margin-top:12px;padding-top:10px;border-top:1px solid #E5E5EA;font-size:11px;color:#8E8E93;line-height:1.5;'>" +
-                "Hệ thống không hiển thị mã MMSI, IMO, tên phương tiện hay thông tin chủ sở hữu." +
-            "</div>" +
             "</div>",
-            {{maxWidth: 360}}
+            {{maxWidth: 400}}
         );
         return {{ v: v, haloOuter: haloOuter, haloMid: haloMid, core: core }};
     }});
@@ -655,15 +736,18 @@ with tab_sim:
             f"Trung Bộ; Hoàng Sa; Trường Sa; ngoài khơi Bình Thuận – Bà Rịa; "
             f"Vịnh Thái Lan. Trọng số phân bố phương tiện tương ứng cường độ khai thác.<br><br>"
             f"<b>Ký hiệu phương tiện.</b> Mỗi phương tiện được thể hiện bằng "
-            f"một điểm phát sáng ba lớp: vòng sáng ngoài, vòng sáng giữa và tâm "
-            f"điểm có viền trắng. Phương tiện không có AIS được vẽ lớn hơn để "
-            f"phân biệt. Di chuột để xem nhãn nhanh; chọn để mở thông tin chi "
-            f"tiết. Thông tin hiển thị không bao gồm mã MMSI, IMO, tên phương "
-            f"tiện hoặc thông tin chủ sở hữu.<br><br>"
+            f"một điểm phát sáng ba lớp. Phương tiện không có AIS được vẽ lớn "
+            f"hơn để phân biệt. Chọn phương tiện để xem đầy đủ thông tin định "
+            f"danh (số hiệu đăng ký, MMSI, tên phương tiện, chủ sở hữu, cảng "
+            f"đăng ký) và thông tin quan sát từ radar. Phương tiện DARK không "
+            f"có định danh vì không phát AIS.<br><br>"
             f"<b>Tương tác.</b> Zoom và di chuyển bản đồ tự do. Bản đồ được vẽ "
             f"một lần và cập nhật vị trí phương tiện thông qua JavaScript, "
             f"không làm nhấp nháy giao diện và giữ nguyên trạng thái zoom.<br><br>"
-            f"<b>Thời gian mô phỏng.</b> Mỗi giây thực tương ứng 45 giây trên biển."
+            f"<b>Thời gian.</b> Hiển thị theo thời gian thực. Vị trí phương tiện "
+            f"chuyển động theo tốc độ vận hành thực (2–11 hải lý/h) — thay đổi "
+            f"vị trí có thể chỉ quan sát được sau vài phút, tương ứng chu kỳ "
+            f"cập nhật của AIS và ảnh SAR."
             f"</div>",
             unsafe_allow_html=True,
         )
@@ -886,8 +970,9 @@ with tab_map:
     if not ban_do:
         st.info("Chưa có bản đồ. Chạy pipeline trước.")
     else:
-        m = folium.Map(location=[10.0, 108.85], zoom_start=9,
-                        tiles="OpenStreetMap", control_scale=True)
+        m = folium.Map(location=[13.0, 109.5], zoom_start=6,
+                        tiles="OpenStreetMap", control_scale=True,
+                        min_zoom=5, max_zoom=12)
         by_state = {"AIS_OK": [], "AIS_MISMATCH": [], "DARK": []}
         for entry in ban_do:
             st_key = entry.get("state", "AIS_OK")
@@ -1004,7 +1089,7 @@ st.markdown("---")
 st.markdown(
     f"<div style='color:{COL_MUTED};font-size:12px;text-align:center;padding:16px 0;line-height:1.6;'>"
     f"SonarNet-VN · Hệ thống hỗ trợ giám sát tuân thủ đánh bắt hải sản<br>"
-    f"Sản phẩm chỉ xếp thứ tự ưu tiên giám sát. Không truy vết cá nhân."
+    f"Kết quả mô hình mang tính hỗ trợ nghiệp vụ. Thẩm quyền xử lý thuộc cơ quan chức năng."
     f"</div>",
     unsafe_allow_html=True,
 )
