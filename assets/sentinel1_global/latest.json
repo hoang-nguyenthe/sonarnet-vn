@@ -1,0 +1,127 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "refreshed_at": "2026-09-16T10:03:41.471874Z",
+  "tiles": [
+    {
+      "key": "sea_of_japan",
+      "label": "Tây Thái Bình Dương",
+      "bbox": [
+        123.0,
+        33.0,
+        131.0,
+        41.0
+      ],
+      "asset": "sentinel1_global/sea_of_japan.png",
+      "newest_catalog_acquired_at": "2026-09-14T21:16:32Z",
+      "catalog_scene_count": 33,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    },
+    {
+      "key": "southeast_asia",
+      "label": "Đông Nam Á",
+      "bbox": [
+        103.0,
+        3.0,
+        111.0,
+        11.0
+      ],
+      "asset": "sentinel1_global/southeast_asia.png",
+      "newest_catalog_acquired_at": "2026-09-15T11:26:25Z",
+      "catalog_scene_count": 36,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    },
+    {
+      "key": "indian_ocean",
+      "label": "Ấn Độ Dương",
+      "bbox": [
+        54.0,
+        16.0,
+        62.0,
+        24.0
+      ],
+      "asset": "sentinel1_global/indian_ocean.png",
+      "newest_catalog_acquired_at": "2026-09-16T02:06:31Z",
+      "catalog_scene_count": 38,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    },
+    {
+      "key": "mediterranean_suez",
+      "label": "Địa Trung Hải – Suez",
+      "bbox": [
+        27.0,
+        28.0,
+        35.0,
+        36.0
+      ],
+      "asset": "sentinel1_global/mediterranean_suez.png",
+      "newest_catalog_acquired_at": "2026-09-16T03:44:17Z",
+      "catalog_scene_count": 50,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    },
+    {
+      "key": "north_sea_atlantic",
+      "label": "Đại Tây Dương châu Âu",
+      "bbox": [
+        -4.0,
+        50.0,
+        4.0,
+        58.0
+      ],
+      "asset": "sentinel1_global/north_sea_atlantic.png",
+      "newest_catalog_acquired_at": "2026-09-16T06:06:38Z",
+      "catalog_scene_count": 50,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    },
+    {
+      "key": "east_america",
+      "label": "Bờ đông châu Mỹ",
+      "bbox": [
+        -82.0,
+        25.0,
+        -74.0,
+        33.0
+      ],
+      "asset": "sentinel1_global/east_america.png",
+      "newest_catalog_acquired_at": "2026-09-15T23:02:27Z",
+      "catalog_scene_count": 28,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    },
+    {
+      "key": "west_america",
+      "label": "Bờ tây châu Mỹ",
+      "bbox": [
+        -123.0,
+        30.0,
+        -115.0,
+        38.0
+      ],
+      "asset": "sentinel1_global/west_america.png",
+      "newest_catalog_acquired_at": "2026-09-15T13:44:56Z",
+      "catalog_scene_count": 50,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    },
+    {
+      "key": "southern_africa",
+      "label": "Nam Phi",
+      "bbox": [
+        15.0,
+        -35.0,
+        23.0,
+        -27.0
+      ],
+      "asset": "sentinel1_global/southern_africa.png",
+      "newest_catalog_acquired_at": "2026-09-14T17:10:55Z",
+      "catalog_scene_count": 48,
+      "window_start": "2026-09-02",
+      "window_end": "2026-09-16"
+    }
+  ],
+  "note": "Mỗi tile là mosaic Sentinel-1 theo pixel mới nhất trong cửa sổ 14 ngày; thời điểm khác nhau theo vùng."
+}

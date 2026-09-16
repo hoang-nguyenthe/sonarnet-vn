@@ -358,6 +358,7 @@ LIVE_DEMO_METADATA = ROOT / "assets" / "sentinel1_binh_thuan_20260912.json"
 NATIONAL_MOSAIC_IMAGE = ROOT / "assets" / "sentinel1_vietnam_latest.png"
 NATIONAL_MOSAIC_METADATA = ROOT / "assets" / "sentinel1_vietnam_latest.json"
 GLOBAL_SHIP_DETECTIONS = ROOT / "assets" / "gfw_global_ship_detections_latest.json"
+GLOBAL_SENTINEL_DIR = ROOT / "assets" / "sentinel1_global"
 
 
 @st.cache_data(show_spinner=False)
@@ -373,6 +374,18 @@ def load_prepared_global_detections() -> dict:
     if not GLOBAL_SHIP_DETECTIONS.exists():
         return {"points": [], "corridors": []}
     return json.loads(GLOBAL_SHIP_DETECTIONS.read_text())
+
+
+@st.cache_data(show_spinner=False)
+def load_prepared_global_sentinel_tiles() -> list[tuple[dict, bytes]]:
+    manifest = GLOBAL_SENTINEL_DIR / "latest.json"
+    if not manifest.exists():
+        return []
+    return [
+        (record, (ROOT / "assets" / record["asset"]).read_bytes())
+        for record in json.loads(manifest.read_text()).get("tiles", [])
+        if (ROOT / "assets" / record["asset"]).exists()
+    ]
 
 
 @st.cache_data
@@ -1379,6 +1392,7 @@ with tab_map:
         unsafe_allow_html=True,
     )
     base_mode = st.radio("Chế độ nền", ["Ảnh vệ tinh", "Bản đồ"], horizontal=True, key="global_base_mode")
+    show_sentinel = st.toggle("Hiện mosaic Sentinel‑1 đa vùng", value=True, key="global_sentinel_tiles")
     show_ships = st.toggle("Hiện đốm phát hiện tàu (GFW SAR)", value=True, key="global_ship_dots")
     show_vietnam_labels = st.toggle("Hiện nhãn tỉnh/thành Việt Nam", value=True, key="global_vietnam_labels")
     detections = load_prepared_global_detections()
@@ -1390,6 +1404,26 @@ with tab_map:
         ).add_to(global_map)
     else:
         folium.TileLayer("OpenStreetMap", name="Bản đồ", overlay=False).add_to(global_map)
+    if show_sentinel:
+        for record, image in load_prepared_global_sentinel_tiles():
+            west, south, east, north = record["bbox"]
+            folium.raster_layers.ImageOverlay(
+                image=folium_image_source(image), bounds=[[south, west], [north, east]], opacity=.70,
+                interactive=True, cross_origin=False, zindex=2, name=f"Sentinel‑1 · {record['label']}",
+            ).add_to(global_map)
+            folium.Rectangle(
+                bounds=[[south, west], [north, east]], color="#72f2de", weight=1.3, fill=False,
+                tooltip=(f"<b>Sentinel‑1 · {record['label']}</b><br>"
+                         f"Cảnh catalog mới nhất: {record.get('newest_catalog_acquired_at') or 'không rõ'}<br>"
+                         f"Cửa sổ mosaic: {record['window_start']} → {record['window_end']}"),
+                popup=folium.Popup(
+                    f"<b>Sentinel‑1 · {record['label']}</b><br>"
+                    f"Cảnh catalog mới nhất: {record.get('newest_catalog_acquired_at') or 'không rõ'} UTC<br>"
+                    f"Mosaic: {record['window_start']} → {record['window_end']}<br>"
+                    f"{record.get('catalog_scene_count', 0)} cảnh trong catalog",
+                    max_width=280,
+                ),
+            ).add_to(global_map)
     if show_vietnam_labels:
         for latitude, longitude, label in VIETNAM_ADMIN_LABELS:
             folium.Marker(
@@ -1414,7 +1448,7 @@ with tab_map:
       <div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:rgba(18,18,18,.88);color:#fff;
           padding:12px 14px;border-radius:12px;font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5">
         <div style="font-weight:650;margin-bottom:4px">Quan sát toàn cầu</div>
-        <div>{'Đốm tàu đang bật' if show_ships else 'Chỉ hiển thị nền'} · bấm đốm để xem thời điểm</div>
+        <div>{'Đốm tàu đang bật' if show_ships else 'Chỉ hiển thị nền'} · bấm đốm/khung để xem thời điểm</div>
         <div style="opacity:.72">Cửa sổ dữ liệu: {detections.get('window_start', '—')} → {detections.get('window_end', '—')}</div>
       </div>
     """))
