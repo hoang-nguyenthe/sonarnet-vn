@@ -32,7 +32,8 @@ def render_scan(root: Path):
     count = sum(len(r['detections']) for r in ready)
     st.subheader('Kiểm tra ảnh radar thật')
     st.caption('Chọn ảnh → xem ứng viên → lưu ghi chú và bằng chứng.')
-    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>YOLO đề xuất<strong>{count} ứng viên</strong></span></div>', unsafe_allow_html=True)
+    reviewed = sum(1 for value in reviews.values() if value.get('status') != STATUSES[0])
+    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>Ứng viên baseline<strong>{count}</strong></span><span>Đã xem<strong>{reviewed} ô</strong></span></div>', unsafe_allow_html=True)
     model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
     st.caption(f"Mô hình: YOLO baseline học từ ảnh mô phỏng · mã {model_hash[:12] if model_hash else 'chưa có'}. Đây là ứng viên để người xem rà soát, không phải kết quả đã xác minh.")
     st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
@@ -69,7 +70,7 @@ def render_scan(root: Path):
             folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color='#ffb85c',fill=True,
                 popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · chưa xác minh").add_to(chart)
     chart.fit_bounds([[6,102],[24,115]])
-    with st.expander('Phạm vi đã quét trên Việt Nam'):
+    with st.expander('Phạm vi đã quét trên Việt Nam', expanded=True):
         html(chart.get_root().render(), height=420)
     if not ready:
         return
