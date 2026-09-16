@@ -16,12 +16,9 @@ from __future__ import annotations
 import base64
 from io import BytesIO
 import json
-import re
 import sys
 from datetime import date, timedelta
 from pathlib import Path
-from urllib.parse import quote
-from urllib.request import Request, urlopen
 
 import numpy as np
 import streamlit as st
@@ -40,40 +37,6 @@ def load_demo_gfw_reference(
 ):
     """Cache the independent reference layer so opening the demo stays instant."""
     return sar_reference_report(token, bbox, start, end)
-
-
-@st.cache_data(ttl=7 * 24 * 3600, show_spinner=False)
-def resolve_global_location(query: str) -> tuple[str, tuple[float, float, float, float]]:
-    """Resolve a coastal place or a ``latitude, longitude`` pair for the global demo."""
-    coordinate = re.fullmatch(r"\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*", query)
-    if coordinate:
-        latitude, longitude = map(float, coordinate.groups())
-        if not (-89.7 < latitude < 89.7 and -180 <= longitude <= 180):
-            raise ValueError("Tọa độ phải theo thứ tự vĩ độ, kinh độ hợp lệ.")
-        half_width = 0.20
-        return f"{latitude:.3f}°N, {longitude:.3f}°E", (
-            longitude - half_width, latitude - half_width * 0.75,
-            longitude + half_width, latitude + half_width * 0.75,
-        )
-
-    request = Request(
-        f"https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q={quote(query)}",
-        headers={"User-Agent": "SonarNet-VN/1.0 (academic research)"},
-    )
-    try:
-        with urlopen(request, timeout=15) as response:
-            results = json.loads(response.read().decode("utf-8"))
-    except OSError as exc:
-        raise ValueError("Không thể định vị địa danh lúc này. Hãy thử nhập tọa độ vĩ độ, kinh độ.") from exc
-    if not results:
-        raise ValueError("Không tìm thấy địa danh. Hãy thử tên vùng biển/cảng khác hoặc tọa độ vĩ độ, kinh độ.")
-    result = results[0]
-    latitude, longitude = float(result["lat"]), float(result["lon"])
-    half_width = 0.20
-    return str(result["display_name"]).split(",")[0], (
-        longitude - half_width, latitude - half_width * 0.75,
-        longitude + half_width, latitude + half_width * 0.75,
-    )
 
 
 @st.cache_data(ttl=6 * 3600, show_spinner=False)
@@ -389,17 +352,28 @@ with tab_live:
         "</div>",
         unsafe_allow_html=True,
     )
-    place_query = st.text_input(
-        "Quan sát ở bất kỳ nơi nào trên thế giới",
-        value="Bình Thuận, Việt Nam",
-        help="Nhập tên vùng biển/cảng/thành phố ven biển, hoặc tọa độ theo dạng vĩ độ, kinh độ. Dữ liệu sẽ tự tải khi bạn xác nhận ô nhập.",
-        key="global_observation_query",
+    available_regions = {
+        "Việt Nam · Bình Thuận — cảnh chuẩn đã kiểm chứng": None,
+        "Nhật Bản · Tokyo Bay": (35.45, 139.80),
+        "Singapore · Eo biển Singapore": (1.25, 104.00),
+        "Hàn Quốc · Cảng Busan": (35.10, 129.10),
+        "Hà Lan · Cảng Rotterdam": (51.95, 4.05),
+        "Hoa Kỳ · Cảng Los Angeles": (33.65, -118.25),
+        "Brazil · Cảng Santos": (-24.00, -46.35),
+        "Ai Cập · Cửa bắc kênh Suez": (31.28, 32.32),
+        "Nam Phi · Vịnh Table, Cape Town": (-33.90, 18.40),
+    }
+    selected_region = st.selectbox(
+        "Chọn vùng quan sát có sẵn",
+        list(available_regions),
+        help="Các vùng biển và cảng quốc tế đã cấu hình sẵn cho luồng Sentinel‑1 × GFW. Chọn vùng là web tự tải, không cần nút chạy.",
+        key="global_observation_region",
     )
-    st.caption("Bình Thuận là cảnh mẫu đã kiểm chứng. Đổi địa danh hoặc tọa độ để tự tạo cảnh đối chiếu mới ở bất kỳ vùng biển nào có Sentinel‑1.")
+    st.caption("Bình Thuận là cảnh chuẩn đã kiểm chứng. Các lựa chọn còn lại tự lấy cảnh Sentinel‑1 mới nhất trong cửa sổ GFW đã công bố.")
     if not (LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists()):
         st.error("Thiếu cảnh Sentinel-1 đã đóng gói cho bản demo.")
     else:
-        is_standard_scene = place_query.strip().casefold() in {"bình thuận, việt nam", "binh thuan, vietnam"}
+        is_standard_scene = available_regions[selected_region] is None
         evidence = json.loads(LIVE_DEMO_METADATA.read_text())
         reference_image: Path | bytes = LIVE_DEMO_IMAGE
         scene_name = "Ngoài khơi Bình Thuận"
@@ -412,7 +386,13 @@ with tab_live:
                 st.stop()
             try:
                 with st.spinner("Đang định vị vùng quan sát và tìm cảnh Sentinel-1 mới nhất có thể đối chiếu…"):
-                    scene_name, reference_bbox = resolve_global_location(place_query)
+                    latitude, longitude = available_regions[selected_region]
+                    half_width = 0.20
+                    scene_name = selected_region.split(" · ", 1)[1]
+                    reference_bbox = (
+                        longitude - half_width, latitude - half_width * 0.75,
+                        longitude + half_width, latitude + half_width * 0.75,
+                    )
                     # GFW publishes with a short latency. Select the newest pass in
                     # its likely available window, rather than a newer pass whose
                     # independent reference has not been published yet.
