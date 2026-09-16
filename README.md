@@ -219,8 +219,10 @@ với nhịp phát không đều, nhiễu vị trí và các khoảng mất són
 
 ### 6.2. Chuyển sang dữ liệu thật
 
-Kiến trúc được thiết kế để việc thay thế nguồn dữ liệu chỉ tác động đến tầng một.
-Ba tầng còn lại giữ nguyên hoàn toàn.
+Kiến trúc nghiên cứu được thiết kế để việc thay thế nguồn dữ liệu chỉ tác động
+đến tầng một. Bản public hiện đã có asset Sentinel‑1 GRD thật được xuất bản
+theo cửa sổ 14 ngày; phần YOLO ảnh thật vẫn là vùng thử nghiệm có cổng kiểm
+chứng riêng, không được gắn nhãn là mô hình nghiệp vụ toàn quốc.
 
 **Ảnh vệ tinh Sentinel-1** — miễn phí, cần đăng ký tài khoản:
 
@@ -244,7 +246,7 @@ Ba tầng còn lại giữ nguyên hoàn toàn.
 
 **Ranh giới vùng biển**: <https://www.marineregions.org>
 
-Các bước cần thực hiện khi chuyển sang dữ liệu thật:
+Các bước nghiên cứu tiếp theo khi mở rộng sang dữ liệu thật:
 
 1. Thay `data/simulator.py` bằng một mô-đun tải ảnh Sentinel-1 theo lịch quỹ đạo,
    thực hiện hiệu chuẩn bức xạ, khử nhiễu đốm và chỉnh hình học địa hình.
@@ -256,11 +258,12 @@ Các bước cần thực hiện khi chuyển sang dữ liệu thật:
 
 ### 6.3. Đối chứng độc lập với Global Fishing Watch
 
-Sau khi có GFW API token, SonarNet-VN dùng **SAR Vessel Detections** của
-Global Fishing Watch (`public-global-sar-presence:latest`) như một lớp đối
-chiếu ngoài hệ thống. Nguồn này được xây dựng từ ảnh Sentinel-1, có độ trễ xấp
-xỉ 5 ngày và vẫn có thể có dương tính giả; vì vậy **không dùng làm nhãn để huấn
-luyện YOLO**, cũng không xem là ground truth tuyệt đối.
+SonarNet‑VN dùng **SAR Vessel Detections** của Global Fishing Watch
+(`public-global-sar-presence:latest`) như một lớp đối chiếu ngoài hệ thống.
+Nguồn này được xây dựng từ ảnh Sentinel‑1 và vẫn có thể có dương tính giả; vì
+vậy **không dùng làm nhãn để huấn luyện YOLO**, cũng không xem là ground truth
+tuyệt đối. Bản public hiển thị lớp này mặc định tắt để người xem không nhầm nó
+với đầu ra mô hình.
 
 Quy trình đánh giá đúng là:
 
@@ -271,15 +274,33 @@ Quy trình đánh giá đúng là:
    mức độ đồng thuận, các ca chỉ SonarNet/GFW phát hiện được và các giới hạn.
 
 Điều này bổ sung kiểm chứng độc lập mà không làm mô hình học lại đầu ra của một
-hệ thống khác. SonarNet-VN vì vậy là hệ thống **giám sát vệ tinh gần thời gian
-thực**, không phải công cụ theo dõi liên tục thời gian thực: AIS có thể cập nhật
-theo luồng khi có nguồn phù hợp, còn SAR chỉ tạo quan sát khi vệ tinh đi qua.
+hệ thống khác. SonarNet‑VN là công cụ hỗ trợ giám sát theo lượt bay, không phải
+theo dõi liên tục thời gian thực: AIS có thể cập nhật thường xuyên khi có nguồn
+phù hợp, còn SAR chỉ tạo quan sát khi vệ tinh đi qua.
 
-### 6.4. Chạy tab Sentinel-1 thật
+### 6.4. Dashboard public và cập nhật dữ liệu
 
-Dashboard có tab **Sentinel-1 thật** để truy vấn các cảnh GRD theo khu vực và
-thời gian, sau đó dựng ảnh xem nhanh VV đã hiệu chỉnh địa hình qua Copernicus
-Process API. Cấu hình secrets cục bộ trước khi chạy:
+Dashboard public có ba khu vực, được cố ý rút gọn để người dùng phổ thông không
+bị lạc trong các tab kỹ thuật:
+
+1. **Khám phá** mở mặc định ở **Xem ảnh toàn cảnh**, bắt đầu từ khung Việt Nam.
+   Chọn một vùng có asset sẵn để xem mosaic Sentinel‑1, mốc catalog mới nhất,
+   thời gian tạo và lớp địa danh. Chạm ảnh radar để mở nguồn; lớp GFW là lớp
+   tham khảo, không phải kết quả YOLO.
+2. **Kiểm tra ảnh thật** trong cùng khu vực cho phép chọn ô, xem ảnh cắt ứng
+   viên YOLO, đánh giá thủ công, ghi chú và xuất gói bằng chứng ZIP kèm SHA‑256.
+   Bộ công khai hiện là lưới 12 ô Bình Thuận ngày 12/09/2026 UTC; đây là vùng
+   thử nghiệm, không đại diện độ chính xác toàn quốc.
+3. **Cách dùng** giải thích bài toán bằng ngôn ngữ trình bày; **Nghiên cứu**
+   chứa mô phỏng, ghép radar–AIS, Kalman/Hungarian và chỉ số. Không dùng các
+   chỉ số mô phỏng để quảng bá độ chính xác ảnh Sentinel‑1 thật.
+
+Asset được GitHub Actions kiểm tra mỗi 6 giờ (cron `17 */6 * * *`). Job chỉ
+publish khi Copernicus trả về cảnh và ảnh PNG hợp lệ; nếu dịch vụ lỗi hoặc cửa
+sổ không có cảnh, asset cũ được giữ nguyên. Credentials chỉ nằm trong secrets
+của GitHub Actions/Streamlit, không commit vào repository.
+
+Để chạy job cục bộ, cấu hình secrets (không commit):
 
 ```toml
 # .streamlit/secrets.toml (không commit)
