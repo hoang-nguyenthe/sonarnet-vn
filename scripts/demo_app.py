@@ -157,6 +157,29 @@ CSS = f"""
     }}
     .stApp {{ background: {COL_BG}; color: {COL_INK}; }}
     .main .block-container {{ padding-top: 2rem; max-width: 1240px; }}
+    @keyframes sonar-rise {{ from {{ opacity: 0; transform: translateY(18px); }} to {{ opacity: 1; transform: translateY(0); }} }}
+    @keyframes sonar-aurora {{ 0%,100% {{ transform: translate3d(-3%,-2%,0) scale(1); }} 50% {{ transform: translate3d(4%,3%,0) scale(1.10); }} }}
+    @keyframes sonar-pulse {{ 0%,100% {{ box-shadow: 0 0 0 0 rgba(78, 205, 196, .34); }} 50% {{ box-shadow: 0 0 0 10px rgba(78, 205, 196, 0); }} }}
+    @keyframes sonar-shimmer {{ from {{ background-position: 140% 0; }} to {{ background-position: -40% 0; }} }}
+    .sonar-hero {{
+        position: relative; overflow: hidden; isolation: isolate; border-radius: 28px;
+        padding: clamp(30px, 5vw, 64px); color: #fff; margin: 4px 0 24px;
+        background: linear-gradient(130deg, #07152b 0%, #0d3159 47%, #126869 100%);
+        box-shadow: 0 20px 60px rgba(8, 32, 62, .20); animation: sonar-rise .75s cubic-bezier(.2,.8,.2,1) both;
+    }}
+    .sonar-hero::before {{
+        content: ""; position: absolute; z-index: -1; inset: -35%;
+        background: radial-gradient(circle at 24% 43%, rgba(114,242,222,.36), transparent 21%),
+                    radial-gradient(circle at 72% 30%, rgba(68,144,255,.42), transparent 22%),
+                    radial-gradient(circle at 54% 85%, rgba(24,194,168,.25), transparent 25%);
+        filter: blur(18px); animation: sonar-aurora 13s ease-in-out infinite;
+    }}
+    .sonar-eyebrow {{ font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 650; color: #9de4db; margin-bottom: 14px; }}
+    .sonar-title {{ max-width: 720px; font-size: clamp(38px, 6vw, 76px); line-height: .98; letter-spacing: -.065em; font-weight: 650; }}
+    .sonar-copy {{ max-width: 650px; margin-top: 17px; font-size: 16px; line-height: 1.55; color: rgba(255,255,255,.78); }}
+    .sonar-pills {{ display:flex; flex-wrap:wrap; gap:8px; margin-top:25px; }}
+    .sonar-pill {{ border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); backdrop-filter:blur(16px); border-radius:999px; padding:8px 12px; font-size:12px; color:rgba(255,255,255,.9); }}
+    .sonar-status {{ display:inline-block; width:7px; height:7px; margin-right:7px; border-radius:50%; background:#72f2de; animation: sonar-pulse 2.2s ease-out infinite; }}
 
     section[data-testid="stSidebar"] {{
         background: #F5F5F7;
@@ -183,6 +206,7 @@ CSS = f"""
         font-weight: 400 !important; color: {COL_MUTED} !important;
         background: transparent !important; font-size: 14px !important;
         border-bottom: 2px solid transparent !important;
+        transition: color .24s ease, border-color .24s ease, transform .24s ease !important;
     }}
     button[data-baseweb="tab"][aria-selected="true"] {{
         background: transparent !important; color: {COL_INK} !important;
@@ -208,8 +232,9 @@ CSS = f"""
     .kpi {{
         flex: 1; min-width: 180px; background: {COL_CARD};
         padding: 18px 20px; border-radius: 12px; border: 1px solid {COL_HAIRLINE};
-        box-shadow: none;
+        box-shadow: none; transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, border-color .3s ease;
     }}
+    [data-testid="stMetric"]:hover {{ transform: translateY(-4px); border-color:#b9c7d2; box-shadow:0 12px 26px rgba(29,29,31,.09); }}
     .kpi .kpi-label {{
         color: {COL_MUTED}; font-size: 13px; font-weight: 400;
         text-transform: none; letter-spacing: 0;
@@ -245,6 +270,10 @@ CSS = f"""
         background: {COL_CARD} !important; border: 1px solid {COL_HAIRLINE} !important;
         border-radius: 10px !important; font-weight: 400 !important;
     }}
+    .stApp img {{ border-radius: 18px; animation: sonar-rise .7s cubic-bezier(.2,.8,.2,1) both; }}
+    [data-testid="stButton"] button {{ transition: transform .22s ease, box-shadow .22s ease, background .22s ease !important; border-radius: 999px !important; }}
+    [data-testid="stButton"] button:hover {{ transform: scale(1.025); box-shadow: 0 8px 20px rgba(0,0,0,.12); }}
+    @media (prefers-reduced-motion: reduce) {{ *, *::before, *::after {{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }} }}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -313,45 +342,21 @@ PREDS = load_predictions()
 # ---------------------------------------------------------------------------
 # Header
 # ---------------------------------------------------------------------------
-h1, h2 = st.columns([3, 1])
-with h1:
-    st.markdown(
-        f"<div style='font-size:32px;font-weight:600;letter-spacing:-0.03em;color:{COL_INK};margin-bottom:4px;'>"
-        f"SonarNet-VN</div>",
-        unsafe_allow_html=True,
-    )
-    st.markdown("#### Toàn cảnh Việt Nam — Sentinel‑1 mới nhất")
-    st.caption("Mosaic toàn quốc: mỗi điểm ảnh là quan sát Sentinel‑1 mới nhất trong 14 ngày gần đây. Hệ thống tự làm mới theo Copernicus mỗi 6 giờ; đây là nhịp cập nhật theo lượt bay vệ tinh, không phải video liên tục.")
-    national_mosaic: bytes | None = None
-    if "copernicus" in st.secrets:
-        try:
-            with st.spinner("Đang dựng mosaic Sentinel‑1 mới nhất phủ vùng biển Việt Nam…"):
-                national_mosaic = load_vietnam_latest_mosaic(
-                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
-                )
-            st.image(national_mosaic, caption="Sentinel‑1 GRD · VV gamma0 terrain · mosaic 14 ngày gần nhất · vùng biển Việt Nam", use_container_width=True)
-        except CopernicusError as exc:
-            st.error(str(exc))
-    else:
-        st.info("Thiếu cấu hình Copernicus để tạo mosaic toàn quốc.")
+st.markdown("""
+<section class="sonar-hero">
+  <div class="sonar-eyebrow"><span class="sonar-status"></span>National maritime intelligence</div>
+  <div class="sonar-title">See the sea.<br>Understand the signal.</div>
+  <div class="sonar-copy">SonarNet‑VN hợp nhất radar Sentinel‑1, tín hiệu AIS và suy luận quỹ đạo thành một bức tranh trực quan, có thể kiểm chứng cho giám sát khai thác hải sản.</div>
+  <div class="sonar-pills">
+    <span class="sonar-pill">Sentinel‑1 · SAR</span>
+    <span class="sonar-pill">AIS · đối chiếu độc lập</span>
+    <span class="sonar-pill">Việt Nam · tự làm mới theo lượt bay</span>
+  </div>
+</section>
+""", unsafe_allow_html=True)
 
-    st.markdown("#### Cảnh chi tiết và đối chiếu GFW")
-    st.markdown(
-        f"<div style='color:{COL_MUTED};font-size:15px;font-weight:400;line-height:1.5;'>"
-        f"Hệ thống giám sát tuân thủ đánh bắt hải sản — hợp nhất ảnh radar "
-        f"Sentinel-1 và tín hiệu định danh AIS.</div>",
-        unsafe_allow_html=True,
-    )
-with h2:
-    st.markdown(
-        f"<div style='text-align:right;padding-top:12px;color:{COL_MUTED};"
-        f"font-size:12px;font-weight:400;line-height:1.5;'>"
-        f"Bản trình diễn nghiên cứu<br>"
-        f"Hợp nhất SAR &amp; AIS</div>",
-        unsafe_allow_html=True,
-    )
-
-st.markdown(f"<div style='height:1px;background:{COL_HAIRLINE};margin:20px 0 8px 0;'></div>", unsafe_allow_html=True)
+# This value is populated in the live-data tab, then reused by the national map.
+national_mosaic: bytes | None = None
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -411,7 +416,21 @@ tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi, tab_live = st.tabs([
 # TAB LIVE — Copernicus Sentinel-1 GRD
 # ============================================================================
 with tab_live:
-    st.subheader("Cảnh Sentinel-1 thật và đối chiếu độc lập")
+    st.subheader("Toàn cảnh Việt Nam — Sentinel‑1 mới nhất")
+    st.caption("Mỗi điểm ảnh là quan sát Sentinel‑1 mới nhất trong 14 ngày gần đây. Lớp ảnh tự làm mới theo Copernicus mỗi 6 giờ, theo nhịp lượt bay vệ tinh — không phải video liên tục.")
+    if "copernicus" in st.secrets:
+        try:
+            with st.spinner("Đang dựng mosaic Sentinel‑1 mới nhất phủ vùng biển Việt Nam…"):
+                national_mosaic = load_vietnam_latest_mosaic(
+                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
+                )
+            st.image(national_mosaic, caption="Sentinel‑1 GRD · VV gamma0 terrain · mosaic 14 ngày gần nhất · vùng biển Việt Nam", use_container_width=True)
+        except CopernicusError as exc:
+            st.error(str(exc))
+    else:
+        st.info("Thiếu cấu hình Copernicus để tạo mosaic toàn quốc.")
+
+    st.subheader("Cảnh chi tiết và đối chiếu độc lập")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:16px;font-size:14px;line-height:1.55;'>"
         "Cảnh radar VV đã hiệu chỉnh địa hình được hiển thị ngay khi mở tab. Các vòng đỏ là "
