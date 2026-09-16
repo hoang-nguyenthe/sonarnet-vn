@@ -12,7 +12,10 @@ import os
 import sys
 import tomllib
 from datetime import date, datetime, timedelta, timezone
+from io import BytesIO
 from pathlib import Path
+
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -39,8 +42,15 @@ def main() -> None:
     today = date.today()
     token = access_token(client_id, client_secret)
     products = search_sentinel1_grd(token, BBOX, today - timedelta(days=14), today, limit=50)
+    if not products:
+        raise RuntimeError('Không có cảnh Sentinel-1 trong cửa sổ 14 ngày; giữ asset đã xác thực trước đó.')
     newest = max(products, key=lambda product: product.acquired_at) if products else None
     image = sentinel1_mosaic_preview(token, BBOX, today - timedelta(days=14), today)
+    # Validate before replacing the published asset.  A successful HTTP
+    # response alone is not enough to guarantee that the bytes are a readable
+    # image or that a transient service error did not produce an empty file.
+    with Image.open(BytesIO(image)) as picture:
+        picture.verify()
     OUTPUT_IMAGE.write_bytes(image)
     OUTPUT_METADATA.write_text(json.dumps({
         "source": "Copernicus Data Space · Sentinel-1 GRD",

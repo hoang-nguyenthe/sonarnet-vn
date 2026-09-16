@@ -49,12 +49,17 @@ def main() -> None:
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
     previous_path = ASSET_DIR / "latest.json"
     previous = json.loads(previous_path.read_text()) if previous_path.exists() else {}
-    previous_tiles = {item['key']: dict(item, refreshed_at=item.get('refreshed_at', previous.get('refreshed_at'))) for item in previous.get('tiles', [])}
+    previous_tiles = {
+        item['key']: dict(item, refreshed_at=item.get('refreshed_at') or previous.get('refreshed_at'))
+        for item in previous.get('tiles', [])
+    }
     records = []
     successes = 0
     for key, bbox in TILES.items():
         try:
             products = search_sentinel1_grd(token, bbox, end - timedelta(days=14), end, limit=50)
+            if not products:
+                raise RuntimeError('Không có cảnh Sentinel-1 trong cửa sổ 14 ngày')
             newest = max(products, key=lambda product: product.acquired_at) if products else None
             image = sentinel1_mosaic_preview(token, bbox, end - timedelta(days=14), end, width=720)
             with Image.open(BytesIO(image)) as picture:
