@@ -452,11 +452,12 @@ with tab_live:
                 use_container_width=True,
             )
         with context_col:
+            west, south, east, north = reference_bbox
             st.markdown("#### Cảnh demo chuẩn" if is_standard_scene else "#### Cảnh quan sát toàn cầu")
             st.metric("Phát hiện GFW", sum(cell.detections for cell in ref_cells))
             st.metric("Ô lưới có tín hiệu", len(ref_cells))
             st.caption(f"Cùng cửa sổ thời gian: {reference_start.strftime('%d/%m/%Y')} UTC.")
-            st.caption("Khung ảnh: 10.35–10.65°B · 107.70–108.10°Đ")
+            st.caption(f"Khung ảnh: {south:.2f}–{north:.2f}°B · {west:.2f}–{east:.2f}°Đ")
             st.caption("Nguồn ảnh: Copernicus Sentinel-1 GRD, cảnh VV gamma0 đã chỉnh địa hình.")
             st.caption(("Chuẩn demo mới nhất đã xác minh đồng thời với GFW" if is_standard_scene else "Cảnh tự động chọn mới nhất trong cửa sổ GFW đã công bố") + f" · cập nhật {evidence['retrieved_at']}.")
             st.caption(f"Mã sản phẩm: `{evidence['product_id']}`")
