@@ -498,7 +498,7 @@ with tab_overview:
     st.subheader("SonarNet giải quyết bài toán gì?")
     st.write("Mục tiêu nghiên cứu: tìm vật thể giống tàu trên ảnh radar, ghép với tín hiệu AIS cùng thời điểm, rồi đánh dấu trường hợp cần người có chuyên môn kiểm tra.")
     st.markdown("**Quy trình mục tiêu:** ảnh SAR có tọa độ → YOLO phát hiện tàu → đối chiếu AIS → người dùng xem bằng chứng. Không có AIS khớp chưa đủ để kết luận vi phạm.")
-    st.warning("Hiện có một lần chạy YOLO thử nghiệm trên vùng ảnh thật Bình Thuận trong tab Khám phá. Chưa kiểm chứng độ chính xác ảnh thật, chưa xử lý toàn quốc và chưa nối đối chiếu AIS.")
+    st.warning("Tab Khám phá có quy trình kiểm tra YOLO trên lưới 12 ô ảnh thật Bình Thuận: xem ảnh, mở ứng viên, ghi chú và xuất hồ sơ. Chưa kiểm chứng độ chính xác ảnh thật, chưa xử lý toàn quốc và chưa nối đối chiếu AIS.")
     st.markdown("**YOLO được train để làm gì?** Học khoanh vùng tàu trên ảnh radar. Phần nghiên cứu dùng tập mô phỏng; tab Khám phá có thêm một lần suy luận trên ảnh thật, lưu kèm bằng chứng. Chưa chứng minh khả năng tổng quát trên ảnh thật.\n\n**GFW để làm gì?** Cung cấp lớp phát hiện SAR độc lập để tham khảo phân bố hoạt động. Nó không thay thế YOLO và không tự chứng minh YOLO đúng.\n\n**Người dùng hiện dùng thế nào?** Vào ‘Khám phá’, xem vùng có ảnh và thời gian; bật GFW khi cần khảo sát thêm. Các phần bên dưới dành cho giải thích nghiên cứu, không phải điều hành tàu thật.")
 
     st.markdown(

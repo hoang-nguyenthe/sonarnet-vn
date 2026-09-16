@@ -1,0 +1,64 @@
+"""Evidence-first review of real SAR processing, including negative results."""
+import json
+from pathlib import Path
+
+import folium
+import streamlit as st
+from PIL import Image
+from streamlit.components.v1 import html
+
+
+def render_scan(root: Path):
+    path = root / 'assets/real_scan/report.json'
+    if not path.exists():
+        st.info('Chưa có hồ sơ xử lý ảnh thật được công bố.')
+        return
+    report = json.loads(path.read_text())
+    tiles = report['tiles']
+    ready = [r for r in tiles if r['status'] == 'processed']
+    count = sum(len(r['detections']) for r in ready)
+    st.subheader('Kiểm tra ảnh radar thật')
+    st.write('Chọn ô đã xử lý, xem ảnh và ghi nhận vùng cần kiểm tra tiếp. Xuất hồ sơ để lưu hoặc chuyển cho người phân tích.')
+    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>12/09/2026</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>YOLO đề xuất<strong>{count} ứng viên</strong></span></div>', unsafe_allow_html=True)
+    st.caption('Ảnh thật, kết quả suy luận thật; mô hình huấn luyện bằng mô phỏng chưa được kiểm chứng trên miền ảnh thật. Đây là công cụ rà soát thử nghiệm, không phải cảnh báo tàu vi phạm.')
+    st.warning('Có ứng viên nằm trên phần đất/bờ biển. Chưa có mặt nạ loại đất hoặc nhãn xác minh; không được coi tổng ứng viên là số tàu.')
+    chart = folium.Map(tiles=None, zoom_snap=.25)
+    folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attr='Esri, Maxar, Earthstar Geographics').add_to(chart)
+    for tile in tiles:
+        w,s,e,n = tile['bbox']
+        processed = tile['status'] == 'processed'
+        summary = f"{len(tile['detections'])} ứng viên" if processed else 'Chưa xử lý được'
+        folium.Rectangle([[s,w],[n,e]], color='#4dd4c6' if processed else '#efad48', weight=2, fill=True, fill_opacity=.15,
+                         tooltip=tile['key'], popup=f"{tile['key']} · {summary} · 12/09/2026 UTC").add_to(chart)
+        for d in tile.get('detections', []):
+            folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color='#ffb85c',fill=True,
+                popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · chưa xác minh").add_to(chart)
+    chart.fit_bounds([[6,102],[24,115]])
+    with st.expander('Phạm vi đã quét trên Việt Nam'):
+        html(chart.get_root().render(), height=420)
+    if not ready:
+        return
+    by_key = {t['key']:t for t in sorted(ready, key=lambda t: -len(t['detections']))}
+    chosen = st.selectbox('Ô ảnh cần kiểm tra', list(by_key), format_func=lambda key: f"{key.replace('cell_', 'Ô ')} · {len(by_key[key]['detections'])} ứng viên", key='review_tile')
+    tile = by_key[chosen]
+    original = st.toggle('Xem ảnh gốc không khung đánh dấu', value=False)
+    st.image(str(root / tile['asset_dir'] / ('sar.png' if original else 'detections.jpg')), use_container_width=True,
+             caption=f"{chosen} · Sentinel-1 VV · {tile['image_size'][0]} × {tile['image_size'][1]} px · ngưỡng {tile['confidence_threshold']}")
+    if tile['detections']:
+        detection = st.selectbox('Mở bằng chứng ứng viên', tile['detections'], format_func=lambda d: f"#{d['id']} · điểm mô hình {d['confidence']:.2f}")
+        with Image.open(root / tile['asset_dir'] / 'sar.png') as image:
+            x1,y1,x2,y2 = detection['bbox_px']
+            crop = image.crop((max(0,int(x1)-24),max(0,int(y1)-24),min(image.width,int(x2)+24),min(image.height,int(y2)+24)))
+            st.image(crop, caption='Ảnh cắt để kiểm tra trực quan — không phải xác nhận tàu cá', width=256)
+        st.write(f"Tọa độ xấp xỉ: {detection['latitude']:.5f}, {detection['longitude']:.5f}. Chưa đối chiếu AIS.")
+    else:
+        st.info('YOLO không đề xuất ứng viên trong ô này ở ngưỡng 0,35. Vẫn cần kiểm tra ảnh; không được suy ra rằng vùng này không có tàu.')
+    st.caption(f"Nguồn: {tile['source']} · WGS84: {tile['bbox']}. Ảnh ghép trong ngày, không có thời điểm riêng từng pixel.")
+    verdict = st.radio('Đánh dấu của người xem', ['Chưa xem xét','Cần kiểm tra tiếp','Đã xem, chưa thấy mục tiêu rõ'], key=f'verdict_{chosen}')
+    note = st.text_area('Ghi chú kiểm tra', key=f'note_{chosen}', placeholder='Ví dụ: có điểm sáng cần đối chiếu với ảnh độ phân giải cao hơn…')
+    st.caption('Đánh dấu chỉ lưu trong phiên trình duyệt; tải hồ sơ bên dưới để giữ lại. Đây là ý kiến người xem, không phải nhãn xác minh.')
+    evidence = dict(tile, reviewer_status=verdict, reviewer_note=note, scan_report_date=report['generated_at'])
+    st.download_button('Tải hồ sơ ô ảnh & ghi chú', json.dumps(evidence,ensure_ascii=False,indent=2), f'{chosen}-review.json', 'application/json')
+    with st.expander('Thông tin toàn bộ lần quét'):
+        st.write(f"Tất cả {len(tiles)} ô được chọn theo lưới cố định, không chọn lọc theo số phát hiện. Ô lỗi được ghi riêng, không tính là 0 tàu.")
+        st.download_button('Tải báo cáo quét', path.read_bytes(), 'sonarnet-real-scan.json', 'application/json')

@@ -1,0 +1,23 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "device": "mps",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260912T110238_20260912T110307_004544_00873C_70DA_COG.SAFE",
+  "observation_day_utc": "2026-09-12",
+  "time_scope": "Daily Process API mosaic; reference product is not an exact per-pixel attribution",
+  "bbox": [
+    107.8,
+    10.45,
+    107.9,
+    10.55
+  ],
+  "image_size": [
+    1024,
+    1024
+  ],
+  "confidence_threshold": 0.35,
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "image_sha256": "33c9e8c362ede140de04e8fdbbeca04fcfe44773b91861215b79834cdcf5d492",
+  "generated_at": "2026-09-16T15:13:00.240531+00:00",
+  "validation": "Model trained on synthetic SAR; real-domain accuracy not validated. Candidates only, not confirmed vessels or fishing classification.",
+  "detections": []
+}

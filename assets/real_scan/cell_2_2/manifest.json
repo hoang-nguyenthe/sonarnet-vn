@@ -1,0 +1,48 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "device": "mps",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260912T110238_20260912T110307_004544_00873C_70DA_COG.SAFE",
+  "observation_day_utc": "2026-09-12",
+  "time_scope": "Daily Process API mosaic; reference product is not an exact per-pixel attribution",
+  "bbox": [
+    107.9,
+    10.55,
+    108.0,
+    10.65
+  ],
+  "image_size": [
+    1024,
+    1024
+  ],
+  "confidence_threshold": 0.35,
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "image_sha256": "14570a4f3e71fd4ca1406e42b63004af6018d81b2f325ac084e1d535da193fdc",
+  "generated_at": "2026-09-16T15:13:16.260308+00:00",
+  "validation": "Model trained on synthetic SAR; real-domain accuracy not validated. Candidates only, not confirmed vessels or fishing classification.",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        627.6939697265625,
+        524.9013671875,
+        641.56201171875,
+        539.984619140625
+      ],
+      "confidence": 0.7380841374397278,
+      "longitude": 107.96197538971902,
+      "latitude": 10.598003613948823
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        629.4369506835938,
+        252.1866455078125,
+        643.2628784179688,
+        264.42108154296875
+      ],
+      "confidence": 0.7020495533943176,
+      "longitude": 107.96214354634286,
+      "latitude": 10.624775013327598
+    }
+  ]
+}

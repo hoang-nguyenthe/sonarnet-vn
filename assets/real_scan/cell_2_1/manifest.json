@@ -1,0 +1,72 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "device": "mps",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260912T110238_20260912T110307_004544_00873C_70DA_COG.SAFE",
+  "observation_day_utc": "2026-09-12",
+  "time_scope": "Daily Process API mosaic; reference product is not an exact per-pixel attribution",
+  "bbox": [
+    107.8,
+    10.55,
+    107.9,
+    10.65
+  ],
+  "image_size": [
+    1024,
+    1024
+  ],
+  "confidence_threshold": 0.35,
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "image_sha256": "6801a1b329f77a50633f79964cbeb1d8374de65875ec66cc6bea100d641058c9",
+  "generated_at": "2026-09-16T15:13:13.054462+00:00",
+  "validation": "Model trained on synthetic SAR; real-domain accuracy not validated. Candidates only, not confirmed vessels or fishing classification.",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        76.25238037109375,
+        780.778076171875,
+        90.28561401367188,
+        796.2333984375
+      ],
+      "confidence": 0.7681562304496765,
+      "longitude": 107.80813173800706,
+      "latitude": 10.57299748659134
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        87.81793212890625,
+        688.9201049804688,
+        100.9217529296875,
+        703.3474731445312
+      ],
+      "confidence": 0.7387399673461914,
+      "longitude": 107.8092158049345,
+      "latitude": 10.582018184661866
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        390.1524963378906,
+        666.4661865234375,
+        403.5057678222656,
+        681.2445068359375
+      ],
+      "confidence": 0.7145566940307617,
+      "longitude": 107.8387528449297,
+      "latitude": 10.584193813800812
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        600.426513671875,
+        391.08966064453125,
+        609.71142578125,
+        401.86907958984375
+      ],
+      "confidence": 0.6930044293403625,
+      "longitude": 107.85908876657486,
+      "latitude": 10.611281311511993
+    }
+  ]
+}

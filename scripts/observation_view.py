@@ -82,6 +82,11 @@ def provenance(record):
 
 
 def render(root):
+    from scan_view import render_scan
+    workflow = st.radio('Bạn muốn làm gì?', ['Kiểm tra ảnh thật', 'Xem ảnh toàn cảnh'], horizontal=True)
+    if workflow == 'Kiểm tra ảnh thật':
+        render_scan(root)
+        return
     records = published_layers(root)
     detection = read_json(root / "assets/gfw_global_ship_detections_latest.json")
     st.caption("Kéo để khám phá · Phóng to để xem gần · Chạm ảnh radar để xem nguồn")
