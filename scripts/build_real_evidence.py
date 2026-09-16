@@ -25,6 +25,7 @@ def main():
     parser.add_argument('--width', type=int, default=768)
     parser.add_argument('--device', default='auto')
     parser.add_argument('--reuse-image', action='store_true')
+    parser.add_argument('--weights', default='sonarnet_run/runs/yolo_sar/weights/best.pt')
     args = parser.parse_args()
     device = ('mps' if torch.backends.mps.is_available() else 'cpu') if args.device == 'auto' else args.device
     bbox = args.bbox
@@ -43,7 +44,7 @@ def main():
     rgba.load()
     if np.mean(np.array(rgba)[:, :, 3] > 0) < .9:
         raise RuntimeError('Insufficient valid SAR pixels; do not publish')
-    weights = ROOT / 'sonarnet_run/runs/yolo_sar/weights/best.pt'
+    weights = ROOT / args.weights
     model = YOLO(str(weights))
     rgb = rgba.convert('RGB')
     result = model.predict(rgb, conf=.35, imgsz=args.width, device=device, verbose=False)[0]

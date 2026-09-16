@@ -1,0 +1,29 @@
+{
+  "model": "training_real/sentinel_finetune/weights/best.pt",
+  "model_status": "research_candidate_not_promoted",
+  "benchmark": {
+    "source": "CAESAR-Radi SAR-Ship-Dataset (Sentinel-prefixed subset)",
+    "split": "held-out test",
+    "images": 1953,
+    "objects": 2110,
+    "precision": 0.891217,
+    "recall": 0.807617,
+    "map50": 0.879492,
+    "map50_95": 0.444075
+  },
+  "baseline_comparison": {
+    "precision": 0.001478,
+    "recall": 0.024171,
+    "map50": 0.000082,
+    "map50_95": 0.000014
+  },
+  "real_vietnam_check": {
+    "area": "Bình Thuận",
+    "date_utc": "2026-09-12",
+    "tiles": 12,
+    "candidate_count": 0,
+    "interpretation": "No candidates at confidence 0.35; this is not evidence of no vessels. Domain shift from benchmark remains unresolved."
+  },
+  "promotion_decision": "Do not use candidate model as operational detector until representative VV Vietnam labels, coastal negatives, and false-alarm review are available.",
+  "generated_at": "2026-09-16T23:30:00+07:00"
+}

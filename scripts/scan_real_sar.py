@@ -5,9 +5,13 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'assets/real_scan'
+
+
+WEIGHTS = 'sonarnet_run/runs/yolo_sar/weights/best.pt'
 
 
 def cell(task):
@@ -15,7 +19,8 @@ def cell(task):
     relative = f'assets/real_scan/{key}'
     result = subprocess.run([sys.executable, str(ROOT / 'scripts/build_real_evidence.py'),
                              '--bbox', *map(str, bbox), '--width', '1024', '--output', relative,
-                             *(['--reuse-image'] if (ROOT / relative / 'sar.png').exists() else [])],
+                             *(['--reuse-image'] if (ROOT / relative / 'sar.png').exists() else []),
+                             '--weights', WEIGHTS],
                             cwd=ROOT, capture_output=True, text=True)
     if result.returncode:
         # Keep failed regions in the report rather than claiming no ships.
@@ -27,6 +32,10 @@ def cell(task):
 
 
 def main():
+    global WEIGHTS
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--weights', default=WEIGHTS)
+    WEIGHTS = parser.parse_args().weights
     OUT.mkdir(exist_ok=True)
     tasks = [(f'cell_{row}_{col}', [round(107.7+col*.1, 4), round(10.35+row*.1, 4),
                                    round(107.8+col*.1, 4), round(10.45+row*.1, 4)])

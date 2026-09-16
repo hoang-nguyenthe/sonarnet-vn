@@ -192,3 +192,9 @@ def render(root):
             "Tạo ảnh": local_time(r.get('refreshed_at')),
         } for r in records]), hide_index=True, use_container_width=True)
         st.caption(f"Đang có {len(records)} vùng ảnh lưu sẵn. Phạm vi bản đồ toàn cầu không đồng nghĩa Sentinel‑1 phủ kín toàn cầu. Các truy vấn catalog cũ giới hạn tối đa 50 kết quả.")
+        evaluation = read_json(root / 'assets/real_model_evaluation.json')
+        if evaluation:
+            st.markdown('**Trạng thái mô hình YOLO**')
+            benchmark = evaluation.get('benchmark', {})
+            st.write(f"Benchmark giữ riêng: precision {benchmark.get('precision', 0):.3f} · recall {benchmark.get('recall', 0):.3f} · mAP50 {benchmark.get('map50', 0):.3f}. Đây là ảnh Sentinel‑1 công khai, không phải ảnh Việt Nam.")
+            st.warning(evaluation.get('promotion_decision', 'Chưa có quyết định phát hành mô hình.'))
