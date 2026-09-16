@@ -338,15 +338,6 @@ st.markdown(CSS, unsafe_allow_html=True)
 
 STATE_COLOR = {"AIS_OK": COL_OK, "AIS_MISMATCH": COL_MISMATCH, "DARK": COL_DARK}
 STATE_LABEL = {"AIS_OK": "Có AIS khớp", "AIS_MISMATCH": "AIS lệch", "DARK": "Không có AIS"}
-VIETNAM_ADMIN_LABELS = [
-    (21.03, 105.85, "Hà Nội"), (20.86, 106.68, "Hải Phòng"), (21.82, 105.22, "Phú Thọ"),
-    (20.45, 106.34, "Thái Bình"), (19.81, 105.78, "Thanh Hóa"), (18.68, 105.68, "Nghệ An"),
-    (17.47, 106.60, "Quảng Bình"), (16.46, 107.60, "Huế"), (16.05, 108.21, "Đà Nẵng"),
-    (15.12, 108.80, "Quảng Ngãi"), (13.78, 109.22, "Bình Định"), (12.24, 109.19, "Khánh Hòa"),
-    (11.94, 108.46, "Lâm Đồng"), (10.82, 106.63, "TP. Hồ Chí Minh"), (10.35, 107.08, "Bà Rịa–Vũng Tàu"),
-    (10.04, 105.78, "Cần Thơ"), (9.18, 105.15, "Cà Mau"), (10.29, 103.98, "Kiên Giang"),
-]
-
 # ---------------------------------------------------------------------------
 # Paths & data
 # ---------------------------------------------------------------------------
@@ -564,18 +555,15 @@ with tab_live:
                 tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 attr="Esri, Maxar, Earthstar Geographics", name="Nền ảnh vệ tinh tham chiếu", overlay=False,
             ).add_to(vietnam_sentinel_map)
+            folium.TileLayer(
+                tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+                attr="Esri", name="Địa danh hành chính", overlay=True, control=True, opacity=.92,
+            ).add_to(vietnam_sentinel_map)
             folium.raster_layers.ImageOverlay(
                 image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
                 opacity=.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 mới nhất",
             ).add_to(vietnam_sentinel_map)
-            for latitude, longitude, label in VIETNAM_ADMIN_LABELS:
-                folium.Marker(
-                    [latitude, longitude],
-                    icon=folium.DivIcon(html=(
-                        "<div style='white-space:nowrap;font:600 11px -apple-system,BlinkMacSystemFont,sans-serif;"
-                        "color:#fff;text-shadow:0 1px 3px #000,1px 0 3px #000,-1px 0 3px #000'>" + label + "</div>"
-                    )),
-                ).add_to(vietnam_sentinel_map)
+            vietnam_sentinel_map.fit_bounds([[6.0, 102.0], [21.8, 115.0]])
             folium.LayerControl(collapsed=True).add_to(vietnam_sentinel_map)
             st_html(vietnam_sentinel_map.get_root().render(), height=560)
         except CopernicusError as exc:
@@ -1396,7 +1384,6 @@ with tab_map:
     base_mode = st.radio("Chế độ nền", ["Ảnh vệ tinh", "Bản đồ"], horizontal=True, key="global_base_mode")
     show_sentinel = st.toggle("Hiện mosaic Sentinel‑1 đa vùng", value=True, key="global_sentinel_tiles")
     show_ships = st.toggle("Hiện đốm phát hiện tàu (GFW SAR)", value=True, key="global_ship_dots")
-    show_vietnam_labels = st.toggle("Hiện nhãn tỉnh/thành Việt Nam", value=True, key="global_vietnam_labels")
     detections = load_prepared_global_detections()
     global_map = folium.Map(location=[18, 12], zoom_start=2, min_zoom=2, max_zoom=12, tiles=None, control_scale=True)
     if base_mode == "Ảnh vệ tinh":
@@ -1406,6 +1393,15 @@ with tab_map:
         ).add_to(global_map)
     else:
         folium.TileLayer("OpenStreetMap", name="Bản đồ", overlay=False).add_to(global_map)
+    folium.TileLayer(
+        tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri", name="Địa danh hành chính", overlay=True, control=True, opacity=.92,
+    ).add_to(global_map)
+    if national_mosaic:
+        folium.raster_layers.ImageOverlay(
+            image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
+            opacity=.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 Việt Nam mới nhất",
+        ).add_to(global_map)
     if show_sentinel:
         for record, image in load_prepared_global_sentinel_tiles():
             west, south, east, north = record["bbox"]
@@ -1426,15 +1422,7 @@ with tab_map:
                     max_width=280,
                 ),
             ).add_to(global_map)
-    if show_vietnam_labels:
-        for latitude, longitude, label in VIETNAM_ADMIN_LABELS:
-            folium.Marker(
-                [latitude, longitude],
-                icon=folium.DivIcon(html=(
-                    "<div style='white-space:nowrap;font:600 11px -apple-system,BlinkMacSystemFont,sans-serif;"
-                    "color:#1d1d1f;text-shadow:0 1px 3px #fff,1px 0 3px #fff,-1px 0 3px #fff'>" + label + "</div>"
-                )),
-            ).add_to(global_map)
+    global_map.fit_bounds([[6.0, 102.0], [21.8, 115.0]])
     if show_ships:
         for point in detections.get("points", []):
             intensity = min(1.0, np.log1p(point["detections"]) / 6)
