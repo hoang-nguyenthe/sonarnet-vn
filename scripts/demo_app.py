@@ -338,6 +338,14 @@ st.markdown(CSS, unsafe_allow_html=True)
 
 STATE_COLOR = {"AIS_OK": COL_OK, "AIS_MISMATCH": COL_MISMATCH, "DARK": COL_DARK}
 STATE_LABEL = {"AIS_OK": "Có AIS khớp", "AIS_MISMATCH": "AIS lệch", "DARK": "Không có AIS"}
+VIETNAM_ADMIN_LABELS = [
+    (21.03, 105.85, "Hà Nội"), (20.86, 106.68, "Hải Phòng"), (21.82, 105.22, "Phú Thọ"),
+    (20.45, 106.34, "Thái Bình"), (19.81, 105.78, "Thanh Hóa"), (18.68, 105.68, "Nghệ An"),
+    (17.47, 106.60, "Quảng Bình"), (16.46, 107.60, "Huế"), (16.05, 108.21, "Đà Nẵng"),
+    (15.12, 108.80, "Quảng Ngãi"), (13.78, 109.22, "Bình Định"), (12.24, 109.19, "Khánh Hòa"),
+    (11.94, 108.46, "Lâm Đồng"), (10.82, 106.63, "TP. Hồ Chí Minh"), (10.35, 107.08, "Bà Rịa–Vũng Tàu"),
+    (10.04, 105.78, "Cần Thơ"), (9.18, 105.15, "Cà Mau"), (10.29, 103.98, "Kiên Giang"),
+]
 
 # ---------------------------------------------------------------------------
 # Paths & data
@@ -349,6 +357,7 @@ LIVE_DEMO_IMAGE = ROOT / "assets" / "sentinel1_binh_thuan_20260912.png"
 LIVE_DEMO_METADATA = ROOT / "assets" / "sentinel1_binh_thuan_20260912.json"
 NATIONAL_MOSAIC_IMAGE = ROOT / "assets" / "sentinel1_vietnam_latest.png"
 NATIONAL_MOSAIC_METADATA = ROOT / "assets" / "sentinel1_vietnam_latest.json"
+GLOBAL_SHIP_DETECTIONS = ROOT / "assets" / "gfw_global_ship_detections_latest.json"
 
 
 @st.cache_data(show_spinner=False)
@@ -357,6 +366,13 @@ def load_prepared_national_mosaic() -> tuple[bytes | None, dict | None]:
     if not NATIONAL_MOSAIC_IMAGE.exists() or not NATIONAL_MOSAIC_METADATA.exists():
         return None, None
     return NATIONAL_MOSAIC_IMAGE.read_bytes(), json.loads(NATIONAL_MOSAIC_METADATA.read_text())
+
+
+@st.cache_data(show_spinner=False)
+def load_prepared_global_detections() -> dict:
+    if not GLOBAL_SHIP_DETECTIONS.exists():
+        return {"points": [], "corridors": []}
+    return json.loads(GLOBAL_SHIP_DETECTIONS.read_text())
 
 
 @st.cache_data
@@ -481,7 +497,7 @@ with st.sidebar:
     st.markdown(
         f"<div style='color:{COL_MUTED};font-size:11px;line-height:1.6;'>"
         f"Kiến trúc: YOLO11n · Kalman–RTS · XGBoost<br>"
-        f"Dữ liệu: 500 cảnh Sentinel-1 mô phỏng<br>"
+        f"Đánh giá mô hình: 500 cảnh Sentinel-1 mô phỏng (tách biệt dữ liệu quan sát thật)<br>"
         f"Huấn luyện: 80 chu kỳ trên Apple Metal</div>",
         unsafe_allow_html=True,
     )
@@ -527,6 +543,26 @@ with tab_live:
                 f"Ảnh đã được tạo và kiểm chứng lúc {format_vietnam_time(national_mosaic_status.get('refreshed_at') if national_mosaic_status else None)}. "
                 "Nếu lần kiểm tra sau lỗi, web tiếp tục giữ ảnh đã xác thực gần nhất."
             )
+            import folium
+            from streamlit.components.v1 import html as st_html
+            st.markdown("#### Sentinel‑1 Việt Nam tương tác")
+            st.caption("Kéo và zoom để đọc ảnh radar; nhãn tỉnh/thành là lớp thông tin phủ lên chính mosaic Sentinel‑1.")
+            vietnam_sentinel_map = folium.Map(location=[13.9, 108.5], zoom_start=5, tiles=None, control_scale=True)
+            folium.TileLayer("OpenStreetMap", name="Nền tham chiếu", overlay=False).add_to(vietnam_sentinel_map)
+            folium.raster_layers.ImageOverlay(
+                image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
+                opacity=.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 mới nhất",
+            ).add_to(vietnam_sentinel_map)
+            for latitude, longitude, label in VIETNAM_ADMIN_LABELS:
+                folium.Marker(
+                    [latitude, longitude],
+                    icon=folium.DivIcon(html=(
+                        "<div style='white-space:nowrap;font:600 11px -apple-system,BlinkMacSystemFont,sans-serif;"
+                        "color:#fff;text-shadow:0 1px 3px #000,1px 0 3px #000,-1px 0 3px #000'>" + label + "</div>"
+                    )),
+                ).add_to(vietnam_sentinel_map)
+            folium.LayerControl(collapsed=True).add_to(vietnam_sentinel_map)
+            st_html(vietnam_sentinel_map.get_root().render(), height=560)
         except CopernicusError as exc:
             st.error(str(exc))
     else:
@@ -1334,43 +1370,59 @@ with evidence_tracks:
 with tab_map:
     import folium
     from streamlit.components.v1 import html as st_html
-    st.subheader("Bản đồ giám sát quốc gia")
+    st.subheader("Bản đồ quan sát toàn cầu")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:14px;font-size:14px;line-height:1.55;'>"
-            f"Bản đồ này chỉ hiển thị ảnh Sentinel‑1 thật, ghép theo pixel mới nhất trên toàn vùng biển Việt Nam. "
-            f"Ảnh được tải sẵn; job kiểm tra catalog mỗi 6 giờ và chỉ xuất bản ảnh mới khi render thành công."
+            f"Kéo bản đồ để khám phá toàn cầu. Nền và các đốm phát hiện là hai lớp độc lập; "
+            f"bấm vào một đốm để xem thời điểm quan sát SAR của khu vực đó."
         f"</div>",
         unsafe_allow_html=True,
     )
-
-    st.markdown("#### Lớp quan sát thật — Sentinel‑1 toàn Việt Nam")
-    if national_mosaic:
-        st.caption(
-            f"Cảnh catalog mới nhất: {format_vietnam_time(national_mosaic_status.get('newest_catalog_acquired_at') if national_mosaic_status else None)} · "
-            f"cửa sổ mosaic: {national_mosaic_status.get('window_start') if national_mosaic_status else '—'} → {national_mosaic_status.get('window_end') if national_mosaic_status else '—'}"
-        )
-        national_map = folium.Map(location=[13.9, 108.5], zoom_start=5, tiles=None, control_scale=True)
+    base_mode = st.radio("Chế độ nền", ["Ảnh vệ tinh", "Bản đồ"], horizontal=True, key="global_base_mode")
+    show_ships = st.toggle("Hiện đốm phát hiện tàu (GFW SAR)", value=True, key="global_ship_dots")
+    show_vietnam_labels = st.toggle("Hiện nhãn tỉnh/thành Việt Nam", value=True, key="global_vietnam_labels")
+    detections = load_prepared_global_detections()
+    global_map = folium.Map(location=[18, 12], zoom_start=2, min_zoom=2, max_zoom=12, tiles=None, control_scale=True)
+    if base_mode == "Ảnh vệ tinh":
         folium.TileLayer(
             tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-            attr="Esri, Maxar, Earthstar Geographics", name="Nền vệ tinh", overlay=False,
-        ).add_to(national_map)
-        folium.raster_layers.ImageOverlay(
-            image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
-            opacity=0.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 mosaic mới nhất",
-        ).add_to(national_map)
-        folium.Rectangle(bounds=[[6.0, 102.0], [21.8, 115.0]], color="#ffffff", weight=2, fill=False,
-                         tooltip="Phạm vi mosaic Sentinel‑1 Việt Nam").add_to(national_map)
-        folium.LayerControl(collapsed=True).add_to(national_map)
-        national_map.get_root().html.add_child(folium.Element("""
-          <div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:rgba(18,18,18,.88);color:#fff;
-              padding:12px 14px;border-radius:12px;font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-            <div style="font-weight:650;margin-bottom:4px">Sentinel‑1 · Việt Nam</div>
-            <div>Mosaic 14 ngày · pixel mới nhất · tự làm mới mỗi 6 giờ</div>
-          </div>
-        """))
-        st_html(national_map.get_root().render(), height=560)
+            attr="Esri, Maxar, Earthstar Geographics", name="Ảnh vệ tinh", overlay=False,
+        ).add_to(global_map)
     else:
-        st.error(national_mosaic_error or "Chưa tải được mosaic Sentinel‑1 từ Copernicus.")
+        folium.TileLayer("OpenStreetMap", name="Bản đồ", overlay=False).add_to(global_map)
+    if show_vietnam_labels:
+        for latitude, longitude, label in VIETNAM_ADMIN_LABELS:
+            folium.Marker(
+                [latitude, longitude],
+                icon=folium.DivIcon(html=(
+                    "<div style='white-space:nowrap;font:600 11px -apple-system,BlinkMacSystemFont,sans-serif;"
+                    "color:#1d1d1f;text-shadow:0 1px 3px #fff,1px 0 3px #fff,-1px 0 3px #fff'>" + label + "</div>"
+                )),
+            ).add_to(global_map)
+    if show_ships:
+        for point in detections.get("points", []):
+            intensity = min(1.0, np.log1p(point["detections"]) / 6)
+            folium.CircleMarker(
+                location=[point["latitude"], point["longitude"]], radius=3 + 4 * intensity,
+                color="#ffdf5d", weight=1, fill=True, fill_color="#ff4d42", fill_opacity=.45 + .45 * intensity,
+                tooltip=(f"<b>Phát hiện SAR đã gộp</b><br>{point['detections']} tín hiệu<br>"
+                         f"Thời điểm mới nhất: {point['acquired_at']} UTC<br>"
+                         "Nguồn: Global Fishing Watch · không phải định danh tàu"),
+            ).add_to(global_map)
+    folium.LayerControl(collapsed=True).add_to(global_map)
+    global_map.get_root().html.add_child(folium.Element(f"""
+      <div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:rgba(18,18,18,.88);color:#fff;
+          padding:12px 14px;border-radius:12px;font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5">
+        <div style="font-weight:650;margin-bottom:4px">Quan sát toàn cầu</div>
+        <div>{'Đốm tàu đang bật' if show_ships else 'Chỉ hiển thị nền'} · bấm đốm để xem thời điểm</div>
+        <div style="opacity:.72">Cửa sổ dữ liệu: {detections.get('window_start', '—')} → {detections.get('window_end', '—')}</div>
+      </div>
+    """))
+    st_html(global_map.get_root().render(), height=660)
+    st.caption(
+        "Mỗi đốm là ô lưới phát hiện SAR đã gộp, không phải một tàu được nhận dạng. "
+        "Thời điểm trong tooltip là mốc quan sát mới nhất của ô đó; nền vệ tinh là lớp tham chiếu toàn cầu."
+    )
 
 
 # ============================================================================
