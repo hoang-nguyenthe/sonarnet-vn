@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+from io import BytesIO
+from PIL import Image
 import os
 import sys
 import tomllib
@@ -45,23 +47,35 @@ def main() -> None:
     client_id, client_secret = credentials()
     token, end = access_token(client_id, client_secret), date.today()
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
+    previous_path = ASSET_DIR / "latest.json"
+    previous = json.loads(previous_path.read_text()) if previous_path.exists() else {}
+    previous_tiles = {item['key']: dict(item, refreshed_at=item.get('refreshed_at', previous.get('refreshed_at'))) for item in previous.get('tiles', [])}
     records = []
+    successes = 0
     for key, bbox in TILES.items():
         try:
             products = search_sentinel1_grd(token, bbox, end - timedelta(days=14), end, limit=50)
             newest = max(products, key=lambda product: product.acquired_at) if products else None
             image = sentinel1_mosaic_preview(token, bbox, end - timedelta(days=14), end, width=720)
+            with Image.open(BytesIO(image)) as picture:
+                picture.verify()
         except Exception as exc:  # Keep the previously verified tile, if any.
             print(f"Keeping previous {key}: {exc}")
+            if key in previous_tiles:
+                records.append(previous_tiles[key])
             continue
         output = ASSET_DIR / f"{key}.png"
         output.write_bytes(image)
+        successes += 1
         records.append({
             "key": key, "label": LABELS[key], "bbox": bbox, "asset": f"sentinel1_global/{key}.png",
+            "refreshed_at": datetime.now(timezone.utc).isoformat(),
             "newest_catalog_acquired_at": newest.acquired_at if newest else None,
             "catalog_scene_count": len(products), "window_start": (end - timedelta(days=14)).isoformat(), "window_end": end.isoformat(),
         })
         print(f"Prepared {key}: {len(image):,} bytes")
+    if not successes:
+        raise RuntimeError("No new valid tiles; keeping the previous manifest unchanged")
     (ASSET_DIR / "latest.json").write_text(json.dumps({
         "source": "Copernicus Data Space · Sentinel-1 GRD", "refreshed_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "tiles": records, "note": "Mỗi tile là mosaic Sentinel-1 theo pixel mới nhất trong cửa sổ 14 ngày; thời điểm khác nhau theo vùng.",

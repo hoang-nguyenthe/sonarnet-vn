@@ -197,7 +197,7 @@ CSS = f"""
     @keyframes sonar-shimmer {{ from {{ background-position: 140% 0; }} to {{ background-position: -40% 0; }} }}
     .sonar-hero {{
         position: relative; overflow: hidden; isolation: isolate; border-radius: 28px;
-        padding: clamp(30px, 5vw, 64px); color: #fff; margin: 4px 0 24px;
+        padding: clamp(24px, 3vw, 38px); color: #fff; margin: 4px 0 16px;
         background: linear-gradient(130deg, #07152b 0%, #0d3159 47%, #126869 100%);
         box-shadow: 0 20px 60px rgba(8, 32, 62, .20); animation: sonar-rise .75s cubic-bezier(.2,.8,.2,1) both;
     }}
@@ -209,7 +209,7 @@ CSS = f"""
         filter: blur(18px); animation: sonar-aurora 13s ease-in-out infinite;
     }}
     .sonar-eyebrow {{ font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 650; color: #9de4db; margin-bottom: 14px; }}
-    .sonar-title {{ max-width: 720px; font-size: clamp(38px, 6vw, 76px); line-height: .98; letter-spacing: -.065em; font-weight: 650; }}
+    .sonar-title {{ max-width: 720px; font-size: clamp(32px, 4vw, 52px); line-height: 1.08; letter-spacing: -.045em; font-weight: 650; }}
     .sonar-copy {{ max-width: 650px; margin-top: 17px; font-size: 16px; line-height: 1.55; color: rgba(255,255,255,.78); }}
     .sonar-pills {{ display:flex; flex-wrap:wrap; gap:8px; margin-top:25px; }}
     .sonar-pill {{ border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); backdrop-filter:blur(16px); border-radius:999px; padding:8px 12px; font-size:12px; color:rgba(255,255,255,.9); }}
@@ -432,13 +432,13 @@ PREDS = load_predictions()
 # ---------------------------------------------------------------------------
 st.markdown("""
 <section class="sonar-hero">
-  <div class="sonar-eyebrow"><span class="sonar-status"></span>National maritime intelligence</div>
-  <div class="sonar-title">See the sea.<br>Understand the signal.</div>
-  <div class="sonar-copy">SonarNet‑VN hợp nhất radar Sentinel‑1, tín hiệu AIS và suy luận quỹ đạo thành một bức tranh trực quan, có thể kiểm chứng cho giám sát khai thác hải sản.</div>
+  <div class="sonar-eyebrow"><span class="sonar-status"></span>SonarNet‑VN · Quan sát biển</div>
+  <div class="sonar-title">Biển trong tầm nhìn.</div>
+  <div class="sonar-copy">Khám phá ảnh radar, xem các vùng phát hiện tàu và kiểm tra nguồn dữ liệu trên cùng một bản đồ.</div>
   <div class="sonar-pills">
     <span class="sonar-pill">Sentinel‑1 · SAR</span>
-    <span class="sonar-pill">AIS · đối chiếu độc lập</span>
-    <span class="sonar-pill">Việt Nam · tự làm mới theo lượt bay</span>
+    <span class="sonar-pill">GFW · tham chiếu độc lập</span>
+    <span class="sonar-pill">Ảnh lưu sẵn · có mốc thời gian</span>
   </div>
 </section>
 """, unsafe_allow_html=True)
@@ -454,276 +454,32 @@ st.components.v1.html("""
   const clock = document.getElementById('vn-clock');
   function tick() {
     const now = new Intl.DateTimeFormat('vi-VN', {timeZone:'Asia/Ho_Chi_Minh', weekday:'short', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false}).format(new Date());
-    clock.textContent = 'Việt Nam · ' + now + ' (GMT+7)';
+    clock.textContent = 'Giờ hiện tại tại Việt Nam · ' + now + ' (GMT+7)';
   }
   tick(); setInterval(tick, 1000);
 </script>
 """, height=52)
 
-# The public dashboard reads the last verified nationwide image immediately.
-# A scheduled workflow refreshes this asset every six hours outside user visits.
-national_mosaic, national_mosaic_status = load_prepared_national_mosaic()
-national_mosaic_error = None if national_mosaic else "Chưa có ảnh Sentinel‑1 toàn quốc đã kiểm chứng."
+# One workspace for real observations; research stays separate.
+from observation_view import render as render_observation
 
-# ---------------------------------------------------------------------------
-# Sidebar
-# ---------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown(
-        f"<div style='font-size:11px;font-weight:500;color:{COL_MUTED};"
-        f"text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;'>"
-        f"Chỉ tiêu vận hành</div>",
-        unsafe_allow_html=True,
-    )
-    st.metric("Độ chính xác phát hiện (mAP@0.5)", f"{KQ['detection']['mAP@0.5']:.3f}")
-    st.metric("Độ chính xác phân loại trạng thái", f"{KQ['fusion']['state_accuracy']:.1%}")
-    st.metric("F1 vĩ mô hợp nhất", f"{KQ['fusion']['state_macro_f1']:.3f}")
-    st.metric("F1 phân loại hành vi", f"{KQ['behaviour']['macro_f1']:.3f}")
+    st.title("SonarNet‑VN")
+    st.caption("Quan sát biển · Kiểm chứng dữ liệu")
+    st.markdown("**Bắt đầu từ bản đồ**\n\nChọn vùng có ảnh sẵn, bật/tắt lớp và bấm vào ảnh hoặc ô phát hiện để xem thông tin.")
+    st.info("Ảnh radar và ô GFW là dữ liệu thật. Mô phỏng và chỉ số thuật toán nằm riêng trong phần nghiên cứu.")
+    st.caption("Bản thử nghiệm nghiên cứu. Không phải hệ thống theo dõi tàu trực tiếp hoặc kết luận vi phạm.")
 
-    st.markdown(f"<div style='height:1px;background:{COL_HAIRLINE};margin:20px 0;'></div>", unsafe_allow_html=True)
-
-    st.markdown(
-        f"""<div style="background:{COL_CARD};border:1px solid {COL_HAIRLINE};
-                     padding:14px 16px;border-radius:12px;">
-        <div style="color:{COL_INK};font-weight:500;font-size:13px;margin-bottom:8px;
-                    letter-spacing:-0.01em;">
-        Phạm vi sử dụng</div>
-        <div style="color:{COL_MUTED};font-size:12px;line-height:1.6;">
-        Hệ thống dành cho cơ quan quản lý nhà nước về khai thác hải sản. Kết
-        quả phát hiện, ghép cặp và phân loại chỉ mang tính hỗ trợ nghiệp vụ;
-        quyết định xử lý thuộc thẩm quyền cơ quan chức năng.
-        </div></div>""",
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(f"<div style='height:1px;background:{COL_HAIRLINE};margin:20px 0;'></div>", unsafe_allow_html=True)
-
-    st.markdown(
-        f"<div style='color:{COL_MUTED};font-size:11px;line-height:1.6;'>"
-        f"Kiến trúc: YOLO11n · Kalman–RTS · XGBoost<br>"
-        f"Đánh giá mô hình: 500 cảnh Sentinel-1 mô phỏng (tách biệt dữ liệu quan sát thật)<br>"
-        f"Huấn luyện: 80 chu kỳ trên Apple Metal</div>",
-        unsafe_allow_html=True,
-    )
-
-# ---------------------------------------------------------------------------
-# Tabs
-# ---------------------------------------------------------------------------
-tab_live, tab_map, tab_overview, tab_evidence = st.tabs([
-    "Dữ liệu vệ tinh thật",
-    "Bản đồ Sentinel‑1",
-    "Tổng quan hệ thống",
-    "Phân tích & độ tin cậy",
+tab_observation, tab_overview, tab_evidence = st.tabs([
+    "Quan sát", "Cách hệ thống hoạt động", "Kết quả nghiên cứu",
 ])
-
-# Keep research evidence available for a jury without putting specialist
-# vocabulary in the primary journey used by operators and the public.
+with tab_observation:
+    render_observation(ROOT)
 with tab_evidence:
+    st.info("Các chỉ số dưới đây được đánh giá trên dữ liệu mô phỏng, không phải độ chính xác đã kiểm chứng trên lớp ảnh Sentinel‑1 đang hiển thị.")
     evidence_radar, evidence_ais, evidence_tracks, evidence_metrics = st.tabs([
-        "Kiểm chứng ảnh radar",
-        "Đối chiếu AIS",
-        "Theo dõi hành trình",
-        "Báo cáo độ tin cậy",
+        "Phát hiện radar", "Ghép radar–AIS", "Ước lượng hành trình", "Chỉ số thử nghiệm",
     ])
-
-# ============================================================================
-# TAB LIVE — Copernicus Sentinel-1 GRD
-# ============================================================================
-with tab_live:
-    st.subheader("Toàn cảnh Việt Nam — Sentinel‑1 mới nhất")
-    st.caption("Ảnh được tải sẵn sau khi kiểm chứng từ Copernicus. Job tự kiểm tra catalog mỗi 6 giờ và chỉ thay ảnh khi tạo mosaic thành công — không phải video liên tục.")
-    if national_mosaic:
-        try:
-            st.markdown(
-                f"""<div class="data-provenance">
-                  <div><span>PHẠM VI HIỂN THỊ</span><strong>Biển Việt Nam · 06°–22°B, 102°–115°Đ</strong></div>
-                  <div><span>CẢNH MỚI NHẤT TRONG CATALOG</span><strong>{format_vietnam_time(national_mosaic_status.get('newest_catalog_acquired_at') if national_mosaic_status else None)}</strong></div>
-                  <div><span>CỬA SỔ MOSAIC</span><strong>{national_mosaic_status.get('window_start') if national_mosaic_status else '—'} → {national_mosaic_status.get('window_end') if national_mosaic_status else '—'} · {national_mosaic_status.get('catalog_scene_count') if national_mosaic_status else 0} cảnh</strong></div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
-            st.caption(
-                f"Mosaic Sentinel‑1 đã được tạo và kiểm chứng lúc {format_vietnam_time(national_mosaic_status.get('refreshed_at') if national_mosaic_status else None)}. "
-                "Vùng không có pixel SAR hợp lệ được để nền ảnh vệ tinh tham chiếu, không được nội suy hoặc bịa dữ liệu."
-            )
-            import folium
-            from streamlit.components.v1 import html as st_html
-            st.markdown("#### Sentinel‑1 Việt Nam tương tác")
-            st.caption("Kéo và zoom để đọc ảnh radar; nhãn tỉnh/thành là lớp thông tin phủ lên chính mosaic Sentinel‑1.")
-            vietnam_sentinel_map = folium.Map(location=[13.9, 108.5], zoom_start=5, tiles=None, control_scale=True)
-            folium.TileLayer(
-                tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                attr="Esri, Maxar, Earthstar Geographics", name="Nền ảnh vệ tinh tham chiếu", overlay=False,
-            ).add_to(vietnam_sentinel_map)
-            folium.TileLayer(
-                tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-                attr="Esri", name="Địa danh hành chính", overlay=True, control=True, opacity=.92,
-            ).add_to(vietnam_sentinel_map)
-            folium.raster_layers.ImageOverlay(
-                image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
-                opacity=.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 mới nhất",
-            ).add_to(vietnam_sentinel_map)
-            vietnam_sentinel_map.fit_bounds([[6.0, 102.0], [21.8, 115.0]])
-            folium.LayerControl(collapsed=True).add_to(vietnam_sentinel_map)
-            st_html(vietnam_sentinel_map.get_root().render(), height=560)
-        except CopernicusError as exc:
-            st.error(str(exc))
-    else:
-        st.error(national_mosaic_error or "Chưa tải được mosaic Sentinel‑1 toàn quốc.")
-
-    st.subheader("Cảnh tham chiếu đã kiểm chứng")
-    st.markdown(
-        f"<div style='color:{COL_MUTED};margin-bottom:16px;font-size:14px;line-height:1.55;'>"
-        "Đây là một ảnh Sentinel‑1 thật đã được đóng gói và kiểm chứng trước khi xuất bản. "
-        "Web không cung cấp các lựa chọn tải động có thể thất bại."
-        "</div>",
-        unsafe_allow_html=True,
-    )
-    vietnam_product = None
-    available_regions = {"Việt Nam · Bình Thuận — cảnh tham chiếu đã kiểm chứng": None}
-    selected_region = next(iter(available_regions))
-    if not (LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists()):
-        st.error("Thiếu cảnh Sentinel-1 đã đóng gói cho bản demo.")
-    else:
-        is_standard_scene = vietnam_product is None and available_regions[selected_region] is None
-        evidence = json.loads(LIVE_DEMO_METADATA.read_text())
-        reference_image: Path | bytes = LIVE_DEMO_IMAGE
-        scene_name = "Ngoài khơi Bình Thuận"
-        reference_bbox = tuple(evidence["bbox_wgs84"])
-        reference_start = date.fromisoformat(evidence["acquired_at"][:10])
-        reference_end = reference_start + timedelta(days=1)
-        if vietnam_product is not None:
-            if "copernicus" not in st.secrets:
-                st.error("Chưa có cấu hình Copernicus để tải cảnh đã chọn.")
-                st.stop()
-            matched_scene = vietnam_scene_match(vietnam_product.bbox)
-            if matched_scene is None:
-                st.error("Footprint cảnh này không khớp vùng biển Việt Nam đã định nghĩa.")
-                st.stop()
-            scene_name, reference_bbox = matched_scene
-            try:
-                with st.spinner("Đang dựng ảnh Sentinel-1 cho cảnh Việt Nam đã chọn…"):
-                    reference_image = load_product_preview(
-                        st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"],
-                        reference_bbox, vietnam_product.acquired_at,
-                    )
-                evidence = {
-                    "product_id": vietnam_product.product_id, "acquired_at": vietnam_product.acquired_at,
-                    "render": "VV gamma0 terrain, orthorectified, 768 px",
-                    "retrieved_at": date.today().isoformat(),
-                }
-                reference_start = date.fromisoformat(vietnam_product.acquired_at[:10])
-                reference_end = reference_start + timedelta(days=1)
-            except CopernicusError as exc:
-                st.error(str(exc))
-                st.stop()
-        elif not is_standard_scene:
-            if "copernicus" not in st.secrets:
-                st.error("Chưa có cấu hình Copernicus để tự tải cảnh toàn cầu.")
-                st.stop()
-            try:
-                with st.spinner("Đang định vị vùng quan sát và tìm cảnh Sentinel-1 mới nhất có thể đối chiếu…"):
-                    latitude, longitude = available_regions[selected_region]
-                    half_width = 0.20
-                    scene_name = selected_region.split(" · ", 1)[1]
-                    reference_bbox = (
-                        longitude - half_width, latitude - half_width * 0.75,
-                        longitude + half_width, latitude + half_width * 0.75,
-                    )
-                    # GFW publishes with a short latency. Select the newest pass in
-                    # its likely available window, rather than a newer pass whose
-                    # independent reference has not been published yet.
-                    reference_cutoff = date.today() - timedelta(days=4)
-                    product, reference_image = load_latest_global_scene(
-                        st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"],
-                        reference_bbox, reference_cutoff,
-                    )
-                evidence = {
-                    "product_id": product.product_id, "acquired_at": product.acquired_at,
-                    "render": "VV gamma0 terrain, orthorectified, 768 px",
-                    "retrieved_at": date.today().isoformat(),
-                }
-                reference_start = date.fromisoformat(product.acquired_at[:10])
-                reference_end = reference_start + timedelta(days=1)
-            except (ValueError, CopernicusError) as exc:
-                st.error(str(exc))
-                st.stop()
-
-        ref_cells = []
-
-        image_col, context_col = st.columns([1.75, 1])
-        with image_col:
-            st.image(
-                gfw_overlay_png(reference_image, reference_bbox, ref_cells),
-                caption=("Sentinel-1 GRD thật · VV gamma0 terrain · "
-                         f"{evidence['acquired_at']} · {scene_name}."),
-                use_container_width=True,
-            )
-        with context_col:
-            west, south, east, north = reference_bbox
-            st.markdown("#### Thông tin cảnh đã kiểm chứng" if is_standard_scene else (
-                "#### Cảnh quan sát Việt Nam" if vietnam_product is not None else "#### Cảnh quan sát quốc tế"
-            ))
-            st.caption(f"Cùng cửa sổ thời gian: {reference_start.strftime('%d/%m/%Y')} UTC.")
-            st.caption(f"Khung ảnh: {south:.2f}–{north:.2f}°B · {west:.2f}–{east:.2f}°Đ")
-            st.caption("Nguồn ảnh: Copernicus Sentinel-1 GRD, cảnh VV gamma0 đã chỉnh địa hình.")
-            st.caption(f"Đã kiểm chứng trước khi xuất bản · cập nhật {evidence['retrieved_at']}.")
-            st.caption(f"Mã sản phẩm: `{evidence['product_id']}`")
-
-        if ref_cells:
-            st.markdown("#### Bản đồ đối chiếu độc lập")
-            st.caption("GFW dùng Sentinel-1 và mô hình riêng để lập lớp tham chiếu theo ô lưới. SonarNet chỉ dùng lớp này để kiểm tra tính nhất quán; không huấn luyện từ GFW, không coi là ground truth tuyệt đối, không suy diễn danh tính hoặc vi phạm.")
-            import folium
-            from streamlit.components.v1 import html as st_html
-
-            west, south, east, north = reference_bbox
-            reference_map = folium.Map(
-                location=[(south + north) / 2, (west + east) / 2], zoom_start=10,
-                tiles=None, control_scale=True, zoom_control=True,
-            )
-            folium.TileLayer(
-                tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                attr="Esri, Maxar, Earthstar Geographics", name="Nền vệ tinh", overlay=False,
-            ).add_to(reference_map)
-            folium.raster_layers.ImageOverlay(
-                image=folium_image_source(reference_image), bounds=[[south, west], [north, east]],
-                opacity=0.76, interactive=True, cross_origin=False, zindex=2,
-                name="Cảnh Sentinel-1 VV",
-            ).add_to(reference_map)
-            folium.Rectangle(
-                bounds=[[south, west], [north, east]], color="#ffffff", weight=2,
-                fill=False, tooltip="Khung ảnh Sentinel-1 GRD",
-            ).add_to(reference_map)
-            for cell in ref_cells:
-                radius = 6 + min(cell.detections, 4) * 2
-                folium.CircleMarker(
-                    location=[cell.latitude, cell.longitude], radius=radius,
-                    color="#ffffff", weight=2, fill=True, fill_color="#ff3b30", fill_opacity=0.92,
-                    tooltip=(f"<b>GFW SAR Vessel Detections</b><br>{cell.acquired_at} UTC"
-                             f"<br>{cell.detections} phát hiện trong ô lưới"),
-                ).add_to(reference_map)
-            folium.LayerControl(collapsed=True).add_to(reference_map)
-            reference_map.get_root().html.add_child(folium.Element("""
-                <div style="position:fixed;bottom:24px;left:24px;z-index:9999;
-                    background:rgba(18,18,18,.88);color:#fff;padding:12px 14px;border-radius:12px;
-                    font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;
-                    box-shadow:0 8px 24px rgba(0,0,0,.25)">
-                  <div style="font-weight:650;margin-bottom:5px">Đối chiếu Sentinel‑1 × GFW</div>
-                  <div><span style="display:inline-block;width:11px;height:11px;background:#7e7e7e;
-                    border:1px solid #fff;margin-right:7px"></span>Ảnh Sentinel‑1 VV</div>
-                  <div><span style="display:inline-block;width:11px;height:11px;background:#ff3b30;
-                    border:2px solid #fff;border-radius:50%;margin-right:7px"></span>Ô phát hiện GFW</div>
-                </div>
-            """))
-            st_html(reference_map.get_root().render(), height=540)
-
-        if ref_cells:
-            import pandas as pd
-            st.dataframe(pd.DataFrame([
-                {"Thời điểm": cell.acquired_at, "Vĩ độ": round(cell.latitude, 3),
-                 "Kinh độ": round(cell.longitude, 3), "Phát hiện": cell.detections}
-                for cell in ref_cells
-            ]), use_container_width=True, hide_index=True)
 
 # ============================================================================
 # TAB SIM — Simulated vessel motion
@@ -1366,88 +1122,6 @@ with evidence_tracks:
     if rows:
         import pandas as pd
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-
-# ============================================================================
-# TAB MAP — Bản đồ
-# ============================================================================
-with tab_map:
-    import folium
-    from streamlit.components.v1 import html as st_html
-    st.subheader("Bản đồ quan sát toàn cầu")
-    st.markdown(
-        f"<div style='color:{COL_MUTED};margin-bottom:14px;font-size:14px;line-height:1.55;'>"
-            f"Kéo bản đồ để khám phá toàn cầu. Nền và các đốm phát hiện là hai lớp độc lập; "
-            f"bấm vào một đốm để xem thời điểm quan sát SAR của khu vực đó."
-        f"</div>",
-        unsafe_allow_html=True,
-    )
-    base_mode = st.radio("Chế độ nền", ["Ảnh vệ tinh", "Bản đồ"], horizontal=True, key="global_base_mode")
-    show_sentinel = st.toggle("Hiện mosaic Sentinel‑1 đa vùng", value=True, key="global_sentinel_tiles")
-    show_ships = st.toggle("Hiện đốm phát hiện tàu (GFW SAR)", value=True, key="global_ship_dots")
-    detections = load_prepared_global_detections()
-    global_map = folium.Map(location=[18, 12], zoom_start=2, min_zoom=2, max_zoom=12, tiles=None, control_scale=True)
-    if base_mode == "Ảnh vệ tinh":
-        folium.TileLayer(
-            tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-            attr="Esri, Maxar, Earthstar Geographics", name="Ảnh vệ tinh", overlay=False,
-        ).add_to(global_map)
-    else:
-        folium.TileLayer("OpenStreetMap", name="Bản đồ", overlay=False).add_to(global_map)
-    folium.TileLayer(
-        tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-        attr="Esri", name="Địa danh hành chính", overlay=True, control=True, opacity=.92,
-    ).add_to(global_map)
-    if national_mosaic:
-        folium.raster_layers.ImageOverlay(
-            image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
-            opacity=.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 Việt Nam mới nhất",
-        ).add_to(global_map)
-    if show_sentinel:
-        for record, image in load_prepared_global_sentinel_tiles():
-            west, south, east, north = record["bbox"]
-            folium.raster_layers.ImageOverlay(
-                image=folium_image_source(image), bounds=[[south, west], [north, east]], opacity=.70,
-                interactive=True, cross_origin=False, zindex=2, name=f"Sentinel‑1 · {record['label']}",
-            ).add_to(global_map)
-            folium.Rectangle(
-                bounds=[[south, west], [north, east]], color="#72f2de", weight=1.3, fill=False,
-                tooltip=(f"<b>Sentinel‑1 · {record['label']}</b><br>"
-                         f"Cảnh catalog mới nhất: {record.get('newest_catalog_acquired_at') or 'không rõ'}<br>"
-                         f"Cửa sổ mosaic: {record['window_start']} → {record['window_end']}"),
-                popup=folium.Popup(
-                    f"<b>Sentinel‑1 · {record['label']}</b><br>"
-                    f"Cảnh catalog mới nhất: {record.get('newest_catalog_acquired_at') or 'không rõ'} UTC<br>"
-                    f"Mosaic: {record['window_start']} → {record['window_end']}<br>"
-                    f"{record.get('catalog_scene_count', 0)} cảnh trong catalog",
-                    max_width=280,
-                ),
-            ).add_to(global_map)
-    global_map.fit_bounds([[6.0, 102.0], [21.8, 115.0]])
-    if show_ships:
-        for point in detections.get("points", []):
-            intensity = min(1.0, np.log1p(point["detections"]) / 6)
-            folium.CircleMarker(
-                location=[point["latitude"], point["longitude"]], radius=3 + 4 * intensity,
-                color="#ffdf5d", weight=1, fill=True, fill_color="#ff4d42", fill_opacity=.45 + .45 * intensity,
-                tooltip=(f"<b>Phát hiện SAR đã gộp</b><br>{point['detections']} tín hiệu<br>"
-                         f"Thời điểm mới nhất: {point['acquired_at']} UTC<br>"
-                         "Nguồn: Global Fishing Watch · không phải định danh tàu"),
-            ).add_to(global_map)
-    folium.LayerControl(collapsed=True).add_to(global_map)
-    global_map.get_root().html.add_child(folium.Element(f"""
-      <div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:rgba(18,18,18,.88);color:#fff;
-          padding:12px 14px;border-radius:12px;font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5">
-        <div style="font-weight:650;margin-bottom:4px">Quan sát toàn cầu</div>
-        <div>{'Đốm tàu đang bật' if show_ships else 'Chỉ hiển thị nền'} · bấm đốm/khung để xem thời điểm</div>
-        <div style="opacity:.72">Cửa sổ dữ liệu: {detections.get('window_start', '—')} → {detections.get('window_end', '—')}</div>
-      </div>
-    """))
-    st_html(global_map.get_root().render(), height=660)
-    st.caption(
-        "Mỗi đốm là ô lưới phát hiện SAR đã gộp, không phải một tàu được nhận dạng. "
-        "Thời điểm trong tooltip là mốc quan sát mới nhất của ô đó; nền vệ tinh là lớp tham chiếu toàn cầu."
-    )
-
 
 # ============================================================================
 # TAB KPI — Tổng hợp
