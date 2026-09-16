@@ -27,6 +27,9 @@ def render_scan(root: Path):
     day_label = date.fromisoformat(day).strftime('%d/%m/%Y')
     tiles = report['tiles']
     ready = [r for r in tiles if r['status'] == 'processed']
+    observation_days = sorted({r['observation_day_utc'] for r in ready})
+    if observation_days:
+        day_label = ' → '.join(date.fromisoformat(d).strftime('%d/%m/%Y') for d in sorted({observation_days[0], observation_days[-1]}))
     if len(ready) < len(tiles):
         st.warning(f'{len(tiles)-len(ready)} ô chưa có bằng chứng hợp lệ và không được đưa vào danh sách kiểm tra. Không coi các ô này là không có tàu.')
     count = sum(len(r['detections']) for r in ready)
@@ -59,7 +62,7 @@ def render_scan(root: Path):
         st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews), 'sonarnet-review-session.json', 'application/json')
     with st.expander('Cần biết trước khi dùng kết quả'):
         st.write('Mô hình công bố học trên ảnh mô phỏng, chưa kiểm chứng độ chính xác trên ảnh thật. Có ứng viên trên đất/bờ biển; chưa có mặt nạ loại đất hay nhãn xác minh. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
-        st.write('Đây là ảnh lưu trữ của một ngày quan sát, không phải ảnh mới nhất. Ảnh ghép trong ngày chưa có thời điểm riêng từng pixel. Không phát hiện không chứng minh không có tàu.')
+        st.write('Mỗi ô giữ ngày quan sát của chính ảnh đó. Lịch kiểm tra 6 giờ giữ lại ảnh cũ nếu chưa có ảnh mới hợp lệ. Ảnh ghép trong ngày chưa có thời điểm riêng từng pixel. Không phát hiện không chứng minh không có tàu.')
     chart = folium.Map(tiles=None, zoom_snap=.25)
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attr='Esri, Maxar, Earthstar Geographics').add_to(chart)
     for tile in tiles:
@@ -84,6 +87,7 @@ def render_scan(root: Path):
     by_key = {t['key']:t for t in sorted(ready, key=lambda t: -len(t['detections']))}
     chosen = st.selectbox('Ô ảnh cần kiểm tra', list(by_key), format_func=lambda key: f"{key.replace('cell_', 'Ô ')} · {len(by_key[key]['detections'])} ứng viên", key='review_tile')
     tile = by_key[chosen]
+    st.caption(f"Ngày ảnh của ô đã chọn: {date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')} UTC · Copernicus Sentinel-1 VV")
     original = st.toggle('Xem ảnh gốc không khung đánh dấu', value=False)
     st.image(str(root / tile['asset_dir'] / ('sar.png' if original else 'detections.jpg')), use_container_width=True,
              caption=f"{chosen} · Sentinel-1 VV · {tile['image_size'][0]} × {tile['image_size'][1]} px · ngưỡng {tile['confidence_threshold']}")

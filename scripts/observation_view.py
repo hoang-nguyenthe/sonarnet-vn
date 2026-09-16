@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import base64
+from io import BytesIO
+import hashlib
 import html
 import json
 from datetime import datetime, timezone, timedelta
@@ -69,9 +71,84 @@ def published_layers(root):
     return valid
 
 
+def published_yolo_result(root: Path, record: dict):
+    """Project only validated, detailed SAR evidence onto the overview map."""
+    from scan_assets import validated_report
+    try:
+        report = validated_report(root)
+    except (OSError, ValueError, TypeError, KeyError):
+        return None
+    west, south, east, north = record['bbox']
+    tiles = []
+    candidates = []
+    for tile in report['tiles']:
+        w, s, e, n = tile['bbox']
+        # Overviews are never detector inputs: individual vessels disappear
+        # at kilometre-scale overview resolution.
+        metres_per_pixel = 111320 * (n - s) / tile['image_size'][1] if tile.get('image_size') else float('inf')
+        if tile['status'] != 'processed' or metres_per_pixel > 25 or e < west or w > east or n < south or s > north:
+            continue
+        tiles.append(tile)
+        for candidate in tile['detections']:
+            if not (west <= candidate['longitude'] <= east and south <= candidate['latitude'] <= north):
+                continue
+            candidates.append(dict(candidate, id=f"{tile['key']}/{candidate['id']}",
+                                   tile_key=tile['key'], asset_dir=tile['asset_dir'],
+                                   observation_day_utc=tile['observation_day_utc'],
+                                   weights_sha256=tile['weights_sha256']))
+    return dict(detections=candidates, tiles=tiles, generated_at=report['generated_at'])
+
+
+def candidate_crop(root, candidate):
+    """Small source-image evidence that remains legible on a phone."""
+    with Image.open(root / candidate['asset_dir'] / 'sar.png') as image:
+        x1, y1, x2, y2 = candidate['bbox_px']
+        cx, cy = (x1 + x2) / 2, (y1 + y2) / 2
+        half = max(48, (x2-x1)/2 + 20, (y2-y1)/2 + 20)
+        crop = image.crop((max(0, int(cx-half)), max(0, int(cy-half)),
+                           min(image.width, int(cx+half)), min(image.height, int(cy+half))))
+        buffer = BytesIO()
+        crop.convert('RGB').save(buffer, 'JPEG', quality=88)
+        return buffer.getvalue()
+
+
 def points_in_region(points, bounds):
     west, south, east, north = bounds
     return [point for point in points if west <= point["longitude"] <= east and south <= point["latitude"] <= north]
+
+
+def demo_ais_record(record: dict, candidate: dict) -> dict:
+    """Create a deterministic, explicitly synthetic AIS record for demos.
+
+    The public app has no live VMS/AIS feed.  This helper mirrors the fields a
+    future authorized feed would provide so the review flow can be presented
+    end-to-end without fabricating real identities or implying a live match.
+    """
+    token = int(hashlib.sha256(str(candidate['id']).encode()).hexdigest()[:8], 16)
+    statuses = ["AIS khớp", "AIS lệch", "Không có AIS"]
+    status = statuses[token % len(statuses)]
+    lat, lon = candidate["latitude"], candidate["longitude"]
+    # Deliberate offsets make the three states visible on the map: close for a
+    # plausible match, farther away for a mismatch, and no point for dark.
+    if status == "AIS khớp":
+        ais_lat, ais_lon = lat + 0.012, lon + 0.010
+    elif status == "AIS lệch":
+        ais_lat, ais_lon = lat + 0.16, lon + 0.18
+    else:
+        ais_lat, ais_lon = None, None
+    mmsi = f"DEMO-{token % 1_000_000:06d}" if ais_lat is not None else "Chưa xác định"
+    registration = f"DEMO-{token % 100000:05d}-TS"
+    return {
+        "status": status,
+        "mmsi": mmsi,
+        "registration": registration if ais_lat is not None else "Chưa xác định",
+        "vessel_name": f"SONARNET DEMO {token % 100:02d}" if ais_lat is not None else "Chưa xác định",
+        "owner": "Chủ sở hữu minh hoạ" if ais_lat is not None else "Chưa xác định",
+        "port": "Cảng minh hoạ" if ais_lat is not None else "Chưa xác định",
+        "latitude": ais_lat,
+        "longitude": ais_lon,
+        "timestamp": candidate.get("observation_day_utc"),
+    }
 
 
 def provenance(record):
@@ -117,12 +194,48 @@ def render(root):
             pass
     west, south, east, north = record["bbox"]
     bounds = VN_VIEW if record["key"] == "vietnam" else [[south, west], [north, east]]
+    yolo_enabled = st.toggle(
+        "Hiện ứng viên YOLO",
+        value=True,
+        key="panorama_yolo_enabled",
+        help="Khoanh các vùng ảnh giống tàu để rà soát. Đây là ứng viên mô hình, không phải tàu đã xác minh.",
+    )
+    yolo_result = None
+    if yolo_enabled:
+        yolo_result = published_yolo_result(root, record)
+        if yolo_result and yolo_result['tiles']:
+            days = sorted({tile['observation_day_utc'] for tile in yolo_result['tiles']})
+            st.caption(f"{len(yolo_result['detections'])} ứng viên thử nghiệm · {len(yolo_result['tiles'])} ô ảnh chi tiết đã quét · "
+                       f"ngày ảnh {', '.join(date_label(day) for day in days)} (UTC). Chạm điểm sáng để xem ảnh bằng chứng.")
+            st.caption("YOLO baseline học từ ảnh mô phỏng; các điểm cần được rà soát, có thể gồm nhiễu hoặc bờ đất. Phạm vi đã quét được viền trên ảnh.")
+        else:
+            st.info("Khu vực này chưa có kết quả YOLO trên ảnh chi tiết được công bố. Ảnh toàn cảnh vẫn có thể xem; không coi vùng chưa quét là không có tàu.")
+    ais_demo = []
+    ais_enabled = False
+    if yolo_result and yolo_result['detections']:
+        ais_enabled = st.toggle(
+            "Hiện đối chiếu AIS minh hoạ",
+            value=True,
+            key="panorama_ais_demo_enabled",
+            help="Dữ liệu giả lập để trình bày luồng nghiệp vụ; không phải tín hiệu AIS/VMS thật.",
+        )
+        if ais_enabled:
+            ais_demo = [demo_ais_record(record, candidate) for candidate in yolo_result["detections"]]
+            status_counts = {status: sum(item["status"] == status for item in ais_demo) for status in ["AIS khớp", "AIS lệch", "Không có AIS"]}
+            st.warning(
+                "AIS đang ở chế độ MINH HOẠ: các MMSI, số đăng ký, tên tàu và cảng dưới đây được sinh giả lập "
+                "để trình bày giao diện. Khi được cấp nguồn VMS/AIS thật, lớp này sẽ được thay bằng bản ghi có xác thực."
+            )
+            st.caption("Luồng trình bày: YOLO khoanh vùng → AIS minh hoạ đối chiếu → người dùng kiểm tra bằng chứng. "
+                       f"{status_counts['AIS khớp']} khớp · {status_counts['AIS lệch']} lệch · {status_counts['Không có AIS']} không có AIS.")
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
     folium.TileLayer(
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         attr="Esri, Maxar, Earthstar Geographics", name="Nền ảnh vệ tinh", show=True, control=False,
     ).add_to(chart)
     radar = folium.FeatureGroup(name="Ảnh radar Sentinel‑1", show=True).add_to(chart)
+    yolo_layer = folium.FeatureGroup(name="Ứng viên YOLO · chưa xác minh", show=bool(yolo_enabled)).add_to(chart)
+    ais_layer = folium.FeatureGroup(name="AIS minh hoạ · DEMO", show=bool(ais_enabled)).add_to(chart)
     # All published regions are available when panning; the selected region controls the summary.
     for item in records:
         w, s, e, n = item["bbox"]
@@ -132,6 +245,18 @@ def render(root):
             bounds=[[s, w], [n, e]], opacity=.82, interactive=True,
         ).add_to(radar)
         layer.add_child(folium.Popup(provenance(item), max_width=320))
+    if yolo_result:
+        for tile in yolo_result['tiles']:
+            w, s, e, n = tile['bbox']
+            raw = (root / tile['asset_dir'] / 'sar.png').read_bytes()
+            folium.raster_layers.ImageOverlay(
+                image='data:image/png;base64,' + base64.b64encode(raw).decode(),
+                bounds=[[s,w],[n,e]], opacity=1,
+            ).add_to(radar)
+            folium.Rectangle([[s,w],[n,e]], weight=1, color='#64d2ff', fill=False,
+                tooltip=f"Đã quét YOLO · {tile['key']} · {date_label(tile['observation_day_utc'])} UTC",
+                popup=f"Sentinel-1 VV · Copernicus · {date_label(tile['observation_day_utc'])} UTC · "
+                      f"{len(tile['detections'])} ứng viên thử nghiệm. Ảnh ghép trong ngày.").add_to(yolo_layer)
     folium.map.CustomPane("place_labels", z_index=650, pointer_events=False).add_to(chart)
     folium.TileLayer(
         tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
@@ -153,6 +278,52 @@ def render(root):
             color="#ffecad", weight=1, fill=True, fill_color="#ef993c", fill_opacity=.85,
             popup=folium.Popup(details, max_width=320), tooltip="Mở thông tin ô phát hiện",
         ).add_to(dots)
+    if yolo_result:
+        for index, candidate in enumerate(yolo_result["detections"]):
+            ais = ais_demo[index] if ais_enabled else None
+            ais_text = ""
+            if ais:
+                ais_text = (
+                    f"<br><b>AIS minh hoạ:</b> {ais['status']}<br>"
+                    f"MMSI {ais['mmsi']} · {ais['registration']}<br>"
+                    f"Tên: {ais['vessel_name']} · Cảng: {ais['port']}"
+                )
+            crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
+            folium.CircleMarker(
+                [candidate["latitude"], candidate["longitude"]], radius=7,
+                color="#ffd166", weight=2, fill=True, fill_color="#ffd166", fill_opacity=.9,
+                popup=folium.Popup(
+                    f"<b>Ứng viên YOLO · {candidate['id']}</b><br>"
+                    f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
+                    f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
+                    f"Điểm mô hình: {candidate['confidence']:.2f}<br>"
+                    f"Tọa độ xấp xỉ: {candidate['latitude']:.5f}°, {candidate['longitude']:.5f}°<br>"
+                    f"Chưa xác minh là tàu{ais_text}",
+                    max_width=320,
+                ),
+                tooltip=f"YOLO #{candidate['id']} · {candidate['confidence']:.2f}",
+            ).add_to(yolo_layer)
+        if ais_enabled:
+            for candidate, ais in zip(yolo_result["detections"], ais_demo):
+                if ais["latitude"] is None:
+                    continue
+                status_color = {"AIS khớp": "#32d74b", "AIS lệch": "#ff9f0a"}.get(ais["status"], "#ff453a")
+                folium.PolyLine(
+                    [[candidate["latitude"], candidate["longitude"]], [ais["latitude"], ais["longitude"]]],
+                    color=status_color, weight=2, opacity=.75, dash_array="5,6",
+                ).add_to(ais_layer)
+                folium.CircleMarker(
+                    [ais["latitude"], ais["longitude"]], radius=6, color=status_color,
+                    fill=True, fill_color=status_color, fill_opacity=.88,
+                    popup=folium.Popup(
+                        f"<b>Bản ghi AIS minh hoạ · {ais['status']}</b><br>"
+                        f"MMSI: {ais['mmsi']}<br>Số đăng ký: {ais['registration']}<br>"
+                        f"Tên phương tiện: {ais['vessel_name']}<br>Chủ sở hữu: {ais['owner']}<br>"
+                        f"Cảng đăng ký: {ais['port']}<br>Ngày kịch bản: {date_label(ais['timestamp'])} UTC<br><br>"
+                        "Dữ liệu giả lập để trình bày — không phải định danh thật.", max_width=320,
+                    ),
+                    tooltip=f"AIS minh hoạ · {ais['status']}",
+                ).add_to(ais_layer)
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
     chart.fit_bounds(bounds)
     name = chart.get_name()
@@ -176,6 +347,53 @@ def render(root):
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
     embed(chart.get_root().render(), height=540)
+    if yolo_result and yolo_result['detections']:
+        options = {item['id']: item for item in yolo_result['detections']}
+        chosen = st.selectbox('Xem bằng chứng của ứng viên', list(options), key='panorama_candidate')
+        candidate = options[chosen]
+        with st.expander('Ảnh bằng chứng & thông tin đối chiếu', expanded=True):
+            photo, details = st.columns([1, 2])
+            with photo:
+                st.image(candidate_crop(root, candidate), width=220, caption='Ảnh radar gốc · vùng quanh ứng viên')
+            with details:
+                st.write(f"**{chosen}** · điểm mô hình {candidate['confidence']:.2f}")
+                st.write(f"Copernicus · Sentinel-1 VV · {date_label(candidate['observation_day_utc'])} UTC")
+                st.caption(f"{candidate['latitude']:.5f}°B, {candidate['longitude']:.5f}°Đ · ảnh ghép trong ngày")
+                if ais_enabled:
+                    ais = demo_ais_record(record, candidate)
+                    st.write(f"**AIS minh hoạ: {ais['status']}**")
+                    st.write(f"{ais['vessel_name']} · {ais['registration']}")
+                    st.caption(f"Định danh demo: {ais['mmsi']} · {ais['port']}")
+                st.caption('Để đánh giá ứng viên và xuất ảnh bằng chứng, mở Kiểm tra ảnh thật.')
+        with st.expander("Danh sách ứng viên YOLO trên ảnh này"):
+            rows = [
+                {
+                    "ID": item["id"],
+                    "Điểm mô hình": round(item["confidence"], 3),
+                    "Vĩ độ xấp xỉ": round(item["latitude"], 5),
+                    "Kinh độ xấp xỉ": round(item["longitude"], 5),
+                }
+                for item in yolo_result["detections"]
+            ]
+            if rows:
+                st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+            else:
+                st.info("YOLO không đề xuất ứng viên ở ngưỡng 0,35. Điều này không chứng minh vùng này không có tàu.")
+        if ais_demo:
+            with st.expander("Bản ghi AIS minh hoạ & đối chiếu"):
+                st.caption("Các trường nhận dạng dưới đây chỉ là dữ liệu demo có cấu trúc, chờ thay bằng nguồn VMS/AIS được cấp quyền.")
+                ais_rows = []
+                for candidate, ais in zip(yolo_result["detections"], ais_demo):
+                    ais_rows.append({
+                        "Ứng viên YOLO": f"#{candidate['id']} · {candidate['confidence']:.2f}",
+                        "Trạng thái AIS": ais["status"],
+                        "MMSI minh hoạ": ais["mmsi"],
+                        "Số đăng ký": ais["registration"],
+                        "Tên phương tiện": ais["vessel_name"],
+                        "Cảng đăng ký": ais["port"],
+                        "Ngày kịch bản (UTC)": date_label(ais["timestamp"]),
+                    })
+                st.dataframe(pd.DataFrame(ais_rows), hide_index=True, use_container_width=True)
     st.caption(f"Ảnh radar được tạo: {local_time(updated)}. Ảnh ghép nhiều lượt bay, không phải luồng trực tiếp.")
     st.caption("Thang xám: ảnh radar. Bật ‘Tham khảo GFW’ để xem các ô màu vàng do nguồn bên ngoài cung cấp — không phải kết quả YOLO của SonarNet.")
     st.caption("Danh sách và số ô bên dưới theo khu vực đã chọn. Kéo bản đồ không thay đổi bộ lọc khu vực.")
@@ -189,7 +407,7 @@ def render(root):
         else:
             st.info("Bộ dữ liệu đang công bố chưa có ô phát hiện tại khu vực này. Điều này không chứng minh khu vực không có tàu.")
     with st.expander("Nguồn, thời gian & độ phủ", expanded=False):
-        st.write("Ảnh toàn quốc dùng để quan sát, không phải lớp YOLO toàn quốc. Thử nghiệm YOLO ảnh thật bên trên chỉ xử lý một vùng nhỏ; chưa định danh tàu hay kết luận vi phạm. GFW là lớp tham khảo bên ngoài, không phải kết quả YOLO.")
+        st.write("YOLO chạy trên ô ảnh chi tiết; các ứng viên được đưa lên ảnh toàn cảnh bằng tọa độ. Viền xanh thể hiện phạm vi đã quét. Hiện bộ bằng chứng công bố gồm 12 ô Bình Thuận, chưa phủ toàn quốc. Định danh và trạng thái AIS trong chế độ minh hoạ là kịch bản giả lập.")
         st.caption(f"GFW được tải: {local_time(detection.get('refreshed_at'))}")
         st.markdown("**Ảnh radar:** [Copernicus Data Space](https://dataspace.copernicus.eu/) · Sentinel‑1 GRD. **Ô phát hiện:** [Global Fishing Watch](https://globalfishingwatch.org/our-apis/). **Nền và địa danh:** Esri.")
         st.write("Ảnh ghép dùng nhiều lượt bay trong khoảng ngày công bố. Nơi trong suốt chưa có pixel SAR trong bản ghép; nền tham chiếu vẫn hiện ở dưới. Ngày chụp của nền Esri và ngày riêng từng pixel SAR chưa được cung cấp ở giao diện này.")

@@ -12,7 +12,7 @@ gian mô phỏng.
 2. Giữ mặc định **Khám phá → Xem ảnh toàn cảnh**. Bản đồ bắt đầu ở khung Việt
    Nam, lớp nền Esri và các lớp Sentinel‑1 đã kiểm tra được hiển thị sẵn.
 3. Khi cần đi sâu, chuyển sang **Kiểm tra ảnh thật**. Hiện bộ bằng chứng YOLO
-   công khai là lưới 12 ô ở ngoài khơi Bình Thuận, ảnh ngày **12/09/2026 UTC**;
+   công khai là lưới 12 ô ở ngoài khơi Bình Thuận, mỗi ô có ngày quan sát riêng;
    đây là vùng thử nghiệm, không phải tuyên bố phủ YOLO toàn quốc.
 
 ## Lời dẫn và thao tác
@@ -40,6 +40,13 @@ khảo vùng có phát hiện SAR, không phải đầu ra YOLO và không phả
 duy nhất.
 
 ### 2:00–3:30 · YOLO và rà soát con người
+
+Ngay trên ảnh toàn cảnh, bật **Hiện ứng viên YOLO** và chạm một điểm vàng.
+Popup có ảnh radar cắt tại vị trí đó, nguồn và ngày ảnh. Viền xanh là phạm vi
+đã quét ở độ phân giải chi tiết; không dùng mosaic thu nhỏ để nhận diện tàu.
+**Hiện đối chiếu AIS minh hoạ** mô tả ba tình huống khớp, lệch và không có tín
+hiệu. Các định danh bắt đầu bằng DEMO; không có AIS thì danh tính chưa xác định.
+Đây là kịch bản thuyết trình, chưa phải kết quả ghép AIS thật.
 
 Chuyển sang **Kiểm tra ảnh thật**, chọn một ô, mở một ứng viên và xem ảnh cắt.
 Nói: “YOLO chỉ khoanh vùng điểm sáng giống tàu. Người dùng quyết định ứng viên

@@ -286,11 +286,14 @@ bị lạc trong các tab kỹ thuật:
 1. **Khám phá** mở mặc định ở **Xem ảnh toàn cảnh**, bắt đầu từ khung Việt Nam.
    Chọn một vùng có asset sẵn để xem mosaic Sentinel‑1, mốc catalog mới nhất,
    thời gian tạo và lớp địa danh. Chạm ảnh radar để mở nguồn; lớp GFW là lớp
-   tham khảo, không phải kết quả YOLO.
+   tham khảo, không phải kết quả YOLO. Lớp YOLO đưa ứng viên từ ô ảnh chi tiết
+   lên ảnh toàn cảnh; bấm điểm sáng để xem ảnh cắt và ngày quan sát đúng ô đó.
+   AIS minh hoạ cung cấp kịch bản đối chiếu và định danh DEMO; không có tín
+   hiệu thì không hiển thị danh tính. Không chạy YOLO trên mosaic thu nhỏ.
 2. **Kiểm tra ảnh thật** trong cùng khu vực cho phép chọn ô, xem ảnh cắt ứng
    viên YOLO, đánh giá thủ công, ghi chú và xuất gói bằng chứng ZIP kèm SHA‑256.
-   Bộ công khai hiện là lưới 12 ô Bình Thuận ngày 12/09/2026 UTC; đây là vùng
-   thử nghiệm, không đại diện độ chính xác toàn quốc.
+   Bộ công khai hiện là lưới 12 ô Bình Thuận; ngày quan sát được giữ theo từng
+   ô. Đây là vùng thử nghiệm, không đại diện độ chính xác toàn quốc.
 3. **Cách dùng** giải thích bài toán bằng ngôn ngữ trình bày; **Nghiên cứu**
    chứa mô phỏng, ghép radar–AIS, Kalman/Hungarian và chỉ số. Không dùng các
    chỉ số mô phỏng để quảng bá độ chính xác ảnh Sentinel‑1 thật.
@@ -299,6 +302,14 @@ Asset được GitHub Actions kiểm tra mỗi 6 giờ (cron `17 */6 * * *`). Jo
 publish khi Copernicus trả về cảnh và ảnh PNG hợp lệ; nếu dịch vụ lỗi hoặc cửa
 sổ không có cảnh, asset cũ được giữ nguyên. Credentials chỉ nằm trong secrets
 của GitHub Actions/Streamlit, không commit vào repository.
+
+Job còn kiểm tra catalog cho từng ô ảnh chi tiết đã khai báo. Nếu có sản phẩm
+mới, tải ảnh ~11 m/pixel, chạy YOLO và kiểm tra checksum trước khi công bố.
+Ảnh không đủ 90% pixel hợp lệ giữ lại kết quả cũ cùng ngày quan sát cũ.
+Baseline hiện vẫn là mô hình thử nghiệm học từ ảnh mô phỏng, chưa đạt chất
+lượng nghiệp vụ. Các điểm ứng viên không được diễn giải thành tàu đã xác minh.
+Lưới ảnh toàn cảnh có 22 vùng yêu cầu trên các hành lang biển, chỉ hiển thị
+những vùng tải được; phạm vi đó không tương đương quét YOLO toàn cầu.
 
 Để chạy job cục bộ, cấu hình secrets (không commit):
 

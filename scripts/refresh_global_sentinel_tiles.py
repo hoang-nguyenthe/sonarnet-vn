@@ -17,20 +17,43 @@ from sonarnet.data.copernicus import access_token, search_sentinel1_grd, sentine
 
 # A globe-scale maritime mosaic needs multiple swaths; every swath is retained
 # with its own acquisition time instead of pretending all pixels are synchronous.
+# The grid is intentionally coarse enough for a scheduled public refresh while
+# still giving the viewer worldwide context.  Empty/unavailable cells are
+# omitted rather than painted with invented data.
 TILES = {
-    "sea_of_japan": (123.0, 33.0, 131.0, 41.0),
-    "southeast_asia": (103.0, 3.0, 111.0, 11.0),
-    "indian_ocean": (54.0, 16.0, 62.0, 24.0),
-    "mediterranean_suez": (27.0, 28.0, 35.0, 36.0),
+    "north_pacific": (-154.0, 54.0, -146.0, 62.0),
+    "central_pacific": (-160.0, 17.0, -152.0, 25.0),
+    "south_pacific": (170.0, -42.0, 178.0, -34.0),
+    "north_atlantic": (-65.0, 42.0, -57.0, 50.0),
+    "tropical_atlantic": (-43.0, -7.0, -35.0, 1.0),
+    "south_atlantic": (-55.0, -36.0, -47.0, -28.0),
+    "caribbean_gulf": (-94.0, 22.0, -86.0, 30.0),
     "north_sea_atlantic": (-4.0, 50.0, 4.0, 58.0),
+    "mediterranean_suez": (27.0, 28.0, 35.0, 36.0),
+    "west_africa": (-20.0, 10.0, -12.0, 18.0),
     "east_america": (-82.0, 25.0, -74.0, 33.0),
     "west_america": (-123.0, 30.0, -115.0, 38.0),
+    "arabian_sea": (65.0, 17.0, 73.0, 25.0),
+    "bay_bengal": (86.0, 15.0, 94.0, 23.0),
+    "indian_ocean": (54.0, 16.0, 62.0, 24.0),
+    "southeast_asia": (103.0, 3.0, 111.0, 11.0),
+    "sea_of_japan": (123.0, 33.0, 131.0, 41.0),
+    "east_asia": (134.0, 31.0, 142.0, 39.0),
+    "western_pacific": (120.0, 5.0, 128.0, 13.0),
+    "australia_east": (149.0, -35.0, 157.0, -27.0),
+    "australia_west": (111.0, -35.0, 119.0, -27.0),
     "southern_africa": (15.0, -35.0, 23.0, -27.0),
 }
 LABELS = {
-    "sea_of_japan": "Tây Thái Bình Dương", "southeast_asia": "Đông Nam Á", "indian_ocean": "Ấn Độ Dương",
-    "mediterranean_suez": "Địa Trung Hải – Suez", "north_sea_atlantic": "Đại Tây Dương châu Âu",
-    "east_america": "Bờ đông châu Mỹ", "west_america": "Bờ tây châu Mỹ", "southern_africa": "Nam Phi",
+    "sea_of_japan": "Biển Hoa Đông – bán đảo Triều Tiên",
+    "north_pacific": "Bắc Thái Bình Dương", "central_pacific": "Trung Thái Bình Dương", "south_pacific": "Nam Thái Bình Dương",
+    "north_atlantic": "Bắc Đại Tây Dương", "tropical_atlantic": "Nhiệt đới Đại Tây Dương", "south_atlantic": "Nam Đại Tây Dương",
+    "caribbean_gulf": "Caribe – Vịnh Mexico", "north_sea_atlantic": "Bắc Hải – Đại Tây Dương",
+    "mediterranean_suez": "Địa Trung Hải – Suez", "west_africa": "Tây Phi",
+    "east_america": "Bờ đông châu Mỹ", "west_america": "Bờ tây châu Mỹ", "arabian_sea": "Biển Ả Rập",
+    "bay_bengal": "Vịnh Bengal", "indian_ocean": "Ấn Độ Dương", "southeast_asia": "Đông Nam Á",
+    "east_asia": "Đông Á", "western_pacific": "Tây Thái Bình Dương", "australia_east": "Bờ đông Australia",
+    "australia_west": "Bờ tây Australia", "southern_africa": "Nam Phi",
 }
 ASSET_DIR = ROOT / "assets" / "sentinel1_global"
 
