@@ -1,11 +1,13 @@
 """Evidence-first review of real SAR processing, including negative results."""
 import json
+from datetime import date
 from pathlib import Path
 
 import folium
 import streamlit as st
 from PIL import Image
 from streamlit.components.v1 import html
+from review_workspace import STATUSES, report_id, export_workspace, import_workspace, printable_review
 
 
 def render_scan(root: Path):
@@ -14,12 +16,35 @@ def render_scan(root: Path):
         st.info('Chưa có hồ sơ xử lý ảnh thật được công bố.')
         return
     report = json.loads(path.read_text())
+    workspace_key = 'workspace_' + report_id(report)
+    reviews = st.session_state.setdefault(workspace_key, {})
+    day = report['observation_day_utc']
+    day_label = date.fromisoformat(day).strftime('%d/%m/%Y')
     tiles = report['tiles']
     ready = [r for r in tiles if r['status'] == 'processed']
     count = sum(len(r['detections']) for r in ready)
     st.subheader('Kiểm tra ảnh radar thật')
     st.write('Chọn ô đã xử lý, xem ảnh và ghi nhận vùng cần kiểm tra tiếp. Xuất hồ sơ để lưu hoặc chuyển cho người phân tích.')
-    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>12/09/2026</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>YOLO đề xuất<strong>{count} ứng viên</strong></span></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>YOLO đề xuất<strong>{count} ứng viên</strong></span></div>', unsafe_allow_html=True)
+    st.caption('Bộ ảnh lưu trữ của một ngày quan sát — không phải dữ liệu mới nhất hoặc luồng theo dõi trực tiếp.')
+    with st.expander('Lưu / mở lại phiên kiểm tra'):
+        st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại trên máy khác với đúng bộ ảnh; ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
+        upload = st.file_uploader('Mở hồ sơ phiên (.json)', type=['json'], key='restore_reviews')
+        if st.button('Nạp ghi chú từ hồ sơ', disabled=upload is None):
+            try:
+                imported = import_workspace(upload.getvalue(), report)
+                conflicts = set(imported) & set(reviews)
+                if conflicts:
+                    st.error('Có ô đã ghi chú trong phiên này. Để tránh ghi đè, chỉ nạp hồ sơ vào một phiên mới.')
+                else:
+                    reviews.update(imported)
+                    for key, value in imported.items():
+                        st.session_state[f'verdict_{key}'] = value['status']
+                        st.session_state[f'note_{key}'] = value['note']
+                    st.success(f'Đã nạp {len(imported)} ghi chú.')
+            except ValueError as error:
+                st.error(str(error))
+        st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews), 'sonarnet-review-session.json', 'application/json')
     st.caption('Ảnh thật, kết quả suy luận thật; mô hình huấn luyện bằng mô phỏng chưa được kiểm chứng trên miền ảnh thật. Đây là công cụ rà soát thử nghiệm, không phải cảnh báo tàu vi phạm.')
     st.warning('Có ứng viên nằm trên phần đất/bờ biển. Chưa có mặt nạ loại đất hoặc nhãn xác minh; không được coi tổng ứng viên là số tàu.')
     chart = folium.Map(tiles=None, zoom_snap=.25)
@@ -29,7 +54,7 @@ def render_scan(root: Path):
         processed = tile['status'] == 'processed'
         summary = f"{len(tile['detections'])} ứng viên" if processed else 'Chưa xử lý được'
         folium.Rectangle([[s,w],[n,e]], color='#4dd4c6' if processed else '#efad48', weight=2, fill=True, fill_opacity=.15,
-                         tooltip=tile['key'], popup=f"{tile['key']} · {summary} · 12/09/2026 UTC").add_to(chart)
+                         tooltip=tile['key'], popup=f"{tile['key']} · {summary} · {day_label} UTC").add_to(chart)
         for d in tile.get('detections', []):
             folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color='#ffb85c',fill=True,
                 popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · chưa xác minh").add_to(chart)
@@ -54,11 +79,18 @@ def render_scan(root: Path):
     else:
         st.info('YOLO không đề xuất ứng viên trong ô này ở ngưỡng 0,35. Vẫn cần kiểm tra ảnh; không được suy ra rằng vùng này không có tàu.')
     st.caption(f"Nguồn: {tile['source']} · WGS84: {tile['bbox']}. Ảnh ghép trong ngày, không có thời điểm riêng từng pixel.")
-    verdict = st.radio('Đánh dấu của người xem', ['Chưa xem xét','Cần kiểm tra tiếp','Đã xem, chưa thấy mục tiêu rõ'], key=f'verdict_{chosen}')
-    note = st.text_area('Ghi chú kiểm tra', key=f'note_{chosen}', placeholder='Ví dụ: có điểm sáng cần đối chiếu với ảnh độ phân giải cao hơn…')
-    st.caption('Đánh dấu chỉ lưu trong phiên trình duyệt; tải hồ sơ bên dưới để giữ lại. Đây là ý kiến người xem, không phải nhãn xác minh.')
-    evidence = dict(tile, reviewer_status=verdict, reviewer_note=note, scan_report_date=report['generated_at'])
+    saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
+    with st.form(f'review_form_{chosen}'):
+        verdict = st.radio('Đánh dấu của người xem', STATUSES, index=STATUSES.index(saved['status']), key=f'verdict_{chosen}')
+        note = st.text_area('Ghi chú kiểm tra', value=saved['note'], max_chars=5000, key=f'note_{chosen}', placeholder='Ví dụ: có điểm sáng cần đối chiếu với ảnh độ phân giải cao hơn…')
+        if st.form_submit_button('Lưu ghi chú ô ảnh'):
+            reviews[chosen] = {'status': verdict, 'note': note}
+            st.rerun()
+    saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
+    st.caption(f"Đã lưu trong phiên: {saved['status']}. Bấm lưu trước khi đổi ô. Tải hồ sơ để giữ lại sau khi đóng trang.")
+    evidence = dict(tile, reviewer_status=saved['status'], reviewer_note=saved['note'], scan_report_date=report['generated_at'])
     st.download_button('Tải hồ sơ ô ảnh & ghi chú', json.dumps(evidence,ensure_ascii=False,indent=2), f'{chosen}-review.json', 'application/json')
+    st.download_button('Tải bản đọc / in hồ sơ', printable_review(tile, saved, day_label), f'{chosen}-review.html', 'text/html')
     with st.expander('Thông tin toàn bộ lần quét'):
         st.write(f"Tất cả {len(tiles)} ô được chọn theo lưới cố định, không chọn lọc theo số phát hiện. Ô lỗi được ghi riêng, không tính là 0 tàu.")
         st.download_button('Tải báo cáo quét', path.read_bytes(), 'sonarnet-real-scan.json', 'application/json')

@@ -170,17 +170,6 @@ def render(root):
     st.caption(f"Ảnh radar được tạo: {local_time(updated)}. Ảnh ghép nhiều lượt bay, không phải luồng trực tiếp.")
     st.caption("Thang xám: ảnh radar. Bật ‘Tham khảo GFW’ để xem các ô màu vàng do nguồn bên ngoài cung cấp — không phải kết quả YOLO của SonarNet.")
     st.caption("Danh sách và số ô bên dưới theo khu vực đã chọn. Kéo bản đồ không thay đổi bộ lọc khu vực.")
-    evidence = read_json(root / 'assets/real_evidence/manifest.json')
-    if evidence:
-        st.subheader("Từ ảnh radar đến bằng chứng")
-        st.caption("Thử nghiệm YOLO trên một vùng biển Bình Thuận · ảnh thật, không phải dữ liệu mô phỏng")
-        st.markdown(f'<div class="observation-meta"><span>Ngày quan sát (UTC)<strong>{date_label(evidence["observation_day_utc"])}</strong></span><span>Ứng viên do YOLO phát hiện<strong>{len(evidence["detections"])}</strong></span><span>Ngưỡng mô hình<strong>{evidence["confidence_threshold"]}</strong></span></div>', unsafe_allow_html=True)
-        st.warning("Kết quả thử nghiệm: mô hình học trên dữ liệu mô phỏng, chưa được đánh giá trên ảnh thật. Không phát hiện không có nghĩa là không có tàu.")
-        with st.expander("Mở ảnh đầu vào & kết quả YOLO"):
-            st.image(str(root / 'assets/real_evidence/detections.jpg'), caption='Ảnh SAR thật · khung chỉ xuất hiện khi mô hình trả về ứng viên', use_container_width=True)
-            st.caption(f'Phạm vi WGS84: {evidence["bbox"]}. Nguồn: {evidence["source"]}. Ảnh ghép trong ngày; chưa xác định thời điểm riêng từng pixel.')
-            st.caption(f'Lần xử lý: {local_time(evidence["generated_at"])}. Đây là kết quả lưu sẵn, không phải xử lý toàn quốc trực tiếp.')
-            st.download_button('Tải hồ sơ lần xử lý', json.dumps(evidence, ensure_ascii=False, indent=2), 'sonarnet-evidence.json', 'application/json')
     with st.expander("Danh sách phát hiện & xuất dữ liệu"):
         st.write("Các ô đã công bố trong khu vực; số lượt phát hiện không phải số tàu duy nhất.")
         rows = [{"Vĩ độ tâm ô": p['latitude'], "Kinh độ tâm ô": p['longitude'], "Lượt phát hiện": p['detections'], "Quan sát mới nhất (GMT+7)": local_time(p['acquired_at'])} for p in region_points]

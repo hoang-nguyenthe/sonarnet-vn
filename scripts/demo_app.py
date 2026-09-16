@@ -473,7 +473,7 @@ from observation_view import render as render_observation
 with st.sidebar:
     st.title("SonarNet‑VN")
     st.caption("Quan sát biển · Kiểm chứng dữ liệu")
-    st.markdown("**Bắt đầu từ bản đồ**\n\nChọn vùng có ảnh sẵn, bật/tắt lớp và bấm vào ảnh hoặc ô phát hiện để xem thông tin.")
+    st.markdown("**Bắt đầu từ ảnh thật**\n\nChọn ô ảnh, mở ứng viên, ghi chú và lưu hồ sơ. Chế độ toàn cảnh dùng để xem phạm vi và thời gian ảnh.")
     st.info("Ảnh radar và ô GFW là dữ liệu thật. Mô phỏng và chỉ số thuật toán nằm riêng trong phần nghiên cứu.")
     st.caption("Bản thử nghiệm nghiên cứu. Không phải hệ thống theo dõi tàu trực tiếp hoặc kết luận vi phạm.")
 
@@ -499,7 +499,7 @@ with tab_overview:
     st.write("Mục tiêu nghiên cứu: tìm vật thể giống tàu trên ảnh radar, ghép với tín hiệu AIS cùng thời điểm, rồi đánh dấu trường hợp cần người có chuyên môn kiểm tra.")
     st.markdown("**Quy trình mục tiêu:** ảnh SAR có tọa độ → YOLO phát hiện tàu → đối chiếu AIS → người dùng xem bằng chứng. Không có AIS khớp chưa đủ để kết luận vi phạm.")
     st.warning("Tab Khám phá có quy trình kiểm tra YOLO trên lưới 12 ô ảnh thật Bình Thuận: xem ảnh, mở ứng viên, ghi chú và xuất hồ sơ. Chưa kiểm chứng độ chính xác ảnh thật, chưa xử lý toàn quốc và chưa nối đối chiếu AIS.")
-    st.markdown("**YOLO được train để làm gì?** Học khoanh vùng tàu trên ảnh radar. Phần nghiên cứu dùng tập mô phỏng; tab Khám phá có thêm một lần suy luận trên ảnh thật, lưu kèm bằng chứng. Chưa chứng minh khả năng tổng quát trên ảnh thật.\n\n**GFW để làm gì?** Cung cấp lớp phát hiện SAR độc lập để tham khảo phân bố hoạt động. Nó không thay thế YOLO và không tự chứng minh YOLO đúng.\n\n**Người dùng hiện dùng thế nào?** Vào ‘Khám phá’, xem vùng có ảnh và thời gian; bật GFW khi cần khảo sát thêm. Các phần bên dưới dành cho giải thích nghiên cứu, không phải điều hành tàu thật.")
+    st.markdown("**YOLO làm gì?** Đề xuất các vùng ảnh giống tàu để người phân tích kiểm tra. Mô hình đang công bố học từ mô phỏng; cần đánh giá độc lập trước khi dùng nghiệp vụ.\n\n**Cách làm việc:** vào ‘Khám phá’ → ‘Kiểm tra ảnh thật’ → chọn ô → xem ảnh cắt ứng viên → ghi chú → lưu hồ sơ. Có thể tải toàn bộ phiên và mở lại sau.\n\n**GFW làm gì?** Lớp tham khảo bên ngoài trong chế độ toàn cảnh, không phải kết quả YOLO hoặc bằng chứng xác nhận tàu.\n\nCác mô phỏng bên dưới chỉ giải thích phương pháp.")
 
     st.markdown(
         f"<div style='font-size:22px;font-weight:500;letter-spacing:-0.02em;"
