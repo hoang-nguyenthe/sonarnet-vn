@@ -478,7 +478,7 @@ with st.sidebar:
     st.title("SonarNet‑VN")
     st.caption("Quan sát biển · Kiểm chứng dữ liệu")
     st.markdown("**Bắt đầu từ ảnh thật**\n\nChọn ô ảnh, mở ứng viên, ghi chú và lưu hồ sơ. Chế độ toàn cảnh dùng để xem phạm vi và thời gian ảnh.")
-    st.info("Ảnh radar và ô GFW là dữ liệu thật. Mô phỏng và chỉ số thuật toán nằm riêng trong phần nghiên cứu.")
+    st.info("Ảnh radar và ô GFW là dữ liệu thật. AIS minh hoạ có nhãn DEMO. Phần Cách dùng giải thích quy trình; Nghiên cứu trình bày các chỉ số thử nghiệm.")
     st.caption("Bản thử nghiệm nghiên cứu. Không phải hệ thống theo dõi tàu trực tiếp hoặc kết luận vi phạm.")
 
 tab_observation, tab_overview, tab_evidence = st.tabs([
