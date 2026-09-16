@@ -32,14 +32,14 @@ class SarReferenceCell:
     longitude: float
 
 
-def _bbox_geojson(bbox: tuple[float, float, float, float]) -> str:
+def _bbox_geojson(bbox: tuple[float, float, float, float]) -> dict[str, Any]:
     west, south, east, north = bbox
-    return json.dumps({
+    return {
         "type": "FeatureCollection",
         "features": [{"type": "Feature", "properties": {}, "geometry": {
             "type": "Polygon", "coordinates": [[[west, south], [east, south], [east, north], [west, north], [west, south]]],
         }}],
-    })
+    }
 
 
 def sar_reference_report(
@@ -54,13 +54,21 @@ def sar_reference_report(
         params.append(("filters[0]", f"matched='{str(matched).lower()}'"))
     request = Request(
         f"{REPORT_URL}?{urlencode(params)}", data=json.dumps({"geojson": _bbox_geojson(bbox)}).encode("utf-8"),
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json", "Accept": "application/json"}, method="POST",
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            # Cloudflare rejects urllib's default user agent. Keep a transparent,
+            # contactable application identifier for API operators.
+            "User-Agent": "SonarNet-VN/1.0 (academic research; contact: project-team)",
+        },
+        method="POST",
     )
     try:
         with urlopen(request, timeout=100) as response:
             payload: dict[str, Any] = json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:
-        messages = {401: "Global Fishing Watch từ chối token. Kiểm tra Streamlit secrets.", 403: "Token chưa có quyền đọc lớp GFW SAR reference.", 429: "GFW đang xử lý một báo cáo khác. Thử lại sau."}
+        messages = {401: "Global Fishing Watch từ chối token. Kiểm tra Streamlit secrets.", 429: "GFW đang xử lý một báo cáo khác. Thử lại sau."}
         detail = messages.get(exc.code, f"Global Fishing Watch trả về HTTP {exc.code}.")
         raise GlobalFishingWatchError(detail) from exc
     except URLError as exc:
