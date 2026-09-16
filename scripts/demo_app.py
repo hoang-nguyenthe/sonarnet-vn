@@ -532,63 +532,17 @@ with tab_live:
     else:
         st.error(national_mosaic_error or "Chưa tải được mosaic Sentinel‑1 toàn quốc.")
 
-    st.subheader("Cảnh chi tiết và đối chiếu độc lập")
+    st.subheader("Cảnh tham chiếu đã kiểm chứng")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:16px;font-size:14px;line-height:1.55;'>"
-        "Cảnh radar VV đã hiệu chỉnh địa hình được hiển thị ngay khi mở tab. Các vòng đỏ là "
-        "phát hiện theo ô lưới của Global Fishing Watch tại cùng cửa sổ thời gian. "
-        "Dữ liệu trong tab này là dữ liệu thật; các chỉ tiêu mô hình ở các tab còn lại vẫn là mô phỏng."
+        "Đây là một ảnh Sentinel‑1 thật đã được đóng gói và kiểm chứng trước khi xuất bản. "
+        "Web không cung cấp các lựa chọn tải động có thể thất bại."
         "</div>",
         unsafe_allow_html=True,
     )
-    observation_scope = st.radio(
-        "Phạm vi quan sát", ["Việt Nam — cảnh có sẵn", "Quốc tế — cảnh mẫu"],
-        horizontal=True, key="observation_scope",
-    )
     vietnam_product = None
-    available_regions = {
-        "Việt Nam · Bình Thuận — cảnh chuẩn đã kiểm chứng": None,
-        "Nhật Bản · Tokyo Bay": (35.45, 139.80),
-        "Singapore · Eo biển Singapore": (1.25, 104.00),
-        "Hàn Quốc · Cảng Busan": (35.10, 129.10),
-        "Hà Lan · Cảng Rotterdam": (51.95, 4.05),
-        "Hoa Kỳ · Cảng Los Angeles": (33.65, -118.25),
-        "Brazil · Cảng Santos": (-24.00, -46.35),
-        "Ai Cập · Cửa bắc kênh Suez": (31.28, 32.32),
-        "Nam Phi · Vịnh Table, Cape Town": (-33.90, 18.40),
-    }
-    if observation_scope == "Việt Nam — cảnh có sẵn":
-        if "copernicus" not in st.secrets:
-            st.error("Chưa có cấu hình Copernicus để tải catalog Việt Nam.")
-            st.stop()
-        try:
-            with st.spinner("Đang lập catalog Sentinel-1 có sẵn trên toàn vùng biển Việt Nam…"):
-                vietnam_products = load_available_vietnam_scenes(
-                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"],
-                    date.today() - timedelta(days=4),
-                )
-            if not vietnam_products:
-                st.error("Chưa tìm thấy cảnh Sentinel-1 phù hợp trong cửa sổ GFW đã công bố.")
-                st.stop()
-            vietnam_product = st.selectbox(
-                "Chọn cảnh Sentinel-1 có sẵn trên vùng biển Việt Nam", vietnam_products,
-                format_func=lambda item: (
-                    f"{vietnam_scene_match(item.bbox)[0]} · {item.acquired_at} · {item.platform}"
-                ),
-                key="vietnam_available_scene",
-            )
-            st.caption(f"Catalog đang có {len(vietnam_products)} cảnh. Mỗi cảnh đã được match footprint với vùng biển Việt Nam trước khi hiển thị.")
-        except CopernicusError as exc:
-            st.error(str(exc))
-            st.stop()
-        selected_region = "Việt Nam · catalog Copernicus"
-    else:
-        selected_region = st.selectbox(
-            "Chọn vùng quan sát quốc tế có sẵn", list(available_regions),
-            help="Các vùng biển và cảng quốc tế đã cấu hình sẵn cho luồng Sentinel‑1 × GFW. Chọn vùng là web tự tải, không cần nút chạy.",
-            key="global_observation_region",
-        )
-        st.caption("Các lựa chọn quốc tế tự lấy cảnh Sentinel‑1 mới nhất trong cửa sổ GFW đã công bố.")
+    available_regions = {"Việt Nam · Bình Thuận — cảnh tham chiếu đã kiểm chứng": None}
+    selected_region = next(iter(available_regions))
     if not (LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists()):
         st.error("Thiếu cảnh Sentinel-1 đã đóng gói cho bản demo.")
     else:
@@ -657,40 +611,29 @@ with tab_live:
                 st.stop()
 
         ref_cells = []
-        if "gfw" in st.secrets:
-            try:
-                with st.spinner("Đang ghép lớp SAR Vessel Detections vào cảnh Sentinel-1…"):
-                    ref_cells = load_demo_gfw_reference(
-                        st.secrets["gfw"]["api_token"], reference_bbox, reference_start, reference_end,
-                    )
-            except GlobalFishingWatchError as exc:
-                st.error(str(exc))
 
         image_col, context_col = st.columns([1.75, 1])
         with image_col:
             st.image(
                 gfw_overlay_png(reference_image, reference_bbox, ref_cells),
                 caption=("Sentinel-1 GRD thật · VV gamma0 terrain · "
-                         f"{evidence['acquired_at']} · {scene_name}. "
-                         "Vòng đỏ: ô GFW SAR Vessel Detections."),
+                         f"{evidence['acquired_at']} · {scene_name}."),
                 use_container_width=True,
             )
         with context_col:
             west, south, east, north = reference_bbox
-            st.markdown("#### Cảnh demo chuẩn" if is_standard_scene else (
+            st.markdown("#### Thông tin cảnh đã kiểm chứng" if is_standard_scene else (
                 "#### Cảnh quan sát Việt Nam" if vietnam_product is not None else "#### Cảnh quan sát quốc tế"
             ))
-            st.metric("Phát hiện GFW", sum(cell.detections for cell in ref_cells))
-            st.metric("Ô lưới có tín hiệu", len(ref_cells))
             st.caption(f"Cùng cửa sổ thời gian: {reference_start.strftime('%d/%m/%Y')} UTC.")
             st.caption(f"Khung ảnh: {south:.2f}–{north:.2f}°B · {west:.2f}–{east:.2f}°Đ")
             st.caption("Nguồn ảnh: Copernicus Sentinel-1 GRD, cảnh VV gamma0 đã chỉnh địa hình.")
-            st.caption(("Chuẩn demo mới nhất đã xác minh đồng thời với GFW" if is_standard_scene else "Cảnh tự động chọn mới nhất trong cửa sổ GFW đã công bố") + f" · cập nhật {evidence['retrieved_at']}.")
+            st.caption(f"Đã kiểm chứng trước khi xuất bản · cập nhật {evidence['retrieved_at']}.")
             st.caption(f"Mã sản phẩm: `{evidence['product_id']}`")
 
-        st.markdown("#### Bản đồ đối chiếu độc lập")
-        st.caption("GFW dùng Sentinel-1 và mô hình riêng để lập lớp tham chiếu theo ô lưới. SonarNet chỉ dùng lớp này để kiểm tra tính nhất quán; không huấn luyện từ GFW, không coi là ground truth tuyệt đối, không suy diễn danh tính hoặc vi phạm.")
         if ref_cells:
+            st.markdown("#### Bản đồ đối chiếu độc lập")
+            st.caption("GFW dùng Sentinel-1 và mô hình riêng để lập lớp tham chiếu theo ô lưới. SonarNet chỉ dùng lớp này để kiểm tra tính nhất quán; không huấn luyện từ GFW, không coi là ground truth tuyệt đối, không suy diễn danh tính hoặc vi phạm.")
             import folium
             from streamlit.components.v1 import html as st_html
 
@@ -735,8 +678,6 @@ with tab_live:
             """))
             st_html(reference_map.get_root().render(), height=540)
 
-        st.markdown("#### Bảng đối chiếu")
-        st.caption("Mỗi dòng là một ô GFW để kiểm tra lại vị trí hiển thị trên bản đồ, không phải một phương tiện được nhận dạng.")
         if ref_cells:
             import pandas as pd
             st.dataframe(pd.DataFrame([
@@ -744,8 +685,6 @@ with tab_live:
                  "Kinh độ": round(cell.longitude, 3), "Phát hiện": cell.detections}
                 for cell in ref_cells
             ]), use_container_width=True, hide_index=True)
-        elif "gfw" not in st.secrets:
-            st.info("Cảnh Sentinel-1 vẫn hiển thị đầy đủ. Thêm token GFW để tự chồng lớp đối chiếu độc lập.")
 
 # ============================================================================
 # TAB SIM — Simulated vessel motion
