@@ -13,11 +13,15 @@ Không có mã đăng ký hay thông tin cá nhân — nguyên tắc "không tru
 """
 from __future__ import annotations
 
+import base64
 from io import BytesIO
 import json
+import re
 import sys
 from datetime import date, timedelta
 from pathlib import Path
+from urllib.parse import quote
+from urllib.request import Request, urlopen
 
 import numpy as np
 import streamlit as st
@@ -27,6 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from sonarnet.data.gfw import GlobalFishingWatchError, sar_reference_report
+from sonarnet.data.copernicus import CopernicusError, access_token, search_sentinel1_grd, sentinel1_preview
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -37,10 +42,58 @@ def load_demo_gfw_reference(
     return sar_reference_report(token, bbox, start, end)
 
 
-def gfw_overlay_png(image_path: Path, bbox: tuple[float, float, float, float], cells) -> bytes:
+@st.cache_data(ttl=7 * 24 * 3600, show_spinner=False)
+def resolve_global_location(query: str) -> tuple[str, tuple[float, float, float, float]]:
+    """Resolve a coastal place or a ``latitude, longitude`` pair for the global demo."""
+    coordinate = re.fullmatch(r"\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*", query)
+    if coordinate:
+        latitude, longitude = map(float, coordinate.groups())
+        if not (-89.7 < latitude < 89.7 and -180 <= longitude <= 180):
+            raise ValueError("Tọa độ phải theo thứ tự vĩ độ, kinh độ hợp lệ.")
+        half_width = 0.20
+        return f"{latitude:.3f}°N, {longitude:.3f}°E", (
+            longitude - half_width, latitude - half_width * 0.75,
+            longitude + half_width, latitude + half_width * 0.75,
+        )
+
+    request = Request(
+        f"https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q={quote(query)}",
+        headers={"User-Agent": "SonarNet-VN/1.0 (academic research)"},
+    )
+    try:
+        with urlopen(request, timeout=15) as response:
+            results = json.loads(response.read().decode("utf-8"))
+    except OSError as exc:
+        raise ValueError("Không thể định vị địa danh lúc này. Hãy thử nhập tọa độ vĩ độ, kinh độ.") from exc
+    if not results:
+        raise ValueError("Không tìm thấy địa danh. Hãy thử tên vùng biển/cảng khác hoặc tọa độ vĩ độ, kinh độ.")
+    result = results[0]
+    latitude, longitude = float(result["lat"]), float(result["lon"])
+    half_width = 0.20
+    return str(result["display_name"]).split(",")[0], (
+        longitude - half_width, latitude - half_width * 0.75,
+        longitude + half_width, latitude + half_width * 0.75,
+    )
+
+
+@st.cache_data(ttl=6 * 3600, show_spinner=False)
+def load_latest_global_scene(
+    client_id: str, client_secret: str, bbox: tuple[float, float, float, float], latest_reference_day: date,
+):
+    """Fetch the newest Sentinel pass likely to have a published GFW reference layer."""
+    token = access_token(client_id, client_secret)
+    products = search_sentinel1_grd(token, bbox, latest_reference_day - timedelta(days=10), latest_reference_day)
+    if not products:
+        raise CopernicusError("Chưa có cảnh Sentinel-1 GRD phù hợp trong cửa sổ dữ liệu đối chiếu cho vùng này.")
+    product = max(products, key=lambda item: item.acquired_at)
+    return product, sentinel1_preview(token, bbox, product.acquired_at)
+
+
+def gfw_overlay_png(image_source: Path | bytes, bbox: tuple[float, float, float, float], cells) -> bytes:
     """Overlay gridded GFW counts onto the corresponding Sentinel raster."""
     west, south, east, north = bbox
-    image = Image.open(image_path).convert("RGB")
+    source = BytesIO(image_source) if isinstance(image_source, bytes) else image_source
+    image = Image.open(source).convert("RGB")
     draw = ImageDraw.Draw(image, "RGBA")
     width, height = image.size
     for cell in cells:
@@ -52,6 +105,13 @@ def gfw_overlay_png(image_path: Path, bbox: tuple[float, float, float, float], c
     output = BytesIO()
     image.save(output, format="PNG")
     return output.getvalue()
+
+
+def folium_image_source(image_source: Path | bytes) -> str:
+    """Return a browser-safe URL for Folium's georeferenced image overlay."""
+    if isinstance(image_source, bytes):
+        return "data:image/png;base64," + base64.b64encode(image_source).decode("ascii")
+    return str(image_source)
 
 st.set_page_config(
     page_title="SonarNet-VN — Bảng điều khiển giám sát",
@@ -329,13 +389,49 @@ with tab_live:
         "</div>",
         unsafe_allow_html=True,
     )
+    place_query = st.text_input(
+        "Quan sát ở bất kỳ nơi nào trên thế giới",
+        value="Bình Thuận, Việt Nam",
+        help="Nhập tên vùng biển/cảng/thành phố ven biển, hoặc tọa độ theo dạng vĩ độ, kinh độ. Dữ liệu sẽ tự tải khi bạn xác nhận ô nhập.",
+        key="global_observation_query",
+    )
+    st.caption("Bình Thuận là cảnh mẫu đã kiểm chứng. Đổi địa danh hoặc tọa độ để tự tạo cảnh đối chiếu mới ở bất kỳ vùng biển nào có Sentinel‑1.")
     if not (LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists()):
         st.error("Thiếu cảnh Sentinel-1 đã đóng gói cho bản demo.")
     else:
+        is_standard_scene = place_query.strip().casefold() in {"bình thuận, việt nam", "binh thuan, vietnam"}
         evidence = json.loads(LIVE_DEMO_METADATA.read_text())
+        reference_image: Path | bytes = LIVE_DEMO_IMAGE
+        scene_name = "Ngoài khơi Bình Thuận"
         reference_bbox = tuple(evidence["bbox_wgs84"])
         reference_start = date.fromisoformat(evidence["acquired_at"][:10])
         reference_end = reference_start + timedelta(days=1)
+        if not is_standard_scene:
+            if "copernicus" not in st.secrets:
+                st.error("Chưa có cấu hình Copernicus để tự tải cảnh toàn cầu.")
+                st.stop()
+            try:
+                with st.spinner("Đang định vị vùng quan sát và tìm cảnh Sentinel-1 mới nhất có thể đối chiếu…"):
+                    scene_name, reference_bbox = resolve_global_location(place_query)
+                    # GFW publishes with a short latency. Select the newest pass in
+                    # its likely available window, rather than a newer pass whose
+                    # independent reference has not been published yet.
+                    reference_cutoff = date.today() - timedelta(days=4)
+                    product, reference_image = load_latest_global_scene(
+                        st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"],
+                        reference_bbox, reference_cutoff,
+                    )
+                evidence = {
+                    "product_id": product.product_id, "acquired_at": product.acquired_at,
+                    "render": "VV gamma0 terrain, orthorectified, 768 px",
+                    "retrieved_at": date.today().isoformat(),
+                }
+                reference_start = date.fromisoformat(product.acquired_at[:10])
+                reference_end = reference_start + timedelta(days=1)
+            except (ValueError, CopernicusError) as exc:
+                st.error(str(exc))
+                st.stop()
+
         ref_cells = []
         if "gfw" in st.secrets:
             try:
@@ -349,20 +445,20 @@ with tab_live:
         image_col, context_col = st.columns([1.75, 1])
         with image_col:
             st.image(
-                gfw_overlay_png(LIVE_DEMO_IMAGE, reference_bbox, ref_cells),
+                gfw_overlay_png(reference_image, reference_bbox, ref_cells),
                 caption=("Sentinel-1 GRD thật · VV gamma0 terrain · "
-                         f"{evidence['acquired_at']} · Ngoài khơi Bình Thuận. "
+                         f"{evidence['acquired_at']} · {scene_name}. "
                          "Vòng đỏ: ô GFW SAR Vessel Detections."),
                 use_container_width=True,
             )
         with context_col:
-            st.markdown("#### Cảnh demo chuẩn")
+            st.markdown("#### Cảnh demo chuẩn" if is_standard_scene else "#### Cảnh quan sát toàn cầu")
             st.metric("Phát hiện GFW", sum(cell.detections for cell in ref_cells))
             st.metric("Ô lưới có tín hiệu", len(ref_cells))
-            st.caption("Cùng cửa sổ thời gian: 12/09/2026, 11:00 UTC.")
+            st.caption(f"Cùng cửa sổ thời gian: {reference_start.strftime('%d/%m/%Y')} UTC.")
             st.caption("Khung ảnh: 10.35–10.65°B · 107.70–108.10°Đ")
             st.caption("Nguồn ảnh: Copernicus Sentinel-1 GRD, cảnh VV gamma0 đã chỉnh địa hình.")
-            st.caption(f"Chuẩn demo mới nhất đã xác minh đồng thời với GFW · cập nhật {evidence['retrieved_at']}.")
+            st.caption(("Chuẩn demo mới nhất đã xác minh đồng thời với GFW" if is_standard_scene else "Cảnh tự động chọn mới nhất trong cửa sổ GFW đã công bố") + f" · cập nhật {evidence['retrieved_at']}.")
             st.caption(f"Mã sản phẩm: `{evidence['product_id']}`")
 
         st.markdown("#### Bản đồ đối chiếu độc lập")
@@ -381,7 +477,7 @@ with tab_live:
                 attr="Esri, Maxar, Earthstar Geographics", name="Nền vệ tinh", overlay=False,
             ).add_to(reference_map)
             folium.raster_layers.ImageOverlay(
-                image=str(LIVE_DEMO_IMAGE), bounds=[[south, west], [north, east]],
+                image=folium_image_source(reference_image), bounds=[[south, west], [north, east]],
                 opacity=0.76, interactive=True, cross_origin=False, zindex=2,
                 name="Cảnh Sentinel-1 VV",
             ).add_to(reference_map)
