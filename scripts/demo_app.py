@@ -163,6 +163,8 @@ STATE_LABEL = {"AIS_OK": "Có AIS khớp", "AIS_MISMATCH": "AIS lệch", "DARK":
 RUN = ROOT / "sonarnet_run"
 RESULTS = RUN / "results"
 YOLO = RUN / "data" / "yolo"
+LIVE_DEMO_IMAGE = ROOT / "assets" / "sentinel1_binh_thuan_20260912.png"
+LIVE_DEMO_METADATA = ROOT / "assets" / "sentinel1_binh_thuan_20260912.json"
 
 
 @st.cache_data
@@ -284,14 +286,14 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 # Tabs
 # ---------------------------------------------------------------------------
-tab_live, tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi = st.tabs([
-    "Sentinel-1 thật",
+tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi, tab_live = st.tabs([
     "Mô phỏng hoạt động",
     "Phát hiện trên ảnh radar",
     "Hợp nhất radar–AIS",
     "Nội suy quỹ đạo",
     "Bản đồ giám sát",
     "Chỉ tiêu tổng hợp",
+    "Sentinel-1 thật",
 ])
 
 # ============================================================================
@@ -308,7 +310,15 @@ with tab_live:
     )
 
     if "copernicus" not in st.secrets:
-        st.error("Chưa cấu hình Copernicus. Tạo `.streamlit/secrets.toml` với phần `[copernicus]`.")
+        st.markdown("**Cảnh Sentinel-1 đã kiểm chứng**")
+        if LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists():
+            evidence = json.loads(LIVE_DEMO_METADATA.read_text())
+            st.image(LIVE_DEMO_IMAGE, caption=(
+                f"Sentinel-1 GRD thật · {evidence['acquired_at']} · Ngoài khơi Bình Thuận · "
+                "VV gamma0 terrain, orthorectified"
+            ), use_container_width=True)
+            st.caption(f"Mã sản phẩm Copernicus: {evidence['product_id']}")
+        st.info("Đây là cảnh dữ liệu thật đã đóng gói sẵn cho bản demo công khai. Thêm secrets Copernicus để truy vấn cảnh mới theo yêu cầu.")
     else:
         live_left, live_right = st.columns([2, 1])
         with live_left:
