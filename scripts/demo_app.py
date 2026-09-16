@@ -402,15 +402,22 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 # Tabs
 # ---------------------------------------------------------------------------
-tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi, tab_live = st.tabs([
-    "Mô phỏng hoạt động",
-    "Phát hiện trên ảnh radar",
-    "Hợp nhất radar–AIS",
-    "Nội suy quỹ đạo",
+tab_overview, tab_map, tab_live, tab_evidence = st.tabs([
+    "Tổng quan",
     "Bản đồ giám sát",
-    "Chỉ tiêu tổng hợp",
-    "Sentinel-1 thật",
+    "Dữ liệu vệ tinh thật",
+    "Phân tích & độ tin cậy",
 ])
+
+# Keep research evidence available for a jury without putting specialist
+# vocabulary in the primary journey used by operators and the public.
+with tab_evidence:
+    evidence_radar, evidence_ais, evidence_tracks, evidence_metrics = st.tabs([
+        "Kiểm chứng ảnh radar",
+        "Đối chiếu AIS",
+        "Theo dõi hành trình",
+        "Báo cáo độ tin cậy",
+    ])
 
 # ============================================================================
 # TAB LIVE — Copernicus Sentinel-1 GRD
@@ -648,7 +655,7 @@ with tab_live:
 # ============================================================================
 # TAB SIM — Simulated vessel motion
 # ============================================================================
-with tab_sim:
+with tab_overview:
     import time
     from streamlit.components.v1 import html as st_html
 
@@ -1116,8 +1123,8 @@ with tab_sim:
 # ============================================================================
 # TAB DET — Phát hiện SAR
 # ============================================================================
-with tab_det:
-    st.subheader("Phát hiện phương tiện trên ảnh radar Sentinel-1")
+with evidence_radar:
+    st.subheader("Kiểm chứng phát hiện trên ảnh radar Sentinel‑1")
 
     if not SCENES:
         st.warning(f"Không tìm thấy `{YOLO}/scenes/test.jsonl`. Chạy `python3 scripts/run_pipeline.py` trước.")
@@ -1204,8 +1211,8 @@ with tab_det:
 # ============================================================================
 # TAB FUS — Hợp nhất
 # ============================================================================
-with tab_fus:
-    st.subheader("Hợp nhất radar và AIS — ba trạng thái định danh")
+with evidence_ais:
+    st.subheader("Đối chiếu radar và AIS")
     import plotly.graph_objects as go
 
     cm = np.array(KQ["fusion"]["confusion_matrix"])
@@ -1261,8 +1268,8 @@ with tab_fus:
 # ============================================================================
 # TAB KAL — Kalman
 # ============================================================================
-with tab_kal:
-    st.subheader("Nội suy quỹ đạo — Kalman–RTS so với nội suy tuyến tính")
+with evidence_tracks:
+    st.subheader("Theo dõi hành trình — Kalman–RTS và nội suy tuyến tính")
     import plotly.graph_objects as go
 
     k = INTERP["kalman"]; l = INTERP["linear"]
@@ -1411,8 +1418,8 @@ with tab_map:
 # ============================================================================
 # TAB KPI — Tổng hợp
 # ============================================================================
-with tab_kpi:
-    st.subheader("Chỉ tiêu tổng hợp")
+with evidence_metrics:
+    st.subheader("Báo cáo độ tin cậy")
     inner = st.tabs(["Tầng phát hiện", "Tầng hợp nhất", "Tầng hành vi", "Ablation đầy đủ"])
 
     with inner[0]:
