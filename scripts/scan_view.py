@@ -7,7 +7,7 @@ import folium
 import streamlit as st
 from PIL import Image
 from streamlit.components.v1 import html
-from review_workspace import STATUSES, report_id, export_workspace, import_workspace, printable_review
+from review_workspace import STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
 
 
 def render_scan(root: Path):
@@ -24,9 +24,9 @@ def render_scan(root: Path):
     ready = [r for r in tiles if r['status'] == 'processed']
     count = sum(len(r['detections']) for r in ready)
     st.subheader('Kiểm tra ảnh radar thật')
-    st.write('Chọn ô đã xử lý, xem ảnh và ghi nhận vùng cần kiểm tra tiếp. Xuất hồ sơ để lưu hoặc chuyển cho người phân tích.')
+    st.caption('Chọn ảnh → xem ứng viên → lưu ghi chú và bằng chứng.')
     st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>YOLO đề xuất<strong>{count} ứng viên</strong></span></div>', unsafe_allow_html=True)
-    st.caption('Bộ ảnh lưu trữ của một ngày quan sát — không phải dữ liệu mới nhất hoặc luồng theo dõi trực tiếp.')
+    st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
     with st.expander('Lưu / mở lại phiên kiểm tra'):
         st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại trên máy khác với đúng bộ ảnh; ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
         upload = st.file_uploader('Mở hồ sơ phiên (.json)', type=['json'], key='restore_reviews')
@@ -45,8 +45,9 @@ def render_scan(root: Path):
             except ValueError as error:
                 st.error(str(error))
         st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews), 'sonarnet-review-session.json', 'application/json')
-    st.caption('Ảnh thật, kết quả suy luận thật; mô hình huấn luyện bằng mô phỏng chưa được kiểm chứng trên miền ảnh thật. Đây là công cụ rà soát thử nghiệm, không phải cảnh báo tàu vi phạm.')
-    st.warning('Có ứng viên nằm trên phần đất/bờ biển. Chưa có mặt nạ loại đất hoặc nhãn xác minh; không được coi tổng ứng viên là số tàu.')
+    with st.expander('Cần biết trước khi dùng kết quả'):
+        st.write('Mô hình công bố học trên ảnh mô phỏng, chưa kiểm chứng độ chính xác trên ảnh thật. Có ứng viên trên đất/bờ biển; chưa có mặt nạ loại đất hay nhãn xác minh. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
+        st.write('Đây là ảnh lưu trữ của một ngày quan sát, không phải ảnh mới nhất. Ảnh ghép trong ngày chưa có thời điểm riêng từng pixel. Không phát hiện không chứng minh không có tàu.')
     chart = folium.Map(tiles=None, zoom_snap=.25)
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attr='Esri, Maxar, Earthstar Geographics').add_to(chart)
     for tile in tiles:
@@ -91,6 +92,8 @@ def render_scan(root: Path):
     evidence = dict(tile, reviewer_status=saved['status'], reviewer_note=saved['note'], scan_report_date=report['generated_at'])
     st.download_button('Tải hồ sơ ô ảnh & ghi chú', json.dumps(evidence,ensure_ascii=False,indent=2), f'{chosen}-review.json', 'application/json')
     st.download_button('Tải bản đọc / in hồ sơ', printable_review(tile, saved, day_label), f'{chosen}-review.html', 'text/html')
+    st.download_button('Tải gói bằng chứng kèm ảnh', evidence_bundle(root, tile, saved, day_label), f'{chosen}-evidence.zip', 'application/zip')
+    st.caption('Gói ZIP gồm ảnh gốc, ảnh đánh dấu, hồ sơ đọc/in, dữ liệu JSON và mã kiểm tra SHA‑256. Ghi chú chỉ phản ánh đánh giá của người xem.')
     with st.expander('Thông tin toàn bộ lần quét'):
         st.write(f"Tất cả {len(tiles)} ô được chọn theo lưới cố định, không chọn lọc theo số phát hiện. Ô lỗi được ghi riêng, không tính là 0 tàu.")
         st.download_button('Tải báo cáo quét', path.read_bytes(), 'sonarnet-real-scan.json', 'application/json')

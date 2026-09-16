@@ -11,6 +11,12 @@ The current model and UI are experimental, not an operational vessel-alert servi
 - All training examples contain ships. A background-only coastal evaluation
   set is still required; benchmark precision alone cannot establish safe
   operation on large predominantly empty scenes.
+- Polarization tokens in the archive: HH 9,486; HV 8,820; VH 635; VV 641.
+  Current validation has HH/HV only. Test has 351 VV images, but this test
+  subset must not be used for threshold tuning or repeated model selection.
+  A separate representative VV validation set is required before deployment
+  on the dashboard's VV images. The current MPS run is a mixed-polarization
+  research baseline, not a promotion candidate solely on overall AP.
 - Vietnam evaluation: 12 fixed cells, 12 September 2026 daily composite,
   baseline 18 candidates, including visible land false positives. No labels
   confirming vessel identity or fishing class exist for those candidates.

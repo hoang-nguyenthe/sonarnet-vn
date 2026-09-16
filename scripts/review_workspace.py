@@ -2,6 +2,8 @@
 import hashlib
 import html
 import json
+from io import BytesIO
+import zipfile
 
 STATUSES = ['Chưa xem xét', 'Cần kiểm tra tiếp', 'Đã xem, chưa thấy mục tiêu rõ']
 
@@ -47,3 +49,22 @@ def printable_review(tile, review, day):
 <h2>Ứng viên mô hình — chưa xác minh</h2><table><tr><th>ID</th><th>Điểm mô hình</th><th>Vĩ độ</th><th>Kinh độ</th></tr>{rows}</table>
 <p>Không phải xác nhận tàu, tàu cá hay vi phạm. Không phát hiện không chứng minh không có tàu. Ảnh ghép trong ngày; chưa có thời điểm riêng từng pixel.</p>
 <small>Mã ảnh: {esc(tile['image_sha256'])}<br>Mã mô hình: {esc(tile['weights_sha256'])}</small></html>'''
+
+
+def evidence_bundle(root, tile, review, day):
+    """An offline packet with exact image files, notes and integrity hashes."""
+    directory = (root / tile['asset_dir']).resolve()
+    if not directory.is_relative_to((root / 'assets/real_scan').resolve()):
+        raise ValueError('Evidence must belong to the published scan directory')
+    payloads = {
+        'source.png': (directory / 'sar.png').read_bytes(),
+        'candidates.jpg': (directory / 'detections.jpg').read_bytes(),
+        'review.html': printable_review(tile, review, day).encode('utf-8'),
+        'evidence.json': json.dumps(dict(tile, review=review), ensure_ascii=False, indent=2).encode('utf-8'),
+    }
+    payloads['checksums.json'] = json.dumps({name:hashlib.sha256(data).hexdigest() for name,data in payloads.items()},indent=2).encode()
+    buffer = BytesIO()
+    with zipfile.ZipFile(buffer,'w',compression=zipfile.ZIP_DEFLATED) as archive:
+        for name,data in payloads.items():
+            archive.writestr(name,data)
+    return buffer.getvalue()

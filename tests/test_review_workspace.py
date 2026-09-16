@@ -2,9 +2,12 @@ import json
 from pathlib import Path
 import sys
 import unittest
+import hashlib
+import zipfile
+from io import BytesIO
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'scripts'))
-from review_workspace import export_workspace, import_workspace, printable_review
+from review_workspace import export_workspace, import_workspace, printable_review, evidence_bundle
 
 
 class WorkspaceTests(unittest.TestCase):
@@ -33,6 +36,19 @@ class WorkspaceTests(unittest.TestCase):
         result=printable_review(self.tile,{'status':'Chưa xem xét','note':'<script>alert(1)</script>'},'01/01/2026')
         self.assertNotIn('<script>',result)
         self.assertIn('&lt;script&gt;',result)
+
+    def test_real_bundle_integrity(self):
+        root=Path(__file__).resolve().parents[1]
+        report=json.loads((root/'assets/real_scan/report.json').read_text())
+        tile=next(t for t in report['tiles'] if t['status']=='processed')
+        raw=evidence_bundle(root,tile,{'status':'Chưa xem xét','note':'test'},'12/09/2026')
+        with zipfile.ZipFile(BytesIO(raw)) as archive:
+            checks=json.loads(archive.read('checksums.json'))
+            self.assertEqual(set(checks),{'source.png','candidates.jpg','review.html','evidence.json'})
+            for name,digest in checks.items():
+                self.assertEqual(hashlib.sha256(archive.read(name)).hexdigest(),digest)
+        with self.assertRaises(ValueError):
+            evidence_bundle(root,dict(tile,asset_dir='../'),{},'')
 
 
 if __name__ == '__main__':

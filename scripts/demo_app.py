@@ -327,9 +327,10 @@ CSS = f"""
     :focus-visible {{ outline:3px solid #0085ff!important; outline-offset:3px; }}
     @media (max-width: 720px) {{
         .main .block-container, [data-testid="stMainBlockContainer"] {{ padding: 4.5rem 1rem 2rem; }}
-        .sonar-hero {{ border-radius:22px; padding:22px 20px; margin-top:0; }}
-        .sonar-title {{ font-size:34px; letter-spacing:-.045em; }}
-        .sonar-copy {{ font-size:14px; }}
+        .sonar-hero {{ border-radius:22px; padding:18px 20px; margin-top:0; }}
+        .sonar-title {{ font-size:30px; letter-spacing:-.045em; }}
+        .sonar-copy {{ font-size:13px; margin-top:10px; }}
+        .sonar-copy br {{ display:none; }}
         .sonar-eyebrow {{ font-size:10px; margin-bottom:10px; }}
         .observation-meta {{ gap:10px 22px; padding:12px 14px; }}
         .observation-meta strong {{ font-size:13px; }}
