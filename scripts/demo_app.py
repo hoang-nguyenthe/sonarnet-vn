@@ -430,9 +430,24 @@ st.components.v1.html("""
 </script>
 """, height=52)
 
-# This value is populated in the live-data tab, then reused by the national map.
+# The nationwide real-data layer is resolved before rendering tabs so every view
+# uses the same current Copernicus observation.
 national_mosaic: bytes | None = None
 national_mosaic_status: dict[str, str | int | None] | None = None
+national_mosaic_error: str | None = None
+if "copernicus" in st.secrets:
+    try:
+        with st.spinner("Đang đồng bộ Sentinel‑1 trên toàn vùng biển Việt Nam…"):
+            national_mosaic_status = load_vietnam_mosaic_status(
+                st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
+            )
+            national_mosaic = load_vietnam_latest_mosaic(
+                st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
+            )
+    except CopernicusError as exc:
+        national_mosaic_error = str(exc)
+else:
+    national_mosaic_error = "Thiếu cấu hình Copernicus để tạo mosaic toàn quốc."
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -478,10 +493,10 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 # Tabs
 # ---------------------------------------------------------------------------
-tab_overview, tab_map, tab_live, tab_evidence = st.tabs([
-    "Tổng quan",
-    "Bản đồ giám sát",
+tab_live, tab_map, tab_overview, tab_evidence = st.tabs([
     "Dữ liệu vệ tinh thật",
+    "Bản đồ Sentinel‑1",
+    "Tổng quan hệ thống",
     "Phân tích & độ tin cậy",
 ])
 
@@ -501,15 +516,8 @@ with tab_evidence:
 with tab_live:
     st.subheader("Toàn cảnh Việt Nam — Sentinel‑1 mới nhất")
     st.caption("Mỗi điểm ảnh là quan sát Sentinel‑1 mới nhất trong 14 ngày gần đây. Lớp ảnh tự làm mới theo Copernicus mỗi 6 giờ, theo nhịp lượt bay vệ tinh — không phải video liên tục.")
-    if "copernicus" in st.secrets:
+    if national_mosaic:
         try:
-            with st.spinner("Đang dựng mosaic Sentinel‑1 mới nhất phủ vùng biển Việt Nam…"):
-                national_mosaic_status = load_vietnam_mosaic_status(
-                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
-                )
-                national_mosaic = load_vietnam_latest_mosaic(
-                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
-                )
             st.markdown(
                 f"""<div class="data-provenance">
                   <div><span>PHẠM VI HIỂN THỊ</span><strong>Biển Việt Nam · 06°–22°B, 102°–115°Đ</strong></div>
@@ -533,7 +541,7 @@ with tab_live:
         except CopernicusError as exc:
             st.error(str(exc))
     else:
-        st.info("Thiếu cấu hình Copernicus để tạo mosaic toàn quốc.")
+        st.error(national_mosaic_error or "Chưa tải được mosaic Sentinel‑1 toàn quốc.")
 
     st.subheader("Cảnh chi tiết và đối chiếu độc lập")
     st.markdown(
@@ -1401,14 +1409,18 @@ with tab_map:
     st.subheader("Bản đồ giám sát quốc gia")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:14px;font-size:14px;line-height:1.55;'>"
-        f"Lớp đầu là ảnh Sentinel‑1 thật phủ vùng biển Việt Nam; lớp bên dưới là mô phỏng vận hành cho một khu vực thử nghiệm để minh họa luồng SAR–AIS. "
-        f"Hai lớp được ghi nhãn riêng để không nhầm dữ liệu thật với mô phỏng."
+        f"Bản đồ này chỉ hiển thị ảnh Sentinel‑1 thật, ghép theo pixel mới nhất trên toàn vùng biển Việt Nam. "
+        f"Catalog Copernicus được kiểm tra lại mỗi 6 giờ; ảnh thay đổi khi có lượt bay mới."
         f"</div>",
         unsafe_allow_html=True,
     )
 
     st.markdown("#### Lớp quan sát thật — Sentinel‑1 toàn Việt Nam")
     if national_mosaic:
+        st.caption(
+            f"Cảnh catalog mới nhất: {format_vietnam_time(national_mosaic_status['newest'] if national_mosaic_status else None)} · "
+            f"cửa sổ mosaic: {national_mosaic_status['window_start'] if national_mosaic_status else '—'} → {national_mosaic_status['window_end'] if national_mosaic_status else '—'}"
+        )
         national_map = folium.Map(location=[13.9, 108.5], zoom_start=5, tiles=None, control_scale=True)
         folium.TileLayer(
             tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -1430,80 +1442,8 @@ with tab_map:
         """))
         st_html(national_map.get_root().render(), height=560)
     else:
-        st.info("Mosaic Sentinel‑1 đang chờ tải từ Copernicus.")
+        st.error(national_mosaic_error or "Chưa tải được mosaic Sentinel‑1 từ Copernicus.")
 
-    st.markdown("#### Mô phỏng nghiệp vụ — khu vực thử nghiệm Bình Thuận")
-
-    @st.cache_data
-    def load_ban_do_data():
-        p = RESULTS / "ban_do_giam_sat.json"
-        if not p.exists():
-            return []
-        return json.loads(p.read_text())
-
-    ban_do = load_ban_do_data()
-
-    if not ban_do:
-        st.info("Chưa có bản đồ. Chạy pipeline trước.")
-    else:
-        latitudes = [entry["lat"] for entry in ban_do]
-        longitudes = [entry["lon"] for entry in ban_do]
-        st.info(
-            f"**Đây là lớp mô phỏng, không phải luồng tàu trực tiếp toàn quốc.** "
-            f"331 mục tiêu mô phỏng được đặt trong khu vực thử nghiệm ngoài khơi Bình Thuận "
-            f"({min(latitudes):.2f}–{max(latitudes):.2f}°B, {min(longitudes):.2f}–{max(longitudes):.2f}°Đ) "
-            f"để trình bày rõ ba tình huống: AIS khớp, AIS lệch và không có AIS. "
-            f"Ảnh Sentinel‑1 thật toàn quốc nằm ở lớp phía trên, với mốc thời gian tại tab “Dữ liệu vệ tinh thật”."
-        )
-        m = folium.Map(location=[13.0, 109.5], zoom_start=6,
-                        tiles="OpenStreetMap", control_scale=True,
-                        min_zoom=5, max_zoom=12)
-        by_state = {"AIS_OK": [], "AIS_MISMATCH": [], "DARK": []}
-        for entry in ban_do:
-            st_key = entry.get("state", "AIS_OK")
-            if st_key in by_state:
-                by_state[st_key].append(entry)
-
-        for state_key, entries in by_state.items():
-            col = STATE_COLOR[state_key]
-            for e in entries:
-                lat, lon = e["lat"], e["lon"]
-                # Halo lớn
-                folium.CircleMarker(location=[lat, lon], radius=14, color=col,
-                                     fill=True, fill_color=col, fill_opacity=0.15,
-                                     weight=0).add_to(m)
-                folium.CircleMarker(location=[lat, lon], radius=8, color=col,
-                                     fill=True, fill_color=col, fill_opacity=0.4,
-                                     weight=0).add_to(m)
-                folium.CircleMarker(location=[lat, lon], radius=4, color="white",
-                                     fill=True, fill_color=col, fill_opacity=1.0,
-                                     weight=1.5,
-                                     tooltip=(f"<b>{STATE_LABEL[state_key]}</b><br>"
-                                                f"Kích thước ~{e.get('length_m', 0):.0f} m<br>"
-                                                f"Tốc độ: {e.get('speed_kn', 0):.1f} hải lý/h<br>"
-                                                f"<i>Không xác định danh tính</i>")).add_to(m)
-
-        legend_html = f'''
-        <div style="position:fixed; top:100px; right:20px; z-index:9999;
-                     background:rgba(255,255,255,0.95); padding:12px 16px;
-                     border-radius:8px; font-family:sans-serif; font-size:13px;
-                     box-shadow:0 2px 8px rgba(0,0,0,0.15); color:#0E2A38;">
-            <div style="font-weight:600; margin-bottom:8px;">Trạng thái</div>
-            <div style="margin:4px 0;"><span style="display:inline-block;width:12px;height:12px;background:{COL_OK};border-radius:50%;margin-right:8px;"></span>Có AIS khớp ({len(by_state["AIS_OK"])})</div>
-            <div style="margin:4px 0;"><span style="display:inline-block;width:12px;height:12px;background:{COL_MISMATCH};border-radius:50%;margin-right:8px;"></span>AIS lệch ({len(by_state["AIS_MISMATCH"])})</div>
-            <div style="margin:4px 0;"><span style="display:inline-block;width:12px;height:12px;background:{COL_DARK};border-radius:50%;margin-right:8px;"></span>Không có AIS ({len(by_state["DARK"])})</div>
-        </div>
-        '''
-        m.get_root().html.add_child(folium.Element(legend_html))
-
-        st_html(m.get_root().render(), height=720)
-
-        n_all = len(ban_do)
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Tổng phương tiện", n_all)
-        c2.metric("Có AIS khớp", len(by_state["AIS_OK"]))
-        c3.metric("AIS lệch", len(by_state["AIS_MISMATCH"]))
-        c4.metric("Không có AIS", len(by_state["DARK"]))
 
 # ============================================================================
 # TAB KPI — Tổng hợp
