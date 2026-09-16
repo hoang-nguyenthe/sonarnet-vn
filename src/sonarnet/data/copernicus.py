@@ -141,3 +141,46 @@ function evaluatePixel(sample) {
     if not image.startswith(b"\x89PNG"):
         raise CopernicusError("Copernicus không trả về ảnh PNG hợp lệ.")
     return image
+
+
+def sentinel1_mosaic_preview(
+    token: str, bbox: tuple[float, float, float, float], start: date, end: date, width: int = 1024,
+) -> bytes:
+    """Render a most-recent Sentinel-1 VV mosaic across a date window."""
+    start_iso = datetime.combine(start, time.min, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
+    end_iso = datetime.combine(end, time.max, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
+    evalscript = """
+//VERSION=3
+function setup() { return { input: ["VV", "dataMask"], output: { bands: 4 } }; }
+function evaluatePixel(sample) {
+  var db = 10 * Math.log(sample.VV) / Math.LN10;
+  var gray = Math.max(0, Math.min(1, (db + 25) / 30));
+  return [gray, gray, gray, sample.dataMask];
+}
+"""
+    height = max(256, min(1024, round(width * (bbox[3] - bbox[1]) / (bbox[2] - bbox[0]))))
+    payload = {
+        "input": {
+            "bounds": {"bbox": list(bbox), "properties": {"crs": "http://www.opengis.net/def/crs/EPSG/0/4326"}},
+            "data": [{
+                "type": "sentinel-1-grd",
+                "dataFilter": {"timeRange": {"from": start_iso, "to": end_iso}, "mosaickingOrder": "mostRecent"},
+                "processing": {"orthorectify": True, "backCoeff": "GAMMA0_TERRAIN", "demInstance": "COPERNICUS_30"},
+            }],
+        },
+        "output": {"width": width, "height": height, "responses": [{"identifier": "default", "format": {"type": "image/png"}}]},
+        "evalscript": evalscript,
+    }
+    request = Request(PROCESS_URL, data=json.dumps(payload).encode("utf-8"),
+                      headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"}, method="POST")
+    try:
+        with urlopen(request, timeout=120) as response:
+            image = response.read()
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")[:400]
+        raise CopernicusError(f"Không tạo được mosaic Sentinel-1 (HTTP {exc.code}): {detail}") from exc
+    except URLError as exc:
+        raise CopernicusError("Không thể tải mosaic Sentinel-1. Kiểm tra mạng rồi thử lại.") from exc
+    if not image.startswith(b"\x89PNG"):
+        raise CopernicusError("Copernicus không trả về mosaic PNG hợp lệ.")
+    return image

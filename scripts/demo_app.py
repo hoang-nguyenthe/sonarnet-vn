@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from sonarnet.data.gfw import GlobalFishingWatchError, sar_reference_report
-from sonarnet.data.copernicus import CopernicusError, access_token, search_sentinel1_grd, sentinel1_preview
+from sonarnet.data.copernicus import CopernicusError, access_token, search_sentinel1_grd, sentinel1_mosaic_preview, sentinel1_preview
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -67,6 +67,14 @@ def load_product_preview(
     client_id: str, client_secret: str, bbox: tuple[float, float, float, float], acquired_at: str,
 ) -> bytes:
     return sentinel1_preview(access_token(client_id, client_secret), bbox, acquired_at)
+
+
+@st.cache_data(ttl=6 * 3600, show_spinner=False)
+def load_vietnam_latest_mosaic(client_id: str, client_secret: str, end: date) -> bytes:
+    """National display layer: each pixel is the most recent SAR observation in 14 days."""
+    return sentinel1_mosaic_preview(
+        access_token(client_id, client_secret), (102.0, 6.0, 115.0, 21.8), end - timedelta(days=14), end,
+    )
 
 
 VIETNAM_MARITIME_ZONES: dict[str, tuple[float, float, float, float]] = {
@@ -312,6 +320,22 @@ with h1:
         f"SonarNet-VN</div>",
         unsafe_allow_html=True,
     )
+    st.markdown("#### Toàn cảnh Việt Nam — Sentinel‑1 mới nhất")
+    st.caption("Mosaic toàn quốc: mỗi điểm ảnh là quan sát Sentinel‑1 mới nhất trong 14 ngày gần đây. Hệ thống tự làm mới theo Copernicus mỗi 6 giờ; đây là nhịp cập nhật theo lượt bay vệ tinh, không phải video liên tục.")
+    national_mosaic: bytes | None = None
+    if "copernicus" in st.secrets:
+        try:
+            with st.spinner("Đang dựng mosaic Sentinel‑1 mới nhất phủ vùng biển Việt Nam…"):
+                national_mosaic = load_vietnam_latest_mosaic(
+                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
+                )
+            st.image(national_mosaic, caption="Sentinel‑1 GRD · VV gamma0 terrain · mosaic 14 ngày gần nhất · vùng biển Việt Nam", use_container_width=True)
+        except CopernicusError as exc:
+            st.error(str(exc))
+    else:
+        st.info("Thiếu cấu hình Copernicus để tạo mosaic toàn quốc.")
+
+    st.markdown("#### Cảnh chi tiết và đối chiếu GFW")
     st.markdown(
         f"<div style='color:{COL_MUTED};font-size:15px;font-weight:400;line-height:1.5;'>"
         f"Hệ thống giám sát tuân thủ đánh bắt hải sản — hợp nhất ảnh radar "
@@ -1267,14 +1291,41 @@ with tab_kal:
 with tab_map:
     import folium
     from streamlit.components.v1 import html as st_html
-    st.subheader("Bản đồ giám sát")
+    st.subheader("Bản đồ giám sát quốc gia")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:14px;font-size:14px;line-height:1.55;'>"
-        f"Toàn bộ phương tiện phát hiện được trong khung quan sát, trên nền "
-        f"OpenStreetMap. Không hiển thị định danh cá nhân của phương tiện."
+        f"Lớp đầu là ảnh Sentinel‑1 thật phủ vùng biển Việt Nam; lớp bên dưới là mô phỏng vận hành để minh họa luồng SAR–AIS. "
+        f"Hai lớp được ghi nhãn riêng để không nhầm dữ liệu thật với mô phỏng."
         f"</div>",
         unsafe_allow_html=True,
     )
+
+    st.markdown("#### Lớp quan sát thật — Sentinel‑1 toàn Việt Nam")
+    if national_mosaic:
+        national_map = folium.Map(location=[13.9, 108.5], zoom_start=5, tiles=None, control_scale=True)
+        folium.TileLayer(
+            tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            attr="Esri, Maxar, Earthstar Geographics", name="Nền vệ tinh", overlay=False,
+        ).add_to(national_map)
+        folium.raster_layers.ImageOverlay(
+            image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
+            opacity=0.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 mosaic mới nhất",
+        ).add_to(national_map)
+        folium.Rectangle(bounds=[[6.0, 102.0], [21.8, 115.0]], color="#ffffff", weight=2, fill=False,
+                         tooltip="Phạm vi mosaic Sentinel‑1 Việt Nam").add_to(national_map)
+        folium.LayerControl(collapsed=True).add_to(national_map)
+        national_map.get_root().html.add_child(folium.Element("""
+          <div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:rgba(18,18,18,.88);color:#fff;
+              padding:12px 14px;border-radius:12px;font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+            <div style="font-weight:650;margin-bottom:4px">Sentinel‑1 · Việt Nam</div>
+            <div>Mosaic 14 ngày · pixel mới nhất · tự làm mới mỗi 6 giờ</div>
+          </div>
+        """))
+        st_html(national_map.get_root().render(), height=560)
+    else:
+        st.info("Mosaic Sentinel‑1 đang chờ tải từ Copernicus.")
+
+    st.markdown("#### Lớp mô phỏng nghiệp vụ — SAR × AIS")
 
     @st.cache_data
     def load_ban_do_data():

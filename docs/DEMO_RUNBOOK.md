@@ -7,8 +7,7 @@ kết quả mô phỏng như kết quả trên dữ liệu thật.
 ## Chuẩn bị trước khi mở đầu
 
 1. Mở https://sonarnet.streamlit.app và kiểm tra trang tải xong.
-2. Mở tab **Sentinel 1 thật** ở cuối thanh tab. Cảnh GRD đã đóng gói sẵn phải
-   hiển thị kể cả khi bản Streamlit Cloud chưa cài secrets.
+2. Mở tab **Bản đồ giám sát** và kiểm tra mosaic Sentinel-1 toàn Việt Nam đã tải xong.
 3. Chuẩn bị liên kết GitHub để Hội đồng xem mã nguồn và lịch sử commit.
 
 ## Lời dẫn và thao tác
@@ -37,10 +36,9 @@ vệ tinh chụp; Hungarian đảm bảo ghép cặp một tàu với một quan
 
 ### 2:10 đến 3:00 Dữ liệu Sentinel 1 thật
 
-Mở tab **Sentinel 1 thật**. Chỉ vào ảnh GRD thật ngoài khơi Bình Thuận, thời
-điểm chụp và mã sản phẩm Copernicus. Nói: “Đây là cảnh thật lấy qua Catalog API
-và Process API. Chúng tôi chưa báo cáo mAP trên cảnh này vì chưa có nhãn độc lập
-đủ chất lượng.” Nếu secrets backend đã cài, bấm tìm ảnh mới và tải ảnh VV.
+Mở tab **Bản đồ giám sát**. Nói: “Mosaic toàn quốc dùng pixel Sentinel-1 mới nhất
+trong 14 ngày, tự làm mới theo Copernicus; không phải video hay một ảnh duy nhất.”
+Sau đó mở tab **Sentinel 1 thật** để đi sâu vào cảnh và đối chiếu GFW cùng thời gian.
 
 ### 3:00 đến 4:00 Kiểm chứng độc lập
 
@@ -51,10 +49,8 @@ học lại đầu ra của một hệ thống có sẵn.”
 
 ### 4:00 đến 5:00 Giới hạn và giá trị
 
-Nói: “SonarNet VN là giám sát vệ tinh gần thời gian thực. Sentinel 1 chỉ quan
-sát khi vệ tinh bay qua, vì vậy hệ thống không thay thế AIS hoặc radar bờ. Giá
-trị của nó là chỉ ra phần chênh lệch giữa tín hiệu tự khai báo và quan sát SAR,
-để cơ quan có thẩm quyền kiểm chứng thêm.”
+Nói: “SonarNet VN là giám sát vệ tinh gần thời gian thực: cập nhật mới xuất hiện
+khi Sentinel-1 có lượt bay và Copernicus công bố ảnh, không thay thế AIS hoặc radar bờ.”
 
 Kết bằng việc mở GitHub và nhắc rằng credentials không nằm trong mã nguồn, còn
 mọi dữ liệu và công cụ AI được kê khai trong hồ sơ.
