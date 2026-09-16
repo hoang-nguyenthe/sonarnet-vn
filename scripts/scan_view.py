@@ -33,7 +33,8 @@ def render_scan(root: Path):
     st.subheader('Kiểm tra ảnh radar thật')
     st.caption('Chọn ảnh → xem ứng viên → lưu ghi chú và bằng chứng.')
     reviewed = sum(1 for value in reviews.values() if value.get('status') != STATUSES[0])
-    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>Ứng viên baseline<strong>{count}</strong></span><span>Đã xem<strong>{reviewed} ô</strong></span></div>', unsafe_allow_html=True)
+    follow_up = sum(1 for value in reviews.values() if value.get('status') == STATUSES[1])
+    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>Ứng viên baseline<strong>{count}</strong></span><span>Đã xem<strong>{reviewed} ô</strong></span><span>Cần xem tiếp<strong>{follow_up} ô</strong></span></div>', unsafe_allow_html=True)
     model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
     st.caption(f"Mô hình: YOLO baseline học từ ảnh mô phỏng · mã {model_hash[:12] if model_hash else 'chưa có'}. Đây là ứng viên để người xem rà soát, không phải kết quả đã xác minh.")
     st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
@@ -64,14 +65,17 @@ def render_scan(root: Path):
         w,s,e,n = tile['bbox']
         processed = tile['status'] == 'processed'
         summary = f"{len(tile['detections'])} ứng viên" if processed else 'Chưa xử lý được'
-        folium.Rectangle([[s,w],[n,e]], color='#4dd4c6' if processed else '#efad48', weight=2, fill=True, fill_opacity=.15,
-                         tooltip=tile['key'], popup=f"{tile['key']} · {summary} · {day_label} UTC").add_to(chart)
+        review_status = reviews.get(tile['key'], {}).get('status', STATUSES[0])
+        border = '#43c6b7' if review_status == STATUSES[2] else '#ff9f43' if review_status == STATUSES[1] else '#74869a'
+        folium.Rectangle([[s,w],[n,e]], color=border if processed else '#efad48', weight=3 if review_status != STATUSES[0] else 2, fill=True, fill_opacity=.18,
+                         tooltip=f"{tile['key']} · {review_status}", popup=f"{tile['key']} · {summary} · {day_label} UTC · {review_status}").add_to(chart)
         for d in tile.get('detections', []):
             folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color='#ffb85c',fill=True,
                 popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · chưa xác minh").add_to(chart)
     chart.fit_bounds([[6,102],[24,115]])
     with st.expander('Phạm vi đã quét trên Việt Nam', expanded=True):
         html(chart.get_root().render(), height=420)
+        st.caption('Viền xám: chưa xem · cam: cần kiểm tra tiếp · xanh: đã xem, chưa thấy mục tiêu rõ.')
     if not ready:
         return
     by_key = {t['key']:t for t in sorted(ready, key=lambda t: -len(t['detections']))}
