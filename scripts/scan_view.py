@@ -8,6 +8,7 @@ import streamlit as st
 from PIL import Image
 from streamlit.components.v1 import html
 from review_workspace import STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
+from scan_assets import validated_report
 
 
 def render_scan(root: Path):
@@ -15,13 +16,19 @@ def render_scan(root: Path):
     if not path.exists():
         st.info('Chưa có hồ sơ xử lý ảnh thật được công bố.')
         return
-    report = json.loads(path.read_text())
+    try:
+        report = validated_report(root)
+    except (ValueError, KeyError, TypeError, OSError):
+        st.warning('Hồ sơ quan sát đang được kiểm tra. Chuyển sang Xem ảnh toàn cảnh; không sử dụng kết quả chưa xác thực.')
+        return
     workspace_key = 'workspace_' + report_id(report)
     reviews = st.session_state.setdefault(workspace_key, {})
     day = report['observation_day_utc']
     day_label = date.fromisoformat(day).strftime('%d/%m/%Y')
     tiles = report['tiles']
     ready = [r for r in tiles if r['status'] == 'processed']
+    if len(ready) < len(tiles):
+        st.warning(f'{len(tiles)-len(ready)} ô chưa có bằng chứng hợp lệ và không được đưa vào danh sách kiểm tra. Không coi các ô này là không có tàu.')
     count = sum(len(r['detections']) for r in ready)
     st.subheader('Kiểm tra ảnh radar thật')
     st.caption('Chọn ảnh → xem ứng viên → lưu ghi chú và bằng chứng.')
