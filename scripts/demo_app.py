@@ -57,7 +57,7 @@ def load_available_vietnam_scenes(client_id: str, client_secret: str, latest_ref
     """Return actual Sentinel-1 products intersecting Vietnam's maritime domain."""
     token = access_token(client_id, client_secret)
     products = search_sentinel1_grd(
-        token, (102.0, 6.0, 116.0, 24.0), latest_reference_day - timedelta(days=10), latest_reference_day, limit=50,
+        token, (102.0, 6.0, 115.0, 21.8), latest_reference_day - timedelta(days=10), latest_reference_day, limit=50,
     )
     return sorted(products, key=lambda item: item.acquired_at, reverse=True)
 
@@ -72,7 +72,7 @@ def load_product_preview(
 def vietnam_focus_bbox(product_bbox: tuple[float, float, float, float]) -> tuple[float, float, float, float]:
     """Use a compact ocean-facing crop for a selected Vietnam-overlapping swath."""
     west, south, east, north = product_bbox
-    west, south, east, north = max(west, 102.0), max(south, 6.0), min(east, 116.0), min(north, 24.0)
+    west, south, east, north = max(west, 102.0), max(south, 6.0), min(east, 115.0), min(north, 21.8)
     if west >= east or south >= north:
         return (107.7, 10.35, 108.1, 10.65)
     longitude, latitude = (west + east) / 2, (south + north) / 2
@@ -510,7 +510,9 @@ with tab_live:
             )
         with context_col:
             west, south, east, north = reference_bbox
-            st.markdown("#### Cảnh demo chuẩn" if is_standard_scene else "#### Cảnh quan sát toàn cầu")
+            st.markdown("#### Cảnh demo chuẩn" if is_standard_scene else (
+                "#### Cảnh quan sát Việt Nam" if vietnam_product is not None else "#### Cảnh quan sát quốc tế"
+            ))
             st.metric("Phát hiện GFW", sum(cell.detections for cell in ref_cells))
             st.metric("Ô lưới có tín hiệu", len(ref_cells))
             st.caption(f"Cùng cửa sổ thời gian: {reference_start.strftime('%d/%m/%Y')} UTC.")
