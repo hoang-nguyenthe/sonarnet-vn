@@ -17,7 +17,7 @@ import base64
 from io import BytesIO
 import json
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import numpy as np
@@ -75,6 +75,40 @@ def load_vietnam_latest_mosaic(client_id: str, client_secret: str, end: date) ->
     return sentinel1_mosaic_preview(
         access_token(client_id, client_secret), (102.0, 6.0, 115.0, 21.8), end - timedelta(days=14), end,
     )
+
+
+@st.cache_data(ttl=6 * 3600, show_spinner=False)
+def load_vietnam_mosaic_status(client_id: str, client_secret: str, end: date) -> dict[str, str | int | None]:
+    """Report the catalogue evidence behind the nationwide most-recent mosaic."""
+    token = access_token(client_id, client_secret)
+    products = search_sentinel1_grd(token, (102.0, 6.0, 115.0, 21.8), end - timedelta(days=14), end, limit=50)
+    newest = max(products, key=lambda item: item.acquired_at) if products else None
+    newest_by_zone: dict[str, str] = {}
+    for product in products:
+        match = vietnam_scene_match(product.bbox)
+        if match is None:
+            continue
+        zone, _ = match
+        if zone not in newest_by_zone or product.acquired_at > newest_by_zone[zone]:
+            newest_by_zone[zone] = product.acquired_at
+    return {
+        "newest": newest.acquired_at if newest else None,
+        "count": len(products),
+        "window_start": (end - timedelta(days=14)).isoformat(),
+        "window_end": end.isoformat(),
+        "zones": newest_by_zone,
+    }
+
+
+def format_vietnam_time(value: str | None) -> str:
+    """Show satellite acquisition time in the audience's local time zone."""
+    if not value:
+        return "Chưa có cảnh phù hợp trong cửa sổ này"
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        return parsed.astimezone(timezone(timedelta(hours=7))).strftime("%H:%M · %d/%m/%Y (GMT+7)")
+    except ValueError:
+        return value
 
 
 VIETNAM_MARITIME_ZONES: dict[str, tuple[float, float, float, float]] = {
@@ -261,6 +295,14 @@ CSS = f"""
     .principle-note .principle-body {{
         color: {COL_MUTED}; font-size: 13px; line-height: 1.55;
     }}
+    .data-provenance {{
+        display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px;
+        overflow:hidden; margin:12px 0 20px; border:1px solid {COL_HAIRLINE};
+        border-radius:14px; background:{COL_HAIRLINE};
+    }}
+    .data-provenance > div {{ background:{COL_CARD}; padding:14px 16px; }}
+    .data-provenance span {{ display:block; color:{COL_MUTED}; font-size:11px; margin-bottom:4px; }}
+    .data-provenance strong {{ display:block; color:{COL_INK}; font-size:14px; line-height:1.32; font-weight:550; }}
 
     /* Streamlit's default subheader — quieter, denser */
     .stApp [data-testid="stMarkdownContainer"] p {{ line-height: 1.55; }}
@@ -294,6 +336,7 @@ CSS = f"""
         [data-testid="stMetric"] {{ padding:14px 15px; border-radius:11px; }}
         [data-testid="stMetricValue"] {{ font-size:24px; }}
         section[data-testid="stSidebar"] {{ min-width:280px; }}
+        .data-provenance {{ grid-template-columns:1fr; gap:1px; }}
     }}
     @media (prefers-reduced-motion: reduce) {{ *, *::before, *::after {{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }} }}
 </style>
@@ -402,6 +445,7 @@ st.components.v1.html("""
 
 # This value is populated in the live-data tab, then reused by the national map.
 national_mosaic: bytes | None = None
+national_mosaic_status: dict[str, str | int | None] | None = None
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -473,10 +517,32 @@ with tab_live:
     if "copernicus" in st.secrets:
         try:
             with st.spinner("Đang dựng mosaic Sentinel‑1 mới nhất phủ vùng biển Việt Nam…"):
+                national_mosaic_status = load_vietnam_mosaic_status(
+                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
+                )
                 national_mosaic = load_vietnam_latest_mosaic(
                     st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
                 )
-            st.image(national_mosaic, caption="Sentinel‑1 GRD · VV gamma0 terrain · mosaic 14 ngày gần nhất · vùng biển Việt Nam", use_container_width=True)
+            st.markdown(
+                f"""<div class="data-provenance">
+                  <div><span>PHẠM VI HIỂN THỊ</span><strong>Biển Việt Nam · 06°–22°B, 102°–115°Đ</strong></div>
+                  <div><span>CẢNH MỚI NHẤT TRONG CATALOG</span><strong>{format_vietnam_time(national_mosaic_status['newest'] if national_mosaic_status else None)}</strong></div>
+                  <div><span>CỬA SỔ MOSAIC</span><strong>{national_mosaic_status['window_start'] if national_mosaic_status else '—'} → {national_mosaic_status['window_end'] if national_mosaic_status else '—'} · {national_mosaic_status['count'] if national_mosaic_status else 0} cảnh</strong></div>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+            st.image(national_mosaic, caption="Sentinel‑1 GRD · VV Gamma0 ellipsoid · mosaic theo pixel mới nhất · Copernicus Data Space", use_container_width=True)
+            if national_mosaic_status and national_mosaic_status.get("zones"):
+                zone_lines = "<br>".join(
+                    f"<b>{zone}</b> — {format_vietnam_time(acquired_at)}"
+                    for zone, acquired_at in sorted(national_mosaic_status["zones"].items())
+                )
+                with st.expander("Ngày quan sát mới nhất theo khu vực", expanded=True):
+                    st.markdown(
+                        "Các mốc dưới đây là thời điểm cảnh catalog mới nhất có footprint giao với từng vùng. "
+                        "Trong mosaic, từng pixel dùng quan sát mới nhất sẵn có trong cửa sổ 14 ngày.<br><br>" + zone_lines,
+                        unsafe_allow_html=True,
+                    )
         except CopernicusError as exc:
             st.error(str(exc))
     else:
@@ -1365,7 +1431,7 @@ with tab_map:
     st.subheader("Bản đồ giám sát quốc gia")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:14px;font-size:14px;line-height:1.55;'>"
-        f"Lớp đầu là ảnh Sentinel‑1 thật phủ vùng biển Việt Nam; lớp bên dưới là mô phỏng vận hành để minh họa luồng SAR–AIS. "
+        f"Lớp đầu là ảnh Sentinel‑1 thật phủ vùng biển Việt Nam; lớp bên dưới là mô phỏng vận hành cho một khu vực thử nghiệm để minh họa luồng SAR–AIS. "
         f"Hai lớp được ghi nhãn riêng để không nhầm dữ liệu thật với mô phỏng."
         f"</div>",
         unsafe_allow_html=True,
@@ -1396,7 +1462,7 @@ with tab_map:
     else:
         st.info("Mosaic Sentinel‑1 đang chờ tải từ Copernicus.")
 
-    st.markdown("#### Lớp mô phỏng nghiệp vụ — SAR × AIS")
+    st.markdown("#### Mô phỏng nghiệp vụ — khu vực thử nghiệm Bình Thuận")
 
     @st.cache_data
     def load_ban_do_data():
@@ -1410,6 +1476,15 @@ with tab_map:
     if not ban_do:
         st.info("Chưa có bản đồ. Chạy pipeline trước.")
     else:
+        latitudes = [entry["lat"] for entry in ban_do]
+        longitudes = [entry["lon"] for entry in ban_do]
+        st.info(
+            f"**Đây là lớp mô phỏng, không phải luồng tàu trực tiếp toàn quốc.** "
+            f"331 mục tiêu mô phỏng được đặt trong khu vực thử nghiệm ngoài khơi Bình Thuận "
+            f"({min(latitudes):.2f}–{max(latitudes):.2f}°B, {min(longitudes):.2f}–{max(longitudes):.2f}°Đ) "
+            f"để trình bày rõ ba tình huống: AIS khớp, AIS lệch và không có AIS. "
+            f"Ảnh Sentinel‑1 thật toàn quốc nằm ở lớp phía trên, với mốc thời gian tại tab “Dữ liệu vệ tinh thật”."
+        )
         m = folium.Map(location=[13.0, 109.5], zoom_start=6,
                         tiles="OpenStreetMap", control_scale=True,
                         min_zoom=5, max_zoom=12)
