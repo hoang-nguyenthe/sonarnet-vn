@@ -84,11 +84,7 @@ def provenance(record):
 def render(root):
     records = published_layers(root)
     detection = read_json(root / "assets/gfw_global_ship_detections_latest.json")
-    st.subheader("Xem ảnh radar vùng biển")
-    st.write("1. Xem Việt Nam trên bản đồ → 2. Bấm ảnh để xem nguồn và khoảng thời gian → 3. Bật lớp GFW nếu cần tham khảo nơi có phát hiện tàu.")
-    with st.expander("Tôi dùng màn hình này để làm gì?"):
-        st.markdown("**Dùng được:** xem vùng nào có ảnh radar lưu sẵn, kiểm tra thời gian và nguồn ảnh; xem các ô phát hiện do GFW cung cấp để chọn vùng cần khảo sát thêm.\n\n**Chưa làm được:** định danh tàu, theo dõi trực tiếp, tự kết luận tàu tắt AIS hay vi phạm. YOLO của SonarNet chưa chạy trên ảnh thật ở bản đồ này.")
-        st.markdown("**GFW là nguồn tham khảo bên ngoài**, không phải kết quả YOLO và chưa phải bộ kiểm chứng độ chính xác YOLO. Muốn đối chiếu phải có cùng cảnh ảnh, thời gian và tọa độ phát hiện đủ chi tiết.")
+    st.caption("Kéo để khám phá · Phóng to để xem gần · Chạm ảnh radar để xem nguồn")
     if not records:
         st.info("Chưa có ảnh được xuất bản. Dữ liệu sẽ xuất hiện sau lần đồng bộ thành công.")
         return
@@ -97,12 +93,7 @@ def render(root):
     record = choices[selected]
     region_points = points_in_region(detection.get("points", []), record["bbox"])
     updated = record.get("refreshed_at")
-    a, b, c = st.columns(3)
-    a.metric("Cửa sổ ảnh kết thúc", date_label(record.get('window_end')))
-    b.metric("Ô tham khảo GFW có sẵn", f"{len(region_points):,}")
-    c.metric("Nguồn ảnh radar", "Sentinel‑1 GRD")
-    st.caption(f"Ảnh được tạo: {local_time(updated)} · GFW được tải: {local_time(detection.get('refreshed_at'))}")
-    st.caption(f"Ảnh radar ghép từ {date_label(record.get('window_start'))} đến {date_label(record.get('window_end'))}. Không phải ảnh chụp đồng thời hoặc luồng trực tiếp.")
+    st.markdown(f'<div class="observation-meta"><span>Ảnh radar<strong>Sentinel‑1 GRD</strong></span><span>Khoảng ghép ảnh<strong>{date_label(record.get("window_start"))} – {date_label(record.get("window_end"))}</strong></span></div>', unsafe_allow_html=True)
     if updated:
         try:
             age = datetime.now(timezone.utc) - datetime.fromisoformat(updated.replace('Z', '+00:00'))
@@ -113,10 +104,9 @@ def render(root):
     west, south, east, north = record["bbox"]
     bounds = VN_VIEW if record["key"] == "vietnam" else [[south, west], [north, east]]
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
-    folium.TileLayer("OpenStreetMap", name="Bản đồ", show=True).add_to(chart)
     folium.TileLayer(
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        attr="Esri, Maxar, Earthstar Geographics", name="Nền ảnh vệ tinh", show=False,
+        attr="Esri, Maxar, Earthstar Geographics", name="Nền ảnh vệ tinh", show=True, control=False,
     ).add_to(chart)
     radar = folium.FeatureGroup(name="Ảnh radar Sentinel‑1", show=True).add_to(chart)
     # All published regions are available when panning; the selected region controls the summary.
@@ -149,7 +139,7 @@ def render(root):
             color="#ffecad", weight=1, fill=True, fill_color="#ef993c", fill_opacity=.85,
             popup=folium.Popup(details, max_width=320), tooltip="Mở thông tin ô phát hiện",
         ).add_to(dots)
-    folium.LayerControl(collapsed=False, position="topright").add_to(chart)
+    folium.LayerControl(collapsed=True, position="topright").add_to(chart)
     chart.fit_bounds(bounds)
     name = chart.get_name()
     home_control = MacroElement()
@@ -171,9 +161,21 @@ def render(root):
       .leaflet-popup-content{font-size:13px;line-height:1.6}
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
-    embed(chart.get_root().render(), height=620)
+    embed(chart.get_root().render(), height=540)
+    st.caption(f"Ảnh radar được tạo: {local_time(updated)}. Ảnh ghép nhiều lượt bay, không phải luồng trực tiếp.")
     st.caption("Thang xám: ảnh radar. Bật ‘Tham khảo GFW’ để xem các ô màu vàng do nguồn bên ngoài cung cấp — không phải kết quả YOLO của SonarNet.")
     st.caption("Danh sách và số ô bên dưới theo khu vực đã chọn. Kéo bản đồ không thay đổi bộ lọc khu vực.")
+    evidence = read_json(root / 'assets/real_evidence/manifest.json')
+    if evidence:
+        st.subheader("Từ ảnh radar đến bằng chứng")
+        st.caption("Thử nghiệm YOLO trên một vùng biển Bình Thuận · ảnh thật, không phải dữ liệu mô phỏng")
+        st.markdown(f'<div class="observation-meta"><span>Ngày quan sát (UTC)<strong>{date_label(evidence["observation_day_utc"])}</strong></span><span>Ứng viên do YOLO phát hiện<strong>{len(evidence["detections"])}</strong></span><span>Ngưỡng mô hình<strong>{evidence["confidence_threshold"]}</strong></span></div>', unsafe_allow_html=True)
+        st.warning("Kết quả thử nghiệm: mô hình học trên dữ liệu mô phỏng, chưa được đánh giá trên ảnh thật. Không phát hiện không có nghĩa là không có tàu.")
+        with st.expander("Mở ảnh đầu vào & kết quả YOLO"):
+            st.image(str(root / 'assets/real_evidence/detections.jpg'), caption='Ảnh SAR thật · khung chỉ xuất hiện khi mô hình trả về ứng viên', use_container_width=True)
+            st.caption(f'Phạm vi WGS84: {evidence["bbox"]}. Nguồn: {evidence["source"]}. Ảnh ghép trong ngày; chưa xác định thời điểm riêng từng pixel.')
+            st.caption(f'Lần xử lý: {local_time(evidence["generated_at"])}. Đây là kết quả lưu sẵn, không phải xử lý toàn quốc trực tiếp.')
+            st.download_button('Tải hồ sơ lần xử lý', json.dumps(evidence, ensure_ascii=False, indent=2), 'sonarnet-evidence.json', 'application/json')
     with st.expander("Danh sách phát hiện & xuất dữ liệu"):
         st.write("Các ô đã công bố trong khu vực; số lượt phát hiện không phải số tàu duy nhất.")
         rows = [{"Vĩ độ tâm ô": p['latitude'], "Kinh độ tâm ô": p['longitude'], "Lượt phát hiện": p['detections'], "Quan sát mới nhất (GMT+7)": local_time(p['acquired_at'])} for p in region_points]
@@ -184,7 +186,9 @@ def render(root):
         else:
             st.info("Bộ dữ liệu đang công bố chưa có ô phát hiện tại khu vực này. Điều này không chứng minh khu vực không có tàu.")
     with st.expander("Nguồn, thời gian & độ phủ", expanded=False):
-        st.markdown("**Ảnh radar:** [Copernicus Data Space](https://dataspace.copernicus.eu/) · Sentinel‑1 GRD. **Ô phát hiện:** [Global Fishing Watch](https://globalfishingwatch.org/our-apis/). **Nền và địa danh:** OpenStreetMap / Esri.")
+        st.write("Ảnh toàn quốc dùng để quan sát, không phải lớp YOLO toàn quốc. Thử nghiệm YOLO ảnh thật bên trên chỉ xử lý một vùng nhỏ; chưa định danh tàu hay kết luận vi phạm. GFW là lớp tham khảo bên ngoài, không phải kết quả YOLO.")
+        st.caption(f"GFW được tải: {local_time(detection.get('refreshed_at'))}")
+        st.markdown("**Ảnh radar:** [Copernicus Data Space](https://dataspace.copernicus.eu/) · Sentinel‑1 GRD. **Ô phát hiện:** [Global Fishing Watch](https://globalfishingwatch.org/our-apis/). **Nền và địa danh:** Esri.")
         st.write("Ảnh ghép dùng nhiều lượt bay trong khoảng ngày công bố. Nơi trong suốt chưa có pixel SAR trong bản ghép; nền tham chiếu vẫn hiện ở dưới. Ngày chụp của nền Esri và ngày riêng từng pixel SAR chưa được cung cấp ở giao diện này.")
         st.write("Các ô GFW là lớp tham chiếu độc lập, chưa được SonarNet ghép với AIS hoặc xác minh thành cảnh báo vi phạm. Bộ hiện tại giới hạn 1.800 ô có nhiều lượt phát hiện nhất trên các vùng đã tải; không phải toàn bộ tàu trên thế giới.")
         st.write("Lịch kiểm tra dữ liệu: mỗi 6 giờ. Ngày tạo ảnh và ngày quan sát là hai mốc khác nhau; lịch chạy có thể trễ khi dịch vụ không sẵn sàng.")

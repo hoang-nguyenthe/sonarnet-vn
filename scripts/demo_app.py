@@ -166,7 +166,7 @@ st.set_page_config(
     page_title="SonarNet-VN — Bảng điều khiển giám sát",
     page_icon="◉",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # ---------------------------------------------------------------------------
@@ -190,14 +190,14 @@ CSS = f"""
         -webkit-font-smoothing: antialiased;
     }}
     .stApp {{ background: {COL_BG}; color: {COL_INK}; }}
-    .main .block-container {{ padding-top: 2rem; max-width: 1240px; }}
+    .main .block-container, [data-testid="stMainBlockContainer"] {{ padding-top: 4.5rem; max-width: 1240px; }}
     @keyframes sonar-rise {{ from {{ opacity: 0; transform: translateY(18px); }} to {{ opacity: 1; transform: translateY(0); }} }}
     @keyframes sonar-aurora {{ 0%,100% {{ transform: translate3d(-3%,-2%,0) scale(1); }} 50% {{ transform: translate3d(4%,3%,0) scale(1.10); }} }}
     @keyframes sonar-pulse {{ 0%,100% {{ box-shadow: 0 0 0 0 rgba(78, 205, 196, .34); }} 50% {{ box-shadow: 0 0 0 10px rgba(78, 205, 196, 0); }} }}
     @keyframes sonar-shimmer {{ from {{ background-position: 140% 0; }} to {{ background-position: -40% 0; }} }}
     .sonar-hero {{
         position: relative; overflow: hidden; isolation: isolate; border-radius: 28px;
-        padding: clamp(24px, 3vw, 38px); color: #fff; margin: 4px 0 16px;
+        padding: clamp(24px, 3vw, 38px); color: #fff; margin: 4px 0 8px;
         background: linear-gradient(130deg, #07152b 0%, #0d3159 47%, #126869 100%);
         box-shadow: 0 20px 60px rgba(8, 32, 62, .20); animation: sonar-rise .75s cubic-bezier(.2,.8,.2,1) both;
     }}
@@ -317,18 +317,30 @@ CSS = f"""
     [data-testid="stButton"] button:hover {{ transform: scale(1.025); box-shadow: 0 8px 20px rgba(0,0,0,.12); }}
     [role="tabpanel"] {{ animation: sonar-rise .42s cubic-bezier(.2,.8,.2,1) both; }}
     .stApp iframe {{ border-radius:18px; overflow:hidden; }}
+    [role="tablist"] {{ gap:6px!important; border:0!important; background:#edf0f5!important; border-radius:16px!important; padding:5px!important; }}
+    [role="tab"] {{ min-height:44px; border-radius:12px!important; padding:10px 18px!important; }}
+    [role="tab"][aria-selected="true"] {{ background:white!important; color:#0865d6!important; box-shadow:0 2px 10px #14274812; border:0!important; }}
+    [data-testid="stExpander"] {{ border:1px solid #e5eaf0; border-radius:16px; background:#fff; }}
+    .observation-meta {{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; background:linear-gradient(110deg,#eef5ff,#edfaf8); border:1px solid #dce9f1; border-radius:16px; padding:14px 18px; margin:0 0 12px; }}
+    .observation-meta span {{ font-size:12px; color:#506379; }}
+    .observation-meta strong {{ display:block; color:#163755; font-size:15px; font-weight:600; margin-top:3px; }}
+    :focus-visible {{ outline:3px solid #0085ff!important; outline-offset:3px; }}
     @media (max-width: 720px) {{
-        .main .block-container {{ padding: .65rem .85rem 2rem; }}
-        .sonar-hero {{ border-radius:22px; padding:28px 22px; margin-top:0; }}
-        .sonar-title {{ font-size:42px; letter-spacing:-.055em; }}
+        .main .block-container, [data-testid="stMainBlockContainer"] {{ padding: 4.5rem 1rem 2rem; }}
+        .sonar-hero {{ border-radius:22px; padding:22px 20px; margin-top:0; }}
+        .sonar-title {{ font-size:34px; letter-spacing:-.045em; }}
         .sonar-copy {{ font-size:14px; }}
+        .sonar-eyebrow {{ font-size:10px; margin-bottom:10px; }}
+        .observation-meta {{ gap:10px 22px; padding:12px 14px; }}
+        .observation-meta strong {{ font-size:13px; }}
+        [role="tab"] {{ padding:10px 12px!important; flex:1; }}
+        [role="tab"] p {{ font-size:13px!important; white-space:nowrap; }}
         .sonar-pills {{ gap:6px; margin-top:19px; }}
         .sonar-pill {{ font-size:11px; padding:7px 10px; }}
         div[data-baseweb="tab-list"] {{ overflow-x:auto; scrollbar-width:none; white-space:nowrap; }}
         button[data-baseweb="tab"] {{ padding:11px 12px !important; font-size:13px !important; }}
         [data-testid="stMetric"] {{ padding:14px 15px; border-radius:11px; }}
         [data-testid="stMetricValue"] {{ font-size:24px; }}
-        section[data-testid="stSidebar"] {{ min-width:280px; }}
         .data-provenance {{ grid-template-columns:1fr; gap:1px; }}
     }}
     @media (prefers-reduced-motion: reduce) {{ *, *::before, *::after {{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }} }}
@@ -434,12 +446,7 @@ st.markdown("""
 <section class="sonar-hero">
   <div class="sonar-eyebrow"><span class="sonar-status"></span>SonarNet‑VN · Quan sát biển</div>
   <div class="sonar-title">Biển trong tầm nhìn.</div>
-  <div class="sonar-copy">Khám phá ảnh radar, xem các vùng phát hiện tàu và kiểm tra nguồn dữ liệu trên cùng một bản đồ.</div>
-  <div class="sonar-pills">
-    <span class="sonar-pill">Sentinel‑1 · SAR</span>
-    <span class="sonar-pill">GFW · tham chiếu độc lập</span>
-    <span class="sonar-pill">Ảnh lưu sẵn · có mốc thời gian</span>
-  </div>
+  <div class="sonar-copy">Khám phá vùng biển qua ảnh radar.<br>Nguồn rõ ràng. Thời gian minh bạch.</div>
 </section>
 """, unsafe_allow_html=True)
 
@@ -454,7 +461,7 @@ st.components.v1.html("""
   const clock = document.getElementById('vn-clock');
   function tick() {
     const now = new Intl.DateTimeFormat('vi-VN', {timeZone:'Asia/Ho_Chi_Minh', weekday:'short', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false}).format(new Date());
-    clock.textContent = 'Giờ hiện tại tại Việt Nam · ' + now + ' (GMT+7)';
+    clock.textContent = 'Giờ Việt Nam · ' + now;
   }
   tick(); setInterval(tick, 1000);
 </script>
@@ -471,7 +478,7 @@ with st.sidebar:
     st.caption("Bản thử nghiệm nghiên cứu. Không phải hệ thống theo dõi tàu trực tiếp hoặc kết luận vi phạm.")
 
 tab_observation, tab_overview, tab_evidence = st.tabs([
-    "Ảnh radar thật", "Giải thích & mô phỏng", "Thử nghiệm YOLO & AIS",
+    "Khám phá", "Cách dùng", "Nghiên cứu",
 ])
 with tab_observation:
     render_observation(ROOT)
@@ -491,8 +498,8 @@ with tab_overview:
     st.subheader("SonarNet giải quyết bài toán gì?")
     st.write("Mục tiêu nghiên cứu: tìm vật thể giống tàu trên ảnh radar, ghép với tín hiệu AIS cùng thời điểm, rồi đánh dấu trường hợp cần người có chuyên môn kiểm tra.")
     st.markdown("**Quy trình mục tiêu:** ảnh SAR có tọa độ → YOLO phát hiện tàu → đối chiếu AIS → người dùng xem bằng chứng. Không có AIS khớp chưa đủ để kết luận vi phạm.")
-    st.warning("Trạng thái hiện tại: bản đồ ảnh thật và thử nghiệm mô hình là hai phần riêng. Chưa có pipeline YOLO → AIS hoạt động trên các ảnh thật đang công bố.")
-    st.markdown("**YOLO được train để làm gì?** Học khoanh vùng tàu trên ảnh radar. Web hiện chỉ hiển thị dự báo đã lưu trên tập mô phỏng để minh họa và đánh giá phương pháp. Chưa chứng minh khả năng tổng quát trên ảnh thật.\n\n**GFW để làm gì?** Cung cấp lớp phát hiện SAR độc lập để tham khảo phân bố hoạt động. Nó không thay thế YOLO và không tự chứng minh YOLO đúng.\n\n**Người dùng hiện dùng thế nào?** Vào ‘Ảnh radar thật’, xem vùng có ảnh và thời gian; bật GFW khi cần khảo sát thêm. Các phần bên dưới dành cho giải thích nghiên cứu, không phải điều hành tàu thật.")
+    st.warning("Hiện có một lần chạy YOLO thử nghiệm trên vùng ảnh thật Bình Thuận trong tab Khám phá. Chưa kiểm chứng độ chính xác ảnh thật, chưa xử lý toàn quốc và chưa nối đối chiếu AIS.")
+    st.markdown("**YOLO được train để làm gì?** Học khoanh vùng tàu trên ảnh radar. Phần nghiên cứu dùng tập mô phỏng; tab Khám phá có thêm một lần suy luận trên ảnh thật, lưu kèm bằng chứng. Chưa chứng minh khả năng tổng quát trên ảnh thật.\n\n**GFW để làm gì?** Cung cấp lớp phát hiện SAR độc lập để tham khảo phân bố hoạt động. Nó không thay thế YOLO và không tự chứng minh YOLO đúng.\n\n**Người dùng hiện dùng thế nào?** Vào ‘Khám phá’, xem vùng có ảnh và thời gian; bật GFW khi cần khảo sát thêm. Các phần bên dưới dành cho giải thích nghiên cứu, không phải điều hành tàu thật.")
 
     st.markdown(
         f"<div style='font-size:22px;font-weight:500;letter-spacing:-0.02em;"
@@ -680,8 +687,8 @@ with tab_overview:
 
     var map = L.map('map', {{ zoomControl: true, preferCanvas: true, zoomSnap: 0.25 }});
     map.fitBounds([[6, 102], [24, 115]]);
-    L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
-        attribution: '© OpenStreetMap contributors',
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{
+        attribution: 'Esri, Maxar, Earthstar Geographics',
         maxZoom: 19,
         minZoom: 4,
     }}).addTo(map);
@@ -912,7 +919,7 @@ with tab_overview:
     with st.expander("Chú giải bản đồ"):
         st.markdown(
             f"<div style='color:{COL_INK};font-size:13px;line-height:1.7;'>"
-            f"<b>Nền bản đồ.</b> OpenStreetMap, phủ toàn bộ vùng biển Việt Nam "
+            f"<b>Nền ảnh vệ tinh.</b> Esri, phủ toàn bộ vùng biển Việt Nam "
             f"từ Vịnh Bắc Bộ đến Vịnh Thái Lan.<br><br>"
             f"<b>Quần đảo và đảo thuộc chủ quyền Việt Nam</b> được đánh dấu bằng "
             f"nhãn hành chính. Hai quần đảo Hoàng Sa và Trường Sa có vòng viền "
@@ -933,7 +940,7 @@ with tab_overview:
             f"không làm nhấp nháy giao diện và giữ nguyên trạng thái zoom.<br><br>"
             f"<b>Thời gian.</b> Đây là mô phỏng chạy theo tốc độ vận hành thực "
             f"(2–11 hải lý/h), không phải luồng AIS trực tiếp. Dữ liệu Sentinel-1 "
-            f"thật chỉ có khi vệ tinh bay qua; tab “Ảnh radar thật” hiển thị các "
+            f"thật chỉ có khi vệ tinh bay qua; tab “Khám phá” hiển thị các "
             f"cảnh quan sát thực tế theo thời điểm thu nhận."
             f"</div>",
             unsafe_allow_html=True,
