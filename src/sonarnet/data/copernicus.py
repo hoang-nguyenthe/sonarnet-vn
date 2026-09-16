@@ -121,7 +121,10 @@ function evaluatePixel(sample) {
             "data": [{
                 "type": "sentinel-1-grd",
                 "dataFilter": {"timeRange": {"from": start, "to": end}, "mosaickingOrder": "mostRecent"},
-                "processing": {"orthorectify": True, "backCoeff": "GAMMA0_TERRAIN", "demInstance": "COPERNICUS_30"},
+                # A nationwide mosaic spans many DEM tiles. Gamma0 ellipsoid
+                # avoids intermittent CDSE DEM service failures; detailed
+                # scene previews retain terrain correction in sentinel1_preview.
+                "processing": {"backCoeff": "GAMMA0_ELLIPSOID"},
             }],
         },
         "output": {"width": width, "height": height,

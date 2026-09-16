@@ -273,6 +273,21 @@ CSS = f"""
     .stApp img {{ border-radius: 18px; animation: sonar-rise .7s cubic-bezier(.2,.8,.2,1) both; }}
     [data-testid="stButton"] button {{ transition: transform .22s ease, box-shadow .22s ease, background .22s ease !important; border-radius: 999px !important; }}
     [data-testid="stButton"] button:hover {{ transform: scale(1.025); box-shadow: 0 8px 20px rgba(0,0,0,.12); }}
+    [role="tabpanel"] {{ animation: sonar-rise .42s cubic-bezier(.2,.8,.2,1) both; }}
+    .stApp iframe {{ border-radius:18px; overflow:hidden; }}
+    @media (max-width: 720px) {{
+        .main .block-container {{ padding: .65rem .85rem 2rem; }}
+        .sonar-hero {{ border-radius:22px; padding:28px 22px; margin-top:0; }}
+        .sonar-title {{ font-size:42px; letter-spacing:-.055em; }}
+        .sonar-copy {{ font-size:14px; }}
+        .sonar-pills {{ gap:6px; margin-top:19px; }}
+        .sonar-pill {{ font-size:11px; padding:7px 10px; }}
+        div[data-baseweb="tab-list"] {{ overflow-x:auto; scrollbar-width:none; white-space:nowrap; }}
+        button[data-baseweb="tab"] {{ padding:11px 12px !important; font-size:13px !important; }}
+        [data-testid="stMetric"] {{ padding:14px 15px; border-radius:11px; }}
+        [data-testid="stMetricValue"] {{ font-size:24px; }}
+        section[data-testid="stSidebar"] {{ min-width:280px; }}
+    }}
     @media (prefers-reduced-motion: reduce) {{ *, *::before, *::after {{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }} }}
 </style>
 """
@@ -354,6 +369,23 @@ st.markdown("""
   </div>
 </section>
 """, unsafe_allow_html=True)
+
+st.components.v1.html("""
+<div style="display:flex;justify-content:flex-end;padding:0 2px 15px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif">
+  <div style="display:flex;align-items:center;gap:10px;border:1px solid #d2d2d7;border-radius:999px;background:rgba(255,255,255,.86);padding:8px 13px;color:#1d1d1f;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.06)">
+    <span style="display:block;width:7px;height:7px;border-radius:50%;background:#34c759;box-shadow:0 0 0 4px rgba(52,199,89,.13)"></span>
+    <span id="vn-clock">Việt Nam · Đang đồng bộ…</span>
+  </div>
+</div>
+<script>
+  const clock = document.getElementById('vn-clock');
+  function tick() {
+    const now = new Intl.DateTimeFormat('vi-VN', {timeZone:'Asia/Ho_Chi_Minh', weekday:'short', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false}).format(new Date());
+    clock.textContent = 'Việt Nam · ' + now + ' (GMT+7)';
+  }
+  tick(); setInterval(tick, 1000);
+</script>
+""", height=52)
 
 # This value is populated in the live-data tab, then reused by the national map.
 national_mosaic: bytes | None = None
@@ -849,7 +881,7 @@ with tab_overview:
     <div class="legend-row"><span class="legend-dot" style="background:{COL_MISMATCH};"></span>AIS sai lệch</div>
     <div class="legend-row"><span class="legend-dot" style="background:{COL_DARK};"></span>Không có AIS</div>
 </div>
-<div class="timer"><span class="timer-label">Thời gian phiên</span><span id="timer">00:00</span></div>
+<div class="timer"><span class="timer-label">Thời gian mô phỏng</span><span id="timer">00:00</span></div>
 
 <script>
     var FLEET = {fleet_json};
