@@ -1,0 +1,36 @@
+{
+  "splits": [
+    {
+      "split": "train",
+      "n_scenes": 500,
+      "n_vessels": 4300,
+      "n_boxes": 4300,
+      "n_ais_records": 58718,
+      "n_AIS_OK": 2354,
+      "n_DARK": 1167,
+      "n_AIS_MISMATCH": 779
+    },
+    {
+      "split": "val",
+      "n_scenes": 80,
+      "n_vessels": 702,
+      "n_boxes": 702,
+      "n_ais_records": 9226,
+      "n_DARK": 205,
+      "n_AIS_OK": 369,
+      "n_AIS_MISMATCH": 128
+    },
+    {
+      "split": "test",
+      "n_scenes": 80,
+      "n_vessels": 672,
+      "n_boxes": 672,
+      "n_ais_records": 8803,
+      "n_AIS_OK": 360,
+      "n_DARK": 201,
+      "n_AIS_MISMATCH": 111
+    }
+  ],
+  "data_yaml": "/Users/nguyenthehoang/projects/sonarnet-vn/sonarnet_run/data/yolo/data.yaml",
+  "root": "/Users/nguyenthehoang/projects/sonarnet-vn/sonarnet_run/data/yolo"
+}

@@ -1,0 +1,39 @@
+{
+  "match_accuracy": 1.0,
+  "mean_match_error_m": 39.08,
+  "median_match_error_m": 36.15,
+  "p90_match_error_m": 68.03,
+  "dark_precision": 1.0,
+  "dark_recall": 0.9552,
+  "dark_f1": 0.9771,
+  "state_accuracy": 0.9693,
+  "state_macro_f1": 0.9656,
+  "confusion_matrix": [
+    [
+      339,
+      5,
+      0
+    ],
+    [
+      6,
+      101,
+      0
+    ],
+    [
+      9,
+      0,
+      192
+    ]
+  ],
+  "confusion_labels": [
+    "AIS_OK",
+    "AIS_MISMATCH",
+    "DARK"
+  ],
+  "per_state_f1": {
+    "AIS_OK": 0.9713,
+    "AIS_MISMATCH": 0.9484,
+    "DARK": 0.9771
+  },
+  "n_evaluated": 652
+}

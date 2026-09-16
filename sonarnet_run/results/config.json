@@ -1,0 +1,69 @@
+{
+  "root": "/Users/nguyenthehoang/projects/sonarnet-vn/sonarnet_run",
+  "seed": 20260914,
+  "quick_mode": false,
+  "multi_gpu": false,
+  "geo": {
+    "lat_min": 9.2,
+    "lat_max": 10.1,
+    "lon_min": 108.4,
+    "lon_max": 109.4,
+    "pixel_spacing_m": 10.0
+  },
+  "data": {
+    "scene_size": 640,
+    "n_train_scenes": 500,
+    "n_val_scenes": 80,
+    "n_test_scenes": 80,
+    "ships_per_scene": [
+      3,
+      14
+    ],
+    "dark_vessel_ratio": 0.28,
+    "land_probability": 0.22,
+    "azimuth_ambiguity": true,
+    "ais_position_noise_m": 45.0,
+    "ais_interval_s": [
+      12,
+      180
+    ],
+    "ais_window_s": 900,
+    "kaggle_input_dir": "/kaggle/input"
+  },
+  "detect": {
+    "backend": "ultralytics",
+    "yolo_model": "yolo11n.pt",
+    "imgsz": 640,
+    "epochs": 80,
+    "batch_size": 32,
+    "workers": 4,
+    "lr0": 0.005,
+    "patience": 30,
+    "tta_inference": false,
+    "close_mosaic_epochs": 20,
+    "devices": [
+      0
+    ],
+    "conf_threshold": 0.35,
+    "iou_threshold": 0.5
+  },
+  "fusion": {
+    "max_match_distance_m": 500.0,
+    "kalman_process_noise": 0.01,
+    "kalman_measurement_noise": 45.0,
+    "size_mismatch_ratio": 0.42
+  },
+  "behavior": {
+    "classes": [
+      "qua_canh",
+      "cau",
+      "keo_luoi",
+      "neo_dau"
+    ],
+    "track_hours": 18.0,
+    "track_step_min": 10.0,
+    "n_tracks_per_class": 320,
+    "test_size": 0.25,
+    "backend": "auto"
+  }
+}

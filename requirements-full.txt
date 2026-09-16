@@ -1,0 +1,43 @@
+# ===========================================================================
+#  SonarNet-VN — Danh mục thư viện
+# ===========================================================================
+#
+#  Trên Kaggle, toàn bộ nhóm BẮT BUỘC đã có sẵn trong ảnh Python mặc định.
+#  Chỉ cần cài đặt khi chạy trên máy cá nhân:
+#
+#      pip install -r requirements.txt
+#
+#  Các thư viện ở nhóm TUỲ CHỌN giúp nâng cao chất lượng hoặc tốc độ, nhưng
+#  khi thiếu, hệ thống tự động chuyển sang phương án thay thế và vẫn chạy
+#  đầy đủ mọi bước. Điều này bảo đảm notebook chạy thông cả khi Kaggle tắt
+#  kết nối mạng.
+#
+# ===========================================================================
+
+# ---- BẮT BUỘC -------------------------------------------------------------
+numpy>=1.23
+scipy>=1.9                # thuật toán Hungarian, lọc Gauss
+torch>=2.0                # nền tảng học sâu
+torchvision>=0.15         # phương án phát hiện dự phòng Faster R-CNN
+scikit-learn>=1.2         # chia tập, bộ phân loại dự phòng
+matplotlib>=3.6           # kết xuất hình minh hoạ
+pillow>=9.0               # đọc ghi ảnh
+pyyaml>=6.0               # mô tả bộ dữ liệu
+
+# ---- TUỲ CHỌN -------------------------------------------------------------
+# Thiếu bất kỳ mục nào dưới đây, hệ thống vẫn chạy đủ mọi bước.
+
+ultralytics>=8.3          # YOLO — phương án phát hiện chính, hỗ trợ đa GPU
+                          #   thiếu -> chuyển sang Faster R-CNN của torchvision
+xgboost>=1.7              # phân loại hành vi
+                          #   thiếu -> chuyển sang HistGradientBoosting
+folium>=0.14              # bản đồ giám sát tương tác
+                          #   thiếu -> kết xuất biểu đồ phân bố tĩnh
+opencv-python-headless>=4.7  # đọc ghi ảnh nhanh hơn
+                          #   thiếu -> chuyển sang Pillow
+pandas>=1.5               # kết xuất bảng dạng CSV
+                          #   thiếu -> bỏ qua bước xuất CSV
+
+# ---- PHÁT TRIỂN -----------------------------------------------------------
+# pytest>=7.0             # chạy bộ kiểm thử; không bắt buộc vì
+                          #   tests/test_smoke.py chạy độc lập được

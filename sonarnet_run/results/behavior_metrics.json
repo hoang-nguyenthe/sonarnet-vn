@@ -1,0 +1,59 @@
+{
+  "backend": "xgboost",
+  "classes": [
+    "cau",
+    "keo_luoi",
+    "neo_dau",
+    "qua_canh"
+  ],
+  "accuracy": 1.0,
+  "macro_f1": 1.0,
+  "per_class_f1": {
+    "cau": 1.0,
+    "keo_luoi": 1.0,
+    "neo_dau": 1.0,
+    "qua_canh": 1.0
+  },
+  "confusion_matrix": [
+    [
+      80,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      80,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      80
+    ]
+  ],
+  "n_train": 960,
+  "n_test": 320,
+  "top_features": {
+    "speed_max": 0.1707284328408226,
+    "accel_abs_std": 0.14376734188249612,
+    "turn_abs_mean": 0.1372557125838299,
+    "speed_mean": 0.12626528550716473,
+    "speed_std": 0.12468627634799373,
+    "accel_abs_mean": 0.12040336180465022,
+    "turn_abs_std": 0.11148832396940662,
+    "speed_median": 0.0338966806883798,
+    "course_autocorr_lag1": 0.022339731893852792,
+    "speed_p10": 0.006286132797054684,
+    "net_displacement_m": 0.0008266623168728625,
+    "bbox_diag_m": 0.0005490765890503955
+  }
+}

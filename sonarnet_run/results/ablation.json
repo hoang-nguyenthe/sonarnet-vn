@@ -1,0 +1,206 @@
+{
+  "rows": [
+    {
+      "Cấu hình": "A",
+      "Nội dung": "Chỉ ảnh radar",
+      "Độ nhạy phát hiện": 0.9568,
+      "Chính xác lớp DARK": 0.2991,
+      "Độ nhạy lớp DARK": 1.0,
+      "F1 lớp DARK": 0.4605,
+      "Chính xác 3 trạng thái": 0.2991,
+      "F1 vĩ mô 3 trạng thái": 0.1535,
+      "Sai số ghép cặp (m)": null
+    },
+    {
+      "Cấu hình": "B",
+      "Nội dung": "Chỉ dữ liệu AIS",
+      "Độ nhạy phát hiện": 0.7009,
+      "Chính xác lớp DARK": 0.0,
+      "Độ nhạy lớp DARK": 0.0,
+      "F1 lớp DARK": 0.0,
+      "Chính xác 3 trạng thái": 0.7009,
+      "F1 vĩ mô 3 trạng thái": 0.5939,
+      "Sai số ghép cặp (m)": 0.0
+    },
+    {
+      "Cấu hình": "C",
+      "Nội dung": "Hợp nhất, nội suy tuyến tính",
+      "Độ nhạy phát hiện": 0.9568,
+      "Chính xác lớp DARK": 1.0,
+      "Độ nhạy lớp DARK": 0.9552,
+      "F1 lớp DARK": 0.9771,
+      "Chính xác 3 trạng thái": 0.8221,
+      "F1 vĩ mô 3 trạng thái": 0.6109,
+      "Sai số ghép cặp (m)": 49.7
+    },
+    {
+      "Cấu hình": "D",
+      "Nội dung": "Hệ thống đầy đủ",
+      "Độ nhạy phát hiện": 0.9568,
+      "Chính xác lớp DARK": 1.0,
+      "Độ nhạy lớp DARK": 0.9552,
+      "F1 lớp DARK": 0.9771,
+      "Chính xác 3 trạng thái": 0.9693,
+      "F1 vĩ mô 3 trạng thái": 0.9656,
+      "Sai số ghép cặp (m)": 39.1
+    }
+  ],
+  "metrics": {
+    "D": {
+      "match_accuracy": 1.0,
+      "mean_match_error_m": 39.08,
+      "median_match_error_m": 36.15,
+      "p90_match_error_m": 68.03,
+      "dark_precision": 1.0,
+      "dark_recall": 0.9552,
+      "dark_f1": 0.9771,
+      "state_accuracy": 0.9693,
+      "state_macro_f1": 0.9656,
+      "confusion_matrix": [
+        [
+          339,
+          5,
+          0
+        ],
+        [
+          6,
+          101,
+          0
+        ],
+        [
+          9,
+          0,
+          192
+        ]
+      ],
+      "confusion_labels": [
+        "AIS_OK",
+        "AIS_MISMATCH",
+        "DARK"
+      ],
+      "per_state_f1": {
+        "AIS_OK": 0.9713,
+        "AIS_MISMATCH": 0.9484,
+        "DARK": 0.9771
+      },
+      "n_evaluated": 652
+    },
+    "C": {
+      "match_accuracy": 1.0,
+      "mean_match_error_m": 49.72,
+      "median_match_error_m": 45.4,
+      "p90_match_error_m": 85.54,
+      "dark_precision": 1.0,
+      "dark_recall": 0.9552,
+      "dark_f1": 0.9771,
+      "state_accuracy": 0.8221,
+      "state_macro_f1": 0.6109,
+      "confusion_matrix": [
+        [
+          344,
+          0,
+          0
+        ],
+        [
+          107,
+          0,
+          0
+        ],
+        [
+          9,
+          0,
+          192
+        ]
+      ],
+      "confusion_labels": [
+        "AIS_OK",
+        "AIS_MISMATCH",
+        "DARK"
+      ],
+      "per_state_f1": {
+        "AIS_OK": 0.8557,
+        "AIS_MISMATCH": 0.0,
+        "DARK": 0.9771
+      },
+      "n_evaluated": 652
+    },
+    "A": {
+      "match_accuracy": 0.0,
+      "mean_match_error_m": NaN,
+      "median_match_error_m": NaN,
+      "p90_match_error_m": NaN,
+      "dark_precision": 0.2991,
+      "dark_recall": 1.0,
+      "dark_f1": 0.4605,
+      "state_accuracy": 0.2991,
+      "state_macro_f1": 0.1535,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          360
+        ],
+        [
+          0,
+          0,
+          111
+        ],
+        [
+          0,
+          0,
+          201
+        ]
+      ],
+      "confusion_labels": [
+        "AIS_OK",
+        "AIS_MISMATCH",
+        "DARK"
+      ],
+      "per_state_f1": {
+        "AIS_OK": 0.0,
+        "AIS_MISMATCH": 0.0,
+        "DARK": 0.4605
+      },
+      "n_evaluated": 672
+    },
+    "B": {
+      "match_accuracy": 1.0,
+      "mean_match_error_m": 0.0,
+      "median_match_error_m": 0.0,
+      "p90_match_error_m": 0.0,
+      "dark_precision": 0.0,
+      "dark_recall": 0.0,
+      "dark_f1": 0.0,
+      "state_accuracy": 0.7009,
+      "state_macro_f1": 0.5939,
+      "confusion_matrix": [
+        [
+          360,
+          0,
+          0
+        ],
+        [
+          0,
+          111,
+          0
+        ],
+        [
+          201,
+          0,
+          0
+        ]
+      ],
+      "confusion_labels": [
+        "AIS_OK",
+        "AIS_MISMATCH",
+        "DARK"
+      ],
+      "per_state_f1": {
+        "AIS_OK": 0.7818,
+        "AIS_MISMATCH": 1.0,
+        "DARK": 0.0
+      },
+      "n_evaluated": 672
+    }
+  }
+}

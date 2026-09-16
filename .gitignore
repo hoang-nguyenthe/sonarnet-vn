@@ -1,0 +1,63 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Logs and local run artefacts
+*.log
+run*.log
+streamlit.log
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Model weights (large, will be re-downloaded / re-trained)
+*.pt
+*.pth
+*.onnx
+yolo11n.pt
+
+# Large training data — not needed for the online demo
+sonarnet_run/data/yolo/images/train/
+sonarnet_run/data/yolo/images/val/
+sonarnet_run/data/yolo/labels/train/
+sonarnet_run/data/yolo/labels/val/
+sonarnet_run/data/yolo/scenes/train.jsonl
+sonarnet_run/data/yolo/scenes/val.jsonl
+sonarnet_run/data/yolo/data.yaml.bak
+sonarnet_run/runs/
+
+# Working artefacts not intended for the public repo
+prompt_log/
+KE_KHAI_CONG_CU_AI.md
+docs/PROMPT_LOG.md
+scripts/promptlog.py
+scripts/build_notebook.py
+scripts/_to_delete/
+
+# OS
+Thumbs.db
+
+# Large AIS training files
+sonarnet_run/data/yolo/ais/train.jsonl
+sonarnet_run/data/yolo/ais/val.jsonl
