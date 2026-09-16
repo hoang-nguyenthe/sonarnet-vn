@@ -13,6 +13,7 @@ Không có mã đăng ký hay thông tin cá nhân — nguyên tắc "không tru
 """
 from __future__ import annotations
 
+from io import BytesIO
 import json
 import sys
 from datetime import date, timedelta
@@ -20,19 +21,37 @@ from pathlib import Path
 
 import numpy as np
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from sonarnet.data.copernicus import (
-    CopernicusError,
-    SentinelProduct,
-    access_token,
-    search_sentinel1_grd,
-    sentinel1_preview,
-)
 from sonarnet.data.gfw import GlobalFishingWatchError, sar_reference_report
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_demo_gfw_reference(
+    token: str, bbox: tuple[float, float, float, float], start: date, end: date,
+):
+    """Cache the independent reference layer so opening the demo stays instant."""
+    return sar_reference_report(token, bbox, start, end)
+
+
+def gfw_overlay_png(image_path: Path, bbox: tuple[float, float, float, float], cells) -> bytes:
+    """Overlay gridded GFW counts onto the corresponding Sentinel raster."""
+    west, south, east, north = bbox
+    image = Image.open(image_path).convert("RGB")
+    draw = ImageDraw.Draw(image, "RGBA")
+    width, height = image.size
+    for cell in cells:
+        x = (cell.longitude - west) / (east - west) * width
+        y = (north - cell.latitude) / (north - south) * height
+        radius = 7 + min(cell.detections, 4) * 2
+        draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=(255, 59, 48, 215), outline=(255, 255, 255, 255), width=2)
+        draw.text((x + radius + 2, y - radius - 2), str(cell.detections), fill=(255, 255, 255, 255), stroke_width=2, stroke_fill=(0, 0, 0, 220))
+    output = BytesIO()
+    image.save(output, format="PNG")
+    return output.getvalue()
 
 st.set_page_config(
     page_title="SonarNet-VN — Bảng điều khiển giám sát",
@@ -301,130 +320,62 @@ tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi, tab_live = st.tabs([
 # TAB LIVE — Copernicus Sentinel-1 GRD
 # ============================================================================
 with tab_live:
-    st.subheader("Cảnh Sentinel-1 thật và lớp đối chiếu độc lập")
+    st.subheader("Cảnh Sentinel-1 thật và đối chiếu độc lập")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:16px;font-size:14px;line-height:1.55;'>"
-        "Tra cứu catalog Copernicus, hiển thị ảnh radar VV đã hiệu chỉnh địa hình, "
-        "và đối chiếu theo ô lưới với lớp SAR Vessel Detections của Global Fishing Watch. "
+        "Cảnh radar VV đã hiệu chỉnh địa hình được hiển thị ngay khi mở tab. Các vòng đỏ là "
+        "phát hiện theo ô lưới của Global Fishing Watch tại cùng cửa sổ thời gian. "
         "Dữ liệu trong tab này là dữ liệu thật; các chỉ tiêu mô hình ở các tab còn lại vẫn là mô phỏng."
         "</div>",
         unsafe_allow_html=True,
     )
-    products: list[SentinelProduct] = []
-    reference_bbox: tuple[float, float, float, float] | None = None
-    reference_start: date | None = None
-    reference_end: date | None = None
-
-    if "copernicus" not in st.secrets:
-        st.markdown("**Cảnh Sentinel-1 đã kiểm chứng**")
-        if LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists():
-            evidence = json.loads(LIVE_DEMO_METADATA.read_text())
-            st.image(LIVE_DEMO_IMAGE, caption=(
-                f"Sentinel-1 GRD thật · {evidence['acquired_at']} · Ngoài khơi Bình Thuận · "
-                "VV gamma0 terrain, orthorectified"
-            ), use_container_width=True)
-            st.caption(f"Mã sản phẩm Copernicus: {evidence['product_id']}")
-            reference_bbox = tuple(evidence["bbox_wgs84"])
-            reference_start = date.fromisoformat(evidence["acquired_at"][:10])
-            reference_end = reference_start + timedelta(days=1)
-        st.info("Đây là cảnh thật đã đóng gói sẵn cho demo công khai. Nó kiểm chứng nguồn và chuỗi Copernicus, nhưng chưa được dùng để báo cáo mAP vì chưa có nhãn độc lập trên chính cảnh này.")
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Nguồn", "Copernicus Sentinel-1 GRD")
-        c2.metric("Vai trò", "Kiểm chứng nguồn và giao diện")
-        c3.metric("Không suy diễn", "Danh tính hay vi phạm")
+    if not (LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists()):
+        st.error("Thiếu cảnh Sentinel-1 đã đóng gói cho bản demo.")
     else:
-        live_left, live_right = st.columns([2, 1])
-        with live_left:
-            presets = {
-                "Ngoài khơi Bình Thuận": (107.70, 10.35, 108.10, 10.65),
-                "Vịnh Bắc Bộ": (107.10, 20.20, 107.50, 20.50),
-                "Vịnh Thái Lan": (104.25, 9.00, 104.65, 9.30),
-                "Trường Sa (vùng quan sát)": (112.80, 10.10, 113.20, 10.40),
-            }
-            area_name = st.selectbox("Vùng quan sát", list(presets), key="live_area")
-            bbox = presets[area_name]
-            end_date = st.date_input("Ngày kết thúc", value=date.today(), max_value=date.today(), key="live_end")
-            start_date = st.date_input("Ngày bắt đầu", value=end_date - timedelta(days=90),
-                                       max_value=end_date, key="live_start")
-        with live_right:
-            st.markdown("**Khung quan sát**")
-            st.caption(f"{bbox[1]:.2f}–{bbox[3]:.2f}°B · {bbox[0]:.2f}–{bbox[2]:.2f}°Đ")
-            st.caption("Ảnh xem nhanh: VV, gamma0 terrain, 768 px.")
-            search_clicked = st.button("Tìm ảnh Sentinel-1", type="primary", use_container_width=True)
-
-        if start_date > end_date:
-            st.warning("Ngày bắt đầu phải không sau ngày kết thúc.")
-        elif search_clicked:
+        evidence = json.loads(LIVE_DEMO_METADATA.read_text())
+        reference_bbox = tuple(evidence["bbox_wgs84"])
+        reference_start = date.fromisoformat(evidence["acquired_at"][:10])
+        reference_end = reference_start + timedelta(days=1)
+        ref_cells = []
+        if "gfw" in st.secrets:
             try:
-                credentials = st.secrets["copernicus"]
-                with st.spinner("Đang xác thực và truy vấn catalog Copernicus…"):
-                    token = access_token(credentials["client_id"], credentials["client_secret"])
-                    products = search_sentinel1_grd(token, bbox, start_date, end_date)
-                st.session_state["live_products"] = products
-                st.session_state["live_bbox"] = bbox
-                st.session_state["live_area_name"] = area_name
-                if not products:
-                    st.info("Không tìm thấy Sentinel-1 GRD trong khoảng thời gian này. Hãy mở rộng khoảng ngày.")
-            except CopernicusError as exc:
-                st.error(str(exc))
-
-        products = st.session_state.get("live_products", [])
-        reference_bbox = st.session_state.get("live_bbox", bbox)
-        reference_start, reference_end = start_date, end_date
-        if products:
-            if st.session_state.get("live_bbox") != bbox:
-                st.info("Bấm “Tìm ảnh Sentinel-1” để cập nhật kết quả cho vùng đang chọn.")
-            selected = st.selectbox(
-                "Sản phẩm tìm thấy", products,
-                format_func=lambda p: f"{p.acquired_at} · {p.platform} · quỹ đạo {p.orbit} · {p.polarization}",
-                key="live_product",
-            )
-            # GFW's report interval is end-exclusive.  Anchor the independent
-            # reference to the selected satellite pass instead of querying a
-            # broad, slow date range unrelated to the displayed scene.
-            reference_start = date.fromisoformat(selected.acquired_at[:10])
-            reference_end = reference_start + timedelta(days=1)
-            st.caption(f"Mã sản phẩm: `{selected.product_id}`")
-            if st.button("Tải ảnh radar VV", use_container_width=False):
-                try:
-                    credentials = st.secrets["copernicus"]
-                    with st.spinner("Copernicus đang dựng ảnh Sentinel-1…"):
-                        token = access_token(credentials["client_id"], credentials["client_secret"])
-                        image_bytes = sentinel1_preview(token, st.session_state["live_bbox"], selected.acquired_at)
-                    st.session_state["live_image"] = image_bytes
-                    st.session_state["live_image_product"] = selected.product_id
-                except CopernicusError as exc:
-                    st.error(str(exc))
-
-            if st.session_state.get("live_image_product") == selected.product_id:
-                st.image(st.session_state["live_image"], caption=(
-                    f"Sentinel-1 GRD thật · VV gamma0 terrain · {selected.acquired_at} · "
-                    f"{st.session_state.get('live_area_name', area_name)}"
-                ), use_container_width=True)
-                st.info("Ảnh này là lớp quan sát SAR. Không suy luận danh tính hay vi phạm từ ảnh; dùng lớp reference bên dưới để kiểm tra tính nhất quán ở mức ô lưới.")
-
-    st.markdown("#### Đối chiếu ngoài mẫu: GFW SAR Vessel Detections")
-    st.caption("GFW dùng Sentinel-1 và mô hình riêng để tạo lớp phát hiện SAR theo ô lưới. SonarNet chỉ dùng lớp này làm reference độc lập, không dùng để huấn luyện hoặc coi là ground truth tuyệt đối.")
-    if "gfw" not in st.secrets:
-        st.info("Chưa cấu hình token Global Fishing Watch. Luồng reference đã có trong code nhưng không thể truy vấn công khai mà không có token cá nhân.")
-    elif reference_bbox and reference_start and reference_end:
-        ref_mode = st.radio("Lọc lớp reference", ["Tất cả", "Không khớp AIS", "Khớp AIS"], horizontal=True, key="gfw_mode")
-        matched_filter = {"Tất cả": None, "Không khớp AIS": False, "Khớp AIS": True}[ref_mode]
-        if st.button("Tra cứu lớp GFW reference", use_container_width=False):
-            try:
-                with st.spinner("Global Fishing Watch đang tổng hợp dữ liệu SAR reference…"):
-                    st.session_state["gfw_reference_cells"] = sar_reference_report(
+                with st.spinner("Đang ghép lớp SAR Vessel Detections vào cảnh Sentinel-1…"):
+                    ref_cells = load_demo_gfw_reference(
                         st.secrets["gfw"]["api_token"], reference_bbox, reference_start, reference_end,
-                        matched=matched_filter,
                     )
             except GlobalFishingWatchError as exc:
                 st.error(str(exc))
-        ref_cells = st.session_state.get("gfw_reference_cells", [])
+
+        image_col, context_col = st.columns([1.75, 1])
+        with image_col:
+            st.image(
+                gfw_overlay_png(LIVE_DEMO_IMAGE, reference_bbox, ref_cells),
+                caption=("Sentinel-1 GRD thật · VV gamma0 terrain · "
+                         f"{evidence['acquired_at']} · Ngoài khơi Bình Thuận. "
+                         "Vòng đỏ: ô GFW SAR Vessel Detections."),
+                use_container_width=True,
+            )
+        with context_col:
+            st.markdown("#### Cảnh demo chuẩn")
+            st.metric("Phát hiện GFW", sum(cell.detections for cell in ref_cells))
+            st.metric("Ô lưới có tín hiệu", len(ref_cells))
+            st.caption("Cùng cửa sổ thời gian: 12/09/2026, 11:00 UTC.")
+            st.caption("Khung ảnh: 10.35–10.65°B · 107.70–108.10°Đ")
+            st.caption("Nguồn ảnh: Copernicus Sentinel-1 GRD, cảnh VV gamma0 đã chỉnh địa hình.")
+            st.caption(f"Chuẩn demo mới nhất đã xác minh đồng thời với GFW · cập nhật {evidence['retrieved_at']}.")
+            st.caption(f"Mã sản phẩm: `{evidence['product_id']}`")
+
+        st.markdown("#### Đối chiếu độc lập")
+        st.caption("GFW dùng Sentinel-1 và mô hình riêng để lập lớp tham chiếu theo ô lưới. SonarNet chỉ dùng lớp này để kiểm tra tính nhất quán; không huấn luyện từ GFW, không coi là ground truth tuyệt đối, không suy diễn danh tính hoặc vi phạm.")
         if ref_cells:
             import pandas as pd
-            st.metric("Tổng phát hiện GFW trong vùng / kỳ", sum(cell.detections for cell in ref_cells))
-            st.dataframe(pd.DataFrame([{"Thời điểm": cell.acquired_at, "Vĩ độ": round(cell.latitude, 3), "Kinh độ": round(cell.longitude, 3), "Phát hiện": cell.detections} for cell in ref_cells]), use_container_width=True, hide_index=True)
-            st.warning("Đối chiếu theo ô lưới và thời điểm, không phải xác nhận danh tính, danh sách vi phạm hay thay thế kiểm tra nghiệp vụ.")
+            st.dataframe(pd.DataFrame([
+                {"Thời điểm": cell.acquired_at, "Vĩ độ": round(cell.latitude, 3),
+                 "Kinh độ": round(cell.longitude, 3), "Phát hiện": cell.detections}
+                for cell in ref_cells
+            ]), use_container_width=True, hide_index=True)
+        elif "gfw" not in st.secrets:
+            st.info("Cảnh Sentinel-1 vẫn hiển thị đầy đủ. Thêm token GFW để tự chồng lớp đối chiếu độc lập.")
 
 # ============================================================================
 # TAB SIM — Simulated vessel motion
