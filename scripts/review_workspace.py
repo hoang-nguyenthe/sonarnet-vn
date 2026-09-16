@@ -6,6 +6,7 @@ from io import BytesIO
 import zipfile
 
 STATUSES = ['Chưa xem xét', 'Cần kiểm tra tiếp', 'Đã xem, chưa thấy mục tiêu rõ']
+CANDIDATE_STATUSES = ['Chưa đánh giá', 'Có khả năng là tàu', 'Nhiễu / không phải tàu']
 
 
 def report_id(report):
@@ -35,7 +36,23 @@ def import_workspace(raw, report):
             raise ValueError('Hồ sơ chứa ô ảnh không hợp lệ.')
         if item.get('status') not in STATUSES or not isinstance(item.get('note'), str) or len(item['note']) > 5000:
             raise ValueError('Trạng thái hoặc ghi chú không hợp lệ.')
-    return {k: {'status': v['status'], 'note': v['note']} for k,v in reviews.items()}
+        labels = item.get('candidate_labels', {})
+        if not isinstance(labels, dict):
+            raise ValueError('Đánh giá ứng viên không hợp lệ.')
+        for candidate_id, label in labels.items():
+            if not str(candidate_id).isdigit() or label not in CANDIDATE_STATUSES:
+                raise ValueError('Đánh giá ứng viên không hợp lệ.')
+    # Keep the original session shape for older workspaces.  Candidate-level
+    # labels are optional and are only added when the reviewer has actually
+    # recorded one, so importing an old tile review never creates noisy empty
+    # fields or breaks round-trip compatibility.
+    result = {}
+    for key, value in reviews.items():
+        review = {'status': value['status'], 'note': value['note']}
+        if value.get('candidate_labels'):
+            review['candidate_labels'] = value['candidate_labels']
+        result[key] = review
+    return result
 
 
 def printable_review(tile, review, day):

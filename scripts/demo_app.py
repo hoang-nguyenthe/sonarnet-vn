@@ -1,15 +1,14 @@
 #!/usr/bin/env python
-"""Dashboard tương tác SonarNet-VN — chạy bằng `streamlit run scripts/demo_app.py`.
+"""Dashboard tương tác SonarNet‑VN — chạy bằng ``streamlit run scripts/demo_app.py``.
 
-Sáu khu vực demo:
-  1. 🎬 Mô phỏng hoạt động — tàu di chuyển theo thời gian, thấy được ai bật/tắt AIS
-  2. 🛰 Phát hiện tàu SAR — ảnh gốc + ground truth + YOLO predictions
-  3. 🔗 Hợp nhất radar–AIS — ma trận hỗn hợp 3 màu
-  4. 📐 Kalman vs tuyến tính — bằng chứng vì sao chọn RTS
-  5. 🗺 Bản đồ giám sát — Folium tương tác
-  6. 📊 Chỉ tiêu tổng hợp
+Luồng công khai được rút gọn thành ba điểm đến:
+  1. Khám phá — xem lớp Sentinel‑1 đã xuất bản hoặc rà soát ứng viên YOLO trên
+     lưới ảnh thật có bằng chứng.
+  2. Cách dùng — giải thích bài toán và giới hạn theo ngôn ngữ dễ trình bày.
+  3. Nghiên cứu — các mô phỏng và chỉ số thuật toán, tách khỏi dữ liệu thật.
 
-Không có mã đăng ký hay thông tin cá nhân — nguyên tắc "không truy vết".
+Thông tin nhạy cảm không nằm trong mã nguồn; các lớp dữ liệu luôn hiển thị
+nguồn, khoảng thời gian và trạng thái kiểm chứng.
 """
 from __future__ import annotations
 
@@ -25,6 +24,10 @@ import streamlit as st
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
+# Make sibling view modules importable both via `streamlit run` and through
+# Streamlit's AppTest runner (which does not always add the script directory
+# to ``sys.path``).
+sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
 from sonarnet.data.gfw import GlobalFishingWatchError, sar_reference_report

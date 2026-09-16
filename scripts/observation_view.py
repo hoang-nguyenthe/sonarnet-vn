@@ -50,7 +50,13 @@ def published_layers(root):
     if national:
         records.append(dict(national, key="vietnam", label="Việt Nam", asset="sentinel1_vietnam_latest.png"))
     manifest = read_json(assets / "sentinel1_global/latest.json")
-    records.extend(dict(item, refreshed_at=item.get("refreshed_at", manifest.get("refreshed_at"))) for item in manifest.get("tiles", []))
+    # Per-tile manifests may explicitly contain ``null``.  Treat that as
+    # missing and fall back to the manifest refresh time so every published
+    # image can show a trustworthy “created” timestamp in its provenance.
+    records.extend(
+        dict(item, refreshed_at=item.get("refreshed_at") or manifest.get("refreshed_at"))
+        for item in manifest.get("tiles", [])
+    )
     valid = []
     for record in records:
         path = assets / record["asset"]
@@ -83,7 +89,10 @@ def provenance(record):
 
 def render(root):
     from scan_view import render_scan
-    workflow = st.radio('Bạn muốn làm gì?', ['Kiểm tra ảnh thật', 'Xem ảnh toàn cảnh'], horizontal=True)
+    # Start with the nationwide context so a first-time visitor immediately
+    # sees the published Sentinel‑1 coverage.  The focused YOLO review remains
+    # one deliberate step away and is clearly labelled as a test workspace.
+    workflow = st.radio('Bạn muốn làm gì?', ['Xem ảnh toàn cảnh', 'Kiểm tra ảnh thật'], horizontal=True)
     if workflow == 'Kiểm tra ảnh thật':
         render_scan(root)
         return

@@ -7,7 +7,7 @@ import folium
 import streamlit as st
 from PIL import Image
 from streamlit.components.v1 import html
-from review_workspace import STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
+from review_workspace import STATUSES, CANDIDATE_STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
 from scan_assets import validated_report
 
 
@@ -30,11 +30,12 @@ def render_scan(root: Path):
     if len(ready) < len(tiles):
         st.warning(f'{len(tiles)-len(ready)} ô chưa có bằng chứng hợp lệ và không được đưa vào danh sách kiểm tra. Không coi các ô này là không có tàu.')
     count = sum(len(r['detections']) for r in ready)
+    candidate_reviewed = sum(len(v.get('candidate_labels', {})) for v in reviews.values())
     st.subheader('Kiểm tra ảnh radar thật')
     st.caption('Chọn ảnh → xem ứng viên → lưu ghi chú và bằng chứng.')
     reviewed = sum(1 for value in reviews.values() if value.get('status') != STATUSES[0])
     follow_up = sum(1 for value in reviews.values() if value.get('status') == STATUSES[1])
-    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>Ứng viên baseline<strong>{count}</strong></span><span>Đã xem<strong>{reviewed} ô</strong></span><span>Cần xem tiếp<strong>{follow_up} ô</strong></span></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>Ứng viên baseline<strong>{count}</strong></span><span>Đã xem<strong>{reviewed} ô</strong></span><span>Ứng viên đã đánh giá<strong>{candidate_reviewed}/{count}</strong></span><span>Cần xem tiếp<strong>{follow_up} ô</strong></span></div>', unsafe_allow_html=True)
     model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
     st.caption(f"Mô hình: YOLO baseline học từ ảnh mô phỏng · mã {model_hash[:12] if model_hash else 'chưa có'}. Đây là ứng viên để người xem rà soát, không phải kết quả đã xác minh.")
     st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
@@ -70,8 +71,10 @@ def render_scan(root: Path):
         folium.Rectangle([[s,w],[n,e]], color=border if processed else '#efad48', weight=3 if review_status != STATUSES[0] else 2, fill=True, fill_opacity=.18,
                          tooltip=f"{tile['key']} · {review_status}", popup=f"{tile['key']} · {summary} · {day_label} UTC · {review_status}").add_to(chart)
         for d in tile.get('detections', []):
-            folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color='#ffb85c',fill=True,
-                popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · chưa xác minh").add_to(chart)
+            label = reviews.get(tile['key'], {}).get('candidate_labels', {}).get(str(d['id']), CANDIDATE_STATUSES[0])
+            dot_color = '#45c9b8' if label == CANDIDATE_STATUSES[1] else '#ea6b61' if label == CANDIDATE_STATUSES[2] else '#ffb85c'
+            folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color=dot_color,fill=True,
+                popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · {label}").add_to(chart)
     chart.fit_bounds([[6,102],[24,115]])
     with st.expander('Phạm vi đã quét trên Việt Nam', expanded=True):
         html(chart.get_root().render(), height=420)
@@ -91,6 +94,15 @@ def render_scan(root: Path):
             crop = image.crop((max(0,int(x1)-24),max(0,int(y1)-24),min(image.width,int(x2)+24),min(image.height,int(y2)+24)))
             st.image(crop, caption='Ảnh cắt để kiểm tra trực quan — không phải xác nhận tàu cá', width=256)
         st.write(f"Tọa độ xấp xỉ: {detection['latitude']:.5f}, {detection['longitude']:.5f}. Chưa đối chiếu AIS.")
+        review_state = reviews.setdefault(chosen, {'status': STATUSES[0], 'note': ''})
+        candidate_labels = review_state.setdefault('candidate_labels', {})
+        selected_label = candidate_labels.get(str(detection['id']), CANDIDATE_STATUSES[0])
+        with st.form(f'candidate_form_{chosen}_{detection["id"]}'):
+            candidate_status = st.radio('Đánh giá ứng viên này', CANDIDATE_STATUSES, index=CANDIDATE_STATUSES.index(selected_label), key=f'candidate_status_{chosen}_{detection["id"]}')
+            if st.form_submit_button('Lưu đánh giá ứng viên'):
+                reviews.setdefault(chosen, {}).setdefault('candidate_labels', {})[str(detection['id'])] = candidate_status
+                st.rerun()
+        st.caption('Đây là đánh giá thủ công để tạo dữ liệu kiểm chứng, không phải nhãn sự thật hay kết luận tàu cá.')
     else:
         st.info('YOLO không đề xuất ứng viên trong ô này ở ngưỡng 0,35. Vẫn cần kiểm tra ảnh; không được suy ra rằng vùng này không có tàu.')
     st.caption(f"Nguồn: {tile['source']} · WGS84: {tile['bbox']}. Ảnh ghép trong ngày, không có thời điểm riêng từng pixel.")
@@ -99,7 +111,14 @@ def render_scan(root: Path):
         verdict = st.radio('Đánh dấu của người xem', STATUSES, index=STATUSES.index(saved['status']), key=f'verdict_{chosen}')
         note = st.text_area('Ghi chú kiểm tra', value=saved['note'], max_chars=5000, key=f'note_{chosen}', placeholder='Ví dụ: có điểm sáng cần đối chiếu với ảnh độ phân giải cao hơn…')
         if st.form_submit_button('Lưu ghi chú ô ảnh'):
+            # Preserve candidate-level decisions when the tile-level verdict
+            # is saved afterwards.  Without this, a normal workflow of
+            # labelling a candidate then saving the tile would silently erase
+            # the candidate review from the map and exported session.
+            candidate_labels = reviews.get(chosen, {}).get('candidate_labels', {})
             reviews[chosen] = {'status': verdict, 'note': note}
+            if candidate_labels:
+                reviews[chosen]['candidate_labels'] = candidate_labels
             st.rerun()
     saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
     st.caption(f"Đã lưu trong phiên: {saved['status']}. Bấm lưu trước khi đổi ô. Tải hồ sơ để giữ lại sau khi đóng trang.")
