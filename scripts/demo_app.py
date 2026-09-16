@@ -59,7 +59,7 @@ def load_available_vietnam_scenes(client_id: str, client_secret: str, latest_ref
     products = search_sentinel1_grd(
         token, (102.0, 6.0, 115.0, 21.8), latest_reference_day - timedelta(days=10), latest_reference_day, limit=50,
     )
-    return sorted(products, key=lambda item: item.acquired_at, reverse=True)
+    return sorted((item for item in products if vietnam_scene_match(item.bbox) is not None), key=lambda item: item.acquired_at, reverse=True)
 
 
 @st.cache_data(ttl=6 * 3600, show_spinner=False)
@@ -69,14 +69,31 @@ def load_product_preview(
     return sentinel1_preview(access_token(client_id, client_secret), bbox, acquired_at)
 
 
-def vietnam_focus_bbox(product_bbox: tuple[float, float, float, float]) -> tuple[float, float, float, float]:
-    """Use a compact ocean-facing crop for a selected Vietnam-overlapping swath."""
+VIETNAM_MARITIME_ZONES: dict[str, tuple[float, float, float, float]] = {
+    "Vịnh Bắc Bộ": (105.5, 18.0, 110.5, 21.8),
+    "Ven biển Bắc Trung Bộ": (106.0, 16.0, 109.0, 19.0),
+    "Ven biển Trung Bộ": (108.0, 12.0, 111.0, 16.5),
+    "Ngoài khơi Bình Thuận": (107.0, 9.5, 110.0, 12.5),
+    "Vũng Tàu – Côn Đảo": (105.5, 8.0, 109.0, 10.5),
+    "Vịnh Thái Lan": (102.0, 7.0, 105.5, 11.0),
+    "Quần đảo Hoàng Sa": (110.5, 15.5, 113.5, 18.5),
+    "Quần đảo Trường Sa": (111.0, 7.0, 115.0, 12.5),
+}
+
+
+def vietnam_scene_match(product_bbox: tuple[float, float, float, float]) -> tuple[str, tuple[float, float, float, float]] | None:
+    """Match a Copernicus footprint to its largest-overlap Vietnam maritime zone."""
     west, south, east, north = product_bbox
-    west, south, east, north = max(west, 102.0), max(south, 6.0), min(east, 115.0), min(north, 21.8)
-    if west >= east or south >= north:
-        return (107.7, 10.35, 108.1, 10.65)
-    longitude, latitude = (west + east) / 2, (south + north) / 2
-    return (longitude - 0.20, latitude - 0.15, longitude + 0.20, latitude + 0.15)
+    best: tuple[str, tuple[float, float, float, float], float] | None = None
+    for name, (zone_w, zone_s, zone_e, zone_n) in VIETNAM_MARITIME_ZONES.items():
+        overlap_w, overlap_s = max(west, zone_w), max(south, zone_s)
+        overlap_e, overlap_n = min(east, zone_e), min(north, zone_n)
+        area = max(0.0, overlap_e - overlap_w) * max(0.0, overlap_n - overlap_s)
+        if area > 0 and (best is None or area > best[2]):
+            # Keep a compact, legible crop entirely inside the matched maritime zone.
+            longitude, latitude = (overlap_w + overlap_e) / 2, (overlap_s + overlap_n) / 2
+            best = (name, (longitude - 0.20, latitude - 0.15, longitude + 0.20, latitude + 0.15), area)
+    return (best[0], best[1]) if best else None
 
 
 def gfw_overlay_png(image_source: Path | bytes, bbox: tuple[float, float, float, float], cells) -> bytes:
@@ -410,10 +427,12 @@ with tab_live:
                 st.stop()
             vietnam_product = st.selectbox(
                 "Chọn cảnh Sentinel-1 có sẵn trên vùng biển Việt Nam", vietnam_products,
-                format_func=lambda item: f"{item.acquired_at} · {item.platform} · {item.orbit} · {item.polarization}",
+                format_func=lambda item: (
+                    f"{vietnam_scene_match(item.bbox)[0]} · {item.acquired_at} · {item.platform}"
+                ),
                 key="vietnam_available_scene",
             )
-            st.caption(f"Catalog đang có {len(vietnam_products)} cảnh. Danh sách được lấy trực tiếp từ Copernicus, không phải điểm đặt sẵn.")
+            st.caption(f"Catalog đang có {len(vietnam_products)} cảnh. Mỗi cảnh đã được match footprint với vùng biển Việt Nam trước khi hiển thị.")
         except CopernicusError as exc:
             st.error(str(exc))
             st.stop()
@@ -439,8 +458,11 @@ with tab_live:
             if "copernicus" not in st.secrets:
                 st.error("Chưa có cấu hình Copernicus để tải cảnh đã chọn.")
                 st.stop()
-            reference_bbox = vietnam_focus_bbox(vietnam_product.bbox)
-            scene_name = "Vùng biển Việt Nam"
+            matched_scene = vietnam_scene_match(vietnam_product.bbox)
+            if matched_scene is None:
+                st.error("Footprint cảnh này không khớp vùng biển Việt Nam đã định nghĩa.")
+                st.stop()
+            scene_name, reference_bbox = matched_scene
             try:
                 with st.spinner("Đang dựng ảnh Sentinel-1 cho cảnh Việt Nam đã chọn…"):
                     reference_image = load_product_preview(
