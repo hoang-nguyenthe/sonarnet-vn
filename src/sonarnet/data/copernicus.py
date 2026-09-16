@@ -144,7 +144,7 @@ function evaluatePixel(sample) {
 
 
 def sentinel1_mosaic_preview(
-    token: str, bbox: tuple[float, float, float, float], start: date, end: date, width: int = 1024,
+    token: str, bbox: tuple[float, float, float, float], start: date, end: date, width: int = 1280,
 ) -> bytes:
     """Render a most-recent Sentinel-1 VV mosaic across a date window."""
     start_iso = datetime.combine(start, time.min, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
@@ -158,7 +158,9 @@ function evaluatePixel(sample) {
   return [gray, gray, gray, sample.dataMask];
 }
 """
-    height = max(256, min(1024, round(width * (bbox[3] - bbox[1]) / (bbox[2] - bbox[0]))))
+    # S1GRD requires at least 1.5 km/pixel.  The full Vietnam bbox is tall,
+    # so retain enough vertical pixels rather than capping it at 1024.
+    height = max(256, min(1600, round(width * (bbox[3] - bbox[1]) / (bbox[2] - bbox[0]))))
     payload = {
         "input": {
             "bounds": {"bbox": list(bbox), "properties": {"crs": "http://www.opengis.net/def/crs/EPSG/0/4326"}},
