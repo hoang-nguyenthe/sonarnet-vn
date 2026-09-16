@@ -20,20 +20,21 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(import_workspace(export_workspace(self.report,notes),self.report),notes)
 
     def test_candidate_labels_roundtrip(self):
+        report = {'tiles': [dict(self.tile, detections=[{'id': 1}, {'id': 2}])]}
         notes = {'cell_0': {
             'status': 'Cần kiểm tra tiếp',
             'note': 'Đối chiếu ảnh độ phân giải cao hơn',
             'candidate_labels': {'1': 'Có khả năng là tàu', '2': 'Nhiễu / không phải tàu'},
         }}
-        self.assertEqual(import_workspace(export_workspace(self.report,notes),self.report),notes)
+        self.assertEqual(import_workspace(export_workspace(report,notes),report),notes)
 
     def test_reject_invalid_candidate_label(self):
-        notes = {'cell_0': {
-            'status': 'Chưa xem xét', 'note': '',
-            'candidate_labels': {'not-an-id': 'Có khả năng là tàu'},
-        }}
-        with self.assertRaises(ValueError):
-            import_workspace(export_workspace(self.report,notes),self.report)
+        for labels in ({'not-an-id': 'Có khả năng là tàu'}, {'999': 'Có khả năng là tàu'}):
+            notes = {'cell_0': {
+                'status': 'Chưa xem xét', 'note': '', 'candidate_labels': labels,
+            }}
+            with self.assertRaises(ValueError):
+                import_workspace(export_workspace(self.report,notes),self.report)
 
     def test_reject_wrong_model(self):
         raw = export_workspace(self.report,{})

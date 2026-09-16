@@ -39,8 +39,10 @@ def import_workspace(raw, report):
         labels = item.get('candidate_labels', {})
         if not isinstance(labels, dict):
             raise ValueError('Đánh giá ứng viên không hợp lệ.')
+        tile = next(tile for tile in report['tiles'] if tile['key'] == key)
+        candidate_ids = {str(candidate['id']) for candidate in tile.get('detections', [])}
         for candidate_id, label in labels.items():
-            if not str(candidate_id).isdigit() or label not in CANDIDATE_STATUSES:
+            if str(candidate_id) not in candidate_ids or label not in CANDIDATE_STATUSES:
                 raise ValueError('Đánh giá ứng viên không hợp lệ.')
     # Keep the original session shape for older workspaces.  Candidate-level
     # labels are optional and are only added when the reviewer has actually
