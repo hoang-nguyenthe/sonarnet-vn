@@ -254,6 +254,44 @@ Các bước cần thực hiện khi chuyển sang dữ liệu thật:
    dạng bản ghi gồm `mmsi`, `timestamp`, `lat`, `lon`.
 4. Giữ nguyên toàn bộ `detect/`, `fusion/`, `behavior/`, `evaluation/`, `viz/`.
 
+### 6.3. Đối chứng độc lập với Global Fishing Watch
+
+Sau khi có GFW API token, SonarNet-VN sẽ dùng **SAR Vessel Detections** của
+Global Fishing Watch (`public-global-sar-presence:latest`) như một lớp đối
+chiếu ngoài hệ thống. Nguồn này được xây dựng từ ảnh Sentinel-1, có độ trễ xấp
+xỉ 5 ngày và vẫn có thể có dương tính giả; vì vậy **không dùng làm nhãn để huấn
+luyện YOLO**, cũng không xem là ground truth tuyệt đối.
+
+Quy trình đánh giá đúng là:
+
+1. Huấn luyện SonarNet trên SARDet-100K, HRSID, SSDD và xView3-SAR.
+2. Chạy SonarNet trên cảnh Sentinel-1 GRD thật lấy trực tiếp từ Copernicus.
+3. Ghép đầu ra với AIS bằng Kalman + Hungarian.
+4. So sánh theo không gian-thời gian với GFW SAR Vessel Detections, rồi báo cáo
+   mức độ đồng thuận, các ca chỉ SonarNet/GFW phát hiện được và các giới hạn.
+
+Điều này bổ sung kiểm chứng độc lập mà không làm mô hình học lại đầu ra của một
+hệ thống khác. SonarNet-VN vì vậy là hệ thống **giám sát vệ tinh gần thời gian
+thực**, không phải công cụ theo dõi liên tục thời gian thực: AIS có thể cập nhật
+theo luồng khi có nguồn phù hợp, còn SAR chỉ tạo quan sát khi vệ tinh đi qua.
+
+### 6.4. Chạy tab Sentinel-1 thật
+
+Dashboard có tab **Sentinel-1 thật** để truy vấn các cảnh GRD theo khu vực và
+thời gian, sau đó dựng ảnh xem nhanh VV đã hiệu chỉnh địa hình qua Copernicus
+Process API. Cấu hình secrets cục bộ trước khi chạy:
+
+```toml
+# .streamlit/secrets.toml (không commit)
+[copernicus]
+client_id = "sh-…"
+client_secret = "…"
+```
+
+Có mẫu an toàn tại `.streamlit/secrets.example.toml`. Trên Streamlit Community
+Cloud, đưa hai khoá trên vào **App settings → Secrets**, không thêm chúng vào
+repository.
+
 ---
 
 ## 7. Chỉ tiêu đánh giá

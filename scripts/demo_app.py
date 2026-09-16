@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -23,6 +24,14 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+
+from sonarnet.data.copernicus import (
+    CopernicusError,
+    SentinelProduct,
+    access_token,
+    search_sentinel1_grd,
+    sentinel1_preview,
+)
 
 st.set_page_config(
     page_title="SonarNet-VN — Bảng điều khiển giám sát",
@@ -275,7 +284,8 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 # Tabs
 # ---------------------------------------------------------------------------
-tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi = st.tabs([
+tab_live, tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi = st.tabs([
+    "Sentinel-1 thật",
     "Mô phỏng hoạt động",
     "Phát hiện trên ảnh radar",
     "Hợp nhất radar–AIS",
@@ -283,6 +293,85 @@ tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi = st.tabs([
     "Bản đồ giám sát",
     "Chỉ tiêu tổng hợp",
 ])
+
+# ============================================================================
+# TAB LIVE — Copernicus Sentinel-1 GRD
+# ============================================================================
+with tab_live:
+    st.subheader("Ảnh Sentinel-1 GRD thật từ Copernicus")
+    st.markdown(
+        f"<div style='color:{COL_MUTED};margin-bottom:16px;font-size:14px;line-height:1.55;'>"
+        "Tra cứu catalog Copernicus và hiển thị ảnh radar VV đã hiệu chỉnh địa hình. "
+        "Dữ liệu trong tab này là dữ liệu thật; các tab còn lại vẫn là kết quả mô phỏng."
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+    if "copernicus" not in st.secrets:
+        st.error("Chưa cấu hình Copernicus. Tạo `.streamlit/secrets.toml` với phần `[copernicus]`.")
+    else:
+        live_left, live_right = st.columns([2, 1])
+        with live_left:
+            presets = {
+                "Ngoài khơi Bình Thuận": (107.70, 10.35, 108.10, 10.65),
+                "Vịnh Bắc Bộ": (107.10, 20.20, 107.50, 20.50),
+                "Vịnh Thái Lan": (104.25, 9.00, 104.65, 9.30),
+                "Trường Sa (vùng quan sát)": (112.80, 10.10, 113.20, 10.40),
+            }
+            area_name = st.selectbox("Vùng quan sát", list(presets), key="live_area")
+            bbox = presets[area_name]
+            end_date = st.date_input("Ngày kết thúc", value=date.today(), max_value=date.today(), key="live_end")
+            start_date = st.date_input("Ngày bắt đầu", value=end_date - timedelta(days=90),
+                                       max_value=end_date, key="live_start")
+        with live_right:
+            st.markdown("**Khung quan sát**")
+            st.caption(f"{bbox[1]:.2f}–{bbox[3]:.2f}°B · {bbox[0]:.2f}–{bbox[2]:.2f}°Đ")
+            st.caption("Ảnh xem nhanh: VV, gamma0 terrain, 768 px.")
+            search_clicked = st.button("Tìm ảnh Sentinel-1", type="primary", use_container_width=True)
+
+        if start_date > end_date:
+            st.warning("Ngày bắt đầu phải không sau ngày kết thúc.")
+        elif search_clicked:
+            try:
+                credentials = st.secrets["copernicus"]
+                with st.spinner("Đang xác thực và truy vấn catalog Copernicus…"):
+                    token = access_token(credentials["client_id"], credentials["client_secret"])
+                    products = search_sentinel1_grd(token, bbox, start_date, end_date)
+                st.session_state["live_products"] = products
+                st.session_state["live_bbox"] = bbox
+                st.session_state["live_area_name"] = area_name
+                if not products:
+                    st.info("Không tìm thấy Sentinel-1 GRD trong khoảng thời gian này. Hãy mở rộng khoảng ngày.")
+            except CopernicusError as exc:
+                st.error(str(exc))
+
+        products: list[SentinelProduct] = st.session_state.get("live_products", [])
+        if products:
+            if st.session_state.get("live_bbox") != bbox:
+                st.info("Bấm “Tìm ảnh Sentinel-1” để cập nhật kết quả cho vùng đang chọn.")
+            selected = st.selectbox(
+                "Sản phẩm tìm thấy", products,
+                format_func=lambda p: f"{p.acquired_at} · {p.platform} · quỹ đạo {p.orbit} · {p.polarization}",
+                key="live_product",
+            )
+            st.caption(f"Mã sản phẩm: `{selected.product_id}`")
+            if st.button("Tải ảnh radar VV", use_container_width=False):
+                try:
+                    credentials = st.secrets["copernicus"]
+                    with st.spinner("Copernicus đang dựng ảnh Sentinel-1…"):
+                        token = access_token(credentials["client_id"], credentials["client_secret"])
+                        image_bytes = sentinel1_preview(token, st.session_state["live_bbox"], selected.acquired_at)
+                    st.session_state["live_image"] = image_bytes
+                    st.session_state["live_image_product"] = selected.product_id
+                except CopernicusError as exc:
+                    st.error(str(exc))
+
+            if st.session_state.get("live_image_product") == selected.product_id:
+                st.image(st.session_state["live_image"], caption=(
+                    f"Sentinel-1 GRD thật · VV gamma0 terrain · {selected.acquired_at} · "
+                    f"{st.session_state.get('live_area_name', area_name)}"
+                ), use_container_width=True)
+                st.info("Ảnh này chỉ là lớp quan sát SAR. Chưa có AIS đối chứng hay suy luận về danh tính tàu trong dữ liệu thật.")
 
 # ============================================================================
 # TAB SIM — Simulated vessel motion
@@ -690,7 +779,7 @@ with tab_sim:
 """
     st_html(html_code, height=680)
 
-    # KPI strip TỔNG (không thay đổi realtime)
+    # KPI strip tổng cho dữ liệu mô phỏng
     n_ok = sum(1 for v in json.loads(fleet_json) if v["state"] == "AIS_OK")
     n_mm = sum(1 for v in json.loads(fleet_json) if v["state"] == "AIS_MISMATCH")
     n_dk = sum(1 for v in json.loads(fleet_json) if v["state"] == "DARK")
@@ -744,10 +833,10 @@ with tab_sim:
             f"<b>Tương tác.</b> Zoom và di chuyển bản đồ tự do. Bản đồ được vẽ "
             f"một lần và cập nhật vị trí phương tiện thông qua JavaScript, "
             f"không làm nhấp nháy giao diện và giữ nguyên trạng thái zoom.<br><br>"
-            f"<b>Thời gian.</b> Hiển thị theo thời gian thực. Vị trí phương tiện "
-            f"chuyển động theo tốc độ vận hành thực (2–11 hải lý/h) — thay đổi "
-            f"vị trí có thể chỉ quan sát được sau vài phút, tương ứng chu kỳ "
-            f"cập nhật của AIS và ảnh SAR."
+            f"<b>Thời gian.</b> Đây là mô phỏng chạy theo tốc độ vận hành thực "
+            f"(2–11 hải lý/h), không phải luồng AIS trực tiếp. Dữ liệu Sentinel-1 "
+            f"thật chỉ có khi vệ tinh bay qua; tab “Sentinel-1 thật” hiển thị các "
+            f"cảnh quan sát thực tế theo thời điểm thu nhận."
             f"</div>",
             unsafe_allow_html=True,
         )
