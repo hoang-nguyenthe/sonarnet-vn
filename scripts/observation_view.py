@@ -222,12 +222,8 @@ def render(root):
         if ais_enabled:
             ais_demo = [demo_ais_record(record, candidate) for candidate in yolo_result["detections"]]
             status_counts = {status: sum(item["status"] == status for item in ais_demo) for status in ["AIS khớp", "AIS lệch", "Không có AIS"]}
-            st.warning(
-                "AIS đang ở chế độ MINH HOẠ: các MMSI, số đăng ký, tên tàu và cảng dưới đây được sinh giả lập "
-                "để trình bày giao diện. Khi được cấp nguồn VMS/AIS thật, lớp này sẽ được thay bằng bản ghi có xác thực."
-            )
-            st.caption("Luồng trình bày: YOLO khoanh vùng → AIS minh hoạ đối chiếu → người dùng kiểm tra bằng chứng. "
-                       f"{status_counts['AIS khớp']} khớp · {status_counts['AIS lệch']} lệch · {status_counts['Không có AIS']} không có AIS.")
+            st.info(f"AIS minh hoạ · {status_counts['AIS khớp']} khớp · {status_counts['AIS lệch']} lệch · {status_counts['Không có AIS']} không có tín hiệu. "
+                    "Định danh và trạng thái là dữ liệu giả lập để trình bày quy trình.")
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
     folium.TileLayer(
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -327,16 +323,29 @@ def render(root):
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
     chart.fit_bounds(bounds)
     name = chart.get_name()
+    scan_bounds = None
+    if yolo_result and yolo_result['tiles']:
+        boxes = [tile['bbox'] for tile in yolo_result['tiles']]
+        scan_bounds = [[min(b[1] for b in boxes), min(b[0] for b in boxes)],
+                       [max(b[3] for b in boxes), max(b[2] for b in boxes)]]
+    scan_button_js = '' if scan_bounds is None else f"""
+        const scanButton = L.DomUtil.create('button', '', group);
+        scanButton.textContent = 'Vùng đã quét YOLO';
+        scanButton.style.cssText = button.style.cssText + ';margin-top:5px';
+        scanButton.onclick = () => {name}.fitBounds({json.dumps(scan_bounds)}, {{padding:[24,24]}});
+    """
     home_control = MacroElement()
     home_control._template = Template("{% macro script(this, kwargs) %}" + f"""
         const home = L.control({{position:'topleft'}});
         home.onAdd = function() {{
-            const button = L.DomUtil.create('button');
+            const group = L.DomUtil.create('div');
+            const button = L.DomUtil.create('button', '', group);
             button.textContent = 'Về Việt Nam';
-            button.style.cssText = 'background:white;border:0;border-radius:6px;padding:10px;cursor:pointer;font:13px system-ui;box-shadow:0 1px 6px #0003';
-            L.DomEvent.disableClickPropagation(button);
+            button.style.cssText = 'display:block;background:white;border:0;border-radius:6px;padding:10px;cursor:pointer;font:13px system-ui;box-shadow:0 1px 6px #0003';
+            L.DomEvent.disableClickPropagation(group);
             button.onclick = () => {name}.fitBounds({json.dumps(VN_VIEW)});
-            return button;
+            {scan_button_js}
+            return group;
         }}; home.addTo({name});
     """ + "{% endmacro %}")
     chart.add_child(home_control)
@@ -422,6 +431,8 @@ def render(root):
         evaluation = read_json(root / 'assets/real_model_evaluation.json')
         if evaluation:
             st.markdown('**Trạng thái mô hình YOLO**')
+            baseline = evaluation.get('baseline_comparison', {})
+            st.write(f"Baseline đang hiển thị: precision {baseline.get('precision', 0):.4f} · recall {baseline.get('recall', 0):.4f} trên bộ test SAR thật. Chất lượng này chưa đủ cho giám sát nghiệp vụ; cần xem từng ảnh bằng chứng.")
             benchmark = evaluation.get('benchmark', {})
-            st.write(f"Benchmark giữ riêng: precision {benchmark.get('precision', 0):.3f} · recall {benchmark.get('recall', 0):.3f} · mAP50 {benchmark.get('map50', 0):.3f}. Đây là ảnh Sentinel‑1 công khai, không phải ảnh Việt Nam.")
+            st.write(f"Mô hình thử nghiệm huấn luyện lại (chưa thay baseline trên bản đồ): precision {benchmark.get('precision', 0):.3f} · recall {benchmark.get('recall', 0):.3f} · mAP50 {benchmark.get('map50', 0):.3f}. Đây là benchmark giữ riêng từ bộ SAR công khai, chưa chứng minh chất lượng trên Việt Nam.")
             st.warning(evaluation.get('promotion_decision', 'Chưa có quyết định phát hành mô hình.'))
