@@ -84,8 +84,11 @@ def provenance(record):
 def render(root):
     records = published_layers(root)
     detection = read_json(root / "assets/gfw_global_ship_detections_latest.json")
-    st.subheader("Quan sát vùng biển")
-    st.write("Chọn khu vực, xem ảnh radar và mở từng điểm phát hiện để kiểm tra nguồn, vị trí và thời gian.")
+    st.subheader("Xem ảnh radar vùng biển")
+    st.write("1. Xem Việt Nam trên bản đồ → 2. Bấm ảnh để xem nguồn và khoảng thời gian → 3. Bật lớp GFW nếu cần tham khảo nơi có phát hiện tàu.")
+    with st.expander("Tôi dùng màn hình này để làm gì?"):
+        st.markdown("**Dùng được:** xem vùng nào có ảnh radar lưu sẵn, kiểm tra thời gian và nguồn ảnh; xem các ô phát hiện do GFW cung cấp để chọn vùng cần khảo sát thêm.\n\n**Chưa làm được:** định danh tàu, theo dõi trực tiếp, tự kết luận tàu tắt AIS hay vi phạm. YOLO của SonarNet chưa chạy trên ảnh thật ở bản đồ này.")
+        st.markdown("**GFW là nguồn tham khảo bên ngoài**, không phải kết quả YOLO và chưa phải bộ kiểm chứng độ chính xác YOLO. Muốn đối chiếu phải có cùng cảnh ảnh, thời gian và tọa độ phát hiện đủ chi tiết.")
     if not records:
         st.info("Chưa có ảnh được xuất bản. Dữ liệu sẽ xuất hiện sau lần đồng bộ thành công.")
         return
@@ -96,7 +99,7 @@ def render(root):
     updated = record.get("refreshed_at")
     a, b, c = st.columns(3)
     a.metric("Cửa sổ ảnh kết thúc", date_label(record.get('window_end')))
-    b.metric("Ô phát hiện trong khu vực", f"{len(region_points):,}")
+    b.metric("Ô tham khảo GFW có sẵn", f"{len(region_points):,}")
     c.metric("Nguồn ảnh radar", "Sentinel‑1 GRD")
     st.caption(f"Ảnh được tạo: {local_time(updated)} · GFW được tải: {local_time(detection.get('refreshed_at'))}")
     st.caption(f"Ảnh radar ghép từ {date_label(record.get('window_start'))} đến {date_label(record.get('window_end'))}. Không phải ảnh chụp đồng thời hoặc luồng trực tiếp.")
@@ -130,7 +133,7 @@ def render(root):
         tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
         attr="Esri", name="Tên địa danh", overlay=True, pane="place_labels",
     ).add_to(chart)
-    dots = folium.FeatureGroup(name="Ô phát hiện tàu · GFW", show=True).add_to(chart)
+    dots = folium.FeatureGroup(name="Tham khảo GFW · không phải YOLO", show=False).add_to(chart)
     for point in region_points:
         details = (
             "<b>Ô phát hiện SAR · GFW</b><br>"
@@ -169,7 +172,7 @@ def render(root):
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
     embed(chart.get_root().render(), height=620)
-    st.caption("Thang xám: ảnh radar • Đốm vàng: ô phát hiện GFW • Đổi nền và bật/tắt lớp ngay trong bản đồ, không tải lại trang.")
+    st.caption("Thang xám: ảnh radar. Bật ‘Tham khảo GFW’ để xem các ô màu vàng do nguồn bên ngoài cung cấp — không phải kết quả YOLO của SonarNet.")
     st.caption("Danh sách và số ô bên dưới theo khu vực đã chọn. Kéo bản đồ không thay đổi bộ lọc khu vực.")
     with st.expander("Danh sách phát hiện & xuất dữ liệu"):
         st.write("Các ô đã công bố trong khu vực; số lượt phát hiện không phải số tàu duy nhất.")

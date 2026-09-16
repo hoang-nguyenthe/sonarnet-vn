@@ -471,7 +471,7 @@ with st.sidebar:
     st.caption("Bản thử nghiệm nghiên cứu. Không phải hệ thống theo dõi tàu trực tiếp hoặc kết luận vi phạm.")
 
 tab_observation, tab_overview, tab_evidence = st.tabs([
-    "Quan sát", "Cách hệ thống hoạt động", "Kết quả nghiên cứu",
+    "Ảnh radar thật", "Giải thích & mô phỏng", "Thử nghiệm YOLO & AIS",
 ])
 with tab_observation:
     render_observation(ROOT)
@@ -487,6 +487,12 @@ with tab_evidence:
 with tab_overview:
     import time
     from streamlit.components.v1 import html as st_html
+
+    st.subheader("SonarNet giải quyết bài toán gì?")
+    st.write("Mục tiêu nghiên cứu: tìm vật thể giống tàu trên ảnh radar, ghép với tín hiệu AIS cùng thời điểm, rồi đánh dấu trường hợp cần người có chuyên môn kiểm tra.")
+    st.markdown("**Quy trình mục tiêu:** ảnh SAR có tọa độ → YOLO phát hiện tàu → đối chiếu AIS → người dùng xem bằng chứng. Không có AIS khớp chưa đủ để kết luận vi phạm.")
+    st.warning("Trạng thái hiện tại: bản đồ ảnh thật và thử nghiệm mô hình là hai phần riêng. Chưa có pipeline YOLO → AIS hoạt động trên các ảnh thật đang công bố.")
+    st.markdown("**YOLO được train để làm gì?** Học khoanh vùng tàu trên ảnh radar. Web hiện chỉ hiển thị dự báo đã lưu trên tập mô phỏng để minh họa và đánh giá phương pháp. Chưa chứng minh khả năng tổng quát trên ảnh thật.\n\n**GFW để làm gì?** Cung cấp lớp phát hiện SAR độc lập để tham khảo phân bố hoạt động. Nó không thay thế YOLO và không tự chứng minh YOLO đúng.\n\n**Người dùng hiện dùng thế nào?** Vào ‘Ảnh radar thật’, xem vùng có ảnh và thời gian; bật GFW khi cần khảo sát thêm. Các phần bên dưới dành cho giải thích nghiên cứu, không phải điều hành tàu thật.")
 
     st.markdown(
         f"<div style='font-size:22px;font-weight:500;letter-spacing:-0.02em;"
@@ -672,7 +678,8 @@ with tab_overview:
     var STATE_COLOR = {{"AIS_OK": "{COL_OK}", "AIS_MISMATCH": "{COL_MISMATCH}", "DARK": "{COL_DARK}"}};
     var STATE_LABEL = {{"AIS_OK": "Có AIS khớp", "AIS_MISMATCH": "AIS lệch", "DARK": "Không có AIS"}};
 
-    var map = L.map('map', {{ zoomControl: true, preferCanvas: true }}).setView([15.5, 108.5], 6);
+    var map = L.map('map', {{ zoomControl: true, preferCanvas: true, zoomSnap: 0.25 }});
+    map.fitBounds([[6, 102], [24, 115]]);
     L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
         attribution: '© OpenStreetMap contributors',
         maxZoom: 19,
@@ -926,7 +933,7 @@ with tab_overview:
             f"không làm nhấp nháy giao diện và giữ nguyên trạng thái zoom.<br><br>"
             f"<b>Thời gian.</b> Đây là mô phỏng chạy theo tốc độ vận hành thực "
             f"(2–11 hải lý/h), không phải luồng AIS trực tiếp. Dữ liệu Sentinel-1 "
-            f"thật chỉ có khi vệ tinh bay qua; tab “Sentinel-1 thật” hiển thị các "
+            f"thật chỉ có khi vệ tinh bay qua; tab “Ảnh radar thật” hiển thị các "
             f"cảnh quan sát thực tế theo thời điểm thu nhận."
             f"</div>",
             unsafe_allow_html=True,
@@ -936,7 +943,8 @@ with tab_overview:
 # TAB DET — Phát hiện SAR
 # ============================================================================
 with evidence_radar:
-    st.subheader("Kiểm chứng phát hiện trên ảnh radar Sentinel‑1")
+    st.subheader("YOLO trên ảnh SAR mô phỏng — kết quả thử nghiệm")
+    st.caption("Khung dự báo được đọc từ tệp kết quả đã lưu; đây không phải suy luận trực tiếp trên ảnh Sentinel‑1 thật của bản đồ.")
 
     if not SCENES:
         st.warning(f"Không tìm thấy `{YOLO}/scenes/test.jsonl`. Chạy `python3 scripts/run_pipeline.py` trước.")
