@@ -33,6 +33,8 @@ def render_scan(root: Path):
     st.subheader('Kiểm tra ảnh radar thật')
     st.caption('Chọn ảnh → xem ứng viên → lưu ghi chú và bằng chứng.')
     st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>YOLO đề xuất<strong>{count} ứng viên</strong></span></div>', unsafe_allow_html=True)
+    model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
+    st.caption(f"Mô hình: YOLO baseline học từ ảnh mô phỏng · mã {model_hash[:12] if model_hash else 'chưa có'}. Đây là ứng viên để người xem rà soát, không phải kết quả đã xác minh.")
     st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
     with st.expander('Lưu / mở lại phiên kiểm tra'):
         st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại trên máy khác với đúng bộ ảnh; ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
