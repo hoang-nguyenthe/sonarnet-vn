@@ -325,7 +325,8 @@ with tab_live:
             ), use_container_width=True)
             st.caption(f"Mã sản phẩm Copernicus: {evidence['product_id']}")
             reference_bbox = tuple(evidence["bbox_wgs84"])
-            reference_start = reference_end = date.fromisoformat(evidence["acquired_at"][:10])
+            reference_start = date.fromisoformat(evidence["acquired_at"][:10])
+            reference_end = reference_start + timedelta(days=1)
         st.info("Đây là cảnh thật đã đóng gói sẵn cho demo công khai. Nó kiểm chứng nguồn và chuỗi Copernicus, nhưng chưa được dùng để báo cáo mAP vì chưa có nhãn độc lập trên chính cảnh này.")
         c1, c2, c3 = st.columns(3)
         c1.metric("Nguồn", "Copernicus Sentinel-1 GRD")
@@ -378,6 +379,11 @@ with tab_live:
                 format_func=lambda p: f"{p.acquired_at} · {p.platform} · quỹ đạo {p.orbit} · {p.polarization}",
                 key="live_product",
             )
+            # GFW's report interval is end-exclusive.  Anchor the independent
+            # reference to the selected satellite pass instead of querying a
+            # broad, slow date range unrelated to the displayed scene.
+            reference_start = date.fromisoformat(selected.acquired_at[:10])
+            reference_end = reference_start + timedelta(days=1)
             st.caption(f"Mã sản phẩm: `{selected.product_id}`")
             if st.button("Tải ảnh radar VV", use_container_width=False):
                 try:
