@@ -365,8 +365,55 @@ with tab_live:
             st.caption(f"Chuẩn demo mới nhất đã xác minh đồng thời với GFW · cập nhật {evidence['retrieved_at']}.")
             st.caption(f"Mã sản phẩm: `{evidence['product_id']}`")
 
-        st.markdown("#### Đối chiếu độc lập")
+        st.markdown("#### Bản đồ đối chiếu độc lập")
         st.caption("GFW dùng Sentinel-1 và mô hình riêng để lập lớp tham chiếu theo ô lưới. SonarNet chỉ dùng lớp này để kiểm tra tính nhất quán; không huấn luyện từ GFW, không coi là ground truth tuyệt đối, không suy diễn danh tính hoặc vi phạm.")
+        if ref_cells:
+            import folium
+            from streamlit.components.v1 import html as st_html
+
+            west, south, east, north = reference_bbox
+            reference_map = folium.Map(
+                location=[(south + north) / 2, (west + east) / 2], zoom_start=10,
+                tiles=None, control_scale=True, zoom_control=True,
+            )
+            folium.TileLayer(
+                tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                attr="Esri, Maxar, Earthstar Geographics", name="Nền vệ tinh", overlay=False,
+            ).add_to(reference_map)
+            folium.raster_layers.ImageOverlay(
+                image=str(LIVE_DEMO_IMAGE), bounds=[[south, west], [north, east]],
+                opacity=0.76, interactive=True, cross_origin=False, zindex=2,
+                name="Cảnh Sentinel-1 VV",
+            ).add_to(reference_map)
+            folium.Rectangle(
+                bounds=[[south, west], [north, east]], color="#ffffff", weight=2,
+                fill=False, tooltip="Khung ảnh Sentinel-1 GRD",
+            ).add_to(reference_map)
+            for cell in ref_cells:
+                radius = 6 + min(cell.detections, 4) * 2
+                folium.CircleMarker(
+                    location=[cell.latitude, cell.longitude], radius=radius,
+                    color="#ffffff", weight=2, fill=True, fill_color="#ff3b30", fill_opacity=0.92,
+                    tooltip=(f"<b>GFW SAR Vessel Detections</b><br>{cell.acquired_at} UTC"
+                             f"<br>{cell.detections} phát hiện trong ô lưới"),
+                ).add_to(reference_map)
+            folium.LayerControl(collapsed=True).add_to(reference_map)
+            reference_map.get_root().html.add_child(folium.Element("""
+                <div style="position:fixed;bottom:24px;left:24px;z-index:9999;
+                    background:rgba(18,18,18,.88);color:#fff;padding:12px 14px;border-radius:12px;
+                    font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.5;
+                    box-shadow:0 8px 24px rgba(0,0,0,.25)">
+                  <div style="font-weight:650;margin-bottom:5px">Đối chiếu Sentinel‑1 × GFW</div>
+                  <div><span style="display:inline-block;width:11px;height:11px;background:#7e7e7e;
+                    border:1px solid #fff;margin-right:7px"></span>Ảnh Sentinel‑1 VV</div>
+                  <div><span style="display:inline-block;width:11px;height:11px;background:#ff3b30;
+                    border:2px solid #fff;border-radius:50%;margin-right:7px"></span>Ô phát hiện GFW</div>
+                </div>
+            """))
+            st_html(reference_map.get_root().render(), height=540)
+
+        st.markdown("#### Bảng đối chiếu")
+        st.caption("Mỗi dòng là một ô GFW để kiểm tra lại vị trí hiển thị trên bản đồ, không phải một phương tiện được nhận dạng.")
         if ref_cells:
             import pandas as pd
             st.dataframe(pd.DataFrame([
