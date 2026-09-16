@@ -347,6 +347,16 @@ RESULTS = RUN / "results"
 YOLO = RUN / "data" / "yolo"
 LIVE_DEMO_IMAGE = ROOT / "assets" / "sentinel1_binh_thuan_20260912.png"
 LIVE_DEMO_METADATA = ROOT / "assets" / "sentinel1_binh_thuan_20260912.json"
+NATIONAL_MOSAIC_IMAGE = ROOT / "assets" / "sentinel1_vietnam_latest.png"
+NATIONAL_MOSAIC_METADATA = ROOT / "assets" / "sentinel1_vietnam_latest.json"
+
+
+@st.cache_data(show_spinner=False)
+def load_prepared_national_mosaic() -> tuple[bytes | None, dict | None]:
+    """Load the verified asset produced by the six-hour refresh workflow."""
+    if not NATIONAL_MOSAIC_IMAGE.exists() or not NATIONAL_MOSAIC_METADATA.exists():
+        return None, None
+    return NATIONAL_MOSAIC_IMAGE.read_bytes(), json.loads(NATIONAL_MOSAIC_METADATA.read_text())
 
 
 @st.cache_data
@@ -430,24 +440,10 @@ st.components.v1.html("""
 </script>
 """, height=52)
 
-# The nationwide real-data layer is resolved before rendering tabs so every view
-# uses the same current Copernicus observation.
-national_mosaic: bytes | None = None
-national_mosaic_status: dict[str, str | int | None] | None = None
-national_mosaic_error: str | None = None
-if "copernicus" in st.secrets:
-    try:
-        with st.spinner("Đang đồng bộ Sentinel‑1 trên toàn vùng biển Việt Nam…"):
-            national_mosaic_status = load_vietnam_mosaic_status(
-                st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
-            )
-            national_mosaic = load_vietnam_latest_mosaic(
-                st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"], date.today(),
-            )
-    except CopernicusError as exc:
-        national_mosaic_error = str(exc)
-else:
-    national_mosaic_error = "Thiếu cấu hình Copernicus để tạo mosaic toàn quốc."
+# The public dashboard reads the last verified nationwide image immediately.
+# A scheduled workflow refreshes this asset every six hours outside user visits.
+national_mosaic, national_mosaic_status = load_prepared_national_mosaic()
+national_mosaic_error = None if national_mosaic else "Chưa có ảnh Sentinel‑1 toàn quốc đã kiểm chứng."
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -515,29 +511,22 @@ with tab_evidence:
 # ============================================================================
 with tab_live:
     st.subheader("Toàn cảnh Việt Nam — Sentinel‑1 mới nhất")
-    st.caption("Mỗi điểm ảnh là quan sát Sentinel‑1 mới nhất trong 14 ngày gần đây. Lớp ảnh tự làm mới theo Copernicus mỗi 6 giờ, theo nhịp lượt bay vệ tinh — không phải video liên tục.")
+    st.caption("Ảnh được tải sẵn sau khi kiểm chứng từ Copernicus. Job tự kiểm tra catalog mỗi 6 giờ và chỉ thay ảnh khi tạo mosaic thành công — không phải video liên tục.")
     if national_mosaic:
         try:
             st.markdown(
                 f"""<div class="data-provenance">
                   <div><span>PHẠM VI HIỂN THỊ</span><strong>Biển Việt Nam · 06°–22°B, 102°–115°Đ</strong></div>
-                  <div><span>CẢNH MỚI NHẤT TRONG CATALOG</span><strong>{format_vietnam_time(national_mosaic_status['newest'] if national_mosaic_status else None)}</strong></div>
-                  <div><span>CỬA SỔ MOSAIC</span><strong>{national_mosaic_status['window_start'] if national_mosaic_status else '—'} → {national_mosaic_status['window_end'] if national_mosaic_status else '—'} · {national_mosaic_status['count'] if national_mosaic_status else 0} cảnh</strong></div>
+                  <div><span>CẢNH MỚI NHẤT TRONG CATALOG</span><strong>{format_vietnam_time(national_mosaic_status.get('newest_catalog_acquired_at') if national_mosaic_status else None)}</strong></div>
+                  <div><span>CỬA SỔ MOSAIC</span><strong>{national_mosaic_status.get('window_start') if national_mosaic_status else '—'} → {national_mosaic_status.get('window_end') if national_mosaic_status else '—'} · {national_mosaic_status.get('catalog_scene_count') if national_mosaic_status else 0} cảnh</strong></div>
                 </div>""",
                 unsafe_allow_html=True,
             )
             st.image(national_mosaic, caption="Sentinel‑1 GRD · VV Gamma0 ellipsoid · mosaic theo pixel mới nhất · Copernicus Data Space", use_container_width=True)
-            if national_mosaic_status and national_mosaic_status.get("zones"):
-                zone_lines = "<br>".join(
-                    f"<b>{zone}</b> — {format_vietnam_time(acquired_at)}"
-                    for zone, acquired_at in sorted(national_mosaic_status["zones"].items())
-                )
-                with st.expander("Ngày quan sát mới nhất theo khu vực", expanded=True):
-                    st.markdown(
-                        "Các mốc dưới đây là thời điểm cảnh catalog mới nhất có footprint giao với từng vùng. "
-                        "Trong mosaic, từng pixel dùng quan sát mới nhất sẵn có trong cửa sổ 14 ngày.<br><br>" + zone_lines,
-                        unsafe_allow_html=True,
-                    )
+            st.caption(
+                f"Ảnh đã được tạo và kiểm chứng lúc {format_vietnam_time(national_mosaic_status.get('refreshed_at') if national_mosaic_status else None)}. "
+                "Nếu lần kiểm tra sau lỗi, web tiếp tục giữ ảnh đã xác thực gần nhất."
+            )
         except CopernicusError as exc:
             st.error(str(exc))
     else:
@@ -1409,8 +1398,8 @@ with tab_map:
     st.subheader("Bản đồ giám sát quốc gia")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:14px;font-size:14px;line-height:1.55;'>"
-        f"Bản đồ này chỉ hiển thị ảnh Sentinel‑1 thật, ghép theo pixel mới nhất trên toàn vùng biển Việt Nam. "
-        f"Catalog Copernicus được kiểm tra lại mỗi 6 giờ; ảnh thay đổi khi có lượt bay mới."
+            f"Bản đồ này chỉ hiển thị ảnh Sentinel‑1 thật, ghép theo pixel mới nhất trên toàn vùng biển Việt Nam. "
+            f"Ảnh được tải sẵn; job kiểm tra catalog mỗi 6 giờ và chỉ xuất bản ảnh mới khi render thành công."
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -1418,8 +1407,8 @@ with tab_map:
     st.markdown("#### Lớp quan sát thật — Sentinel‑1 toàn Việt Nam")
     if national_mosaic:
         st.caption(
-            f"Cảnh catalog mới nhất: {format_vietnam_time(national_mosaic_status['newest'] if national_mosaic_status else None)} · "
-            f"cửa sổ mosaic: {national_mosaic_status['window_start'] if national_mosaic_status else '—'} → {national_mosaic_status['window_end'] if national_mosaic_status else '—'}"
+            f"Cảnh catalog mới nhất: {format_vietnam_time(national_mosaic_status.get('newest_catalog_acquired_at') if national_mosaic_status else None)} · "
+            f"cửa sổ mosaic: {national_mosaic_status.get('window_start') if national_mosaic_status else '—'} → {national_mosaic_status.get('window_end') if national_mosaic_status else '—'}"
         )
         national_map = folium.Map(location=[13.9, 108.5], zoom_start=5, tiles=None, control_scale=True)
         folium.TileLayer(

@@ -1,0 +1,32 @@
+name: Refresh Sentinel-1 Vietnam mosaic
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install the data client
+        run: pip install -r requirements.txt
+      - name: Render the newest nationwide Sentinel-1 mosaic
+        env:
+          COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
+          COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
+        run: python scripts/refresh_sentinel_mosaic.py
+      - name: Publish a verified asset only when it changed
+        run: |
+          git config user.name "sonarnet-vn-bot"
+          git config user.email "sonarnet-vn-bot@users.noreply.github.com"
+          git add assets/sentinel1_vietnam_latest.png assets/sentinel1_vietnam_latest.json
+          git diff --cached --quiet || git commit -m "Refresh Sentinel-1 Vietnam mosaic"
+          git push
