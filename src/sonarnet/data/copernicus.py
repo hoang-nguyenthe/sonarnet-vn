@@ -161,8 +161,10 @@ function evaluatePixel(sample) {
   return [gray, gray, gray, sample.dataMask];
 }
 """
-    # S1GRD requires at least 1.5 km/pixel.  The full Vietnam bbox is tall,
+    # S1GRD requires at least 1.5 km/pixel. The full Vietnam bbox is tall,
     # so retain enough vertical pixels rather than capping it at 1024.
+    # Gamma0 ellipsoid deliberately avoids Copernicus' occasionally unavailable
+    # terrain DEM tiles on very large, nationwide requests.
     height = max(256, min(1600, round(width * (bbox[3] - bbox[1]) / (bbox[2] - bbox[0]))))
     payload = {
         "input": {
@@ -170,7 +172,7 @@ function evaluatePixel(sample) {
             "data": [{
                 "type": "sentinel-1-grd",
                 "dataFilter": {"timeRange": {"from": start_iso, "to": end_iso}, "mosaickingOrder": "mostRecent"},
-                "processing": {"orthorectify": True, "backCoeff": "GAMMA0_TERRAIN", "demInstance": "COPERNICUS_30"},
+                "processing": {"backCoeff": "GAMMA0_ELLIPSOID"},
             }],
         },
         "output": {"width": width, "height": height, "responses": [{"identifier": "default", "format": {"type": "image/png"}}]},
