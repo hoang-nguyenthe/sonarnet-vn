@@ -551,17 +551,19 @@ with tab_live:
                 </div>""",
                 unsafe_allow_html=True,
             )
-            st.image(national_mosaic, caption="Sentinel‑1 GRD · VV Gamma0 ellipsoid · mosaic theo pixel mới nhất · Copernicus Data Space", use_container_width=True)
             st.caption(
-                f"Ảnh đã được tạo và kiểm chứng lúc {format_vietnam_time(national_mosaic_status.get('refreshed_at') if national_mosaic_status else None)}. "
-                "Nếu lần kiểm tra sau lỗi, web tiếp tục giữ ảnh đã xác thực gần nhất."
+                f"Mosaic Sentinel‑1 đã được tạo và kiểm chứng lúc {format_vietnam_time(national_mosaic_status.get('refreshed_at') if national_mosaic_status else None)}. "
+                "Vùng không có pixel SAR hợp lệ được để nền ảnh vệ tinh tham chiếu, không được nội suy hoặc bịa dữ liệu."
             )
             import folium
             from streamlit.components.v1 import html as st_html
             st.markdown("#### Sentinel‑1 Việt Nam tương tác")
             st.caption("Kéo và zoom để đọc ảnh radar; nhãn tỉnh/thành là lớp thông tin phủ lên chính mosaic Sentinel‑1.")
             vietnam_sentinel_map = folium.Map(location=[13.9, 108.5], zoom_start=5, tiles=None, control_scale=True)
-            folium.TileLayer("OpenStreetMap", name="Nền tham chiếu", overlay=False).add_to(vietnam_sentinel_map)
+            folium.TileLayer(
+                tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                attr="Esri, Maxar, Earthstar Geographics", name="Nền ảnh vệ tinh tham chiếu", overlay=False,
+            ).add_to(vietnam_sentinel_map)
             folium.raster_layers.ImageOverlay(
                 image=folium_image_source(national_mosaic), bounds=[[6.0, 102.0], [21.8, 115.0]],
                 opacity=.78, interactive=True, cross_origin=False, zindex=2, name="Sentinel‑1 mới nhất",
