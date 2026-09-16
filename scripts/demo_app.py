@@ -180,6 +180,11 @@ CSS = f"""
     .sonar-pills {{ display:flex; flex-wrap:wrap; gap:8px; margin-top:25px; }}
     .sonar-pill {{ border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); backdrop-filter:blur(16px); border-radius:999px; padding:8px 12px; font-size:12px; color:rgba(255,255,255,.9); }}
     .sonar-status {{ display:inline-block; width:7px; height:7px; margin-right:7px; border-radius:50%; background:#72f2de; animation: sonar-pulse 2.2s ease-out infinite; }}
+    .sonar-vn-art {{ position:absolute; right:5%; top:50%; width:min(215px,25vw); transform:translateY(-50%); opacity:.72; pointer-events:none; }}
+    .sonar-vn-art path {{ fill:rgba(112,242,222,.07); stroke:rgba(169,255,238,.72); stroke-width:1.3; vector-effect:non-scaling-stroke; stroke-linejoin:round; }}
+    .sonar-vn-art circle {{ fill:#72f2de; animation:sonar-pulse 2.5s ease-out infinite; }}
+    .sonar-vn-meta {{ position:absolute; right:5%; bottom:12%; color:rgba(255,255,255,.58); font-size:10px; letter-spacing:.11em; text-transform:uppercase; }}
+    .sonar-vn-star {{ position:absolute; right:calc(5% + 5px); top:12%; width:25px; height:25px; display:grid; place-items:center; border-radius:50%; background:#d92d28; color:#ffd15a; font-size:14px; box-shadow:0 5px 20px rgba(217,45,40,.35); }}
 
     section[data-testid="stSidebar"] {{
         background: #F5F5F7;
@@ -282,6 +287,8 @@ CSS = f"""
         .sonar-copy {{ font-size:14px; }}
         .sonar-pills {{ gap:6px; margin-top:19px; }}
         .sonar-pill {{ font-size:11px; padding:7px 10px; }}
+        .sonar-vn-art, .sonar-vn-meta {{ display:none; }}
+        .sonar-vn-star {{ right:18px; top:17px; }}
         div[data-baseweb="tab-list"] {{ overflow-x:auto; scrollbar-width:none; white-space:nowrap; }}
         button[data-baseweb="tab"] {{ padding:11px 12px !important; font-size:13px !important; }}
         [data-testid="stMetric"] {{ padding:14px 15px; border-radius:11px; }}
@@ -367,6 +374,12 @@ st.markdown("""
     <span class="sonar-pill">AIS · đối chiếu độc lập</span>
     <span class="sonar-pill">Việt Nam · tự làm mới theo lượt bay</span>
   </div>
+  <div class="sonar-vn-star" aria-label="Việt Nam">★</div>
+  <svg class="sonar-vn-art" viewBox="0 0 150 250" aria-hidden="true">
+    <path d="M68 8 C57 20 59 32 48 43 C38 53 40 67 53 78 C60 85 54 94 44 102 C36 110 42 120 55 127 C66 133 62 142 54 151 C45 161 52 170 67 175 C79 179 77 190 68 199 C61 207 68 218 84 225 C96 230 100 237 102 245 L119 238 C112 228 105 220 100 210 C94 198 101 187 110 175 C119 162 112 151 101 143 C90 135 94 126 104 115 C114 104 107 94 95 87 C84 80 90 68 99 59 C110 48 103 36 93 30 C82 23 82 14 87 7 Z"/>
+    <circle cx="67" cy="113" r="3"/><circle cx="95" cy="164" r="3"/><circle cx="88" cy="211" r="3"/>
+  </svg>
+  <div class="sonar-vn-meta">Việt Nam · 06°–22°B · 102°–115°Đ</div>
 </section>
 """, unsafe_allow_html=True)
 
