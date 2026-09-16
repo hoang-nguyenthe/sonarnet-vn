@@ -32,6 +32,7 @@ from sonarnet.data.copernicus import (
     search_sentinel1_grd,
     sentinel1_preview,
 )
+from sonarnet.data.gfw import GlobalFishingWatchError, sar_reference_report
 
 st.set_page_config(
     page_title="SonarNet-VN — Bảng điều khiển giám sát",
@@ -300,14 +301,16 @@ tab_sim, tab_det, tab_fus, tab_kal, tab_map, tab_kpi, tab_live = st.tabs([
 # TAB LIVE — Copernicus Sentinel-1 GRD
 # ============================================================================
 with tab_live:
-    st.subheader("Ảnh Sentinel-1 GRD thật từ Copernicus")
+    st.subheader("Cảnh Sentinel-1 thật và lớp đối chiếu độc lập")
     st.markdown(
         f"<div style='color:{COL_MUTED};margin-bottom:16px;font-size:14px;line-height:1.55;'>"
-        "Tra cứu catalog Copernicus và hiển thị ảnh radar VV đã hiệu chỉnh địa hình. "
-        "Dữ liệu trong tab này là dữ liệu thật; các tab còn lại vẫn là kết quả mô phỏng."
+        "Tra cứu catalog Copernicus, hiển thị ảnh radar VV đã hiệu chỉnh địa hình, "
+        "và đối chiếu theo ô lưới với lớp SAR Vessel Detections của Global Fishing Watch. "
+        "Dữ liệu trong tab này là dữ liệu thật; các chỉ tiêu mô hình ở các tab còn lại vẫn là mô phỏng."
         "</div>",
         unsafe_allow_html=True,
     )
+    products: list[SentinelProduct] = []
 
     if "copernicus" not in st.secrets:
         st.markdown("**Cảnh Sentinel-1 đã kiểm chứng**")
@@ -318,7 +321,11 @@ with tab_live:
                 "VV gamma0 terrain, orthorectified"
             ), use_container_width=True)
             st.caption(f"Mã sản phẩm Copernicus: {evidence['product_id']}")
-        st.info("Đây là cảnh dữ liệu thật đã đóng gói sẵn cho bản demo công khai. Thêm secrets Copernicus để truy vấn cảnh mới theo yêu cầu.")
+        st.info("Đây là cảnh thật đã đóng gói sẵn cho demo công khai. Nó kiểm chứng nguồn và chuỗi Copernicus, nhưng chưa được dùng để báo cáo mAP vì chưa có nhãn độc lập trên chính cảnh này.")
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Nguồn", "Copernicus Sentinel-1 GRD")
+        c2.metric("Vai trò", "Kiểm chứng nguồn và giao diện")
+        c3.metric("Không suy diễn", "Danh tính hay vi phạm")
     else:
         live_left, live_right = st.columns([2, 1])
         with live_left:
@@ -355,7 +362,7 @@ with tab_live:
             except CopernicusError as exc:
                 st.error(str(exc))
 
-        products: list[SentinelProduct] = st.session_state.get("live_products", [])
+        products = st.session_state.get("live_products", [])
         if products:
             if st.session_state.get("live_bbox") != bbox:
                 st.info("Bấm “Tìm ảnh Sentinel-1” để cập nhật kết quả cho vùng đang chọn.")
@@ -381,7 +388,30 @@ with tab_live:
                     f"Sentinel-1 GRD thật · VV gamma0 terrain · {selected.acquired_at} · "
                     f"{st.session_state.get('live_area_name', area_name)}"
                 ), use_container_width=True)
-                st.info("Ảnh này chỉ là lớp quan sát SAR. Chưa có AIS đối chứng hay suy luận về danh tính tàu trong dữ liệu thật.")
+                st.info("Ảnh này là lớp quan sát SAR. Không suy luận danh tính hay vi phạm từ ảnh; dùng lớp reference bên dưới để kiểm tra tính nhất quán ở mức ô lưới.")
+
+        st.markdown("#### Đối chiếu ngoài mẫu: GFW SAR Vessel Detections")
+        st.caption("GFW dùng Sentinel-1 và mô hình riêng để tạo lớp phát hiện SAR theo ô lưới. SonarNet chỉ dùng lớp này làm reference độc lập, không dùng để huấn luyện hoặc coi là ground truth tuyệt đối.")
+        if "gfw" not in st.secrets:
+            st.info("Chưa cấu hình token Global Fishing Watch. Luồng reference đã có trong code nhưng không thể truy vấn công khai mà không có token cá nhân.")
+        elif products:
+            ref_mode = st.radio("Lọc lớp reference", ["Tất cả", "Không khớp AIS", "Khớp AIS"], horizontal=True, key="gfw_mode")
+            matched_filter = {"Tất cả": None, "Không khớp AIS": False, "Khớp AIS": True}[ref_mode]
+            if st.button("Tra cứu lớp GFW reference", use_container_width=False):
+                try:
+                    with st.spinner("Global Fishing Watch đang tổng hợp dữ liệu SAR reference…"):
+                        st.session_state["gfw_reference_cells"] = sar_reference_report(
+                            st.secrets["gfw"]["api_token"], st.session_state.get("live_bbox", bbox), start_date, end_date,
+                            matched=matched_filter,
+                        )
+                except GlobalFishingWatchError as exc:
+                    st.error(str(exc))
+            ref_cells = st.session_state.get("gfw_reference_cells", [])
+            if ref_cells:
+                import pandas as pd
+                st.metric("Tổng phát hiện GFW trong vùng / kỳ", sum(cell.detections for cell in ref_cells))
+                st.dataframe(pd.DataFrame([{"Thời điểm": cell.acquired_at, "Vĩ độ": round(cell.latitude, 3), "Kinh độ": round(cell.longitude, 3), "Phát hiện": cell.detections} for cell in ref_cells]), use_container_width=True, hide_index=True)
+                st.warning("Đối chiếu theo ô lưới và thời điểm, không phải xác nhận danh tính, danh sách vi phạm hay thay thế kiểm tra nghiệp vụ.")
 
 # ============================================================================
 # TAB SIM — Simulated vessel motion

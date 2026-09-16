@@ -256,7 +256,7 @@ Các bước cần thực hiện khi chuyển sang dữ liệu thật:
 
 ### 6.3. Đối chứng độc lập với Global Fishing Watch
 
-Sau khi có GFW API token, SonarNet-VN sẽ dùng **SAR Vessel Detections** của
+Sau khi có GFW API token, SonarNet-VN dùng **SAR Vessel Detections** của
 Global Fishing Watch (`public-global-sar-presence:latest`) như một lớp đối
 chiếu ngoài hệ thống. Nguồn này được xây dựng từ ảnh Sentinel-1, có độ trễ xấp
 xỉ 5 ngày và vẫn có thể có dương tính giả; vì vậy **không dùng làm nhãn để huấn
