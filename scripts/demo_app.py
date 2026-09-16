@@ -52,6 +52,33 @@ def load_latest_global_scene(
     return product, sentinel1_preview(token, bbox, product.acquired_at)
 
 
+@st.cache_data(ttl=6 * 3600, show_spinner=False)
+def load_available_vietnam_scenes(client_id: str, client_secret: str, latest_reference_day: date):
+    """Return actual Sentinel-1 products intersecting Vietnam's maritime domain."""
+    token = access_token(client_id, client_secret)
+    products = search_sentinel1_grd(
+        token, (102.0, 6.0, 116.0, 24.0), latest_reference_day - timedelta(days=10), latest_reference_day, limit=50,
+    )
+    return sorted(products, key=lambda item: item.acquired_at, reverse=True)
+
+
+@st.cache_data(ttl=6 * 3600, show_spinner=False)
+def load_product_preview(
+    client_id: str, client_secret: str, bbox: tuple[float, float, float, float], acquired_at: str,
+) -> bytes:
+    return sentinel1_preview(access_token(client_id, client_secret), bbox, acquired_at)
+
+
+def vietnam_focus_bbox(product_bbox: tuple[float, float, float, float]) -> tuple[float, float, float, float]:
+    """Use a compact ocean-facing crop for a selected Vietnam-overlapping swath."""
+    west, south, east, north = product_bbox
+    west, south, east, north = max(west, 102.0), max(south, 6.0), min(east, 116.0), min(north, 24.0)
+    if west >= east or south >= north:
+        return (107.7, 10.35, 108.1, 10.65)
+    longitude, latitude = (west + east) / 2, (south + north) / 2
+    return (longitude - 0.20, latitude - 0.15, longitude + 0.20, latitude + 0.15)
+
+
 def gfw_overlay_png(image_source: Path | bytes, bbox: tuple[float, float, float, float], cells) -> bytes:
     """Overlay gridded GFW counts onto the corresponding Sentinel raster."""
     west, south, east, north = bbox
@@ -352,6 +379,11 @@ with tab_live:
         "</div>",
         unsafe_allow_html=True,
     )
+    observation_scope = st.radio(
+        "Phạm vi quan sát", ["Việt Nam — cảnh có sẵn", "Quốc tế — cảnh mẫu"],
+        horizontal=True, key="observation_scope",
+    )
+    vietnam_product = None
     available_regions = {
         "Việt Nam · Bình Thuận — cảnh chuẩn đã kiểm chứng": None,
         "Nhật Bản · Tokyo Bay": (35.45, 139.80),
@@ -363,24 +395,69 @@ with tab_live:
         "Ai Cập · Cửa bắc kênh Suez": (31.28, 32.32),
         "Nam Phi · Vịnh Table, Cape Town": (-33.90, 18.40),
     }
-    selected_region = st.selectbox(
-        "Chọn vùng quan sát có sẵn",
-        list(available_regions),
-        help="Các vùng biển và cảng quốc tế đã cấu hình sẵn cho luồng Sentinel‑1 × GFW. Chọn vùng là web tự tải, không cần nút chạy.",
-        key="global_observation_region",
-    )
-    st.caption("Bình Thuận là cảnh chuẩn đã kiểm chứng. Các lựa chọn còn lại tự lấy cảnh Sentinel‑1 mới nhất trong cửa sổ GFW đã công bố.")
+    if observation_scope == "Việt Nam — cảnh có sẵn":
+        if "copernicus" not in st.secrets:
+            st.error("Chưa có cấu hình Copernicus để tải catalog Việt Nam.")
+            st.stop()
+        try:
+            with st.spinner("Đang lập catalog Sentinel-1 có sẵn trên toàn vùng biển Việt Nam…"):
+                vietnam_products = load_available_vietnam_scenes(
+                    st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"],
+                    date.today() - timedelta(days=4),
+                )
+            if not vietnam_products:
+                st.error("Chưa tìm thấy cảnh Sentinel-1 phù hợp trong cửa sổ GFW đã công bố.")
+                st.stop()
+            vietnam_product = st.selectbox(
+                "Chọn cảnh Sentinel-1 có sẵn trên vùng biển Việt Nam", vietnam_products,
+                format_func=lambda item: f"{item.acquired_at} · {item.platform} · {item.orbit} · {item.polarization}",
+                key="vietnam_available_scene",
+            )
+            st.caption(f"Catalog đang có {len(vietnam_products)} cảnh. Danh sách được lấy trực tiếp từ Copernicus, không phải điểm đặt sẵn.")
+        except CopernicusError as exc:
+            st.error(str(exc))
+            st.stop()
+        selected_region = "Việt Nam · catalog Copernicus"
+    else:
+        selected_region = st.selectbox(
+            "Chọn vùng quan sát quốc tế có sẵn", list(available_regions),
+            help="Các vùng biển và cảng quốc tế đã cấu hình sẵn cho luồng Sentinel‑1 × GFW. Chọn vùng là web tự tải, không cần nút chạy.",
+            key="global_observation_region",
+        )
+        st.caption("Các lựa chọn quốc tế tự lấy cảnh Sentinel‑1 mới nhất trong cửa sổ GFW đã công bố.")
     if not (LIVE_DEMO_IMAGE.exists() and LIVE_DEMO_METADATA.exists()):
         st.error("Thiếu cảnh Sentinel-1 đã đóng gói cho bản demo.")
     else:
-        is_standard_scene = available_regions[selected_region] is None
+        is_standard_scene = vietnam_product is None and available_regions[selected_region] is None
         evidence = json.loads(LIVE_DEMO_METADATA.read_text())
         reference_image: Path | bytes = LIVE_DEMO_IMAGE
         scene_name = "Ngoài khơi Bình Thuận"
         reference_bbox = tuple(evidence["bbox_wgs84"])
         reference_start = date.fromisoformat(evidence["acquired_at"][:10])
         reference_end = reference_start + timedelta(days=1)
-        if not is_standard_scene:
+        if vietnam_product is not None:
+            if "copernicus" not in st.secrets:
+                st.error("Chưa có cấu hình Copernicus để tải cảnh đã chọn.")
+                st.stop()
+            reference_bbox = vietnam_focus_bbox(vietnam_product.bbox)
+            scene_name = "Vùng biển Việt Nam"
+            try:
+                with st.spinner("Đang dựng ảnh Sentinel-1 cho cảnh Việt Nam đã chọn…"):
+                    reference_image = load_product_preview(
+                        st.secrets["copernicus"]["client_id"], st.secrets["copernicus"]["client_secret"],
+                        reference_bbox, vietnam_product.acquired_at,
+                    )
+                evidence = {
+                    "product_id": vietnam_product.product_id, "acquired_at": vietnam_product.acquired_at,
+                    "render": "VV gamma0 terrain, orthorectified, 768 px",
+                    "retrieved_at": date.today().isoformat(),
+                }
+                reference_start = date.fromisoformat(vietnam_product.acquired_at[:10])
+                reference_end = reference_start + timedelta(days=1)
+            except CopernicusError as exc:
+                st.error(str(exc))
+                st.stop()
+        elif not is_standard_scene:
             if "copernicus" not in st.secrets:
                 st.error("Chưa có cấu hình Copernicus để tự tải cảnh toàn cầu.")
                 st.stop()
