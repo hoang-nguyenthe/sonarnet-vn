@@ -155,7 +155,7 @@ def provenance(record):
     esc = html.escape
     return (
         f"<b>{esc(record['label'])} · Sentinel‑1 GRD</b><br>"
-        "Nguồn: Copernicus Data Space<br>"
+        f"Nguồn: Copernicus Data Space · kênh {esc(record.get('band', 'VV'))}<br>"
         f"Khoảng ghép ảnh: {esc(record.get('window_start', '—'))} → {esc(record.get('window_end', '—'))}<br>"
         f"Mốc mới nhất trong catalog đã truy vấn: {esc(local_time(record.get('newest_catalog_acquired_at')))}<br>"
         f"Ảnh được tạo: {esc(local_time(record.get('refreshed_at')))}<br><br>"
@@ -207,7 +207,6 @@ def render(root):
             days = sorted({tile['observation_day_utc'] for tile in yolo_result['tiles']})
             st.caption(f"{len(yolo_result['detections'])} ứng viên thử nghiệm · {len(yolo_result['tiles'])} ô ảnh chi tiết đã quét · "
                        f"ngày ảnh {', '.join(date_label(day) for day in days)} (UTC). Chạm điểm sáng để xem ảnh bằng chứng.")
-            st.caption("YOLO baseline học từ ảnh mô phỏng; các điểm cần được rà soát, có thể gồm nhiễu hoặc bờ đất. Phạm vi đã quét được viền trên ảnh.")
         else:
             st.info("Khu vực này chưa có kết quả YOLO trên ảnh chi tiết được công bố. Ảnh toàn cảnh vẫn có thể xem; không coi vùng chưa quét là không có tàu.")
     ais_demo = []
@@ -238,7 +237,7 @@ def render(root):
         raw = (root / "assets" / item["asset"]).read_bytes()
         layer = folium.raster_layers.ImageOverlay(
             image="data:image/png;base64," + base64.b64encode(raw).decode(),
-            bounds=[[s, w], [n, e]], opacity=.82, interactive=True,
+            bounds=[[s, w], [n, e]], opacity=.82, interactive=True, alt=f"Ảnh Sentinel-1 · {item['label']}",
         ).add_to(radar)
         layer.add_child(folium.Popup(provenance(item), max_width=320))
     if yolo_result:
@@ -247,7 +246,7 @@ def render(root):
             raw = (root / tile['asset_dir'] / 'sar.png').read_bytes()
             folium.raster_layers.ImageOverlay(
                 image='data:image/png;base64,' + base64.b64encode(raw).decode(),
-                bounds=[[s,w],[n,e]], opacity=1,
+                bounds=[[s,w],[n,e]], opacity=1, alt=f"Ô radar chi tiết {tile['key']}",
             ).add_to(radar)
             folium.Rectangle([[s,w],[n,e]], weight=1, color='#64d2ff', fill=False,
                 tooltip=f"Đã quét YOLO · {tile['key']} · {date_label(tile['observation_day_utc'])} UTC",
@@ -347,6 +346,18 @@ def render(root):
             {scan_button_js}
             return group;
         }}; home.addTo({name});
+        let previousWidth = {name}.getContainer().clientWidth;
+        let resizeTimer;
+        new ResizeObserver(() => {{
+            const width = {name}.getContainer().clientWidth;
+            if (!width || width === previousWidth) return;
+            previousWidth = width;
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {{
+                {name}.invalidateSize({{pan:false}});
+                {name}.fitBounds({json.dumps(bounds)}, {{animate:false}});
+            }}, 120);
+        }}).observe({name}.getContainer());
     """ + "{% endmacro %}")
     chart.add_child(home_control)
     chart.get_root().header.add_child(Element("""<style>
@@ -356,6 +367,8 @@ def render(root):
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
     embed(chart.get_root().render(), height=540)
+    if yolo_result and yolo_result['tiles']:
+        st.caption('YOLO thử nghiệm học từ ảnh mô phỏng; có thể nhầm nhiễu hoặc bờ đất. Viền xanh là vùng đã quét; điểm sáng chưa được xác minh là tàu.')
     if yolo_result and yolo_result['detections']:
         options = {item['id']: item for item in yolo_result['detections']}
         chosen = st.selectbox('Xem bằng chứng của ứng viên', list(options), key='panorama_candidate')

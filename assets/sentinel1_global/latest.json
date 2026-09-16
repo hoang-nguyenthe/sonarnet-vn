@@ -1,6 +1,6 @@
 {
   "source": "Copernicus Data Space · Sentinel-1 GRD",
-  "refreshed_at": "2026-09-16T21:19:17.253431Z",
+  "refreshed_at": "2026-09-16T21:23:49.200721Z",
   "tiles": [
     {
       "key": "north_pacific",
@@ -12,11 +12,13 @@
         62.0
       ],
       "asset": "sentinel1_global/north_pacific.png",
-      "refreshed_at": "2026-09-16T21:18:31.100258+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:22.377171+00:00",
       "newest_catalog_acquired_at": "2026-09-16T15:56:17Z",
-      "catalog_scene_count": 24,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 19,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "central_pacific",
@@ -28,11 +30,13 @@
         25.0
       ],
       "asset": "sentinel1_global/central_pacific.png",
-      "refreshed_at": "2026-09-16T21:18:33.216051+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:25.528680+00:00",
       "newest_catalog_acquired_at": "2026-09-16T04:46:55Z",
-      "catalog_scene_count": 27,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 25,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "south_pacific",
@@ -44,11 +48,31 @@
         -34.0
       ],
       "asset": "sentinel1_global/south_pacific.png",
-      "refreshed_at": "2026-09-16T21:18:35.771975+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:29.947040+00:00",
       "newest_catalog_acquired_at": "2026-09-15T17:22:16Z",
       "catalog_scene_count": 45,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
+    },
+    {
+      "key": "north_atlantic",
+      "label": "Bắc Đại Tây Dương",
+      "bbox": [
+        -65.0,
+        42.0,
+        -57.0,
+        50.0
+      ],
+      "asset": "sentinel1_global/north_atlantic.png",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:34.223997+00:00",
+      "newest_catalog_acquired_at": "2026-09-16T10:15:42Z",
+      "catalog_scene_count": 50,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "tropical_atlantic",
@@ -60,11 +84,13 @@
         1.0
       ],
       "asset": "sentinel1_global/tropical_atlantic.png",
-      "refreshed_at": "2026-09-16T21:18:39.268152+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:37.818818+00:00",
       "newest_catalog_acquired_at": "2026-09-16T08:01:15Z",
-      "catalog_scene_count": 30,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 26,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "south_atlantic",
@@ -76,11 +102,13 @@
         -28.0
       ],
       "asset": "sentinel1_global/south_atlantic.png",
-      "refreshed_at": "2026-09-16T21:18:41.275240+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:41.755209+00:00",
       "newest_catalog_acquired_at": "2026-09-16T08:57:45Z",
       "catalog_scene_count": 32,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "caribbean_gulf",
@@ -92,11 +120,13 @@
         30.0
       ],
       "asset": "sentinel1_global/caribbean_gulf.png",
-      "refreshed_at": "2026-09-16T21:18:44.533547+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:45.765997+00:00",
       "newest_catalog_acquired_at": "2026-09-15T00:01:39Z",
-      "catalog_scene_count": 36,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 33,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "north_sea_atlantic",
@@ -108,11 +138,13 @@
         58.0
       ],
       "asset": "sentinel1_global/north_sea_atlantic.png",
-      "refreshed_at": "2026-09-16T21:18:46.982619+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:50.400867+00:00",
       "newest_catalog_acquired_at": "2026-09-16T18:06:34Z",
       "catalog_scene_count": 50,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "mediterranean_suez",
@@ -124,11 +156,13 @@
         36.0
       ],
       "asset": "sentinel1_global/mediterranean_suez.png",
-      "refreshed_at": "2026-09-16T21:18:49.794223+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:54.586194+00:00",
       "newest_catalog_acquired_at": "2026-09-16T16:19:48Z",
       "catalog_scene_count": 50,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "west_africa",
@@ -140,11 +174,13 @@
         18.0
       ],
       "asset": "sentinel1_global/west_africa.png",
-      "refreshed_at": "2026-09-16T21:18:52.046165+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:22:58.539422+00:00",
       "newest_catalog_acquired_at": "2026-09-14T19:02:05Z",
-      "catalog_scene_count": 41,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 34,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "east_america",
@@ -156,11 +192,13 @@
         33.0
       ],
       "asset": "sentinel1_global/east_america.png",
-      "refreshed_at": "2026-09-16T21:18:54.074685+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:03.643745+00:00",
       "newest_catalog_acquired_at": "2026-09-16T11:09:49Z",
       "catalog_scene_count": 30,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "west_america",
@@ -172,11 +210,13 @@
         38.0
       ],
       "asset": "sentinel1_global/west_america.png",
-      "refreshed_at": "2026-09-16T21:18:56.333143+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:07.880291+00:00",
       "newest_catalog_acquired_at": "2026-09-16T01:34:13Z",
       "catalog_scene_count": 50,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "arabian_sea",
@@ -188,11 +228,13 @@
         25.0
       ],
       "asset": "sentinel1_global/arabian_sea.png",
-      "refreshed_at": "2026-09-16T21:18:58.640712+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:12.016012+00:00",
       "newest_catalog_acquired_at": "2026-09-16T01:18:19Z",
-      "catalog_scene_count": 28,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 26,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "bay_bengal",
@@ -204,11 +246,13 @@
         23.0
       ],
       "asset": "sentinel1_global/bay_bengal.png",
-      "refreshed_at": "2026-09-16T21:19:00.932143+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:16.137565+00:00",
       "newest_catalog_acquired_at": "2026-09-16T12:11:58Z",
       "catalog_scene_count": 38,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "indian_ocean",
@@ -220,11 +264,13 @@
         24.0
       ],
       "asset": "sentinel1_global/indian_ocean.png",
-      "refreshed_at": "2026-09-16T21:19:03.352506+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:20.591550+00:00",
       "newest_catalog_acquired_at": "2026-09-16T02:06:31Z",
-      "catalog_scene_count": 40,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 37,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "southeast_asia",
@@ -236,11 +282,13 @@
         11.0
       ],
       "asset": "sentinel1_global/southeast_asia.png",
-      "refreshed_at": "2026-09-16T21:19:05.683096+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:24.216759+00:00",
       "newest_catalog_acquired_at": "2026-09-16T11:19:03Z",
       "catalog_scene_count": 37,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "sea_of_japan",
@@ -252,11 +300,13 @@
         41.0
       ],
       "asset": "sentinel1_global/sea_of_japan.png",
-      "refreshed_at": "2026-09-16T21:19:08.142804+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:27.896187+00:00",
       "newest_catalog_acquired_at": "2026-09-14T21:16:32Z",
-      "catalog_scene_count": 33,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 31,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "east_asia",
@@ -268,11 +318,13 @@
         39.0
       ],
       "asset": "sentinel1_global/east_asia.png",
-      "refreshed_at": "2026-09-16T21:19:10.279413+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:31.837833+00:00",
       "newest_catalog_acquired_at": "2026-09-15T09:06:28Z",
-      "catalog_scene_count": 38,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 36,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "western_pacific",
@@ -284,11 +336,49 @@
         13.0
       ],
       "asset": "sentinel1_global/western_pacific.png",
-      "refreshed_at": "2026-09-16T21:19:12.774836+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:36.121615+00:00",
       "newest_catalog_acquired_at": "2026-09-14T21:24:10Z",
       "catalog_scene_count": 50,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
+    },
+    {
+      "key": "australia_east",
+      "label": "Bờ đông Australia",
+      "bbox": [
+        149.0,
+        -35.0,
+        157.0,
+        -27.0
+      ],
+      "asset": "sentinel1_global/australia_east.png",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:40.783744+00:00",
+      "newest_catalog_acquired_at": "2026-09-16T08:40:47Z",
+      "catalog_scene_count": 33,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
+    },
+    {
+      "key": "australia_west",
+      "label": "Bờ tây Australia",
+      "bbox": [
+        111.0,
+        -35.0,
+        119.0,
+        -27.0
+      ],
+      "asset": "sentinel1_global/australia_west.png",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:45.047446+00:00",
+      "newest_catalog_acquired_at": "2026-09-13T21:42:14Z",
+      "catalog_scene_count": 27,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     },
     {
       "key": "southern_africa",
@@ -300,11 +390,13 @@
         -27.0
       ],
       "asset": "sentinel1_global/southern_africa.png",
-      "refreshed_at": "2026-09-16T21:19:17.253389+00:00",
+      "polarization": "DV",
+      "band": "VV",
+      "refreshed_at": "2026-09-16T21:23:49.200672+00:00",
       "newest_catalog_acquired_at": "2026-09-14T17:10:55Z",
-      "catalog_scene_count": 48,
-      "window_start": "2026-09-02",
-      "window_end": "2026-09-16"
+      "catalog_scene_count": 41,
+      "window_start": "2026-09-03",
+      "window_end": "2026-09-17"
     }
   ],
   "note": "Mỗi tile là mosaic Sentinel-1 theo pixel mới nhất trong cửa sổ 14 ngày; thời điểm khác nhau theo vùng."

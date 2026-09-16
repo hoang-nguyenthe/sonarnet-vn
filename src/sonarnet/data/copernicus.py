@@ -148,8 +148,12 @@ function evaluatePixel(sample) {
 
 def sentinel1_mosaic_preview(
     token: str, bbox: tuple[float, float, float, float], start: date, end: date, width: int = 1280,
+    polarization: str = 'DV',
 ) -> bytes:
-    """Render a most-recent Sentinel-1 VV mosaic across a date window."""
+    """Render one declared co-polarization without mixing incompatible bands."""
+    bands = {'DV': 'VV', 'SV': 'VV', 'VV': 'VV', 'DH': 'HH', 'SH': 'HH', 'HH': 'HH'}
+    if polarization not in bands:
+        raise ValueError('A VV or HH co-polarization is required')
     start_iso = datetime.combine(start, time.min, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
     end_iso = datetime.combine(end, time.max, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
     evalscript = """
@@ -161,7 +165,8 @@ function evaluatePixel(sample) {
   return [gray, gray, gray, sample.dataMask];
 }
 """
-    # S1GRD requires at least 1.5 km/pixel. The full Vietnam bbox is tall,
+    evalscript = evalscript.replace('VV', bands[polarization])
+    # Keep overview spacing below the service's 1.5 km/pixel ceiling.
     # so retain enough vertical pixels rather than capping it at 1024.
     # Gamma0 ellipsoid deliberately avoids Copernicus' occasionally unavailable
     # terrain DEM tiles on very large, nationwide requests.
@@ -171,7 +176,7 @@ function evaluatePixel(sample) {
             "bounds": {"bbox": list(bbox), "properties": {"crs": "http://www.opengis.net/def/crs/EPSG/0/4326"}},
             "data": [{
                 "type": "sentinel-1-grd",
-                "dataFilter": {"timeRange": {"from": start_iso, "to": end_iso}, "mosaickingOrder": "mostRecent"},
+                "dataFilter": {"timeRange": {"from": start_iso, "to": end_iso}, "mosaickingOrder": "mostRecent", "polarization": polarization},
                 "processing": {"backCoeff": "GAMMA0_ELLIPSOID"},
             }],
         },

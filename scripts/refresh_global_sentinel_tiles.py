@@ -84,9 +84,12 @@ def main() -> None:
             if not products:
                 raise RuntimeError('Không có cảnh Sentinel-1 trong cửa sổ 14 ngày')
             newest = max(products, key=lambda product: product.acquired_at) if products else None
-            image = sentinel1_mosaic_preview(token, bbox, end - timedelta(days=14), end, width=720)
+            polarization = newest.polarization if newest.polarization in {'DV', 'SV', 'VV', 'DH', 'SH', 'HH'} else 'DV'
+            image = sentinel1_mosaic_preview(token, bbox, end - timedelta(days=14), end, width=720, polarization=polarization)
             with Image.open(BytesIO(image)) as picture:
-                picture.verify()
+                picture.load()
+                if picture.mode == 'RGBA' and picture.getchannel('A').getbbox() is None:
+                    raise RuntimeError('Mosaic không có pixel radar hợp lệ')
         except Exception as exc:  # Keep the previously verified tile, if any.
             print(f"Keeping previous {key}: {exc}")
             if key in previous_tiles:
@@ -97,6 +100,7 @@ def main() -> None:
         successes += 1
         records.append({
             "key": key, "label": LABELS[key], "bbox": bbox, "asset": f"sentinel1_global/{key}.png",
+            "polarization": polarization, "band": 'HH' if polarization in {'DH', 'SH', 'HH'} else 'VV',
             "refreshed_at": datetime.now(timezone.utc).isoformat(),
             "newest_catalog_acquired_at": newest.acquired_at if newest else None,
             "catalog_scene_count": len(products), "window_start": (end - timedelta(days=14)).isoformat(), "window_end": end.isoformat(),
