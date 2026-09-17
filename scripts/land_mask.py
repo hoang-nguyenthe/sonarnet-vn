@@ -2,9 +2,30 @@
 from functools import lru_cache
 import json
 import gzip
+import hashlib
+import zipfile
 from PIL import Image, ImageDraw
 from shapely.geometry import box, shape, mapping
-from shapely import prepare
+from shapely import prepare, from_wkb
+
+
+@lru_cache(maxsize=1)
+def load_packed_mask(path, modified_ns, source_digest):
+    with zipfile.ZipFile(path) as archive:
+        data = json.loads(archive.read('metadata.json'))
+        if data.get('packed_source_sha256') != source_digest:
+            raise ValueError('Runtime mask does not match original source')
+        geometries = {key: from_wkb(archive.read(f'{key}.wkb'))
+                      for key in ('land', 'core', 'coast', 'shoreline')}
+    for key in ('land', 'coast'):
+        prepare(geometries[key])
+    return data, geometries
+
+
+@lru_cache(maxsize=1)
+def source_hash(path, modified_ns):
+    with path.open('rb') as source:
+        return hashlib.file_digest(source, 'sha256').hexdigest()
 
 
 @lru_cache(maxsize=1)
@@ -23,6 +44,14 @@ def load_mask(path, modified_ns):
 
 def get_mask(root):
     path = root / 'assets/land_mask/vietnam.json.gz'
+    packed = path.with_name('vietnam.runtime.zip')
+    if packed.exists():
+        try:
+            return load_packed_mask(packed, packed.stat().st_mtime_ns,
+                                    source_hash(path, path.stat().st_mtime_ns))
+        except (ValueError, KeyError, zipfile.BadZipFile):
+            # A stale build must never change the actual exclusion policy.
+            pass
     return load_mask(path, path.stat().st_mtime_ns)
 
 
