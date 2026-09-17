@@ -28,7 +28,7 @@ class ProjectionTests(unittest.TestCase):
             Image.new('RGBA', (8, 12), (80, 90, 100, 255)).save(source)
             original = source.read_bytes()
             url = static_overlay_source(source, [102, 6, 103, 7], root/'static')
-            self.assertTrue(url.startswith('/app/static/radar/'))
+            self.assertTrue(url.startswith('app/static/radar/'))
             self.assertNotIn('base64', url)
             self.assertEqual(source.read_bytes(), original)
             self.assertTrue((root/'static/radar'/url.split('/')[-1]).exists())

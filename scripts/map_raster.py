@@ -58,7 +58,9 @@ def static_overlay_source(path, bbox, static_dir):
             buffer = BytesIO()
             result.save(buffer, format='WEBP', lossless=True, method=0)
             destination.write_bytes(buffer.getvalue())
-    return '/app/static/radar/' + filename
+    # Relative to the app document: Cloud embeds it under /~/+/ while local
+    # Streamlit runs at /. An origin-root URL bypasses Cloud's app router.
+    return 'app/static/radar/' + filename
 
 
 class ViewportRadar(MacroElement):
@@ -74,7 +76,8 @@ class ViewportRadar(MacroElement):
             records.forEach(function (record, index) {
                 const visible = detailed && view.intersects(record.bounds);
                 if (visible && !layers.has(index)) {
-                    const layer = L.imageOverlay(record.url, record.bounds, {
+                    const url = new URL(record.url, document.baseURI).href;
+                    const layer = L.imageOverlay(url, record.bounds, {
                         opacity: 1, interactive: true, alt: record.label
                     }).bindPopup(record.popup);
                     layers.set(index, layer); group.addLayer(layer);
