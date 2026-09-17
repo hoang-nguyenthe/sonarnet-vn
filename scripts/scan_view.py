@@ -9,7 +9,7 @@ from PIL import Image
 from streamlit.components.v1 import html
 from review_workspace import STATUSES, CANDIDATE_STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
 from scan_assets import validated_report
-from land_mask import add_map_layer, annotated_image, summary
+from land_mask import add_map_layer, annotated_image, summary as land_summary
 
 
 def render_scan(root: Path):
@@ -43,7 +43,7 @@ def render_scan(root: Path):
     model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
     st.caption(f"Mô hình: YOLO baseline học từ ảnh mô phỏng · mã {model_hash[:12] if model_hash else 'chưa có'}. Đây là ứng viên để người xem rà soát, không phải kết quả đã xác minh.")
     st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
-    st.caption(summary(ready))
+    st.caption(land_summary(ready))
     with st.expander('Lưu / mở lại phiên kiểm tra'):
         st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại trên máy khác với đúng bộ ảnh; ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
         upload = st.file_uploader('Mở hồ sơ phiên (.json)', type=['json'], key='restore_reviews')

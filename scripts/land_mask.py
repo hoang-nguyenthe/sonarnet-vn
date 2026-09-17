@@ -74,6 +74,11 @@ def add_map_layer(chart, root):
         style_function=lambda _: {'color': '#919aa8', 'weight': .5, 'fillColor': '#64748b', 'fillOpacity': .22},
         tooltip='Vùng loại trừ trên đất · GSHHG 2.3.7 · không phải ranh giới hành chính',
         ).add_to(layer)
+    coastal = folium.FeatureGroup(name='Vùng sát bờ ±500 m · cần kiểm tra', show=True).add_to(chart)
+    folium.GeoJson(mapping(geometries['coast'].simplify(.0001, preserve_topology=True)),
+        style_function=lambda _: {'color': '#ff9f0a', 'weight': .7, 'fillColor': '#ff9f0a', 'fillOpacity': .25},
+        tooltip='Cách đường bờ tối đa 500 m về hai phía · giữ ứng viên để kiểm tra, không tự kết luận là tàu',
+        ).add_to(coastal)
 
 
 def summary(tiles):

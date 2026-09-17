@@ -288,7 +288,8 @@ def render(root):
             crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
             folium.CircleMarker(
                 [candidate["latitude"], candidate["longitude"]], radius=7,
-                color="#ffd166", weight=2, fill=True, fill_color="#ffd166", fill_opacity=.9,
+                color="#ff9f0a" if candidate.get('surface') == 'near_coast' else "#ffd166", weight=2, fill=True,
+                fill_color="#ff9f0a" if candidate.get('surface') == 'near_coast' else "#ffd166", fill_opacity=.9,
                 popup=folium.Popup(
                     f"<b>Ứng viên YOLO · {candidate['id']}</b><br>"
                     f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
