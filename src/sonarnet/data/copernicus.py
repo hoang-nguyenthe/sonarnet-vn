@@ -52,6 +52,11 @@ def _request_json(url: str, payload: dict[str, Any], token: str | None = None) -
 
 def access_token(client_id: str, client_secret: str) -> str:
     """Exchange the OAuth client credentials for a short-lived access token."""
+    return access_token_info(client_id, client_secret)[0]
+
+
+def access_token_info(client_id: str, client_secret: str) -> tuple[str, float]:
+    """Return token and provider-reported lifetime for long-running workers."""
     body = urlencode({"grant_type": "client_credentials", "client_id": client_id,
                       "client_secret": client_secret}).encode("utf-8")
     request = Request(TOKEN_URL, data=body,
@@ -66,7 +71,14 @@ def access_token(client_id: str, client_secret: str) -> str:
     token = payload.get("access_token")
     if not token:
         raise CopernicusError("Copernicus không trả về access token.")
-    return str(token)
+    try:
+        lifetime = float(payload.get('expires_in', 300))
+    except (TypeError, ValueError):
+        lifetime = 300
+    import math
+    if not math.isfinite(lifetime) or lifetime <= 0:
+        lifetime = 300
+    return str(token), lifetime
 
 
 def search_sentinel1_grd(

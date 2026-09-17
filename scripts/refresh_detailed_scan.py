@@ -24,7 +24,8 @@ from shapely.ops import unary_union
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
-from sonarnet.data.copernicus import access_token, search_sentinel1_grd, sentinel1_mosaic_preview
+from sonarnet.data.copernicus import access_token_info, search_sentinel1_grd, sentinel1_mosaic_preview
+from worker_auth import RefreshingToken
 from refresh_global_sentinel_tiles import credentials
 from scan_assets import validate_tile
 
@@ -129,7 +130,7 @@ def main(argv=None):
     weights = ROOT / 'assets/models/sonarnet_baseline.pt'
     weights_hash = hashlib.sha256(weights.read_bytes()).hexdigest()
     model = YOLO(str(weights))
-    token = access_token(*credentials())
+    tokens = RefreshingToken(lambda: access_token_info(*credentials()))
     end = datetime.now(timezone.utc).date()
     updated, checked, failed = 0, 0, 0
     tiles_by_key = {t['key']: t for t in report['tiles']}
@@ -165,7 +166,7 @@ def main(argv=None):
                 validate_tile(ROOT, old)
             if not geometry_box(*mask[0]['coverage_bbox']).covers(geometry_box(*old['bbox'])):
                 raise ValueError('No validated shoreline mask for this area')
-            products = search_sentinel1_grd(token, tuple(old['bbox']), end-timedelta(days=30), end, limit=50)
+            products = search_sentinel1_grd(tokens.get(), tuple(old['bbox']), end-timedelta(days=30), end, limit=50)
             # The current baseline has only a VV input contract. HH imagery
             # remains visible as imagery, not mislabelled as scanned evidence.
             products = [product for product in products if product.polarization in {'DV', 'SV', 'VV'}]
@@ -183,7 +184,7 @@ def main(argv=None):
                 raw = (ROOT / old['asset_dir'] / 'sar.png').read_bytes()
             else:
                 acquired_day = date.fromisoformat(product.acquired_at[:10])
-                raw = sentinel1_mosaic_preview(token, tuple(old['bbox']), acquired_day, acquired_day,
+                raw = sentinel1_mosaic_preview(tokens.get(), tuple(old['bbox']), acquired_day, acquired_day,
                                               width=1024, polarization=product.polarization)
             image = Image.open(BytesIO(raw)).convert('RGBA')
             image.load()
