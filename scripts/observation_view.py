@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import folium
-from folium.plugins import MarkerCluster
+from folium.plugins import Fullscreen
 import pandas as pd
 import streamlit as st
 from PIL import Image
@@ -187,6 +187,7 @@ def render(root):
     if area_plan and waiting_cells(area_plan):
         st.caption(f"Đang mở rộng vùng kiểm tra: còn {waiting_cells(area_plan):,} ô ảnh chờ xử lý hoặc tải lại. Kết quả được bổ sung sau mỗi lượt đồng bộ, chưa phủ kín khu vực.")
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
+    Fullscreen(position='topleft', title='Toàn màn hình', title_cancel='Thu nhỏ', force_separate_button=True).add_to(chart)
     folium.TileLayer(
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         attr="Esri, Maxar, Earthstar Geographics", name="Nền ảnh vệ tinh", show=True, control=False,
@@ -232,12 +233,6 @@ def render(root):
             popup=folium.Popup(details, max_width=320), tooltip="Mở thông tin ô phát hiện",
         ).add_to(dots)
     if yolo_result:
-        cluster = MarkerCluster(name='Các điểm quan sát', control=False,
-            options={'maxClusterRadius': 34, 'disableClusteringAtZoom': 10,
-                     'showCoverageOnHover': False, 'spiderfyOnMaxZoom': True},
-            icon_create_function="""function(cluster) {
-                return L.divIcon({html: '<div style="width:30px;height:30px;border-radius:50%;background:rgba(20,39,49,.88);border:1px solid rgba(173,220,229,.65);color:#eefcff;display:flex;align-items:center;justify-content:center;font:600 11px system-ui;box-shadow:0 2px 8px #0004">'+cluster.getChildCount()+'</div>',className:'observation-cluster',iconSize:[30,30]});
-            }""").add_to(yolo_layer)
         from illustrative_vessels import profile, popup as illustrative_popup
         for candidate in yolo_result["detections"]:
             crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
@@ -256,7 +251,7 @@ def render(root):
                     max_width=320,
                 ),
                 tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']} · Trình diễn" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
-            ).add_to(cluster)
+            ).add_to(yolo_layer)
     from land_mask import add_map_layer
     add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in yolo_result['tiles']] if yolo_result else [])
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
@@ -315,10 +310,10 @@ def render(root):
       @media(prefers-reduced-motion:reduce){.observation-cluster>div{transition:none}}
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
-    embed(chart.get_root().render(), height=540)
+    embed(chart.get_root().render(), height=820)
     if yolo_result and yolo_result['tiles']:
         st.caption('Điểm sáng: vùng nghi là tàu, cần xác minh. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ. Xem tiến độ và độ phủ bên dưới. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
-    st.caption(('Số trong cụm = số tàu trong kịch bản trình diễn. ' if illustrative else 'Số trong cụm = số điểm quan sát gần nhau, không phải số tàu đã xác nhận. ') + 'Bấm cụm để phóng to; bấm vòng khoanh để xem hồ sơ. Cụm có thể gồm nhiều trạng thái nên giữ màu trung tính.')
+    st.caption('Mỗi vòng khoanh là một tàu trong kịch bản trình diễn. Chạm để mở hồ sơ; phóng gần để chọn các tàu nằm sát nhau.' if illustrative else 'Mỗi vòng khoanh là một điểm quan sát chưa xác minh. Chạm để xem ảnh bằng chứng; phóng gần để chọn các điểm nằm sát nhau.')
     st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn và ngày quan sát · Chạm tên quần đảo để xem nguồn địa danh.')
     if yolo_result and yolo_result['detections']:
         options = {item['id']: item for item in yolo_result['detections']}

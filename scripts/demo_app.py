@@ -13,7 +13,9 @@ st.set_page_config(page_title='SonarNet · Quan sát biển', page_icon='◉', l
 st.markdown('''<style>
 html,body,.stApp{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased}
 .stApp{background:#f5f6f8;color:#172b3d}
-[data-testid="stMainBlockContainer"]{max-width:1280px;padding:4rem 2rem 2rem}
+[data-testid="stMainBlockContainer"]{max-width:none;padding:4rem clamp(12px,2vw,32px) 2rem}
+iframe[height="820"]{height:82vh!important;min-height:580px;max-height:1100px}
+@media(max-width:720px){iframe[height="820"]{height:72svh!important;min-height:420px;max-height:760px}}
 .sonar-hero{position:relative;overflow:hidden;border-radius:24px;padding:30px 34px;margin:0 0 8px;color:#fff;background:linear-gradient(125deg,#07192d,#103c5b 62%,#146466);box-shadow:0 16px 50px #132f4220}
 .sonar-hero:after{content:"";position:absolute;width:450px;height:450px;border-radius:50%;background:radial-gradient(circle,#50c4d025,transparent 65%);right:-100px;top:-180px;animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
 .sonar-eyebrow{color:#9fd5d9;font-size:11px;letter-spacing:.17em;font-weight:650;margin-bottom:12px}
