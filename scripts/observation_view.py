@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import folium
+from folium.plugins import MarkerCluster
 import pandas as pd
 import streamlit as st
 from PIL import Image
@@ -168,6 +169,10 @@ def render(root):
         help="Các vùng ảnh được hệ thống đánh dấu để bạn kiểm tra; chưa xác nhận là tàu.",
     )
     yolo_result = None
+    illustrative = st.toggle('Xem tình huống có dữ liệu tàu', value=False,
+                             help='Hồ sơ minh hoạ để trải nghiệm đối chiếu; không phải AIS thật hoặc danh tính của mục tiêu trong ảnh.')
+    if illustrative:
+        st.info('Đang xem hồ sơ minh hoạ, không phải dữ liệu tàu thật. Xanh ngọc: tình huống có bản tin phù hợp · xám: chưa có bản tin. Loại tàu và thông số là giả định.')
     yolo_result = published_yolo_result(root, record)
     if yolo_enabled:
         if yolo_result and yolo_result['tiles']:
@@ -226,22 +231,31 @@ def render(root):
             popup=folium.Popup(details, max_width=320), tooltip="Mở thông tin ô phát hiện",
         ).add_to(dots)
     if yolo_result:
+        cluster = MarkerCluster(name='Các điểm quan sát', control=False,
+            options={'maxClusterRadius': 34, 'disableClusteringAtZoom': 10,
+                     'showCoverageOnHover': False, 'spiderfyOnMaxZoom': True},
+            icon_create_function="""function(cluster) {
+                return L.divIcon({html: '<div style="width:30px;height:30px;border-radius:50%;background:rgba(20,39,49,.88);border:1px solid rgba(173,220,229,.65);color:#eefcff;display:flex;align-items:center;justify-content:center;font:600 11px system-ui;box-shadow:0 2px 8px #0004">'+cluster.getChildCount()+'</div>',className:'observation-cluster',iconSize:[30,30]});
+            }""").add_to(yolo_layer)
+        from illustrative_vessels import profile, popup as illustrative_popup
         for candidate in yolo_result["detections"]:
             crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
+            color = ('#64d8c6' if profile(candidate)['matched'] else '#c1ccd4') if illustrative else '#bde8ee'
             folium.CircleMarker(
-                [candidate["latitude"], candidate["longitude"]], radius=7,
-                color="#ff9f0a" if candidate.get('surface') == 'near_coast' else "#ffd166", weight=1.5, fill=False,
+                [candidate["latitude"], candidate["longitude"]], radius=4,
+                color=color, weight=1.2, fill=False,
                 popup=folium.Popup(
                     f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>"
                     f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
                     f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
                     "Ngoài vùng bỏ qua trên đất và sát bờ.<br>"
                     f"Tọa độ xấp xỉ: {candidate['latitude']:.5f}°, {candidate['longitude']:.5f}°<br>"
-                    "Chưa xác minh là tàu<br>Thông tin tàu: chưa có dữ liệu đối chiếu cùng thời điểm.",
+                    "Chưa xác minh là tàu<br>Thông tin tàu: chưa có dữ liệu đối chiếu cùng thời điểm."
+                    + (illustrative_popup(candidate) if illustrative else ''),
                     max_width=320,
                 ),
                 tooltip=f"Mở ảnh kiểm tra · {candidate['id']}",
-            ).add_to(yolo_layer)
+            ).add_to(cluster)
     from land_mask import add_map_layer
     add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in yolo_result['tiles']] if yolo_result else [])
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
@@ -289,6 +303,15 @@ def render(root):
       .leaflet-container{font-family:-apple-system,BlinkMacSystemFont,sans-serif}
       .leaflet-control-layers{border:0!important;border-radius:12px!important;padding:10px!important;box-shadow:0 4px 20px #0002!important}
       .leaflet-popup-content{font-size:13px;line-height:1.6}
+      .leaflet-popup-content-wrapper{border-radius:18px;background:rgba(250,253,255,.97);color:#20313c;box-shadow:0 12px 36px #08182740;border:1px solid #ffffffb3}
+      .leaflet-popup-content{margin:18px 20px;max-width:calc(100vw - 100px)}
+      .leaflet-popup-content img{display:block;width:100%;max-width:240px;border-radius:10px;margin:10px 0}
+      .leaflet-popup-content strong,.leaflet-popup-content b{font-weight:600}
+      .leaflet-popup-content hr{border:0;border-top:1px solid #dce5eb;margin:14px 0}
+      .observation-cluster{background:transparent;border:0}
+      .observation-cluster>div{transition:transform .18s ease,box-shadow .18s ease}
+      .observation-cluster:hover>div{transform:scale(1.12);box-shadow:0 4px 18px #0005!important}
+      @media(prefers-reduced-motion:reduce){.observation-cluster>div{transition:none}}
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
     embed(chart.get_root().render(), height=540)
