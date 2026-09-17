@@ -266,13 +266,11 @@ def render(root):
                 color=color, weight=1.2, fill=False,
                 popup=folium.Popup(
                     (f"<b>{profile(candidate)['name']}</b><br>" if illustrative else f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>") +
-                    f"<img src='{popup_crop_url(candidate)}' width='220' alt='Ảnh radar tại vị trí quan sát' loading='lazy'><br>"
-                    f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
-                    "Ngoài vùng bỏ qua trên đất và sát bờ.<br>"
-                    f"Tọa độ xấp xỉ: {candidate['latitude']:.5f}°, {candidate['longitude']:.5f}°<br>"
-                    "Thông tin tàu: chưa có dữ liệu đối chiếu cùng thời điểm."
-                    + (illustrative_popup(candidate) if illustrative else ''),
-                    max_width=320,
+                    f"<img src='{popup_crop_url(candidate)}' width='148' alt='Ảnh radar tại vị trí quan sát' loading='lazy'><br>"
+                    f"<span class='marker-status' style='color:{color}'>{profile(candidate)['label'] if illustrative else 'Điểm cần kiểm tra'}</span><br>"
+                    f"{date_label(candidate['observation_day_utc'])} UTC · {candidate['latitude']:.3f}°, {candidate['longitude']:.3f}°<br>"
+                    "Hồ sơ đầy đủ ở dưới bản đồ.",
+                    max_width=210,
                 ),
                 tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']}" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
             ).add_to(yolo_layer)
@@ -323,10 +321,11 @@ def render(root):
     chart.get_root().header.add_child(Element("""<style>
       .leaflet-container{font-family:-apple-system,BlinkMacSystemFont,sans-serif}
       .leaflet-control-layers{border:0!important;border-radius:12px!important;padding:10px!important;box-shadow:0 4px 20px #0002!important}
-      .leaflet-popup-content{font-size:13px;line-height:1.6}
+      .leaflet-popup-content{font-size:12px;line-height:1.45}
       .leaflet-popup-content-wrapper{border-radius:18px;background:rgba(250,253,255,.97);color:#20313c;box-shadow:0 12px 36px #08182740;border:1px solid #ffffffb3}
-      .leaflet-popup-content{margin:18px 20px;max-width:calc(100vw - 100px)}
-      .leaflet-popup-content img{display:block;width:100%;max-width:240px;border-radius:10px;margin:10px 0}
+      .leaflet-popup-content{margin:12px 14px;max-width:min(185px,calc(100vw - 64px))}
+      .leaflet-popup-content img{display:block;width:100%;max-width:148px;border-radius:9px;margin:7px 0}
+      .marker-status{font-weight:650}
       .leaflet-popup-content strong,.leaflet-popup-content b{font-weight:600}
       .leaflet-popup-content hr{border:0;border-top:1px solid #dce5eb;margin:14px 0}
       .observation-cluster{background:transparent;border:0}
