@@ -49,12 +49,15 @@ def static_overlay_source(path, bbox, static_dir):
     directory.mkdir(parents=True, exist_ok=True)
     destination = directory / filename
     if not destination.exists():
-        with Image.open(path) as picture:
-            result = project_rgba(picture, bbox[1], bbox[3])
-        # Content-addressed output makes concurrent renders equivalent.
-        buffer = BytesIO()
-        result.save(buffer, format='WEBP', lossless=True)
-        destination.write_bytes(buffer.getvalue())
+        prepared = path.with_name('map.webp')
+        if prepared.exists():
+            destination.write_bytes(prepared.read_bytes())
+        else:
+            with Image.open(path) as picture:
+                result = project_rgba(picture, bbox[1], bbox[3])
+            buffer = BytesIO()
+            result.save(buffer, format='WEBP', lossless=True, method=0)
+            destination.write_bytes(buffer.getvalue())
     return '/app/static/radar/' + filename
 
 

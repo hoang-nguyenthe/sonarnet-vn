@@ -49,8 +49,10 @@ jobs:
       - name: Publish a verified asset only when it changed
         if: ${{ !cancelled() }}
         run: |
+          python scripts/prepare_map_displays.py
           git config user.name "sonarnet-vn-bot"
           git config user.email "sonarnet-vn-bot@users.noreply.github.com"
           git add assets/sentinel1_vietnam_latest.png assets/sentinel1_vietnam_latest.json assets/sentinel1_global assets/real_scan assets/gfw_global_ship_detections_latest.json
           git diff --cached --quiet || git commit -m "Refresh Sentinel-1 Vietnam mosaic"
+          git pull --rebase origin main
           git push

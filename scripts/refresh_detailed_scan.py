@@ -199,6 +199,9 @@ def main(argv=None):
             destination.mkdir(parents=True, exist_ok=True)
             (destination/'sar.png').write_bytes(raw)
             annotated.save(destination/'detections.jpg', quality=88)
+            from map_raster import project_rgba
+            project_rgba(image, old['bbox'][1], old['bbox'][3]).save(
+                destination/'map.webp', lossless=True, method=0)
             tile = dict(old, asset_dir=relative, image_size=list(image.size), status='processed',
                         source='Copernicus Data Space · Sentinel-1 GRD', band='VV',
                         time_scope='Daily VV Process API mosaic; reference product is not exact per-pixel attribution',

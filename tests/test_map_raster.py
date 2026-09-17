@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 import unittest
 import tempfile
+from unittest.mock import patch
 import numpy as np
 from PIL import Image
 
@@ -10,6 +11,16 @@ from map_raster import project_rgba, static_overlay_source, ViewportRadar
 
 
 class ProjectionTests(unittest.TestCase):
+    def test_prepared_display_avoids_projection_during_page_load(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = root/'sar.png'
+            Image.new('RGBA', (8, 8), (80, 90, 100, 255)).save(source)
+            Image.new('RGBA', (8, 8), (80, 90, 100, 255)).save(root/'map.webp', lossless=True)
+            with patch('map_raster.project_rgba', side_effect=AssertionError('No page-time projection')):
+                url = static_overlay_source(source, [102, 6, 103, 7], root/'static')
+            self.assertEqual((root/'static/radar'/url.split('/')[-1]).read_bytes(), (root/'map.webp').read_bytes())
+
     def test_static_display_cache_preserves_input(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

@@ -56,7 +56,7 @@ with observation:
 with guide:
     st.subheader('Từ xem ảnh đến kiểm tra bằng chứng.')
     st.markdown('''1. **Chọn khu vực:** xem ảnh vệ tinh và thời gian quan sát. Ảnh màu bên dưới chỉ là nền tham chiếu.
-2. **Xem vùng đã kiểm tra:** viền xanh là vùng đã được xử lý tự động; phần ngoài viền chưa có kết quả.
+2. **Xem vùng đã kiểm tra:** viền xanh là vùng đã được xử lý tự động; phóng to để ảnh chi tiết tự tải. Phần ngoài viền chưa có kết quả.
 3. **Mở điểm nghi vấn:** xem ảnh gốc, tọa độ và ngày quan sát. Một điểm sáng chưa chắc là tàu.
 4. **Lưu bằng chứng:** chuyển sang “Kiểm tra chi tiết”, ghi nhận đánh giá và tải hồ sơ.''')
     st.subheader('Giới hạn cần biết')

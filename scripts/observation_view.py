@@ -174,6 +174,10 @@ def render(root):
                        f"ngày ảnh {', '.join(date_label(day) for day in days)} (UTC). Chạm điểm sáng để xem ảnh bằng chứng.")
         else:
             st.info("Khu vực này chưa được kiểm tra tự động trên ảnh chi tiết. Bạn vẫn có thể xem ảnh; chưa có kết quả không có nghĩa là không có tàu.")
+    coverage = read_json(root/'assets/real_scan/coverage.json')
+    area_plan = next((area for area in coverage.get('regions', []) if area['key'] == record['key']), None)
+    if area_plan and area_plan.get('states', {}).get('pending', 0):
+        st.caption(f"Đang mở rộng vùng kiểm tra: còn {area_plan['states']['pending']:,} ô ảnh chờ xử lý. Kết quả được bổ sung sau mỗi lượt đồng bộ, chưa phủ kín khu vực.")
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
     folium.TileLayer(
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
