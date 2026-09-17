@@ -44,7 +44,7 @@ def render_scan(root: Path):
     model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
     st.caption('Điểm nghi vấn chưa được xác minh, không phải số tàu.')
     with st.expander('Lưu / mở lại phiên kiểm tra'):
-        st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại trên máy khác với đúng bộ ảnh; ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
+        st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại sau khi hệ thống bổ sung ảnh, nếu các ảnh cũ và kết quả của chúng chưa thay đổi. Ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
         upload = st.file_uploader('Mở hồ sơ phiên (.json)', type=['json'], key='restore_reviews')
         if st.button('Nạp ghi chú từ hồ sơ', disabled=upload is None):
             try:

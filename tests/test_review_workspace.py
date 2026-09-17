@@ -19,6 +19,24 @@ class WorkspaceTests(unittest.TestCase):
         notes = {'cell_0':{'status':'Cần kiểm tra tiếp','note':'Điểm sáng ở gần bờ'}}
         self.assertEqual(import_workspace(export_workspace(self.report,notes),self.report),notes)
 
+    def test_new_images_do_not_invalidate_saved_notes(self):
+        notes = {'cell_0': {'status': 'Cần kiểm tra tiếp', 'note': 'Giữ lại'}}
+        raw = export_workspace(self.report, notes)
+        expanded = {'tiles': [dict(self.tile, key='new_cell'), self.tile]}
+        self.assertEqual(import_workspace(raw, expanded), notes)
+
+    def test_policy_and_detection_changes_reject_old_notes(self):
+        raw = export_workspace(self.report, {})
+        for changes in ({'inference_policy_sha256': 'new'}, {'detections': [{'id': 1}]}, {'bbox': [2,3,4,5]}):
+            with self.assertRaises(ValueError):
+                import_workspace(raw, {'tiles': [dict(self.tile, **changes)]})
+
+    def test_legacy_session_still_opens_on_exact_original_report(self):
+        identity = [('cell_0', 'a', 'b', None)]
+        digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+        raw = json.dumps({'schema_version': 1, 'report_id': digest, 'reviews': {}})
+        self.assertEqual(import_workspace(raw, self.report), {})
+
     def test_candidate_labels_roundtrip(self):
         report = {'tiles': [dict(self.tile, detections=[{'id': 1}, {'id': 2}])]}
         notes = {'cell_0': {

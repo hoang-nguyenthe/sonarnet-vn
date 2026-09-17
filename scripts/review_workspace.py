@@ -11,12 +11,21 @@ CANDIDATE_STATUSES = ['Chưa đánh giá', 'Có khả năng là tàu', 'Nhiễu 
 
 
 def report_id(report):
-    identity = [(t['key'], t.get('image_sha256'), t.get('weights_sha256'), t.get('land_mask_version')) for t in report['tiles']]
+    identity = sorted((t['key'], tile_identity(t)) for t in report['tiles'])
     return hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
 
 
+def tile_identity(tile):
+    fields = ('image_sha256', 'weights_sha256', 'land_mask_version',
+              'inference_policy_sha256', 'bbox', 'observation_day_utc', 'detections')
+    payload = {key: tile.get(key) for key in fields}
+    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
+
+
 def export_workspace(report, reviews):
-    return json.dumps({'schema_version': 1, 'report_id': report_id(report), 'reviews': reviews}, ensure_ascii=False, indent=2)
+    return json.dumps({'schema_version': 2, 'report_id': report_id(report),
+                       'tile_identities': {t['key']: tile_identity(t) for t in report['tiles']},
+                       'reviews': reviews}, ensure_ascii=False, indent=2)
 
 
 def import_workspace(raw, report):
@@ -26,8 +35,24 @@ def import_workspace(raw, report):
         data = json.loads(raw)
     except (ValueError, UnicodeError):
         raise ValueError('Tệp không phải JSON hợp lệ.') from None
-    if not isinstance(data, dict) or data.get('schema_version') != 1 or data.get('report_id') != report_id(report):
+    if not isinstance(data, dict):
         raise ValueError('Hồ sơ không thuộc đúng bộ ảnh và mô hình này.')
+    if data.get('schema_version') == 1:
+        old_identity = [(t['key'], t.get('image_sha256'), t.get('weights_sha256'), t.get('land_mask_version')) for t in report['tiles']]
+        old_id = hashlib.sha256(json.dumps(old_identity, sort_keys=True).encode()).hexdigest()
+        if data.get('report_id') != old_id:
+            raise ValueError('Hồ sơ cũ cần đúng bộ ảnh ban đầu để mở lại.')
+    elif data.get('schema_version') == 2:
+        identities = data.get('tile_identities')
+        current = {t['key']: tile_identity(t) for t in report['tiles']}
+        if not isinstance(identities, dict) or not identities:
+            raise ValueError('Hồ sơ thiếu mã kiểm chứng ảnh.')
+        # Appending observations must not invalidate the user's old notes.
+        # Changing an existing image, policy, bounds or candidates must.
+        if any(current.get(key) != digest for key, digest in identities.items()):
+            raise ValueError('Ảnh hoặc kết quả trong hồ sơ đã thay đổi; không gắn ghi chú cũ vào bằng chứng mới.')
+    else:
+        raise ValueError('Phiên bản hồ sơ chưa được hỗ trợ.')
     reviews = data.get('reviews')
     if not isinstance(reviews, dict):
         raise ValueError('Danh sách ghi chú không hợp lệ.')
@@ -35,6 +60,8 @@ def import_workspace(raw, report):
     for key, item in reviews.items():
         if key not in allowed or not isinstance(item, dict):
             raise ValueError('Hồ sơ chứa ô ảnh không hợp lệ.')
+        if data['schema_version'] == 2 and key not in data['tile_identities']:
+            raise ValueError('Ghi chú thiếu mã kiểm chứng ảnh tương ứng.')
         if item.get('status') not in STATUSES or not isinstance(item.get('note'), str) or len(item['note']) > 5000:
             raise ValueError('Trạng thái hoặc ghi chú không hợp lệ.')
         labels = item.get('candidate_labels', {})
