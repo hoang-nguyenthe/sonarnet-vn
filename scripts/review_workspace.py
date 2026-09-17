@@ -4,13 +4,14 @@ import html
 import json
 from io import BytesIO
 import zipfile
+from datetime import date
 
 STATUSES = ['Chưa xem xét', 'Cần kiểm tra tiếp', 'Đã xem, chưa thấy mục tiêu rõ']
 CANDIDATE_STATUSES = ['Chưa đánh giá', 'Có khả năng là tàu', 'Nhiễu / không phải tàu']
 
 
 def report_id(report):
-    identity = [(t['key'], t.get('image_sha256'), t.get('weights_sha256')) for t in report['tiles']]
+    identity = [(t['key'], t.get('image_sha256'), t.get('weights_sha256'), t.get('land_mask_version')) for t in report['tiles']]
     return hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
 
 
@@ -58,12 +59,17 @@ def import_workspace(raw, report):
 
 
 def printable_review(tile, review, day):
+    # A refresh can leave neighbouring cells at different acquisition dates.
+    # The evidence packet must always describe its own source image.
+    if tile.get('observation_day_utc'):
+        day = date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')
     esc = lambda value: html.escape(str(value))
     rows = ''.join(f'<tr><td>{d["id"]}</td><td>{d["confidence"]:.3f}</td><td>{d["latitude"]:.5f}</td><td>{d["longitude"]:.5f}</td></tr>' for d in tile['detections'])
     return f'''<!doctype html><html lang="vi"><meta charset="utf-8"><title>SonarNet — hồ sơ kiểm tra</title>
 <style>body{{font:16px system-ui;max-width:850px;margin:40px auto;padding:20px;color:#193249}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;padding:10px;border-bottom:1px solid #ddd}}.note{{white-space:pre-wrap}}small{{overflow-wrap:anywhere}}@media print{{body{{margin:0}}}}</style>
 <h1>Hồ sơ kiểm tra ảnh SAR</h1><p>{esc(tile['key'])} · Ngày ảnh UTC: {esc(day)}</p>
 <p>Nguồn: {esc(tile['source'])}<br>Phạm vi WGS84: {esc(tile['bbox'])}</p>
+<p>Bộ lọc đất: {esc(tile.get('land_mask_version', 'Chưa áp dụng'))} · Loại {len(tile.get('excluded_detections', []))} ứng viên sâu trên đất. Khung màu cam sát bờ cần kiểm tra. Kết quả gốc được giữ riêng trong gói bằng chứng.</p>
 <p><b>Đánh dấu của người xem:</b> {esc(review['status'])}</p><p class="note">{esc(review['note'])}</p>
 <h2>Ứng viên mô hình — chưa xác minh</h2><table><tr><th>ID</th><th>Điểm mô hình</th><th>Vĩ độ</th><th>Kinh độ</th></tr>{rows}</table>
 <p>Không phải xác nhận tàu, tàu cá hay vi phạm. Không phát hiện không chứng minh không có tàu. Ảnh ghép trong ngày; chưa có thời điểm riêng từng pixel.</p>
@@ -75,9 +81,13 @@ def evidence_bundle(root, tile, review, day):
     directory = (root / tile['asset_dir']).resolve()
     if not directory.is_relative_to((root / 'assets/real_scan').resolve()):
         raise ValueError('Evidence must belong to the published scan directory')
+    from land_mask import annotated_image
+    marked = BytesIO()
+    annotated_image(root, tile).save(marked, format='JPEG', quality=95)
     payloads = {
         'source.png': (directory / 'sar.png').read_bytes(),
-        'candidates.jpg': (directory / 'detections.jpg').read_bytes(),
+        'candidates.jpg': marked.getvalue(),
+        'raw-model-candidates.jpg': (directory / 'detections.jpg').read_bytes(),
         'review.html': printable_review(tile, review, day).encode('utf-8'),
         'evidence.json': json.dumps(dict(tile, review=review), ensure_ascii=False, indent=2).encode('utf-8'),
     }

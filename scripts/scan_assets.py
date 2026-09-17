@@ -52,6 +52,8 @@ def validated_report(root: Path):
             continue
         try:
             validate_tile(root,tile)
+            from land_mask import filter_tile
+            filter_tile(root, tile)
         except (ValueError,KeyError,TypeError,OSError):
             tile['status']='unavailable'
             tile['detections']=[]

@@ -205,6 +205,8 @@ def render(root):
         yolo_result = published_yolo_result(root, record)
         if yolo_result and yolo_result['tiles']:
             days = sorted({tile['observation_day_utc'] for tile in yolo_result['tiles']})
+            from land_mask import summary
+            st.caption(summary(yolo_result['tiles']))
             st.caption(f"{len(yolo_result['detections'])} ứng viên thử nghiệm · {len(yolo_result['tiles'])} ô ảnh chi tiết đã quét · "
                        f"ngày ảnh {', '.join(date_label(day) for day in days)} (UTC). Chạm điểm sáng để xem ảnh bằng chứng.")
         else:
@@ -292,6 +294,7 @@ def render(root):
                     f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
                     f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
                     f"Điểm mô hình: {candidate['confidence']:.2f}<br>"
+                    f"Bề mặt: {'Sát bờ · cần kiểm tra' if candidate.get('surface') == 'near_coast' else 'Ngoài vùng đất loại trừ · chưa xác minh'}<br>"
                     f"Tọa độ xấp xỉ: {candidate['latitude']:.5f}°, {candidate['longitude']:.5f}°<br>"
                     f"Chưa xác minh là tàu{ais_text}",
                     max_width=320,
@@ -319,6 +322,8 @@ def render(root):
                     ),
                     tooltip=f"AIS minh hoạ · {ais['status']}",
                 ).add_to(ais_layer)
+    from land_mask import add_map_layer
+    add_map_layer(chart, root)
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
     chart.fit_bounds(bounds)
     name = chart.get_name()

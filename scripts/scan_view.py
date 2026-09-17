@@ -9,6 +9,7 @@ from PIL import Image
 from streamlit.components.v1 import html
 from review_workspace import STATUSES, CANDIDATE_STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
 from scan_assets import validated_report
+from land_mask import add_map_layer, annotated_image, summary
 
 
 def render_scan(root: Path):
@@ -42,6 +43,7 @@ def render_scan(root: Path):
     model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
     st.caption(f"Mô hình: YOLO baseline học từ ảnh mô phỏng · mã {model_hash[:12] if model_hash else 'chưa có'}. Đây là ứng viên để người xem rà soát, không phải kết quả đã xác minh.")
     st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
+    st.caption(summary(ready))
     with st.expander('Lưu / mở lại phiên kiểm tra'):
         st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại trên máy khác với đúng bộ ảnh; ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
         upload = st.file_uploader('Mở hồ sơ phiên (.json)', type=['json'], key='restore_reviews')
@@ -61,7 +63,7 @@ def render_scan(root: Path):
                 st.error(str(error))
         st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews), 'sonarnet-review-session.json', 'application/json')
     with st.expander('Cần biết trước khi dùng kết quả'):
-        st.write('Mô hình công bố học trên ảnh mô phỏng, chưa kiểm chứng độ chính xác trên ảnh thật. Có ứng viên trên đất/bờ biển; chưa có mặt nạ loại đất hay nhãn xác minh. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
+        st.write('Mô hình công bố học trên ảnh mô phỏng. Mặt nạ GSHHG loại ứng viên có toàn bộ khung nằm sâu hơn 500 m trong đất; giữ vùng sát bờ để kiểm tra thủ công. Đường bờ phiên bản 2017 có thể khác thực địa hiện tại, nhất là khu lấn biển. Vùng ngoài phạm vi mặt nạ không được coi là đã lọc. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
         st.write('Mỗi ô giữ ngày quan sát của chính ảnh đó. Lịch kiểm tra 6 giờ giữ lại ảnh cũ nếu chưa có ảnh mới hợp lệ. Ảnh ghép trong ngày chưa có thời điểm riêng từng pixel. Không phát hiện không chứng minh không có tàu.')
     chart = folium.Map(tiles=None, zoom_snap=.25)
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attr='Esri, Maxar, Earthstar Geographics').add_to(chart)
@@ -72,12 +74,14 @@ def render_scan(root: Path):
         review_status = reviews.get(tile['key'], {}).get('status', STATUSES[0])
         border = '#43c6b7' if review_status == STATUSES[2] else '#ff9f43' if review_status == STATUSES[1] else '#74869a'
         folium.Rectangle([[s,w],[n,e]], color=border if processed else '#efad48', weight=3 if review_status != STATUSES[0] else 2, fill=True, fill_opacity=.18,
-                         tooltip=f"{tile['key']} · {review_status}", popup=f"{tile['key']} · {summary} · {day_label} UTC · {review_status}").add_to(chart)
+                         tooltip=f"{tile['key']} · {review_status}", popup=f"{tile['key']} · {summary} · {tile.get('observation_day_utc', 'Chưa rõ')} UTC · {review_status}").add_to(chart)
         for d in tile.get('detections', []):
             label = reviews.get(tile['key'], {}).get('candidate_labels', {}).get(str(d['id']), CANDIDATE_STATUSES[0])
             dot_color = '#45c9b8' if label == CANDIDATE_STATUSES[1] else '#ea6b61' if label == CANDIDATE_STATUSES[2] else '#ffb85c'
             folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color=dot_color,fill=True,
                 popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · {label}").add_to(chart)
+    add_map_layer(chart, root)
+    folium.LayerControl(collapsed=True).add_to(chart)
     chart.fit_bounds([[6,102],[24,115]])
     with st.expander('Phạm vi đã quét trên Việt Nam', expanded=True):
         html(chart.get_root().render(), height=420)
@@ -89,7 +93,7 @@ def render_scan(root: Path):
     tile = by_key[chosen]
     st.caption(f"Ngày ảnh của ô đã chọn: {date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')} UTC · Copernicus Sentinel-1 VV")
     original = st.toggle('Xem ảnh gốc không khung đánh dấu', value=False)
-    st.image(str(root / tile['asset_dir'] / ('sar.png' if original else 'detections.jpg')), use_container_width=True,
+    st.image(str(root / tile['asset_dir'] / 'sar.png') if original else annotated_image(root, tile), use_container_width=True,
              caption=f"{chosen} · Sentinel-1 VV · {tile['image_size'][0]} × {tile['image_size'][1]} px · ngưỡng {tile['confidence_threshold']}")
     if tile['detections']:
         detection = st.selectbox('Mở bằng chứng ứng viên', tile['detections'], format_func=lambda d: f"#{d['id']} · điểm mô hình {d['confidence']:.2f}")
@@ -108,7 +112,7 @@ def render_scan(root: Path):
                 st.rerun()
         st.caption('Đây là đánh giá thủ công để tạo dữ liệu kiểm chứng, không phải nhãn sự thật hay kết luận tàu cá.')
     else:
-        st.info('YOLO không đề xuất ứng viên trong ô này ở ngưỡng 0,35. Vẫn cần kiểm tra ảnh; không được suy ra rằng vùng này không có tàu.')
+        st.info('Không còn ứng viên sau ngưỡng mô hình và bộ lọc đất liền. Vẫn cần kiểm tra ảnh; không được suy ra rằng vùng này không có tàu.')
     st.caption(f"Nguồn: {tile['source']} · WGS84: {tile['bbox']}. Ảnh ghép trong ngày, không có thời điểm riêng từng pixel.")
     saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
     with st.form(f'review_form_{chosen}'):

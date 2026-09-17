@@ -78,7 +78,6 @@ def search_sentinel1_grd(
     response = _request_json(CATALOG_URL, {
         "bbox": list(bbox), "datetime": f"{start_iso}/{end_iso}",
         "collections": ["sentinel-1-grd"], "limit": max(1, min(limit, 50)),
-        "fields": {},
     }, token)
     products: list[SentinelProduct] = []
     for feature in response.get("features", []):

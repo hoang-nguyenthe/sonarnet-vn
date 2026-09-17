@@ -54,6 +54,12 @@ class WorkspaceTests(unittest.TestCase):
         self.assertNotIn('<script>',result)
         self.assertIn('&lt;script&gt;',result)
 
+    def test_evidence_uses_own_acquisition_not_report_date(self):
+        tile = dict(self.tile, observation_day_utc='2026-09-12')
+        result = printable_review(tile, {'status':'Chưa xem xét','note':''}, '17/09/2026')
+        self.assertIn('Ngày ảnh UTC: 12/09/2026', result)
+        self.assertNotIn('17/09/2026', result)
+
     def test_real_bundle_integrity(self):
         root=Path(__file__).resolve().parents[1]
         report=json.loads((root/'assets/real_scan/report.json').read_text())
@@ -61,7 +67,7 @@ class WorkspaceTests(unittest.TestCase):
         raw=evidence_bundle(root,tile,{'status':'Chưa xem xét','note':'test'},'12/09/2026')
         with zipfile.ZipFile(BytesIO(raw)) as archive:
             checks=json.loads(archive.read('checksums.json'))
-            self.assertEqual(set(checks),{'source.png','candidates.jpg','review.html','evidence.json'})
+            self.assertEqual(set(checks),{'source.png','candidates.jpg','raw-model-candidates.jpg','review.html','evidence.json'})
             for name,digest in checks.items():
                 self.assertEqual(hashlib.sha256(archive.read(name)).hexdigest(),digest)
         with self.assertRaises(ValueError):
