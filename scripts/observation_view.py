@@ -18,7 +18,7 @@ from streamlit.components.v1 import html as embed
 from map_raster import overlay_source, static_overlay_source, ViewportRadar
 from coverage_status import coverage_rows, waiting_cells
 from observation_labels import candidate_label, coordinates
-from illustrative_vessels import profile, popup as illustrative_popup
+from illustrative_vessels import profile, popup as illustrative_popup, FILTERS, filter_vessels
 
 VN_VIEW = [[6, 102], [24, 115]]
 
@@ -173,8 +173,15 @@ def render(root):
     illustrative = st.toggle('Trình diễn đội tàu', value=True,
                              help='Hồ sơ minh hoạ để trải nghiệm đối chiếu; không phải AIS thật hoặc danh tính của mục tiêu trong ảnh.')
     if illustrative:
-        st.info('Dữ liệu minh hoạ · Xanh ngọc: AIS khớp · Cam: AIS lệch · Xám: chưa có AIS. Loại tàu và thông số là giả định, không phải danh tính thật của mục tiêu trong ảnh.')
+        st.caption('Dữ liệu trình diễn · 🟢 AIS khớp · 🟡 AIS lệch · 🔴 Chưa có AIS. Màu đỏ không phải kết luận vi phạm.')
     yolo_result = published_yolo_result(root, record)
+    visible_candidates = yolo_result['detections'] if yolo_result else []
+    if illustrative:
+        selected_status = st.radio('Lọc tàu theo trạng thái', list(FILTERS), horizontal=True, key='vessel_status_filter')
+        visible_candidates = filter_vessels(visible_candidates, selected_status)
+        st.caption(f"Đang hiển thị {len(visible_candidates)} / {len(yolo_result['detections']) if yolo_result else 0} tàu trình diễn.")
+        if not visible_candidates:
+            st.info('Không có tàu thuộc trạng thái đã chọn trong khu vực này. Chọn Tất cả để xem lại.')
     if yolo_enabled:
         if yolo_result and yolo_result['tiles']:
             days = sorted({tile['observation_day_utc'] for tile in yolo_result['tiles']})
@@ -234,7 +241,7 @@ def render(root):
         ).add_to(dots)
     if yolo_result:
         from illustrative_vessels import profile, popup as illustrative_popup
-        for candidate in yolo_result["detections"]:
+        for candidate in visible_candidates:
             crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
             color = profile(candidate)['color'] if illustrative else '#bde8ee'
             folium.CircleMarker(
@@ -315,8 +322,8 @@ def render(root):
         st.caption('Điểm sáng: vùng nghi là tàu, cần xác minh. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ. Xem tiến độ và độ phủ bên dưới. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
     st.caption('Mỗi vòng khoanh là một tàu trong kịch bản trình diễn. Chạm để mở hồ sơ; phóng gần để chọn các tàu nằm sát nhau.' if illustrative else 'Mỗi vòng khoanh là một điểm quan sát chưa xác minh. Chạm để xem ảnh bằng chứng; phóng gần để chọn các điểm nằm sát nhau.')
     st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn và ngày quan sát · Chạm tên quần đảo để xem nguồn địa danh.')
-    if yolo_result and yolo_result['detections']:
-        options = {item['id']: item for item in yolo_result['detections']}
+    if visible_candidates:
+        options = {item['id']: item for item in visible_candidates}
         point_numbers = {key: index+1 for index, key in enumerate(options)}
         chosen = st.selectbox('Chọn tàu' if illustrative else 'Chọn điểm cần kiểm tra', list(options), key='panorama_candidate',
                               format_func=lambda key: (profile(options[key])['name'] + ' · ' + profile(options[key])['label']) if illustrative else candidate_label(options[key], point_numbers[key]))
@@ -347,7 +354,7 @@ def render(root):
                     "Vĩ độ xấp xỉ": round(item["latitude"], 5),
                     "Kinh độ xấp xỉ": round(item["longitude"], 5),
                 }
-                for item in yolo_result["detections"]
+                for item in visible_candidates
             ]
             if rows:
                 st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)

@@ -3,10 +3,18 @@ import hashlib
 from html import escape
 
 STATES = {
-    'matched': ('AIS khớp', '#64d8c6'),
-    'mismatch': ('AIS lệch', '#f0a45d'),
-    'missing': ('Chưa có AIS', '#c1ccd4'),
+    'matched': ('AIS khớp', '#30d158'),
+    'mismatch': ('AIS lệch', '#ffd60a'),
+    'missing': ('Chưa có AIS', '#ff453a'),
 }
+
+FILTERS = {'Tất cả': None, 'Xanh · AIS khớp': 'matched',
+           'Vàng · AIS lệch': 'mismatch', 'Đỏ · Chưa có AIS': 'missing'}
+
+
+def filter_vessels(candidates, selection):
+    status = FILTERS[selection]
+    return [c for c in candidates if status is None or profile(c)['status'] == status]
 
 def profile(candidate):
     seed = hashlib.sha256(str(candidate['id']).encode()).hexdigest()
