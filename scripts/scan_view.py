@@ -77,12 +77,12 @@ def render_scan(root: Path):
         for d in tile.get('detections', []):
             label = reviews.get(tile['key'], {}).get('candidate_labels', {}).get(str(d['id']), CANDIDATE_STATUSES[0])
             dot_color = '#45c9b8' if label == CANDIDATE_STATUSES[1] else '#ea6b61' if label == CANDIDATE_STATUSES[2] else '#ffb85c'
-            folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color=dot_color,fill=True,
+            folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color=dot_color,weight=1.5,fill=False,
                 popup=f"{tile['key']} / #{d['id']} · {label}").add_to(chart)
     add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in ready])
     chart.fit_bounds([[6,102],[24,115]])
-    from maritime_reference import add_reference
-    add_reference(chart, root)
+    from place_labels import add_place_labels
+    add_place_labels(chart)
     folium.LayerControl(collapsed=True).add_to(chart)
     with st.expander('Vị trí các ảnh đã kiểm tra', expanded=False):
         html(chart.get_root().render(), height=420)

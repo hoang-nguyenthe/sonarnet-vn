@@ -207,11 +207,8 @@ def render(root):
             ))
         ViewportRadar(chart, radar, radar_records).add_to(chart)
         st.caption("Phóng to vùng đã xử lý để xem ảnh radar chi tiết. Ảnh tự tải theo vị trí đang xem; mỗi ô có ngày quan sát riêng.")
-    folium.map.CustomPane("place_labels", z_index=650, pointer_events=False).add_to(chart)
-    folium.TileLayer(
-        tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-        attr="Esri", name="Tên địa danh", overlay=True, pane="place_labels",
-    ).add_to(chart)
+    from place_labels import add_place_labels
+    add_place_labels(chart)
     dots = folium.FeatureGroup(name="Quan sát từ nguồn khác", show=False).add_to(chart)
     for point in region_points:
         details = (
@@ -225,7 +222,7 @@ def render(root):
         )
         folium.CircleMarker(
             [point['latitude'], point['longitude']], radius=4,
-            color="#ffecad", weight=1, fill=True, fill_color="#ef993c", fill_opacity=.85,
+            color="#ffecad", weight=1.5, fill=False,
             popup=folium.Popup(details, max_width=320), tooltip="Mở thông tin ô phát hiện",
         ).add_to(dots)
     if yolo_result:
@@ -233,8 +230,7 @@ def render(root):
             crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
             folium.CircleMarker(
                 [candidate["latitude"], candidate["longitude"]], radius=7,
-                color="#ff9f0a" if candidate.get('surface') == 'near_coast' else "#ffd166", weight=2, fill=True,
-                fill_color="#ff9f0a" if candidate.get('surface') == 'near_coast' else "#ffd166", fill_opacity=.9,
+                color="#ff9f0a" if candidate.get('surface') == 'near_coast' else "#ffd166", weight=1.5, fill=False,
                 popup=folium.Popup(
                     f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>"
                     f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
@@ -248,8 +244,6 @@ def render(root):
             ).add_to(yolo_layer)
     from land_mask import add_map_layer
     add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in yolo_result['tiles']] if yolo_result else [])
-    from maritime_reference import add_reference
-    add_reference(chart, root)
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
     chart.fit_bounds(bounds)
     name = chart.get_name()
@@ -300,7 +294,7 @@ def render(root):
     embed(chart.get_root().render(), height=540)
     if yolo_result and yolo_result['tiles']:
         st.caption('Điểm sáng: vùng nghi là tàu, cần xác minh. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ. Xem tiến độ và độ phủ bên dưới. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
-    st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn. Nét đứt xanh nhạt là phạm vi biển tham khảo, không phải ranh giới pháp lý.')
+    st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn và ngày quan sát · Chạm tên quần đảo để xem nguồn địa danh.')
     if yolo_result and yolo_result['detections']:
         options = {item['id']: item for item in yolo_result['detections']}
         point_numbers = {key: index+1 for index, key in enumerate(options)}
@@ -363,7 +357,7 @@ def render(root):
                 st.caption('Một phần khu vực chưa có đường bờ được kiểm tra để loại đất và vùng ven bờ, nên chưa chạy nhận diện ở đó.')
         st.write("Hệ thống tìm vùng giống tàu trong từng ảnh chi tiết, rồi đánh dấu đúng vị trí lên toàn cảnh. Ảnh nền không đồng nghĩa toàn bộ khu vực đã được kiểm tra; xem số ô đã xử lý và còn chờ trong mục độ phủ. Chưa có dữ liệu định danh và vị trí trực tiếp từ tàu.")
         st.caption(f"GFW được tải: {local_time(detection.get('refreshed_at'))}")
-        st.markdown("**Ảnh radar:** [Copernicus Data Space](https://dataspace.copernicus.eu/) · Sentinel‑1 GRD. **Ô phát hiện:** [Global Fishing Watch](https://globalfishingwatch.org/our-apis/). **Nền và địa danh:** Esri.")
+        st.markdown("**Ảnh radar:** [Copernicus Data Space](https://dataspace.copernicus.eu/) · Sentinel‑1 GRD. **Ô phát hiện:** [Global Fishing Watch](https://globalfishingwatch.org/our-apis/). **Nền ảnh:** Esri. Địa danh Việt Nam là lớp nhãn riêng; không sử dụng lớp đường biên của nhà cung cấp bản đồ.")
         st.write("Ảnh ghép dùng nhiều lượt bay trong khoảng ngày công bố. Nơi chưa có ảnh radar sẽ hiện nền ảnh màu bên dưới. Ngày chụp của ảnh nền và ngày riêng từng điểm ảnh radar chưa được cung cấp ở đây.")
         st.write("Nguồn Global Fishing Watch dùng để tham khảo, chưa đối chiếu với thông tin phát từ tàu hoặc xác minh thành cảnh báo vi phạm. Bộ hiện tại giới hạn 1.800 ô có nhiều lượt phát hiện nhất trên các vùng đã tải; không phải toàn bộ tàu trên thế giới.")
         st.write("Lịch kiểm tra dữ liệu: mỗi 6 giờ. Ngày tạo ảnh và ngày quan sát là hai mốc khác nhau; lịch chạy có thể trễ khi dịch vụ không sẵn sàng.")
