@@ -46,10 +46,24 @@ jobs:
         env:
           GFW_API_TOKEN: ${{ secrets.GFW_API_TOKEN }}
         run: python scripts/refresh_global_ship_detections.py
+      - name: Prepare cached map images before publication
+        if: ${{ !cancelled() }}
+        run: python scripts/prepare_map_displays.py
+      - name: Preserve processed observations if publication fails
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentinel-observations-${{ github.run_id }}
+          path: |
+            assets/real_scan/report.json
+            assets/real_scan/coverage.json
+            assets/real_scan/published/
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
       - name: Publish a verified asset only when it changed
         if: ${{ !cancelled() }}
         run: |
-          python scripts/prepare_map_displays.py
           git config user.name "sonarnet-vn-bot"
           git config user.email "sonarnet-vn-bot@users.noreply.github.com"
           git add assets/sentinel1_vietnam_latest.png assets/sentinel1_vietnam_latest.json assets/sentinel1_global assets/real_scan assets/gfw_global_ship_detections_latest.json
