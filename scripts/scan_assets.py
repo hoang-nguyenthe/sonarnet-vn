@@ -1,11 +1,27 @@
 """Fail closed per tile without making the whole review page unavailable."""
 from copy import deepcopy
 from datetime import date
+from functools import lru_cache
 import hashlib
 import json
 import math
 from pathlib import Path
 from PIL import Image
+
+
+@lru_cache(maxsize=2048)
+def _validate_image(path, fingerprint, size, expected_sha256):
+    # Cache only a successful validation, never image bytes. Deployment or
+    # file replacement invalidates the key; failed validation is not cached.
+    with Image.open(path) as image:
+        if image.size != size:
+            raise ValueError('Image dimensions do not match manifest')
+        image.verify()
+    if expected_sha256:
+        with path.open('rb') as source:
+            digest = hashlib.file_digest(source, 'sha256').hexdigest()
+        if digest != expected_sha256:
+            raise ValueError('Image checksum mismatch')
 
 
 def validate_tile(root, tile):
@@ -16,12 +32,12 @@ def validate_tile(root, tile):
     if not (-180 <= w < e <= 180 and -90 <= s < n <= 90):
         raise ValueError('Invalid geographic bounds')
     for filename in ['sar.png','detections.jpg']:
-        with Image.open(directory/filename) as image:
-            if list(image.size) != tile['image_size']:
-                raise ValueError('Image dimensions do not match manifest')
-            image.verify()
-    if hashlib.sha256((directory/'sar.png').read_bytes()).hexdigest() != tile['image_sha256']:
-        raise ValueError('Image checksum mismatch')
+        path = directory / filename
+        stat = path.stat()
+        fingerprint = (stat.st_dev, stat.st_ino, stat.st_size,
+                       stat.st_mtime_ns, stat.st_ctime_ns)
+        _validate_image(path, fingerprint, tuple(tile['image_size']),
+                        tile['image_sha256'] if filename == 'sar.png' else None)
     width,height = tile['image_size']
     ids=set()
     for candidate in tile['detections']:
