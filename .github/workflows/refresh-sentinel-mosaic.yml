@@ -29,23 +29,12 @@ jobs:
           COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
           COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
         run: python scripts/refresh_sentinel_mosaic.py
-      - name: Render multi-pass global Sentinel-1 sea mosaic
-        if: ${{ !cancelled() }}
-        env:
-          COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
-          COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
-        run: python scripts/refresh_global_sentinel_tiles.py
       - name: Refresh and detect on detailed SAR cells
         if: ${{ !cancelled() }}
         env:
           COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
           COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
         run: python scripts/refresh_detailed_scan.py --all-pending --region vietnam --time-budget-seconds 3600
-      - name: Refresh global GFW SAR detection grid
-        if: ${{ !cancelled() }}
-        env:
-          GFW_API_TOKEN: ${{ secrets.GFW_API_TOKEN }}
-        run: python scripts/refresh_global_ship_detections.py
       - name: Prepare cached map images before publication
         if: ${{ !cancelled() }}
         run: python scripts/prepare_map_displays.py
