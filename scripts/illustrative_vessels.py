@@ -46,7 +46,7 @@ def popup(candidate):
     head += f"Tốc độ kịch bản: {p['speed']} hải lý/giờ · Hướng: {p['heading']}°<br>"
     head += f"<span style='color:{p['color']}'>{p['label']}</span><br>"
     if p['status'] == 'missing':
-        return head + 'Kịch bản: không nhận được AIS. Hồ sơ trên là thông tin dựng sẵn cho trình diễn, không được suy ra từ radar.<br>Không suy ra tàu tắt tín hiệu hoặc vi phạm.'
+        return head
     return (head +
             f"Khoảng cách vị trí giả định: {p['offset_m']:,} m.<br>"
             + ('Tình huống: vị trí gần nhau trong cùng khoảng thời gian.<br>' if p['status'] == 'matched'

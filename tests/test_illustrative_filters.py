@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from illustrative_vessels import FILTERS, STATES, filter_vessels, profile
+from illustrative_vessels import FILTERS, STATES, filter_vessels, profile, popup
 
 
 class VesselFilterTests(unittest.TestCase):
@@ -20,3 +20,11 @@ class VesselFilterTests(unittest.TestCase):
 
     def test_empty_filter(self):
         self.assertEqual(filter_vessels([], 'Đỏ · Chưa có AIS'), [])
+
+    def test_missing_ais_card_is_concise_and_labelled(self):
+        candidate = next({'id': str(i)} for i in range(100) if profile({'id': str(i)})['status'] == 'missing')
+        card = popup(candidate)
+        self.assertIn('Chưa có AIS', card)
+        self.assertIn('Dữ liệu trình diễn', card)
+        self.assertNotIn('Kịch bản: không nhận được AIS', card)
+        self.assertNotIn('Không suy ra tàu tắt tín hiệu', card)
