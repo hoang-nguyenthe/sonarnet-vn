@@ -1,0 +1,68 @@
+{
+  "key": "grid_714c19a584c07ded",
+  "bbox": [
+    102.5,
+    12.1,
+    102.6,
+    12.2
+  ],
+  "row": 61,
+  "column": 5,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/67360b5968c9856d/grid_714c19a584c07ded",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1C_IW_GRDH_1SDV_20260916T111933_20260916T111958_009472_012D77_3165_COG.SAFE",
+  "observation_day_utc": "2026-09-16",
+  "image_sha256": "5d6b054db1f4baa98c0b65bf62be14d9913bcbe809311d7d991f6fdd49f67e63",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-09-17T11:55:59.624606+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.3267030715942383,
+    "excluded_candidates": [
+      {
+        "id": 2,
+        "bbox_px": [
+          754.9400024414062,
+          106.15310668945312,
+          786.6354370117188,
+          149.74468994140625
+        ],
+        "confidence": 0.39715805649757385,
+        "longitude": 102.57527223825454,
+        "latitude": 12.187504990398883,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-17T11:55:59.624630+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        769.3284912109375,
+        143.2017364501953,
+        799.303466796875,
+        172.91575622558594
+      ],
+      "confidence": 0.5092501640319824,
+      "longitude": 102.5765933573246,
+      "latitude": 12.18456457555294
+    }
+  ]
+}
