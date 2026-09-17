@@ -76,16 +76,32 @@ def published_layers(root):
 
 
 def published_yolo_result(root: Path, record: dict):
-    """Project only validated, detailed SAR evidence onto the overview map."""
-    from scan_assets import validated_report
+    """Project published evidence without re-hashing every national raster.
+
+    Full validation stays in the detailed-review workspace. Re-hashing every
+    image during initial map rendering exhausted the hosted process before a
+    visitor could see the application. This overview still ignores malformed
+    records and anything whose published display assets are missing.
+    """
     try:
-        report = validated_report(root)
+        report = read_json(root / 'assets' / 'real_scan' / 'report.json')
+        if not isinstance(report.get('tiles'), list):
+            return None
     except (OSError, ValueError, TypeError, KeyError):
         return None
     west, south, east, north = record['bbox']
     tiles = []
     candidates = []
     for tile in report['tiles']:
+        if not isinstance(tile, dict) or tile.get('status') != 'processed':
+            continue
+        if not (isinstance(tile.get('bbox'), list) and len(tile['bbox']) == 4
+                and isinstance(tile.get('detections'), list)
+                and isinstance(tile.get('image_size'), list)):
+            continue
+        asset_dir = root / str(tile.get('asset_dir', ''))
+        if not ((asset_dir / 'sar.png').is_file() and (asset_dir / 'map.webp').is_file()):
+            continue
         w, s, e, n = tile['bbox']
         # Overviews are never detector inputs: individual vessels disappear
         # at kilometre-scale overview resolution.
@@ -94,7 +110,9 @@ def published_yolo_result(root: Path, record: dict):
             continue
         tiles.append(tile)
         for candidate in tile['detections']:
-            if not (west <= candidate['longitude'] <= east and south <= candidate['latitude'] <= north):
+            if not (isinstance(candidate, dict)
+                    and west <= candidate.get('longitude', float('inf')) <= east
+                    and south <= candidate.get('latitude', float('inf')) <= north):
                 continue
             candidates.append(dict(candidate, id=f"{tile['key']}/{candidate['id']}",
                                    tile_key=tile['key'], asset_dir=tile['asset_dir'],
@@ -241,25 +259,24 @@ def render(root):
     if yolo_result:
         from illustrative_vessels import profile, popup as illustrative_popup
         for candidate in visible_candidates:
-            crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
             color = profile(candidate)['color'] if illustrative else '#bde8ee'
             folium.CircleMarker(
                 [candidate["latitude"], candidate["longitude"]], radius=4,
                 color=color, weight=1.2, fill=False,
                 popup=folium.Popup(
                     (f"<b>{profile(candidate)['name']}</b><br>" if illustrative else f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>") +
-                    f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
                     f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
                     "Ngoài vùng bỏ qua trên đất và sát bờ.<br>"
                     f"Tọa độ xấp xỉ: {candidate['latitude']:.5f}°, {candidate['longitude']:.5f}°<br>"
-                    "Chưa xác minh là tàu<br>Thông tin tàu: chưa có dữ liệu đối chiếu cùng thời điểm."
+                    "Chọn tàu bên dưới để xem ảnh bằng chứng.<br>Thông tin tàu: chưa có dữ liệu đối chiếu cùng thời điểm."
                     + (illustrative_popup(candidate) if illustrative else ''),
                     max_width=320,
                 ),
                 tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']}" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
             ).add_to(yolo_layer)
-    from land_mask import add_map_layer
-    add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in yolo_result['tiles']] if yolo_result else [])
+    # The coastal mask remains part of detector filtering. Do not serialize a
+    # union of every national tile's geometry into the public overview; that
+    # payload is too large for a small hosted process.
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
     chart.fit_bounds(bounds)
     name = chart.get_name()

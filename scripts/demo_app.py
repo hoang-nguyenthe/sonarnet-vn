@@ -55,13 +55,16 @@ with st.sidebar:
     st.caption('Ngày chụp ảnh khác với giờ hiện tại. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ; xem tiến độ xử lý của khu vực.')
     st.info('Chưa có dữ liệu định danh tàu. Kết quả cần người có chuyên môn xác minh.')
 
-intro, observation, guide = st.tabs(['Giới thiệu', 'Quan sát', 'Hướng dẫn'])
-with intro:
+section = st.radio('Điều hướng', ['Giới thiệu', 'Quan sát', 'Hướng dẫn'], horizontal=True,
+                   label_visibility='collapsed', key='main_section')
+# st.tabs evaluates every tab on every rerun.  Do not construct the national
+# raster workspace while a visitor is reading the lightweight introduction.
+if section == 'Giới thiệu':
     from introduction import render_introduction
     render_introduction()
-with observation:
+elif section == 'Quan sát':
     render(ROOT)
-with guide:
+else:
     st.subheader('Từ xem ảnh đến kiểm tra bằng chứng.')
     st.markdown('''1. **Chọn khu vực:** xem ảnh vệ tinh và thời gian quan sát. Ảnh màu bên dưới chỉ là nền tham chiếu.
 2. **Xem tiến độ kiểm tra:** xem số ô đã xử lý và còn chờ của khu vực; phóng to để ảnh chi tiết tự tải. Không có điểm đánh dấu không có nghĩa là không có tàu.

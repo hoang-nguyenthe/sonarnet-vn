@@ -9,7 +9,9 @@ class PublicWorkflowTests(unittest.TestCase):
     def test_plain_language_and_evidence_navigation(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=90).run()
         self.assertFalse(app.exception)
-        self.assertEqual([tab.label for tab in app.tabs], ['Giới thiệu', 'Quan sát', 'Hướng dẫn'])
+        self.assertEqual(app.radio[0].options, ['Giới thiệu', 'Quan sát', 'Hướng dẫn'])
+        app.radio[0].set_value('Quan sát').run()
+        self.assertFalse(app.exception)
         controls = ' '.join(x.label for name in ('radio','toggle','button','selectbox') for x in getattr(app, name))
         for forbidden in ('YOLO', 'DEMO', 'giả lập', 'mô phỏng', 'AIS'):
             self.assertNotIn(forbidden, controls)
@@ -17,8 +19,8 @@ class PublicWorkflowTests(unittest.TestCase):
         if evidence_button:
             evidence_button.click().run()
             self.assertFalse(app.exception)
-            self.assertEqual(app.radio[0].value, 'Kiểm tra chi tiết')
+            self.assertEqual(app.radio[1].value, 'Kiểm tra chi tiết')
             self.assertTrue(any(x.label == 'Lưu đánh giá' for x in app.button))
         else:
-            app.radio[0].set_value('Kiểm tra chi tiết').run()
+            app.radio[1].set_value('Kiểm tra chi tiết').run()
             self.assertFalse(app.exception)
