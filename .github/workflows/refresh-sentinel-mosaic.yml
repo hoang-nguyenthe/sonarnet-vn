@@ -15,7 +15,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -40,7 +40,7 @@ jobs:
         env:
           COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
           COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
-        run: python scripts/refresh_detailed_scan.py --all-pending --region vietnam --time-budget-seconds 1200
+        run: python scripts/refresh_detailed_scan.py --all-pending --region vietnam --time-budget-seconds 3600
       - name: Refresh global GFW SAR detection grid
         if: ${{ !cancelled() }}
         env:

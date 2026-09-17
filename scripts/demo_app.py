@@ -47,7 +47,7 @@ st.components.v1.html('''<div id="time" style="font:12px -apple-system,sans-seri
 with st.sidebar:
     st.title('SonarNet')
     st.write('Xem ảnh → kiểm tra điểm nghi vấn → lưu bằng chứng.')
-    st.caption('Ngày chụp ảnh khác với giờ hiện tại. Chỉ vùng có viền xanh mới đã được kiểm tra tự động.')
+    st.caption('Ngày chụp ảnh khác với giờ hiện tại. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ; xem tiến độ xử lý của khu vực.')
     st.info('Chưa có dữ liệu định danh tàu. Kết quả cần người có chuyên môn xác minh.')
 
 observation, guide = st.tabs(['Quan sát', 'Hướng dẫn'])
@@ -56,7 +56,7 @@ with observation:
 with guide:
     st.subheader('Từ xem ảnh đến kiểm tra bằng chứng.')
     st.markdown('''1. **Chọn khu vực:** xem ảnh vệ tinh và thời gian quan sát. Ảnh màu bên dưới chỉ là nền tham chiếu.
-2. **Xem vùng đã kiểm tra:** viền xanh là vùng đã được xử lý tự động; phóng to để ảnh chi tiết tự tải. Phần ngoài viền chưa có kết quả.
+2. **Xem tiến độ kiểm tra:** xem số ô đã xử lý và còn chờ của khu vực; phóng to để ảnh chi tiết tự tải. Không có điểm đánh dấu không có nghĩa là không có tàu.
 3. **Mở điểm nghi vấn:** xem ảnh gốc, tọa độ và ngày quan sát. Một điểm sáng chưa chắc là tàu.
 4. **Lưu bằng chứng:** chuyển sang “Kiểm tra chi tiết”, ghi nhận đánh giá và tải hồ sơ.''')
     st.subheader('Giới hạn cần biết')

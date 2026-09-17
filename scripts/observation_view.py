@@ -205,10 +205,6 @@ def render(root):
                 bounds=[[s,w],[n,e]], label=f"Ô radar chi tiết {tile['key']}",
                 popup=f"Sentinel-1 VV · Copernicus · {date_label(tile['observation_day_utc'])} UTC · Ảnh ghép trong ngày.",
             ))
-            folium.Rectangle([[s,w],[n,e]], weight=1, color='#64d2ff', fill=False,
-                tooltip=f"Vùng đã kiểm tra · {date_label(tile['observation_day_utc'])} UTC",
-                popup=f"Sentinel-1 VV · Copernicus · {date_label(tile['observation_day_utc'])} UTC · "
-                      f"{len(tile['detections'])} điểm cần kiểm tra. Ảnh ghép trong ngày.").add_to(yolo_layer)
         ViewportRadar(chart, radar, radar_records).add_to(chart)
         st.caption("Phóng to vùng đã xử lý để xem ảnh radar chi tiết. Ảnh tự tải theo vị trí đang xem; mỗi ô có ngày quan sát riêng.")
     folium.map.CustomPane("place_labels", z_index=650, pointer_events=False).add_to(chart)
@@ -303,7 +299,7 @@ def render(root):
     </style>"""))
     embed(chart.get_root().render(), height=540)
     if yolo_result and yolo_result['tiles']:
-        st.caption('Viền xanh: vùng đã kiểm tra tự động. Điểm sáng: vùng nghi là tàu, cần xác minh. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
+        st.caption('Điểm sáng: vùng nghi là tàu, cần xác minh. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ. Xem tiến độ và độ phủ bên dưới. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
     st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn. Nét đứt xanh nhạt là phạm vi biển tham khảo, không phải ranh giới pháp lý.')
     if yolo_result and yolo_result['detections']:
         options = {item['id']: item for item in yolo_result['detections']}
@@ -365,7 +361,7 @@ def render(root):
             st.caption('Số ô trên lưới kế hoạch có thể khác số ảnh công bố: các ảnh thử nghiệm ban đầu không cùng lưới. Không cộng hai số này để tính độ phủ.')
             if states.get('blocked_missing_mask'):
                 st.caption('Một phần khu vực chưa có đường bờ được kiểm tra để loại đất và vùng ven bờ, nên chưa chạy nhận diện ở đó.')
-        st.write("Hệ thống tìm vùng giống tàu trong từng ảnh chi tiết, rồi đánh dấu đúng vị trí lên toàn cảnh. Viền xanh là vùng đã kiểm tra; phần ngoài viền chưa có kết quả. Chưa có dữ liệu định danh và vị trí trực tiếp từ tàu.")
+        st.write("Hệ thống tìm vùng giống tàu trong từng ảnh chi tiết, rồi đánh dấu đúng vị trí lên toàn cảnh. Ảnh nền không đồng nghĩa toàn bộ khu vực đã được kiểm tra; xem số ô đã xử lý và còn chờ trong mục độ phủ. Chưa có dữ liệu định danh và vị trí trực tiếp từ tàu.")
         st.caption(f"GFW được tải: {local_time(detection.get('refreshed_at'))}")
         st.markdown("**Ảnh radar:** [Copernicus Data Space](https://dataspace.copernicus.eu/) · Sentinel‑1 GRD. **Ô phát hiện:** [Global Fishing Watch](https://globalfishingwatch.org/our-apis/). **Nền và địa danh:** Esri.")
         st.write("Ảnh ghép dùng nhiều lượt bay trong khoảng ngày công bố. Nơi chưa có ảnh radar sẽ hiện nền ảnh màu bên dưới. Ngày chụp của ảnh nền và ngày riêng từng điểm ảnh radar chưa được cung cấp ở đây.")
