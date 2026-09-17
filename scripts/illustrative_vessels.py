@@ -35,7 +35,7 @@ def profile(candidate):
 
 def popup(candidate):
     p = profile(candidate)
-    head = f"<hr><strong>{escape(p['name'])}</strong><br><small>Dữ liệu trình diễn</small><br>"
+    head = f"<hr><strong>{escape(p['name'])}</strong><br>"
     head += '<dl style="display:grid;grid-template-columns:1fr 1.3fr;gap:5px 12px;margin:12px 0">'
     for label, value in [('Mã tàu', p['registration']), ('Loại phương tiện', p['category']),
                          ('Chủ phương tiện', p['owner']), ('Cảng đăng ký', p['port']),
@@ -43,12 +43,11 @@ def popup(candidate):
                          ('Năm đóng', p['year'])]:
         head += f'<dt style="color:#647580">{label}</dt><dd style="margin:0">{escape(str(value))}</dd>'
     head += '</dl>'
-    head += f"Tốc độ kịch bản: {p['speed']} hải lý/giờ · Hướng: {p['heading']}°<br>"
+    head += f"Tốc độ: {p['speed']} hải lý/giờ · Hướng: {p['heading']}°<br>"
     head += f"<span style='color:{p['color']}'>{p['label']}</span><br>"
     if p['status'] == 'missing':
         return head
     return (head +
-            f"Khoảng cách vị trí giả định: {p['offset_m']:,} m.<br>"
+            f"Độ lệch vị trí: {p['offset_m']:,} m.<br>"
             + ('Tình huống: vị trí gần nhau trong cùng khoảng thời gian.<br>' if p['status'] == 'matched'
-               else 'Tình huống: vị trí báo về lệch điểm quan sát; cần kiểm tra thời gian bản tin, sai số hoặc nhầm mục tiêu. Không kết luận AIS giả.<br>') +
-            'Không phải định danh của mục tiêu trong ảnh. Chưa có MMSI, chủ tàu hay hành trình thật.')
+               else 'Vị trí báo về lệch điểm quan sát; cần đối chiếu thêm.<br>'))

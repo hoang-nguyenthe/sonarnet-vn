@@ -170,16 +170,16 @@ def render(root):
         help="Các vùng ảnh được hệ thống đánh dấu để bạn kiểm tra; chưa xác nhận là tàu.",
     )
     yolo_result = None
-    illustrative = st.toggle('Trình diễn đội tàu', value=True,
-                             help='Hồ sơ minh hoạ để trải nghiệm đối chiếu; không phải AIS thật hoặc danh tính của mục tiêu trong ảnh.')
+    illustrative = st.toggle('Hồ sơ đội tàu', value=True,
+                             help='Hồ sơ và AIS dùng dữ liệu mẫu; ảnh radar giữ nguyên nguồn thật.')
     if illustrative:
-        st.caption('Dữ liệu trình diễn · 🔵 AIS khớp · 🟡 AIS lệch · 🔴 Chưa có AIS. Màu đỏ không phải kết luận vi phạm.')
+        st.caption('Dữ liệu mẫu — hồ sơ tàu & AIS · 🔵 AIS khớp · 🟡 AIS lệch · 🔴 Chưa có AIS')
     yolo_result = published_yolo_result(root, record)
     visible_candidates = yolo_result['detections'] if yolo_result else []
     if illustrative:
         selected_status = st.radio('Lọc tàu theo trạng thái', list(FILTERS), horizontal=True, key='vessel_status_filter')
         visible_candidates = filter_vessels(visible_candidates, selected_status)
-        st.caption(f"Đang hiển thị {len(visible_candidates)} / {len(yolo_result['detections']) if yolo_result else 0} tàu trình diễn.")
+        st.caption(f"Hiển thị {len(visible_candidates)} / {len(yolo_result['detections']) if yolo_result else 0} tàu.")
         if not visible_candidates:
             st.info('Không có tàu thuộc trạng thái đã chọn trong khu vực này. Chọn Tất cả để xem lại.')
     if yolo_enabled:
@@ -247,7 +247,7 @@ def render(root):
                 [candidate["latitude"], candidate["longitude"]], radius=4,
                 color=color, weight=1.2, fill=False,
                 popup=folium.Popup(
-                    (f"<b>{profile(candidate)['name']} · Dữ liệu trình diễn</b><br>" if illustrative else f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>") +
+                    (f"<b>{profile(candidate)['name']}</b><br>" if illustrative else f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>") +
                     f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
                     f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
                     "Ngoài vùng bỏ qua trên đất và sát bờ.<br>"
@@ -256,7 +256,7 @@ def render(root):
                     + (illustrative_popup(candidate) if illustrative else ''),
                     max_width=320,
                 ),
-                tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']} · Trình diễn" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
+                tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']}" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
             ).add_to(yolo_layer)
     from land_mask import add_map_layer
     add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in yolo_result['tiles']] if yolo_result else [])

@@ -28,7 +28,7 @@ def render_introduction():
 <div class="sn-story"><section class="sn-panel"><small>01 / QUAN SÁT</small><h3>Từ toàn cảnh.<br>Đến chi tiết.</h3><p>Ảnh Sentinel-1, thời gian chụp và bằng chứng tại từng vị trí.</p></section><section class="sn-panel"><small>02 / ĐỐI CHIẾU</small><h3>Ba trạng thái.<br>Một góc nhìn.</h3><p>Hồ sơ phương tiện và vị trí quan sát, trong cùng một không gian.</p><div class="sn-status"><span><i style="background:#0a84ff"></i>AIS khớp</span><span><i style="background:#ffd60a"></i>AIS lệch</span><span><i style="background:#ff453a"></i>Chưa có AIS</span></div></section></div>
 <div class="sn-strip"><span>Sentinel-1 · Ảnh radar</span><span>YOLO · Nhận diện</span><span>SAR × AIS · Đối chiếu</span><span>MPS · Xử lý cục bộ</span></div>
 ''', unsafe_allow_html=True)
-    st.caption('Ảnh radar thật · Hồ sơ và trạng thái AIS trình diễn')
+    st.caption('Ảnh radar thật · Hồ sơ tàu & AIS: dữ liệu mẫu')
     with st.expander('Công nghệ & trạng thái triển khai'):
         st.markdown('''**Sentinel-1:** ảnh ghép nhiều lượt chụp, không phải luồng trực tiếp.
 

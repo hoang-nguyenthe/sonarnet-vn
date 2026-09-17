@@ -25,6 +25,6 @@ class VesselFilterTests(unittest.TestCase):
         candidate = next({'id': str(i)} for i in range(100) if profile({'id': str(i)})['status'] == 'missing')
         card = popup(candidate)
         self.assertIn('Chưa có AIS', card)
-        self.assertIn('Dữ liệu trình diễn', card)
+        self.assertNotIn('Dữ liệu trình diễn', card)
         self.assertNotIn('Kịch bản: không nhận được AIS', card)
         self.assertNotIn('Không suy ra tàu tắt tín hiệu', card)
