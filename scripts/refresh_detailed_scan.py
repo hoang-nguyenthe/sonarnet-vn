@@ -15,6 +15,7 @@ import math
 from pathlib import Path
 import sys
 import time
+import shutil
 
 import numpy as np
 from PIL import Image, ImageDraw
@@ -114,6 +115,7 @@ def main(argv=None):
     parser.add_argument('--time-budget-seconds', type=int, default=1500, help='Checkpoint and exit cleanly before the job deadline')
     parser.add_argument('--region', default='vietnam', help='Published region to expand; default Vietnam')
     parser.add_argument('--device', choices=['cpu', 'mps'], default='cpu')
+    parser.add_argument('--prefetch', type=int, default=2, choices=range(1, 5), help='Bounded network look-ahead; one downloader avoids API bursts')
     args = parser.parse_args(argv)
     if args.max_new_cells < 0 or args.time_budget_seconds < 60:
         parser.error('Use nonnegative cell count and time budget >=60 seconds')
@@ -127,6 +129,12 @@ def main(argv=None):
         print(f"Prepared {len(plan['regions'])} observation-region plans; no images fetched or inferred")
         return
     from ultralytics import YOLO
+    if args.device == 'mps':
+        import torch
+        if not torch.backends.mps.is_available():
+            raise RuntimeError('MPS requested but unavailable')
+    if shutil.disk_usage(ROOT).free < 5 * 1024**3:
+        raise RuntimeError('Keep at least 5 GiB free before starting scan')
     weights = ROOT / 'assets/models/sonarnet_baseline.pt'
     weights_hash = hashlib.sha256(weights.read_bytes()).hexdigest()
     model = YOLO(str(weights))
@@ -156,36 +164,53 @@ def main(argv=None):
         pending = report_path.with_suffix('.pending.json')
         pending.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')
         pending.replace(report_path)
-    for old in work:
+    def fetch(old):
+        if time.monotonic() - started >= args.time_budget_seconds:
+            return None
+        if old['key'] in existing_keys:
+            validate_tile(ROOT, old)
+        if not geometry_box(*mask[0]['coverage_bbox']).covers(geometry_box(*old['bbox'])):
+            raise ValueError('No validated shoreline mask for this area')
+        products = search_sentinel1_grd(tokens.get(), tuple(old['bbox']), end-timedelta(days=30), end, limit=50)
+        products = [p for p in products if p.polarization in {'DV', 'SV', 'VV'}]
+        if not products:
+            raise ValueError('No recent catalog acquisition for cell')
+        product = max(products, key=lambda item: item.acquired_at)
+        unchanged = (old.get('reference_product') == product.product_id
+                     and old.get('weights_sha256') == weights_hash
+                     and old.get('inference_policy_sha256') == policy)
+        if unchanged:
+            return product, None
+        if old['key'] in existing_keys and old.get('reference_product') == product.product_id:
+            raw = (ROOT / old['asset_dir'] / 'sar.png').read_bytes()
+        else:
+            acquired_day = date.fromisoformat(product.acquired_at[:10])
+            raw = sentinel1_mosaic_preview(tokens.get(), tuple(old['bbox']), acquired_day, acquired_day,
+                                          width=1024, polarization=product.polarization)
+        return product, raw
+
+    from scan_prefetch import prefetched
+    prepared = prefetched(work, fetch, depth=args.prefetch)
+    for old, fetched, fetch_error in prepared:
+        if shutil.disk_usage(ROOT).free < 5 * 1024**3:
+            print('Disk reserve reached; checkpoint retained', flush=True)
+            break
         if time.monotonic() - started >= args.time_budget_seconds:
             print('Time budget reached; saved work will resume on the next run', flush=True)
             break
         existing = old['key'] in existing_keys
         try:
-            if existing:
-                validate_tile(ROOT, old)
-            if not geometry_box(*mask[0]['coverage_bbox']).covers(geometry_box(*old['bbox'])):
-                raise ValueError('No validated shoreline mask for this area')
-            products = search_sentinel1_grd(tokens.get(), tuple(old['bbox']), end-timedelta(days=30), end, limit=50)
-            # The current baseline has only a VV input contract. HH imagery
-            # remains visible as imagery, not mislabelled as scanned evidence.
-            products = [product for product in products if product.polarization in {'DV', 'SV', 'VV'}]
-            if not products:
-                raise ValueError('No recent catalog acquisition for cell')
-            product = max(products, key=lambda item: item.acquired_at)
+            if fetch_error:
+                raise fetch_error
+            if fetched is None:
+                break
+            product, raw = fetched
             checked += 1
             attempts.pop(old['key'], None)
-            if (old.get('reference_product') == product.product_id and old.get('weights_sha256') == weights_hash
-                    and old.get('inference_policy_sha256') == policy):
+            if raw is None:
                 tiles_by_key[old['key']] = dict(old, catalog_checked_at=datetime.now(timezone.utc).isoformat())
                 checkpoint()
                 continue
-            if existing and old.get('reference_product') == product.product_id:
-                raw = (ROOT / old['asset_dir'] / 'sar.png').read_bytes()
-            else:
-                acquired_day = date.fromisoformat(product.acquired_at[:10])
-                raw = sentinel1_mosaic_preview(tokens.get(), tuple(old['bbox']), acquired_day, acquired_day,
-                                              width=1024, polarization=product.polarization)
             image = Image.open(BytesIO(raw)).convert('RGBA')
             image.load()
             valid_fraction = float(np.mean(np.asarray(image)[:,:,3] > 0))
@@ -228,6 +253,7 @@ def main(argv=None):
                                     'status': 'retry_later', 'error_type': type(error).__name__}
             print(f"Retained {old['key']}: {type(error).__name__}", flush=True)
         checkpoint()
+    prepared.close()
     checkpoint()
     write_plan(ROOT, report, mask=mask, limit=12, region_key=args.region)
     print(f'Catalog checked {checked}; published {len(tiles_by_key)}; updated {updated}; retained after error {failed}')
