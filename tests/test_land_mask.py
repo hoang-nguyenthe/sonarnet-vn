@@ -37,6 +37,7 @@ class LandMaskTests(unittest.TestCase):
     def test_real_geography_and_audit(self):
         from shapely.geometry import Point
         data, geometries = get_mask(ROOT)
+        self.assertNotIn('geometry', data, 'Do not retain duplicate full-resolution coordinate trees')
         self.assertTrue(geometries['core'].covers(Point(105.84, 21.03)))
         self.assertFalse(geometries['land'].covers(Point(110, 15)))
         # The exclusion overlay cannot paint the inland half of a symmetric

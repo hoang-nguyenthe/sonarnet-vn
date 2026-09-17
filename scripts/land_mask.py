@@ -7,10 +7,13 @@ from shapely.geometry import box, shape, mapping
 from shapely import prepare
 
 
-@lru_cache(maxsize=4)
+@lru_cache(maxsize=1)
 def load_mask(path, modified_ns):
     data = json.loads(gzip.decompress(path.read_bytes()))
-    geometries = {key: shape(value) for key, value in data['geometry'].items()}
+    # Retain native geometries, not a second tree of millions of Python
+    # coordinate objects. Display geometry is separately retained below.
+    source = data.pop('geometry')
+    geometries = {key: shape(value) for key, value in source.items()}
     # Prepared polygons make repeated tile/bbox filtering inexpensive. This
     # changes neither the full-resolution boundaries nor their coordinates.
     for key in ('land', 'coast'):
@@ -80,7 +83,7 @@ def add_map_layer(chart, root, detail_bounds=None):
     # Handle older manifests without showing their symmetric inland buffer.
     coastal_shape = display.get('coast') or mapping(
         geometries['coast'].difference(geometries['land']).simplify(.00005, preserve_topology=True))
-    shoreline = display.get('shoreline') or data['geometry'].get('shoreline')
+    shoreline = display.get('shoreline') or mapping(geometries['shoreline'])
     if detail_bounds is not None:
         # Send only geometry around detector inputs, not 9 MB of coastline
         # for an entire country on every phone interaction. Filtering still
