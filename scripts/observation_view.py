@@ -5,6 +5,7 @@ import base64
 from io import BytesIO
 import html
 import json
+from urllib.parse import quote
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -15,7 +16,7 @@ import streamlit as st
 from PIL import Image
 from branca.element import Element, MacroElement, Template
 from streamlit.components.v1 import html as embed
-from map_raster import overlay_source, static_overlay_source, ViewportRadar
+from map_raster import overlay_source
 from coverage_status import coverage_rows, waiting_cells
 from observation_labels import candidate_label, coordinates
 from illustrative_vessels import profile, popup as illustrative_popup, FILTERS, filter_vessels
@@ -134,6 +135,12 @@ def candidate_crop(root, candidate):
         return buffer.getvalue()
 
 
+def popup_crop_url(candidate):
+    """A pre-built local crop; fetched by the browser only when its marker opens."""
+    name = f"{candidate['tile_key']}--{str(candidate['id']).rsplit('/', 1)[-1]}.jpg"
+    return 'app/static/crops/' + quote(name)
+
+
 def points_in_region(points, bounds):
     west, south, east, north = bounds
     return [point for point in points if west <= point["longitude"] <= east and south <= point["latitude"] <= north]
@@ -228,16 +235,10 @@ def render(root):
             bounds=[[s, w], [n, e]], opacity=.82, interactive=True, alt=f"Ảnh Sentinel-1 · {item['label']}",
         ).add_to(radar)
         layer.add_child(folium.Popup(provenance(item), max_width=320))
-    if yolo_result:
-        radar_records = []
-        for tile in yolo_result['tiles']:
-            w, s, e, n = tile['bbox']
-            radar_records.append(dict(
-                url=static_overlay_source(root / tile['asset_dir'] / 'sar.png', tile['bbox'], root/'scripts/static'),
-                bounds=[[s,w],[n,e]], label=f"Ô radar chi tiết {tile['key']}",
-                popup=f"Sentinel-1 VV · Copernicus · {date_label(tile['observation_day_utc'])} UTC · Ảnh ghép trong ngày.",
-            ))
-        ViewportRadar(chart, radar, radar_records).add_to(chart)
+    # The nationwide mosaic is the map's only raster layer. Detailed source
+    # crops are opened from the selected observation below; this avoids a
+    # background copy of every high-resolution tile into Streamlit's static
+    # directory when a visitor simply opens the national view.
     from place_labels import add_place_labels
     add_place_labels(chart)
     dots = folium.FeatureGroup(name="Quan sát từ nguồn khác", show=False).add_to(chart)
@@ -265,10 +266,11 @@ def render(root):
                 color=color, weight=1.2, fill=False,
                 popup=folium.Popup(
                     (f"<b>{profile(candidate)['name']}</b><br>" if illustrative else f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>") +
+                    f"<img src='{popup_crop_url(candidate)}' width='220' alt='Ảnh radar tại vị trí quan sát' loading='lazy'><br>"
                     f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
                     "Ngoài vùng bỏ qua trên đất và sát bờ.<br>"
                     f"Tọa độ xấp xỉ: {candidate['latitude']:.5f}°, {candidate['longitude']:.5f}°<br>"
-                    "Chọn tàu bên dưới để xem ảnh bằng chứng.<br>Thông tin tàu: chưa có dữ liệu đối chiếu cùng thời điểm."
+                    "Thông tin tàu: chưa có dữ liệu đối chiếu cùng thời điểm."
                     + (illustrative_popup(candidate) if illustrative else ''),
                     max_width=320,
                 ),
