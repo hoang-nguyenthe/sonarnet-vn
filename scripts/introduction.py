@@ -1,56 +1,41 @@
-"""Public-facing purpose and honest technology overview."""
+"""Compact product introduction with progressive motion."""
 import streamlit as st
-from pathlib import Path
 
 
 def render_introduction():
     st.markdown('''<style>
-.intro-lead{padding:clamp(44px,7vw,110px) 20px 48px;max-width:1100px;margin:auto;text-align:center}
-.intro-kicker{color:#0876db;font:600 12px system-ui;letter-spacing:.16em;text-transform:uppercase}
-.intro-lead h2{font-size:clamp(38px,6.5vw,88px)!important;line-height:1.04;letter-spacing:-.055em!important;margin:20px 0 28px;font-weight:650}
-.intro-lead p{font-size:clamp(17px,1.8vw,22px);line-height:1.55;color:#627081;max-width:760px;margin:0 auto}
-.intro-lead h2 span{background:linear-gradient(100deg,#064fa7,#087edc,#189aaa);background-clip:text;-webkit-background-clip:text;color:transparent}
-.intro-scroll{display:block;margin-top:34px;color:#647580;font-size:12px;letter-spacing:.06em}
-.intro-chapter{padding:clamp(24px,4vw,56px) 12px 18px;max-width:1000px;margin:auto;text-align:center}
-.intro-chapter h2{font-size:clamp(28px,4vw,52px)!important;line-height:1.12;letter-spacing:-.045em!important}
-.intro-chapter p{color:#637488;font-size:18px;line-height:1.5}
-.intro-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:16px 0 36px}
-.intro-card{background:linear-gradient(145deg,#fff,#edf5ff);border:1px solid #dae6f2;border-radius:24px;padding:28px;transition:transform .25s ease,box-shadow .25s ease}
-.intro-card:hover{transform:translateY(-3px);box-shadow:0 14px 34px #12385612}
-.intro-card small{color:#0876db;font-weight:650}.intro-card h3{font-size:22px!important;margin:12px 0}.intro-card p{color:#53687b;line-height:1.6}
-@keyframes intro-arrive{from{opacity:.35;translate:0 18px}to{opacity:1;translate:0 0}}
-.intro-lead{animation:intro-arrive .65s cubic-bezier(.2,.65,.3,1) both}
-@supports(animation-timeline:view()){
-  .intro-card,.intro-chapter{animation:intro-arrive linear both;animation-timeline:view();animation-range:entry 0% entry 85%}
-}
-@media(max-width:720px){.intro-grid{grid-template-columns:1fr}.intro-card{padding:22px}.intro-lead p{font-size:16px}}
-@media(prefers-reduced-motion:reduce){.intro-card,.intro-lead{animation:none!important;translate:none!important;opacity:1!important;transition:none}.intro-card:hover{transform:none}}
+.sn-intro{overflow:hidden;border-radius:30px;background:#050f1d;color:#fff;position:relative;padding:clamp(50px,9vw,130px) 7%;isolation:isolate;min-height:540px;display:flex;align-items:center}
+.sn-intro:before{content:"";position:absolute;inset:-30%;z-index:-1;background:radial-gradient(ellipse at 65% 45%,#07559599,transparent 45%),radial-gradient(ellipse at 25% 65%,#12657766,transparent 40%);animation:sn-aurora 12s ease-in-out infinite alternate}
+.sn-intro h2{color:#fff!important;font-size:clamp(42px,7.8vw,108px)!important;line-height:1.04;letter-spacing:-.06em!important;max-width:1000px;margin:24px 0!important;font-weight:650;animation:sn-rise .85s ease both}
+.sn-intro h2 span{color:#79caff}.sn-intro p{color:#b6c9dc;font-size:clamp(16px,2vw,22px);animation:sn-rise 1.1s ease both}
+.sn-eyebrow{letter-spacing:.22em;font:600 11px system-ui;color:#86bce8}
+.sn-orbit{position:absolute;width:440px;height:440px;border:1px solid #80caff22;border-radius:50%;right:-130px;bottom:-150px;pointer-events:none}
+.sn-orbit:before,.sn-orbit:after{content:"";position:absolute;inset:45px;border:1px solid #80caff22;border-radius:50%}.sn-orbit:after{inset:100px}
+.sn-sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 75%,#55baff25,transparent);animation:sn-turn 16s linear infinite}
+.sn-story{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}.sn-panel{padding:clamp(28px,4vw,64px);border-radius:28px;background:#fff;border:1px solid #e5eaf0;overflow:hidden;transition:box-shadow .3s ease}
+.sn-panel h3{font-size:clamp(28px,3.6vw,48px)!important;line-height:1.13;letter-spacing:-.045em!important;margin:18px 0}.sn-panel p{font-size:17px;line-height:1.5;color:#68798a;max-width:440px}.sn-panel small{font:600 11px system-ui;letter-spacing:.15em;color:#1676c8}.sn-panel:hover{box-shadow:0 20px 50px #123b5914}
+.sn-status{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}.sn-status span{padding:9px 13px;border-radius:100px;font:500 12px system-ui;background:#f0f5fa;color:#33475c}.sn-status i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px}
+.sn-strip{padding:32px 6%;border-radius:24px;background:#e9f1f8;display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap;margin:24px 0}.sn-strip span{font:600 14px system-ui;color:#355675}
+@keyframes sn-aurora{to{transform:translate3d(5%,-3%,0) scale(1.12)}}
+@keyframes sn-turn{to{transform:rotate(360deg)}}
+@keyframes sn-rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sn-reveal{from{opacity:.25;translate:0 55px;scale:.97}to{opacity:1;translate:0 0;scale:1}}
+@supports(animation-timeline:view()){.sn-panel,.sn-strip{animation:sn-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 100%}}
+@media(max-width:720px){.sn-intro{min-height:420px;border-radius:22px}.sn-story{grid-template-columns:1fr;gap:16px}.sn-panel{border-radius:22px}.sn-orbit{opacity:.6;width:300px;height:300px}}
+@media(prefers-reduced-motion:reduce){.sn-intro:before,.sn-intro h2,.sn-intro p,.sn-sweep,.sn-panel,.sn-strip{animation:none!important;transition:none!important;opacity:1!important;transform:none!important;translate:none!important;scale:1!important}}
 </style>
-<section class="intro-lead"><div class="intro-kicker">SonarNet · Từ dữ liệu đến bằng chứng</div>
-<h2>Biển rộng lớn.<br><span>Nhìn rõ từng dấu vết.</span></h2>
-<p>Khám phá ảnh radar vùng biển Việt Nam.<br>Kiểm tra điểm nghi vấn. Lưu lại bằng chứng.<br>Một không gian, từ toàn cảnh đến từng chi tiết.</p><small class="intro-scroll">CUỘN ĐỂ KHÁM PHÁ ↓</small></section>
-<div class="intro-grid">
-<article class="intro-card"><small>01 · QUAN SÁT</small><h3>Biết đang nhìn gì.</h3><p>Di chuyển trên ảnh vệ tinh, xem khu vực, ngày quan sát và nguồn ảnh. Phóng gần để tải ảnh radar chi tiết.</p></article>
-<article class="intro-card"><small>02 · KIỂM TRA</small><h3>Đi thẳng vào điểm cần xem.</h3><p>Mở một vòng khoanh để xem ảnh gốc tại vị trí đó. Trong chế độ trình diễn, khám phá hồ sơ tàu và ba tình huống đối chiếu AIS.</p></article>
-<article class="intro-card"><small>03 · LƯU BẰNG CHỨNG</small><h3>Không dừng ở một dấu chấm.</h3><p>Ghi chú, đánh giá từng điểm và tải hồ sơ kèm ảnh, tọa độ, thời gian. Người có chuyên môn có thể tiếp tục xác minh từ bằng chứng này.</p></article>
-</div>''', unsafe_allow_html=True)
-    st.markdown('''<section class="intro-chapter"><h2>Không chỉ nhìn thấy.<br>Còn biết mình đang nhìn gì.</h2><p>Ảnh thật. Nguồn rõ ràng. Thời gian quan sát đi cùng bằng chứng.</p></section>''', unsafe_allow_html=True)
-    panorama = Path(__file__).resolve().parents[1] / 'assets/sentinel1_vietnam_latest.png'
-    if panorama.exists():
-        with st.expander('Khám phá ảnh radar Việt Nam đang lưu sẵn', expanded=False):
-            st.image(str(panorama), width='stretch', caption='Ảnh ghép Sentinel-1 lưu sẵn · xem ngày từng vùng và tiến độ nhận diện trong tab Quan sát. Không phải ảnh trực tiếp.')
-    st.subheader('Bắt đầu trong một phút')
-    st.write('Mở tab **Quan sát** → phóng gần khu vực cần xem → chọn một tàu hoặc điểm quan sát. Dùng bộ lọc màu để trình bày từng tình huống; vào **Kiểm tra chi tiết** để đánh giá và lưu hồ sơ.')
-    st.caption('🔵 AIS khớp · 🟡 AIS lệch · 🔴 Chưa có AIS — các trạng thái AIS và hồ sơ tàu hiện là dữ liệu trình diễn, không phải kết quả đối chiếu với AIS thật.')
-    st.subheader('Công nghệ phía sau trải nghiệm')
-    with st.expander('Ảnh radar Sentinel-1 · nguồn quan sát thật', expanded=True):
-        st.write('Ảnh radar từ Copernicus được chia thành các ô chi tiết để xử lý. Ảnh toàn cảnh là ảnh ghép nhiều lượt chụp, có thể khác ngày giữa các vùng; giờ hiện tại không phải giờ chụp. Chỉ những ô xử lý thành công mới có kết quả nhận diện.')
-    with st.expander('Nhận diện tự động · tìm ứng viên tàu'):
-        st.write('Mô hình YOLO đánh dấu những vùng ảnh có đặc trưng giống tàu. Pipeline loại đất liền và dải 500 m sát bờ trước nhận diện. Kết quả là ứng viên cần kiểm tra, không tự xác nhận loại tàu hoặc hành vi vi phạm. Mô hình đang được đánh giá trên dữ liệu radar thật; chưa đủ kiểm chứng để dùng độc lập cho quyết định nghiệp vụ.')
-    with st.expander('Kalman / RTS và SAR–AIS · bước đối chiếu khi có dữ liệu'):
-        st.write('Mã nghiên cứu có bộ làm trơn Kalman/RTS để ước lượng vị trí từ chuỗi AIS về thời điểm quan sát radar, phục vụ ghép vị trí. Phần này chưa được nối vào luồng web đang hiển thị: cần AIS có dấu thời gian và thời điểm quan sát đủ chính xác. Ba màu trong chế độ trình diễn hiện do kịch bản tạo, không phải đầu ra Kalman.')
-    with st.expander('Global Fishing Watch · nguồn tham khảo độc lập'):
-        st.write('Lớp tham khảo cung cấp thống kê phát hiện theo vùng và thời gian. Nó không thay thế AIS trực tiếp, không tự cung cấp danh tính từng mục tiêu và không chứng minh một điểm nhận diện là tàu.')
-    with st.expander('Tự động hoá · xử lý nền, xem kết quả lưu sẵn'):
-        st.write('Tác vụ nền kiểm tra nguồn ảnh và lưu kết quả theo từng ô; có checkpoint để tiếp tục phần còn thiếu. GPU MPS trên MacBook hỗ trợ các lượt xử lý cục bộ. Web đọc kết quả đã công bố, không yêu cầu người xem tự tải ảnh hay chạy mô hình. Tiến độ thực tế nằm tại mục nguồn, thời gian và độ phủ.')
-    st.info('Mục đích hiện tại: trình bày quy trình giám sát và hỗ trợ rà soát ảnh. Ảnh radar là dữ liệu thật; hồ sơ tàu trình diễn không phải danh tính được suy ra từ ảnh. Phạm vi đã xử lý chưa đồng nghĩa phủ kín Việt Nam.')
+<section class="sn-intro"><div><div class="sn-eyebrow">SONARNET / VIỆT NAM</div><h2>Rõ vùng biển.<br><span>Hiện dấu tàu.</span></h2><p>Quan sát bằng radar.<br>Đối chiếu từng dấu vết.</p></div><div class="sn-orbit" aria-hidden="true"><div class="sn-sweep"></div></div></section>
+<div class="sn-story"><section class="sn-panel"><small>01 / QUAN SÁT</small><h3>Từ toàn cảnh.<br>Đến chi tiết.</h3><p>Ảnh Sentinel-1, thời gian chụp và bằng chứng tại từng vị trí.</p></section><section class="sn-panel"><small>02 / ĐỐI CHIẾU</small><h3>Ba trạng thái.<br>Một góc nhìn.</h3><p>Hồ sơ phương tiện và vị trí quan sát, trong cùng một không gian.</p><div class="sn-status"><span><i style="background:#0a84ff"></i>AIS khớp</span><span><i style="background:#ffd60a"></i>AIS lệch</span><span><i style="background:#ff453a"></i>Chưa có AIS</span></div></section></div>
+<div class="sn-strip"><span>Sentinel-1 · Ảnh radar</span><span>YOLO · Nhận diện</span><span>SAR × AIS · Đối chiếu</span><span>MPS · Xử lý cục bộ</span></div>
+''', unsafe_allow_html=True)
+    st.caption('Ảnh radar thật · Hồ sơ và trạng thái AIS trình diễn')
+    with st.expander('Công nghệ & trạng thái triển khai'):
+        st.markdown('''**Sentinel-1:** ảnh ghép nhiều lượt chụp, không phải luồng trực tiếp.
+
+**YOLO:** nhận diện ứng viên trên ảnh chi tiết; bỏ qua đất liền và 500 m sát bờ. Cần kiểm chứng trước khi dùng cho quyết định nghiệp vụ.
+
+**Kalman/RTS:** có trong mã nghiên cứu, chưa chạy trong luồng web; cần chuỗi AIS và thời điểm quan sát phù hợp.
+
+**Global Fishing Watch:** thống kê tham khảo theo vùng, không phải danh tính từng tàu.
+
+**Tự động hoá:** xử lý nền và giữ kết quả theo từng ô. Độ phủ thực tế được ghi trong tab Quan sát.''')

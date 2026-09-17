@@ -44,9 +44,7 @@ h1,h2,h3{letter-spacing:-.025em!important}
 @media(max-width:720px){[data-testid="stMainBlockContainer"]{padding:3.7rem .9rem 1.5rem}.sonar-hero{padding:20px 21px;border-radius:20px}.sonar-copy{display:none}.sonar-title{font-size:26px}.observation-meta{padding:12px 14px;gap:12px 22px}.observation-meta strong{font-size:13px}[role="tab"]{padding:10px 16px!important}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
-<section class="sonar-hero"><div class="sonar-eyebrow">SONARNET · QUAN SÁT BIỂN</div>
-<div class="sonar-title">Quan sát biển.<br>Kiểm tra từng dấu vết.</div>
-<div class="sonar-copy">Xem ảnh vệ tinh, tìm vùng nghi là tàu<br>và lưu bằng chứng để tiếp tục xác minh.</div></section>''', unsafe_allow_html=True)
+<div style="font:650 20px -apple-system,sans-serif;letter-spacing:-.04em">SonarNet<span style="font-size:11px;letter-spacing:.12em;color:#66798c;margin-left:16px">VIỆT NAM</span></div>''', unsafe_allow_html=True)
 
 st.components.v1.html('''<div id="time" style="font:12px -apple-system,sans-serif;color:#64748b;text-align:right;padding:5px 4px"></div>
 <script>function tick(){document.getElementById('time').textContent='Giờ Việt Nam · '+new Intl.DateTimeFormat('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',dateStyle:'short',timeStyle:'medium'}).format(new Date())}tick();setInterval(tick,1000);</script>''', height=32)

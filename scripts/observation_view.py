@@ -220,7 +220,6 @@ def render(root):
                 popup=f"Sentinel-1 VV · Copernicus · {date_label(tile['observation_day_utc'])} UTC · Ảnh ghép trong ngày.",
             ))
         ViewportRadar(chart, radar, radar_records).add_to(chart)
-        st.caption("Phóng to vùng đã xử lý để xem ảnh radar chi tiết. Ảnh tự tải theo vị trí đang xem; mỗi ô có ngày quan sát riêng.")
     from place_labels import add_place_labels
     add_place_labels(chart)
     dots = folium.FeatureGroup(name="Quan sát từ nguồn khác", show=False).add_to(chart)
@@ -318,10 +317,6 @@ def render(root):
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
     embed(chart.get_root().render(), height=820)
-    if yolo_result and yolo_result['tiles']:
-        st.caption('Điểm sáng: vùng nghi là tàu, cần xác minh. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ. Xem tiến độ và độ phủ bên dưới. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
-    st.caption('Mỗi vòng khoanh là một tàu trong kịch bản trình diễn. Chạm để mở hồ sơ; phóng gần để chọn các tàu nằm sát nhau.' if illustrative else 'Mỗi vòng khoanh là một điểm quan sát chưa xác minh. Chạm để xem ảnh bằng chứng; phóng gần để chọn các điểm nằm sát nhau.')
-    st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn và ngày quan sát · Chạm tên quần đảo để xem nguồn địa danh.')
     if visible_candidates:
         options = {item['id']: item for item in visible_candidates}
         point_numbers = {key: index+1 for index, key in enumerate(options)}
