@@ -55,13 +55,13 @@ with st.sidebar:
     st.caption('Ngày chụp ảnh khác với giờ hiện tại. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ; xem tiến độ xử lý của khu vực.')
     st.info('Chưa có dữ liệu định danh tàu. Kết quả cần người có chuyên môn xác minh.')
 
-section = st.radio('Điều hướng', ['Giới thiệu', 'Quan sát', 'Hướng dẫn'], horizontal=True,
+section = st.radio('Điều hướng', ['Nghiên cứu', 'Quan sát', 'Hướng dẫn'], horizontal=True,
                    label_visibility='collapsed', key='main_section')
 # st.tabs evaluates every tab on every rerun.  Do not construct the national
 # raster workspace while a visitor is reading the lightweight introduction.
-if section == 'Giới thiệu':
+if section == 'Nghiên cứu':
     from introduction import render_introduction
-    render_introduction()
+    render_introduction(ROOT)
 elif section == 'Quan sát':
     render(ROOT)
 else:
