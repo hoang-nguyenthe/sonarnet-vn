@@ -1,0 +1,17 @@
+# Only public runtime inputs enter the build context.
+**
+!Dockerfile
+!requirements.txt
+!scripts/
+!scripts/*.py
+!src/
+!src/**
+!assets/
+!assets/**
+!.streamlit/
+!.streamlit/config.toml
+**/__pycache__/**
+**/*.pyc
+**/.env*
+**/secrets.toml
+assets/models/**

@@ -1,3 +1,12 @@
+---
+title: SonarNet
+emoji: 🌊
+colorFrom: blue
+colorTo: gray
+sdk: docker
+app_port: 7860
+---
+
 # SonarNet-VN
 
 **Hệ thống giám sát tuân thủ quy định chống khai thác thuỷ sản bất hợp pháp,
