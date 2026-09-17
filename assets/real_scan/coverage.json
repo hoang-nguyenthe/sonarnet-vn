@@ -1,6 +1,6 @@
 {
   "version": "detailed-sar-0.1deg-v1",
-  "generated_at": "2026-09-17T12:10:19.604313+00:00",
+  "generated_at": "2026-09-17T13:53:55.688325+00:00",
   "cell_degrees": 0.1,
   "requested_image_width": 1024,
   "maximum_metres_per_pixel": 25,
@@ -21,12 +21,11 @@
       "planned_cells": 20540,
       "states": {
         "excluded_land_coast": 6720,
-        "processed": 591,
+        "processed": 1478,
         "no_observation": 8283,
-        "pending": 4942,
-        "retry_later": 4
+        "pending": 4059
       },
-      "published_detail_cells": 603,
+      "published_detail_cells": 1490,
       "latest_detail_day_utc": "2026-09-16"
     },
     {
@@ -92,10 +91,11 @@
         -57.0,
         50.0
       ],
-      "overview_newest_catalog_at": "2026-09-16T22:11:58Z",
+      "overview_newest_catalog_at": "2026-09-17T10:06:51Z",
       "planned_cells": 6400,
       "states": {
-        "blocked_missing_mask": 6400
+        "blocked_missing_mask": 5710,
+        "no_observation": 690
       },
       "published_detail_cells": 0,
       "latest_detail_day_utc": null
@@ -311,10 +311,10 @@
         "blocked_missing_mask": 897,
         "no_observation": 3278,
         "excluded_land_coast": 380,
-        "pending": 1721,
-        "processed": 124
+        "pending": 1528,
+        "processed": 317
       },
-      "published_detail_cells": 168,
+      "published_detail_cells": 371,
       "latest_detail_day_utc": "2026-09-16"
     },
     {
@@ -428,158 +428,158 @@
   ],
   "next_cells": [
     {
-      "key": "grid_bd44b64ac172fe3a",
+      "key": "grid_14ca637e19c47397",
       "bbox": [
-        110.9,
-        21.0,
-        111.0,
-        21.1
+        109.0,
+        21.1,
+        109.1,
+        21.2
       ],
-      "row": 150,
-      "column": 89,
+      "row": 151,
+      "column": 70,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_00af82d3268deb3d",
+      "key": "grid_662e625106e1b7ff",
       "bbox": [
-        110.0,
-        20.0,
-        110.1,
-        20.1
+        108.7,
+        20.1,
+        108.8,
+        20.2
       ],
-      "row": 140,
-      "column": 80,
+      "row": 141,
+      "column": 67,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_bdaac7907c998ec2",
+      "key": "grid_e877b64704815dfa",
       "bbox": [
-        111.3,
+        107.0,
         19.0,
-        111.4,
+        107.1,
         19.1
       ],
       "row": 130,
-      "column": 93,
+      "column": 50,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_2990aad4d66257ae",
+      "key": "grid_0c18885cb9f1e5f6",
       "bbox": [
-        106.5,
-        18.1,
-        106.6,
-        18.2
+        107.8,
+        18.2,
+        107.9,
+        18.3
       ],
-      "row": 121,
-      "column": 45,
+      "row": 122,
+      "column": 58,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_d8f852ac5586a435",
+      "key": "grid_36415f585f789227",
       "bbox": [
-        108.2,
-        17.1,
-        108.3,
-        17.2
+        108.5,
+        17.3,
+        108.6,
+        17.4
       ],
-      "row": 111,
-      "column": 62,
+      "row": 113,
+      "column": 65,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_e27499e922236d69",
+      "key": "grid_49bb5f9886b50af4",
       "bbox": [
         108.1,
-        16.2,
+        16.0,
         108.2,
-        16.3
+        16.1
       ],
-      "row": 102,
+      "row": 100,
       "column": 61,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_ea1001aa19525612",
+      "key": "grid_7eb721fe8c84d5da",
       "bbox": [
         108.9,
-        15.3,
+        15.1,
         109.0,
-        15.4
+        15.2
       ],
-      "row": 93,
+      "row": 91,
       "column": 69,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_f8c876187b9e8347",
-      "bbox": [
-        109.2,
-        14.4,
-        109.3,
-        14.5
-      ],
-      "row": 84,
-      "column": 72,
-      "region_key": "vietnam",
-      "region_label": "Việt Nam"
-    },
-    {
-      "key": "grid_92fc4a49b173aac0",
-      "bbox": [
-        110.0,
-        13.3,
-        110.1,
-        13.4
-      ],
-      "row": 73,
-      "column": 80,
-      "region_key": "vietnam",
-      "region_label": "Việt Nam"
-    },
-    {
-      "key": "grid_eb1ae8aba5ef7d22",
+      "key": "grid_14567681661c847b",
       "bbox": [
         109.9,
-        12.1,
+        14.9,
         110.0,
-        12.2
+        15.0
       ],
-      "row": 61,
+      "row": 89,
       "column": 79,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_1b3de70d5a95027b",
+      "key": "grid_a78905f29738e6a9",
       "bbox": [
+        110.2,
+        12.4,
         110.3,
-        11.0,
-        110.4,
-        11.1
+        12.5
       ],
-      "row": 50,
-      "column": 83,
+      "row": 64,
+      "column": 82,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     },
     {
-      "key": "grid_7d3b1346737ba3ea",
+      "key": "grid_a6f81ab483c09cd5",
       "bbox": [
-        106.7,
-        10.0,
-        106.8,
-        10.1
+        102.0,
+        11.0,
+        102.1,
+        11.1
       ],
-      "row": 40,
-      "column": 47,
+      "row": 50,
+      "column": 0,
+      "region_key": "vietnam",
+      "region_label": "Việt Nam"
+    },
+    {
+      "key": "grid_ab4e4e13e48e84f3",
+      "bbox": [
+        106.3,
+        10.1,
+        106.4,
+        10.2
+      ],
+      "row": 41,
+      "column": 43,
+      "region_key": "vietnam",
+      "region_label": "Việt Nam"
+    },
+    {
+      "key": "grid_6b6c970ddb4c59de",
+      "bbox": [
+        102.4,
+        9.2,
+        102.5,
+        9.3
+      ],
+      "row": 32,
+      "column": 4,
       "region_key": "vietnam",
       "region_label": "Việt Nam"
     }
