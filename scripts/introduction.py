@@ -14,9 +14,16 @@ def _research_snapshot(root: Path | None) -> tuple[str, str, str]:
         return fallback
     try:
         report = json.loads((root / "assets" / "real_scan" / "report.json").read_text())
+        rows = report.get("tiles", [])
         tiles = int(report.get("processed_tiles", report.get("tiles_processed", 0)))
         candidates = int(report.get("candidate_count", report.get("detections", 0)))
+        if isinstance(rows, list):
+            processed = [row for row in rows if isinstance(row, dict) and row.get("status") == "processed"]
+            tiles = tiles or len(processed)
+            candidates = candidates or sum(len(row.get("detections", [])) for row in processed)
         dates = report.get("observation_dates", [])
+        if not dates and isinstance(rows, list):
+            dates = [row.get("observation_day_utc") for row in rows if isinstance(row, dict) and row.get("observation_day_utc")]
         newest = max(dates) if dates else ""
         return (
             f"{tiles:,} ô ảnh đã đọc" if tiles else fallback[0],
