@@ -4,12 +4,18 @@ import json
 import gzip
 from PIL import Image, ImageDraw
 from shapely.geometry import box, shape, mapping
+from shapely import prepare
 
 
 @lru_cache(maxsize=4)
 def load_mask(path, modified_ns):
     data = json.loads(gzip.decompress(path.read_bytes()))
-    return data, {key: shape(value) for key, value in data['geometry'].items()}
+    geometries = {key: shape(value) for key, value in data['geometry'].items()}
+    # Prepared polygons make repeated tile/bbox filtering inexpensive. This
+    # changes neither the full-resolution boundaries nor their coordinates.
+    for key in ('land', 'coast'):
+        prepare(geometries[key])
+    return data, geometries
 
 
 def get_mask(root):
@@ -41,7 +47,7 @@ def filter_tile(root, tile):
         for candidate in tile['detections']:
             candidate['surface'] = 'unknown'
         return
-    tile['land_mask_version'] = data['version'] + '-exclude-coast-500m-v2'
+    tile['land_mask_version'] = data['version']
     tile['land_mask_status'] = 'applied'
     tile['raw_detection_count'] = len(tile['detections'])
     kept, excluded = [], []
@@ -65,25 +71,47 @@ def annotated_image(root, tile):
 
 def add_map_layer(chart, root):
     import folium
+    from branca.element import MacroElement, Template
     try:
         data, geometries = get_mask(root)
     except (OSError, ValueError, KeyError):
         return
-    layer = folium.FeatureGroup(name='Đất liền · loại trừ YOLO (Việt Nam)', show=True).add_to(chart)
-    folium.GeoJson(mapping(geometries['land'].simplify(.0001, preserve_topology=True)),
-        style_function=lambda _: {'color': '#919aa8', 'weight': .5, 'fillColor': '#64748b', 'fillOpacity': .22},
-        tooltip='Vùng loại trừ trên đất · GSHHG 2.3.7 · không phải ranh giới hành chính',
+    display = data.get('display', {})
+    # Handle older manifests without showing their symmetric inland buffer.
+    coastal_shape = display.get('coast') or mapping(
+        geometries['coast'].difference(geometries['land']).simplify(.00005, preserve_topology=True))
+    shoreline = display.get('shoreline') or data['geometry'].get('shoreline')
+    layer = folium.FeatureGroup(name='Vùng bỏ qua sát bờ · 500 m', show=True)
+    pane_name = 'coastal_exclusion_' + layer.get_name()
+    folium.map.CustomPane(pane_name, z_index=410, pointer_events=False).add_to(chart)
+    layer.add_to(chart)
+    # No land tint and no strokes around thousands of islands: a translucent
+    # sea-only ribbon appears when its 500 m width is meaningful on screen.
+    folium.GeoJson(coastal_shape,
+        style_function=lambda _: {'stroke': False, 'fillColor': '#c6ad7a', 'fillOpacity': .18},
+        pane=pane_name, interactive=False,
         ).add_to(layer)
-    coastal = folium.FeatureGroup(name='Ven bờ 500 m · loại trừ YOLO', show=True).add_to(chart)
-    folium.GeoJson(mapping(geometries['coast'].simplify(.0001, preserve_topology=True)),
-        style_function=lambda _: {'color': '#ff9f0a', 'weight': .7, 'fillColor': '#ff9f0a', 'fillOpacity': .25},
-        tooltip='Vùng loại trừ: từ đường bờ ra biển 500 m · không hiển thị ứng viên YOLO/AIS minh hoạ',
-        ).add_to(coastal)
+    if shoreline:
+        folium.GeoJson(shoreline,
+            style_function=lambda _: {'color': '#cbd5df', 'weight': .65, 'opacity': .5, 'fill': False},
+            pane=pane_name, interactive=False,
+            ).add_to(layer)
+    visibility = MacroElement()
+    visibility._template = Template("{% macro script(this, kwargs) %}" + f"""
+        (function() {{
+            const map = {chart.get_name()};
+            const pane = map.getPane('{pane_name}');
+            const update = () => {{ pane.style.display = map.getZoom() >= 9 ? '' : 'none'; }};
+            update();
+            map.on('zoomend', update);
+        }})();
+    """ + "{% endmacro %}")
+    chart.add_child(visibility)
 
 
 def summary(tiles):
     excluded = sum(d.get('surface') == 'excluded_land' for t in tiles for d in t.get('excluded_detections', []))
     coastal = sum(d.get('surface') == 'excluded_coast' for t in tiles for d in t.get('excluded_detections', []))
     unknown = sum(d.get('surface') == 'unknown' for t in tiles for d in t['detections'])
-    return (f'Vùng loại trừ YOLO: đất liền và 500 m từ bờ ra biển. Đã loại {excluded} ứng viên chạm đất, {coastal} ứng viên ven bờ. '
+    return (f'Không xét mục tiêu trên đất liền và trong 500 m từ bờ ra biển. Đã bỏ qua {excluded} điểm chạm đất, {coastal} điểm sát bờ. '
             f'{unknown} ứng viên chưa xác định loại bề mặt. Tàu trong cảng/sát bờ cũng bị bỏ qua; điểm còn lại chưa phải tàu đã xác minh.')

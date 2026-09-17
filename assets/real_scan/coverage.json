@@ -1,0 +1,480 @@
+{
+  "version": "detailed-sar-0.1deg-v1",
+  "generated_at": "2026-09-17T03:30:24.334490+00:00",
+  "cell_degrees": 0.1,
+  "requested_image_width": 1024,
+  "maximum_metres_per_pixel": 25,
+  "scope": "Published observation regions only; this is not complete global Sentinel-1 coverage.",
+  "completion_scope": "Verified detailed cells; timestamps differ by cell. Pending means not scanned, not no vessels.",
+  "mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+  "regions": [
+    {
+      "key": "vietnam",
+      "label": "Việt Nam",
+      "bbox": [
+        102.0,
+        6.0,
+        115.0,
+        21.8
+      ],
+      "overview_newest_catalog_at": "2026-09-16T11:21:13Z",
+      "planned_cells": 20540,
+      "states": {
+        "excluded_land_coast": 6720,
+        "pending": 5537,
+        "no_observation": 8283
+      },
+      "published_detail_cells": 12,
+      "latest_detail_day_utc": "2026-09-12"
+    },
+    {
+      "key": "north_pacific",
+      "label": "Bắc Thái Bình Dương",
+      "bbox": [
+        -154.0,
+        54.0,
+        -146.0,
+        62.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T15:56:17Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 2791,
+        "blocked_missing_mask": 3609
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "central_pacific",
+      "label": "Trung Thái Bình Dương",
+      "bbox": [
+        -160.0,
+        17.0,
+        -152.0,
+        25.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T04:46:55Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 4350,
+        "blocked_missing_mask": 2050
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "south_pacific",
+      "label": "Nam Thái Bình Dương",
+      "bbox": [
+        170.0,
+        -42.0,
+        178.0,
+        -34.0
+      ],
+      "overview_newest_catalog_at": "2026-09-15T17:22:16Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 5414,
+        "no_observation": 986
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "north_atlantic",
+      "label": "Bắc Đại Tây Dương",
+      "bbox": [
+        -65.0,
+        42.0,
+        -57.0,
+        50.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T10:15:42Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 6400
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "tropical_atlantic",
+      "label": "Nhiệt đới Đại Tây Dương",
+      "bbox": [
+        -43.0,
+        -7.0,
+        -35.0,
+        1.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T08:01:15Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 4337,
+        "no_observation": 2063
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "south_atlantic",
+      "label": "Nam Đại Tây Dương",
+      "bbox": [
+        -55.0,
+        -36.0,
+        -47.0,
+        -28.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T08:57:45Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 2212,
+        "blocked_missing_mask": 4188
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "caribbean_gulf",
+      "label": "Caribe – Vịnh Mexico",
+      "bbox": [
+        -94.0,
+        22.0,
+        -86.0,
+        30.0
+      ],
+      "overview_newest_catalog_at": "2026-09-15T00:01:39Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 5229,
+        "no_observation": 1171
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "north_sea_atlantic",
+      "label": "Bắc Hải – Đại Tây Dương",
+      "bbox": [
+        -4.0,
+        50.0,
+        4.0,
+        58.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T18:06:34Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 6400
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "mediterranean_suez",
+      "label": "Địa Trung Hải – Suez",
+      "bbox": [
+        27.0,
+        28.0,
+        35.0,
+        36.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T16:19:48Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 6400
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "west_africa",
+      "label": "Tây Phi",
+      "bbox": [
+        -20.0,
+        10.0,
+        -12.0,
+        18.0
+      ],
+      "overview_newest_catalog_at": "2026-09-14T19:02:05Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 165,
+        "blocked_missing_mask": 6235
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "east_america",
+      "label": "Bờ đông châu Mỹ",
+      "bbox": [
+        -82.0,
+        25.0,
+        -74.0,
+        33.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T11:09:49Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 4863,
+        "no_observation": 1537
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "west_america",
+      "label": "Bờ tây châu Mỹ",
+      "bbox": [
+        -123.0,
+        30.0,
+        -115.0,
+        38.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T01:34:13Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 706,
+        "blocked_missing_mask": 5694
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "arabian_sea",
+      "label": "Biển Ả Rập",
+      "bbox": [
+        65.0,
+        17.0,
+        73.0,
+        25.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T01:18:19Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 2997,
+        "blocked_missing_mask": 3403
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "bay_bengal",
+      "label": "Vịnh Bengal",
+      "bbox": [
+        86.0,
+        15.0,
+        94.0,
+        23.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T12:11:58Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 2667,
+        "blocked_missing_mask": 3733
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "indian_ocean",
+      "label": "Ấn Độ Dương",
+      "bbox": [
+        54.0,
+        16.0,
+        62.0,
+        24.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T02:06:31Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 4130,
+        "no_observation": 2270
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "southeast_asia",
+      "label": "Đông Nam Á",
+      "bbox": [
+        103.0,
+        3.0,
+        111.0,
+        11.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T11:19:03Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 897,
+        "no_observation": 3278,
+        "excluded_land_coast": 380,
+        "pending": 1845
+      },
+      "published_detail_cells": 12,
+      "latest_detail_day_utc": "2026-09-12"
+    },
+    {
+      "key": "sea_of_japan",
+      "label": "Biển Hoa Đông – bán đảo Triều Tiên",
+      "bbox": [
+        123.0,
+        33.0,
+        131.0,
+        41.0
+      ],
+      "overview_newest_catalog_at": "2026-09-14T21:16:32Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 1331,
+        "blocked_missing_mask": 5069
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "east_asia",
+      "label": "Đông Á",
+      "bbox": [
+        134.0,
+        31.0,
+        142.0,
+        39.0
+      ],
+      "overview_newest_catalog_at": "2026-09-15T09:06:28Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 1815,
+        "blocked_missing_mask": 4585
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "western_pacific",
+      "label": "Tây Thái Bình Dương",
+      "bbox": [
+        120.0,
+        5.0,
+        128.0,
+        13.0
+      ],
+      "overview_newest_catalog_at": "2026-09-14T21:24:10Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 5950,
+        "no_observation": 450
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "australia_east",
+      "label": "Bờ đông Australia",
+      "bbox": [
+        149.0,
+        -35.0,
+        157.0,
+        -27.0
+      ],
+      "overview_newest_catalog_at": "2026-09-16T08:40:47Z",
+      "planned_cells": 6400,
+      "states": {
+        "blocked_missing_mask": 4647,
+        "no_observation": 1753
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "australia_west",
+      "label": "Bờ tây Australia",
+      "bbox": [
+        111.0,
+        -35.0,
+        119.0,
+        -27.0
+      ],
+      "overview_newest_catalog_at": "2026-09-13T21:42:14Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 1838,
+        "blocked_missing_mask": 4562
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    },
+    {
+      "key": "southern_africa",
+      "label": "Nam Phi",
+      "bbox": [
+        15.0,
+        -35.0,
+        23.0,
+        -27.0
+      ],
+      "overview_newest_catalog_at": "2026-09-14T17:10:55Z",
+      "planned_cells": 6400,
+      "states": {
+        "no_observation": 339,
+        "blocked_missing_mask": 6061
+      },
+      "published_detail_cells": 0,
+      "latest_detail_day_utc": null
+    }
+  ],
+  "next_cells": [
+    {
+      "key": "grid_d65d9baf0674d51b",
+      "bbox": [
+        102.3,
+        6.0,
+        102.4,
+        6.1
+      ],
+      "row": 0,
+      "column": 3,
+      "region_key": "vietnam",
+      "region_label": "Việt Nam"
+    },
+    {
+      "key": "grid_a43fa1ed409cae16",
+      "bbox": [
+        102.4,
+        6.0,
+        102.5,
+        6.1
+      ],
+      "row": 0,
+      "column": 4,
+      "region_key": "vietnam",
+      "region_label": "Việt Nam"
+    },
+    {
+      "key": "grid_7ef095376ec5915e",
+      "bbox": [
+        102.5,
+        6.0,
+        102.6,
+        6.1
+      ],
+      "row": 0,
+      "column": 5,
+      "region_key": "vietnam",
+      "region_label": "Việt Nam"
+    },
+    {
+      "key": "grid_4945525d6238f053",
+      "bbox": [
+        102.6,
+        6.0,
+        102.7,
+        6.1
+      ],
+      "row": 0,
+      "column": 6,
+      "region_key": "vietnam",
+      "region_label": "Việt Nam"
+    }
+  ]
+}

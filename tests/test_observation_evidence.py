@@ -8,7 +8,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
-from observation_view import published_yolo_result, demo_ais_record, candidate_crop
+from observation_view import published_yolo_result, candidate_crop
 from refresh_detailed_scan import infer_tile, resolution_m
 
 
@@ -39,14 +39,12 @@ class ObservationEvidenceTests(unittest.TestCase):
         self.assertEqual(result['tiles'], [])
 
     def test_missing_ais_has_no_invented_identity(self):
-        rows = [demo_ais_record({}, dict(id=f'cell/{i}', latitude=10, longitude=108,
-                                       observation_day_utc='2026-09-12')) for i in range(50)]
-        dark = [row for row in rows if row['status'] == 'Không có AIS']
-        self.assertTrue(dark)
-        for row in dark:
-            self.assertIsNone(row['latitude'])
-            self.assertEqual(row['mmsi'], 'Chưa xác định')
-            self.assertEqual(row['vessel_name'], 'Chưa xác định')
+        import observation_view
+        self.assertFalse(hasattr(observation_view, 'demo_ais_record'))
+        result = published_yolo_result(ROOT, {'bbox': [102, 6, 115, 24]})
+        for row in result['detections']:
+            self.assertNotIn('mmsi', row)
+            self.assertNotIn('vessel_name', row)
 
 
 if __name__ == '__main__':

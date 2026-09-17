@@ -10,8 +10,6 @@ import json
 from pathlib import Path
 import zipfile
 
-import shapefile
-from pyproj import Transformer
 from shapely.geometry import box, shape, mapping
 from shapely.ops import transform, unary_union
 from shapely import make_valid
@@ -19,7 +17,24 @@ from shapely import make_valid
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def offshore_buffer(land_metric, distance_m=500):
+    """Only water outside land, not a symmetric band across the shoreline."""
+    return land_metric.buffer(distance_m).difference(land_metric)
+
+
+def display_mapping(geometry):
+    """Submetre JSON rounding only for the smaller, non-authoritative overlay."""
+    def rounded(value):
+        if isinstance(value, (tuple, list)):
+            return [rounded(item) for item in value]
+        return round(value, 6)
+    result = mapping(geometry)
+    return dict(result, coordinates=rounded(result['coordinates']))
+
+
 def main():
+    import shapefile
+    from pyproj import Transformer
     archive = ROOT / 'data_external/gshhg/gshhg-shp-2.3.7.zip'
     output = ROOT / 'assets/land_mask'
     output.mkdir(parents=True, exist_ok=True)
@@ -43,16 +58,29 @@ def main():
     geometries = {
         'land': land.intersection(extent),
         'core': transform(backward, metric.buffer(-500)).intersection(extent),
-        'coast': transform(backward, metric.boundary.buffer(500)).intersection(extent),
+        'coast': transform(backward, offshore_buffer(metric)).intersection(extent),
+        # Take the physical shoreline before the final regional clipping. A
+        # rectangular coverage edge must never be drawn as a coastline.
+        'shoreline': land.boundary.intersection(extent),
+    }
+    # Use a small metric tolerance only for display; filtering retains the
+    # full source geometry. The display ring remains strictly seaward too.
+    display_land = metric.simplify(10, preserve_topology=True)
+    display = {
+        'coast': transform(backward, offshore_buffer(display_land).simplify(10, preserve_topology=True).difference(display_land)).intersection(extent),
+        'shoreline': transform(backward, display_land.boundary).intersection(extent),
     }
     payload = {
-        'version': 'gshhg-2.3.7-full-maritime-500m-v1',
+        'version': 'gshhg-2.3.7-full-maritime-seaward-500m-v2',
         'source': 'GSHHG 2.3.7 full resolution L1 (2017-06-15)',
         'source_url': 'https://www.soest.hawaii.edu/pwessel/gshhg/',
         'archive_sha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
         'coverage_bbox': coverage, 'coastal_buffer_m': 500,
         'scope': 'Maritime: inland waters inside L1 polygons are excluded too. Not an administrative boundary.',
         'geometry': {key: mapping(value) for key, value in geometries.items()},
+        'display': {key: display_mapping(value) for key, value in display.items()},
+        'display_simplification_m': 10,
+        'distance_method': 'Regional azimuthal equidistant metres; 500 m engineering exclusion, not a legal limit.',
     }
     (output / 'vietnam.json.gz').write_bytes(gzip.compress(json.dumps(payload, separators=(',', ':')).encode(), mtime=0))
     print('Built', output / 'vietnam.json.gz')

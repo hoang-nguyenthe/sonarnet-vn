@@ -35,15 +35,13 @@ def render_scan(root: Path):
         st.warning(f'{len(tiles)-len(ready)} ô chưa có bằng chứng hợp lệ và không được đưa vào danh sách kiểm tra. Không coi các ô này là không có tàu.')
     count = sum(len(r['detections']) for r in ready)
     candidate_reviewed = sum(len(v.get('candidate_labels', {})) for v in reviews.values())
-    st.subheader('Kiểm tra ảnh radar thật')
-    st.caption('Chọn ảnh → xem ứng viên → lưu ghi chú và bằng chứng.')
+    st.subheader('Kiểm tra chi tiết')
+    st.caption('Chọn ảnh → xem điểm nghi vấn → lưu ghi chú và bằng chứng.')
     reviewed = sum(1 for value in reviews.values() if value.get('status') != STATUSES[0])
     follow_up = sum(1 for value in reviews.values() if value.get('status') == STATUSES[1])
-    st.markdown(f'<div class="observation-meta"><span>Vùng thử nghiệm<strong>Bình Thuận</strong></span><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Đã xử lý<strong>{len(ready)} / {len(tiles)} ô</strong></span><span>Ứng viên baseline<strong>{count}</strong></span><span>Đã xem<strong>{reviewed} ô</strong></span><span>Ứng viên đã đánh giá<strong>{candidate_reviewed}/{count}</strong></span><span>Cần xem tiếp<strong>{follow_up} ô</strong></span></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="observation-meta"><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Ảnh có sẵn<strong>{len(ready)} ô</strong></span><span>Điểm cần kiểm tra<strong>{count}</strong></span><span>Đã đánh giá<strong>{candidate_reviewed}/{count} điểm</strong></span></div>', unsafe_allow_html=True)
     model_hash = next((t.get('weights_sha256') for t in ready if t.get('weights_sha256')), '')
-    st.caption(f"Mô hình: YOLO baseline học từ ảnh mô phỏng · mã {model_hash[:12] if model_hash else 'chưa có'}. Đây là ứng viên để người xem rà soát, không phải kết quả đã xác minh.")
-    st.caption('Ảnh lưu trữ · Ứng viên chưa xác minh, không phải số tàu.')
-    st.caption(land_summary(ready))
+    st.caption('Điểm nghi vấn chưa được xác minh, không phải số tàu.')
     with st.expander('Lưu / mở lại phiên kiểm tra'):
         st.write('Tải hồ sơ phiên trước khi đóng trang. Có thể mở lại trên máy khác với đúng bộ ảnh; ghi chú không lưu vào cơ sở dữ liệu máy chủ.')
         upload = st.file_uploader('Mở hồ sơ phiên (.json)', type=['json'], key='restore_reviews')
@@ -63,14 +61,15 @@ def render_scan(root: Path):
                 st.error(str(error))
         st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews), 'sonarnet-review-session.json', 'application/json')
     with st.expander('Cần biết trước khi dùng kết quả'):
-        st.write('Mô hình công bố học trên ảnh mô phỏng. Mặt nạ GSHHG loại mọi khung ứng viên chạm đất hoặc vùng 500 m từ bờ ra biển, bao gồm tàu trong cảng và sát bờ. Đường bờ phiên bản 2017 có thể khác thực địa hiện tại, nhất là khu lấn biển. Vùng ngoài phạm vi mặt nạ không được coi là đã lọc. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
+        st.write('Hệ thống nhận diện chưa được kiểm chứng đủ để dùng cho quyết định nghiệp vụ. Đất liền và vùng 500 m từ bờ ra biển được bỏ qua, bao gồm tàu trong cảng và sát bờ. Đường bờ phiên bản 2017 có thể khác thực địa hiện tại, nhất là khu lấn biển. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
+        st.caption(land_summary(ready))
         st.write('Mỗi ô giữ ngày quan sát của chính ảnh đó. Lịch kiểm tra 6 giờ giữ lại ảnh cũ nếu chưa có ảnh mới hợp lệ. Ảnh ghép trong ngày chưa có thời điểm riêng từng pixel. Không phát hiện không chứng minh không có tàu.')
     chart = folium.Map(tiles=None, zoom_snap=.25)
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attr='Esri, Maxar, Earthstar Geographics').add_to(chart)
     for tile in tiles:
         w,s,e,n = tile['bbox']
         processed = tile['status'] == 'processed'
-        summary = f"{len(tile['detections'])} ứng viên" if processed else 'Chưa xử lý được'
+        summary = f"{len(tile['detections'])} điểm cần kiểm tra" if processed else 'Chưa xử lý được'
         review_status = reviews.get(tile['key'], {}).get('status', STATUSES[0])
         border = '#43c6b7' if review_status == STATUSES[2] else '#ff9f43' if review_status == STATUSES[1] else '#74869a'
         folium.Rectangle([[s,w],[n,e]], color=border if processed else '#efad48', weight=3 if review_status != STATUSES[0] else 2, fill=True, fill_opacity=.18,
@@ -79,41 +78,45 @@ def render_scan(root: Path):
             label = reviews.get(tile['key'], {}).get('candidate_labels', {}).get(str(d['id']), CANDIDATE_STATUSES[0])
             dot_color = '#45c9b8' if label == CANDIDATE_STATUSES[1] else '#ea6b61' if label == CANDIDATE_STATUSES[2] else '#ffb85c'
             folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color=dot_color,fill=True,
-                popup=f"{tile['key']} / #{d['id']} · điểm mô hình {d['confidence']:.2f} · {label}").add_to(chart)
+                popup=f"{tile['key']} / #{d['id']} · {label}").add_to(chart)
     add_map_layer(chart, root)
-    folium.LayerControl(collapsed=True).add_to(chart)
     chart.fit_bounds([[6,102],[24,115]])
-    with st.expander('Phạm vi đã quét trên Việt Nam', expanded=True):
+    from maritime_reference import add_reference
+    add_reference(chart, root)
+    folium.LayerControl(collapsed=True).add_to(chart)
+    with st.expander('Vị trí các ảnh đã kiểm tra', expanded=False):
         html(chart.get_root().render(), height=420)
         st.caption('Viền xám: chưa xem · cam: cần kiểm tra tiếp · xanh: đã xem, chưa thấy mục tiêu rõ.')
     if not ready:
         return
     by_key = {t['key']:t for t in sorted(ready, key=lambda t: -len(t['detections']))}
-    chosen = st.selectbox('Ô ảnh cần kiểm tra', list(by_key), format_func=lambda key: f"{key.replace('cell_', 'Ô ')} · {len(by_key[key]['detections'])} ứng viên", key='review_tile')
+    chosen = st.selectbox('Chọn ảnh', list(by_key), format_func=lambda key: f"{key.replace('cell_', 'Ô ')} · {len(by_key[key]['detections'])} điểm cần kiểm tra", key='review_tile')
     tile = by_key[chosen]
-    st.caption(f"Ngày ảnh của ô đã chọn: {date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')} UTC · Copernicus Sentinel-1 VV")
+    st.caption(f"Ngày ảnh đã chọn: {date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')} UTC · Copernicus")
     original = st.toggle('Xem ảnh gốc không khung đánh dấu', value=False)
     st.image(str(root / tile['asset_dir'] / 'sar.png') if original else annotated_image(root, tile), use_container_width=True,
-             caption=f"{chosen} · Sentinel-1 VV · {tile['image_size'][0]} × {tile['image_size'][1]} px · ngưỡng {tile['confidence_threshold']}")
+             caption=f"{chosen} · Ảnh radar gốc và các vùng cần kiểm tra")
     if tile['detections']:
-        detection = st.selectbox('Mở bằng chứng ứng viên', tile['detections'], format_func=lambda d: f"#{d['id']} · điểm mô hình {d['confidence']:.2f}")
+        target = st.session_state.pop('review_target_id', None)
+        target_index = next((i for i, d in enumerate(tile['detections']) if str(d['id']) == target), 0)
+        detection = st.selectbox('Mở điểm cần kiểm tra', tile['detections'], index=target_index, format_func=lambda d: f"Điểm {d['id']}")
         with Image.open(root / tile['asset_dir'] / 'sar.png') as image:
             x1,y1,x2,y2 = detection['bbox_px']
             crop = image.crop((max(0,int(x1)-24),max(0,int(y1)-24),min(image.width,int(x2)+24),min(image.height,int(y2)+24)))
             st.image(crop, caption='Ảnh cắt để kiểm tra trực quan — không phải xác nhận tàu cá', width=256)
-        st.write(f"Tọa độ xấp xỉ: {detection['latitude']:.5f}, {detection['longitude']:.5f}. Chưa đối chiếu AIS.")
+        st.write(f"Tọa độ xấp xỉ: {detection['latitude']:.5f}, {detection['longitude']:.5f}. Thông tin tàu chưa xác định.")
         review_state = reviews.setdefault(chosen, {'status': STATUSES[0], 'note': ''})
         candidate_labels = review_state.setdefault('candidate_labels', {})
         selected_label = candidate_labels.get(str(detection['id']), CANDIDATE_STATUSES[0])
         with st.form(f'candidate_form_{chosen}_{detection["id"]}'):
-            candidate_status = st.radio('Đánh giá ứng viên này', CANDIDATE_STATUSES, index=CANDIDATE_STATUSES.index(selected_label), key=f'candidate_status_{chosen}_{detection["id"]}')
-            if st.form_submit_button('Lưu đánh giá ứng viên'):
+            candidate_status = st.radio('Bạn thấy gì trong ảnh?', CANDIDATE_STATUSES, index=CANDIDATE_STATUSES.index(selected_label), key=f'candidate_status_{chosen}_{detection["id"]}')
+            if st.form_submit_button('Lưu đánh giá'):
                 reviews.setdefault(chosen, {}).setdefault('candidate_labels', {})[str(detection['id'])] = candidate_status
                 st.rerun()
         st.caption('Đây là đánh giá thủ công để tạo dữ liệu kiểm chứng, không phải nhãn sự thật hay kết luận tàu cá.')
     else:
-        st.info('Không còn ứng viên sau ngưỡng mô hình và bộ lọc đất liền. Vẫn cần kiểm tra ảnh; không được suy ra rằng vùng này không có tàu.')
-    st.caption(f"Nguồn: {tile['source']} · WGS84: {tile['bbox']}. Ảnh ghép trong ngày, không có thời điểm riêng từng pixel.")
+        st.info('Chưa có điểm cần kiểm tra ngoài vùng bỏ qua trên đất và sát bờ. Không được suy ra rằng vùng này không có tàu.')
+    st.caption(f"Nguồn: {tile['source']}. Ảnh ghép trong ngày, chưa có thời điểm riêng từng điểm ảnh.")
     saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
     with st.form(f'review_form_{chosen}'):
         verdict = st.radio('Đánh dấu của người xem', STATUSES, index=STATUSES.index(saved['status']), key=f'verdict_{chosen}')
@@ -131,10 +134,10 @@ def render_scan(root: Path):
     saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
     st.caption(f"Đã lưu trong phiên: {saved['status']}. Bấm lưu trước khi đổi ô. Tải hồ sơ để giữ lại sau khi đóng trang.")
     evidence = dict(tile, reviewer_status=saved['status'], reviewer_note=saved['note'], scan_report_date=report['generated_at'])
-    st.download_button('Tải hồ sơ ô ảnh & ghi chú', json.dumps(evidence,ensure_ascii=False,indent=2), f'{chosen}-review.json', 'application/json')
-    st.download_button('Tải bản đọc / in hồ sơ', printable_review(tile, saved, day_label), f'{chosen}-review.html', 'text/html')
-    st.download_button('Tải gói bằng chứng kèm ảnh', evidence_bundle(root, tile, saved, day_label), f'{chosen}-evidence.zip', 'application/zip')
-    st.caption('Gói ZIP gồm ảnh gốc, ảnh đánh dấu, hồ sơ đọc/in, dữ liệu JSON và mã kiểm tra SHA‑256. Ghi chú chỉ phản ánh đánh giá của người xem.')
+    st.download_button('Tải hồ sơ kèm ảnh', evidence_bundle(root, tile, saved, day_label), f'{chosen}-evidence.zip', 'application/zip', type='primary')
+    st.caption('Gồm ảnh gốc, ảnh đánh dấu và ghi chú của bạn. Tải xuống để giữ hồ sơ sau khi đóng trang.')
     with st.expander('Thông tin toàn bộ lần quét'):
+        st.download_button('Tải dữ liệu ô ảnh', json.dumps(evidence,ensure_ascii=False,indent=2), f'{chosen}-review.json', 'application/json')
+        st.download_button('Tải bản đọc / in hồ sơ', printable_review(tile, saved, day_label), f'{chosen}-review.html', 'text/html')
         st.write(f"Tất cả {len(tiles)} ô được chọn theo lưới cố định, không chọn lọc theo số phát hiện. Ô lỗi được ghi riêng, không tính là 0 tàu.")
         st.download_button('Tải báo cáo quét', path.read_bytes(), 'sonarnet-real-scan.json', 'application/json')

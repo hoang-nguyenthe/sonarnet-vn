@@ -9,8 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 class ScanTests(unittest.TestCase):
     def test_published_grid(self):
         report = json.loads((ROOT / 'assets/real_scan/report.json').read_text())
-        self.assertEqual(len(report['tiles']), 12)
-        self.assertEqual(len({t['key'] for t in report['tiles']}), 12)
+        self.assertGreaterEqual(len(report['tiles']), 12)
+        self.assertEqual(len({t['key'] for t in report['tiles']}), len(report['tiles']))
         for tile in report['tiles']:
             if tile['status'] != 'processed':
                 continue

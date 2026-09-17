@@ -1,0 +1,159 @@
+{
+  "title": "Vùng biển tham khảo quanh Việt Nam",
+  "dataset": "Maritime Boundaries and Exclusive Economic Zones (200NM), version 12",
+  "publisher": "Flanders Marine Institute (VLIZ)",
+  "edition_date": "2023-10-25",
+  "retrieved_at": "2026-09-17T02:55:45.031274+00:00",
+  "doi": "https://doi.org/10.14284/632",
+  "source": "https://www.marineregions.org/gazetteer.php?p=details&id=8484",
+  "methodology": "https://www.marineregions.org/eezmethodology.php",
+  "line_types_source": "https://www.marineregions.org/eezlinetype.php",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "terms_url": "https://www.marineregions.org/disclaimer.php",
+  "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Maritime Boundaries and Exclusive Economic Zones (200NM), version 12. https://doi.org/10.14284/632. CC BY 4.0.",
+  "modifications": "Selected Vietnam MRGID 8484 and its associated boundary lines from WFS. Source coordinates and attributes are unchanged.",
+  "crs": "EPSG:4326",
+  "coordinate_order": "longitude, latitude",
+  "mrgid": 8484,
+  "legal_boundary": false,
+  "display_only": true,
+  "recommended_display_file": "vietnam_boundary_lines.geojson",
+  "polygon_topology_note": "The original WFS polygon is retained unchanged even if invalid; use valid source lines for display. Never use this polygon as a point-in-zone/legal geofence.",
+  "recommended_label": "Tham khảo biển Việt Nam · VLIZ v12",
+  "disclaimer_vi": "Lớp tham khảo nghiên cứu từ Marine Regions v12 (2023), không phải bản đồ pháp lý hoặc ranh giới chủ quyền. Gồm cả đường trung tuyến do nguồn tính toán; không dùng để kết luận tàu vi phạm hay dẫn đường.",
+  "disputed_areas_vi": "MRGID 8484 không biểu diễn đầy đủ mọi yêu sách biển hoặc chủ quyền đảo. Vùng yêu sách chồng lấn Biển Đông được nguồn lưu riêng (MRGID 49003), không được gộp vào lớp này hoặc quy về riêng một quốc gia.",
+  "definition_note_vi": "Theo phương pháp của VLIZ, polygon EEZ còn bao gồm nội thủy và lãnh hải; không đồng nhất với định nghĩa pháp lý riêng của vùng đặc quyền kinh tế.",
+  "temporal_note_vi": "Phiên bản dữ liệu 2023 không được coi là đã cập nhật các thay đổi pháp lý sau đó.",
+  "legal_decision_use": "Prohibited by application design: no geofence violation, citizenship, sovereignty, navigation, or enforcement inference from this reference.",
+  "polygon": {
+    "file": "vietnam_eez.geojson",
+    "url": "https://geo.vliz.be/geoserver/MarineRegions/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=eez&cql_filter=mrgid%3D8484&srsName=EPSG%3A4326&outputFormat=application%2Fjson",
+    "sha256": "af7ffe1b38f8c432a659a7cc1bdb809215d36a53241a46b640fb71f21fa67ead",
+    "feature_count": 1,
+    "bbox_wgs84": [
+      102.20323728,
+      6.04420355,
+      112.88160248,
+      21.54716304
+    ],
+    "coordinate_count": 36454,
+    "geometry_checks": [
+      {
+        "id": "eez.202",
+        "valid": false,
+        "empty": false,
+        "explanation": "Self-intersection[106.2 6.25]"
+      }
+    ],
+    "all_geometries_valid": false
+  },
+  "lines": {
+    "file": "vietnam_boundary_lines.geojson",
+    "url": "https://geo.vliz.be/geoserver/MarineRegions/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=eez_boundaries&cql_filter=mrgid_eez1%3D8484+OR+mrgid_eez2%3D8484&srsName=EPSG%3A4326&outputFormat=application%2Fjson",
+    "sha256": "d2fc9b778dfb6d58d3fc65ae2dce8936a1021412b8dc762fa07f538c5d475be6",
+    "feature_count": 14,
+    "line_types": {
+      "Treaty": 3,
+      "Connection line": 4,
+      "Median line": 3,
+      "Unsettled median line (land)": 1,
+      "Unsettled (land)": 1,
+      "Straight baseline": 2
+    },
+    "bbox_wgs84": [
+      102.20323728,
+      6.04420355,
+      112.88160248,
+      21.54716304
+    ],
+    "coordinate_count": 3135,
+    "geometry_checks": [
+      {
+        "id": "eez_boundaries.108",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.137",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.155",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.479",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.497",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.501",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.561",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.771",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.811",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.874",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.920",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.922",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.1389",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      },
+      {
+        "id": "eez_boundaries.1916",
+        "valid": true,
+        "empty": false,
+        "explanation": "Valid Geometry"
+      }
+    ],
+    "all_geometries_valid": true
+  }
+}
