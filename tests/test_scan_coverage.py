@@ -7,11 +7,16 @@ from PIL import Image
 from shapely.geometry import box
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from scan_coverage import cells, image_has_observation, cell_state
+from scan_coverage import cells, image_has_observation, cell_state, distributed_queue
 from refresh_detailed_scan import infer_tile, allowed_pixels
 
 
 class CoverageTests(unittest.TestCase):
+    def test_queue_reaches_north_and_south_without_dropping_cells(self):
+        pending = [{'key':str(i), 'bbox':[108, lat, 108.1, lat+.1]} for i,lat in enumerate([6,6.1,6.2,12,12.1,21,21.1])]
+        result = distributed_queue(pending)
+        self.assertEqual([int(c['bbox'][1]) for c in result[:3]], [21,12,6])
+        self.assertEqual({c['key'] for c in result}, {c['key'] for c in pending})
     def test_grid_includes_fractional_edge(self):
         result = list(cells([108, 10, 108.25, 10.15]))
         self.assertEqual(len(result), 6)

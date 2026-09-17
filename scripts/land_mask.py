@@ -69,7 +69,7 @@ def annotated_image(root, tile):
     return image
 
 
-def add_map_layer(chart, root):
+def add_map_layer(chart, root, detail_bounds=None):
     import folium
     from branca.element import MacroElement, Template
     try:
@@ -81,6 +81,17 @@ def add_map_layer(chart, root):
     coastal_shape = display.get('coast') or mapping(
         geometries['coast'].difference(geometries['land']).simplify(.00005, preserve_topology=True))
     shoreline = display.get('shoreline') or data['geometry'].get('shoreline')
+    if detail_bounds is not None:
+        # Send only geometry around detector inputs, not 9 MB of coastline
+        # for an entire country on every phone interaction. Filtering still
+        # uses the full-resolution national mask, never this display subset.
+        from shapely.ops import unary_union
+        if not detail_bounds:
+            return
+        region = unary_union([box(*bounds).buffer(.02) for bounds in detail_bounds])
+        coastal_shape = mapping(shape(coastal_shape).intersection(region))
+        if shoreline:
+            shoreline = mapping(shape(shoreline).intersection(region))
     layer = folium.FeatureGroup(name='Vùng bỏ qua sát bờ · 500 m', show=True)
     pane_name = 'coastal_exclusion_' + layer.get_name()
     folium.map.CustomPane(pane_name, z_index=410, pointer_events=False).add_to(chart)

@@ -14,7 +14,7 @@ import streamlit as st
 from PIL import Image
 from branca.element import Element, MacroElement, Template
 from streamlit.components.v1 import html as embed
-from map_raster import overlay_source
+from map_raster import overlay_source, static_overlay_source, ViewportRadar
 
 VN_VIEW = [[6, 102], [24, 115]]
 
@@ -166,8 +166,8 @@ def render(root):
         help="Các vùng ảnh được hệ thống đánh dấu để bạn kiểm tra; chưa xác nhận là tàu.",
     )
     yolo_result = None
+    yolo_result = published_yolo_result(root, record)
     if yolo_enabled:
-        yolo_result = published_yolo_result(root, record)
         if yolo_result and yolo_result['tiles']:
             days = sorted({tile['observation_day_utc'] for tile in yolo_result['tiles']})
             st.caption(f"{len(yolo_result['detections'])} điểm cần kiểm tra · {len(yolo_result['tiles'])} ô ảnh đã xử lý · "
@@ -191,16 +191,20 @@ def render(root):
         ).add_to(radar)
         layer.add_child(folium.Popup(provenance(item), max_width=320))
     if yolo_result:
+        radar_records = []
         for tile in yolo_result['tiles']:
             w, s, e, n = tile['bbox']
-            folium.raster_layers.ImageOverlay(
-                image=overlay_source(root / tile['asset_dir'] / 'sar.png', tile['bbox']),
-                bounds=[[s,w],[n,e]], opacity=1, alt=f"Ô radar chi tiết {tile['key']}",
-            ).add_to(radar)
+            radar_records.append(dict(
+                url=static_overlay_source(root / tile['asset_dir'] / 'sar.png', tile['bbox'], root/'scripts/static'),
+                bounds=[[s,w],[n,e]], label=f"Ô radar chi tiết {tile['key']}",
+                popup=f"Sentinel-1 VV · Copernicus · {date_label(tile['observation_day_utc'])} UTC · Ảnh ghép trong ngày.",
+            ))
             folium.Rectangle([[s,w],[n,e]], weight=1, color='#64d2ff', fill=False,
                 tooltip=f"Vùng đã kiểm tra · {date_label(tile['observation_day_utc'])} UTC",
                 popup=f"Sentinel-1 VV · Copernicus · {date_label(tile['observation_day_utc'])} UTC · "
                       f"{len(tile['detections'])} điểm cần kiểm tra. Ảnh ghép trong ngày.").add_to(yolo_layer)
+        ViewportRadar(chart, radar, radar_records).add_to(chart)
+        st.caption("Phóng to vùng đã xử lý để xem ảnh radar chi tiết. Ảnh tự tải theo vị trí đang xem; mỗi ô có ngày quan sát riêng.")
     folium.map.CustomPane("place_labels", z_index=650, pointer_events=False).add_to(chart)
     folium.TileLayer(
         tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
@@ -241,7 +245,7 @@ def render(root):
                 tooltip=f"Mở ảnh kiểm tra · {candidate['id']}",
             ).add_to(yolo_layer)
     from land_mask import add_map_layer
-    add_map_layer(chart, root)
+    add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in yolo_result['tiles']] if yolo_result else [])
     from maritime_reference import add_reference
     add_reference(chart, root)
     folium.LayerControl(collapsed=True, position="topright").add_to(chart)
@@ -293,7 +297,7 @@ def render(root):
     </style>"""))
     embed(chart.get_root().render(), height=540)
     if yolo_result and yolo_result['tiles']:
-        st.caption('Viền xanh: vùng đã kiểm tra tự động. Điểm sáng: vùng nghi là tàu, cần xác minh. Dải sát bờ 500 m được bỏ qua và chỉ hiện khi phóng gần.')
+        st.caption('Viền xanh: vùng đã kiểm tra tự động. Điểm sáng: vùng nghi là tàu, cần xác minh. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
     st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn. Nét đứt xanh nhạt là phạm vi biển tham khảo, không phải ranh giới pháp lý.')
     if yolo_result and yolo_result['detections']:
         options = {item['id']: item for item in yolo_result['detections']}

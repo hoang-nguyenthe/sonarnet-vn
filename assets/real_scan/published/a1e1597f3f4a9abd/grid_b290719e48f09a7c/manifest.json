@@ -1,0 +1,64 @@
+{
+  "key": "grid_b290719e48f09a7c",
+  "bbox": [
+    109.4,
+    13.0,
+    109.5,
+    13.1
+  ],
+  "row": 70,
+  "column": 74,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/a1e1597f3f4a9abd/grid_b290719e48f09a7c",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260911T223549_20260911T223614_004536_0086FA_7470_COG.SAFE",
+  "observation_day_utc": "2026-09-11",
+  "image_sha256": "2465959aeecb6ba6f02c8486528d238ebb85e360771ffef8fc1a7c0aaab3795d",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "mps",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-17T07:27:56.361377+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        637.2039794921875,
+        375.8160095214844,
+        646.0604248046875,
+        387.5611267089844
+      ],
+      "confidence": 0.627503514289856,
+      "longitude": 109.46265939474107,
+      "latitude": 13.062725725769996
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        673.9940185546875,
+        347.79571533203125,
+        684.4940185546875,
+        366.4149169921875
+      ],
+      "confidence": 0.38150304555892944,
+      "longitude": 109.46633242368698,
+      "latitude": 13.065126433968544
+    }
+  ]
+}

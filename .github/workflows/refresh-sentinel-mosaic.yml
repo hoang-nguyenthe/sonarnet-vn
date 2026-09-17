@@ -24,25 +24,30 @@ jobs:
       - name: Install the data client and YOLO runtime
         run: pip install -r requirements.txt "ultralytics>=8.3,<9" "torch>=2.0,<3"
       - name: Render the newest nationwide Sentinel-1 mosaic
+        if: ${{ !cancelled() }}
         env:
           COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
           COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
         run: python scripts/refresh_sentinel_mosaic.py
       - name: Render multi-pass global Sentinel-1 sea mosaic
+        if: ${{ !cancelled() }}
         env:
           COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
           COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
         run: python scripts/refresh_global_sentinel_tiles.py
       - name: Refresh and detect on detailed SAR cells
+        if: ${{ !cancelled() }}
         env:
           COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
           COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
-        run: python scripts/refresh_detailed_scan.py
+        run: python scripts/refresh_detailed_scan.py --all-pending --region vietnam --time-budget-seconds 1200
       - name: Refresh global GFW SAR detection grid
+        if: ${{ !cancelled() }}
         env:
           GFW_API_TOKEN: ${{ secrets.GFW_API_TOKEN }}
         run: python scripts/refresh_global_ship_detections.py
       - name: Publish a verified asset only when it changed
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "sonarnet-vn-bot"
           git config user.email "sonarnet-vn-bot@users.noreply.github.com"

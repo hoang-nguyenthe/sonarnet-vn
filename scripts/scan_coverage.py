@@ -7,7 +7,7 @@ vessel observation. Planning performs no network calls and no inference.
 """
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, defaultdict, deque
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -23,6 +23,19 @@ from shapely.ops import unary_union
 GRID_STEP = 0.1
 IMAGE_WIDTH = 1024
 PLAN_VERSION = 'detailed-sar-0.1deg-v1'
+
+
+def distributed_queue(candidates):
+    """Round-robin one-degree latitude bands; retain every pending cell."""
+    bands = defaultdict(deque)
+    for cell in candidates:
+        bands[math.floor((cell['bbox'][1]+cell['bbox'][3])/2)].append(cell)
+    result = []
+    while any(bands.values()):
+        for band in sorted(bands, reverse=True):
+            if bands[band]:
+                result.append(bands[band].popleft())
+    return result
 
 
 def cells(bbox, step=GRID_STEP):
@@ -136,7 +149,7 @@ def build_plan(root, report, mask=None, limit=12, region_key=None):
         for cell in cells(record['bbox']):
             state = cell_state(cell, record, alpha, coverage, excluded, completed, deferred)
             counts[state] += 1
-            if (state == 'pending' and len(queue) < limit and cell['key'] not in claimed
+            if (state == 'pending' and cell['key'] not in claimed
                     and (region_key is None or record['key'] == region_key)):
                 queue.append(dict(cell, region_key=record['key'], region_label=record.get('label', record['key'])))
                 claimed.add(cell['key'])
@@ -155,7 +168,7 @@ def build_plan(root, report, mask=None, limit=12, region_key=None):
         'scope': 'Published observation regions only; this is not complete global Sentinel-1 coverage.',
         'completion_scope': 'Verified detailed cells; timestamps differ by cell. Pending means not scanned, not no vessels.',
         'mask_version': mask[0]['version'] if mask else None,
-        'regions': regions, 'next_cells': queue,
+        'regions': regions, 'next_cells': distributed_queue(queue)[:limit],
     }
 
 

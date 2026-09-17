@@ -79,7 +79,7 @@ def render_scan(root: Path):
             dot_color = '#45c9b8' if label == CANDIDATE_STATUSES[1] else '#ea6b61' if label == CANDIDATE_STATUSES[2] else '#ffb85c'
             folium.CircleMarker([d['latitude'],d['longitude']],radius=5,color=dot_color,fill=True,
                 popup=f"{tile['key']} / #{d['id']} · {label}").add_to(chart)
-    add_map_layer(chart, root)
+    add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in ready])
     chart.fit_bounds([[6,102],[24,115]])
     from maritime_reference import add_reference
     add_reference(chart, root)

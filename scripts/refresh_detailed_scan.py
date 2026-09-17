@@ -14,6 +14,7 @@ import json
 import math
 from pathlib import Path
 import sys
+import time
 
 import numpy as np
 from PIL import Image, ImageDraw
@@ -107,18 +108,20 @@ def infer_tile(model, image, bbox, confidence=.35, mask=None, device='cpu', audi
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan-only', action='store_true', help='No network or YOLO; update coverage queue only')
-    parser.add_argument('--max-new-cells', type=int, default=0, help='Bounded expansion, 0 by default; max 24 per run')
+    parser.add_argument('--max-new-cells', type=int, default=24, help='New cells to process in this run')
+    parser.add_argument('--all-pending', action='store_true', help='Process the complete pending region queue, resuming across runs')
+    parser.add_argument('--time-budget-seconds', type=int, default=1500, help='Checkpoint and exit cleanly before the job deadline')
     parser.add_argument('--region', default='vietnam', help='Published region to expand; default Vietnam')
     parser.add_argument('--device', choices=['cpu', 'mps'], default='cpu')
     args = parser.parse_args(argv)
-    if not 0 <= args.max_new_cells <= 24:
-        parser.error('--max-new-cells must be between 0 and 24')
+    if args.max_new_cells < 0 or args.time_budget_seconds < 60:
+        parser.error('Use nonnegative cell count and time budget >=60 seconds')
     from land_mask import get_mask
     from scan_coverage import write_plan
     report_path = ROOT / 'assets/real_scan/report.json'
     report = json.loads(report_path.read_text())
     mask = get_mask(ROOT)
-    plan = write_plan(ROOT, report, mask=mask, limit=args.max_new_cells, region_key=args.region)
+    plan = write_plan(ROOT, report, mask=mask, limit=100000 if args.all_pending else args.max_new_cells, region_key=args.region)
     if args.plan_only:
         print(f"Prepared {len(plan['regions'])} observation-region plans; no images fetched or inferred")
         return
@@ -129,13 +132,33 @@ def main(argv=None):
     token = access_token(*credentials())
     end = datetime.now(timezone.utc).date()
     updated, checked, failed = 0, 0, 0
-    tiles = []
+    tiles_by_key = {t['key']: t for t in report['tiles']}
     existing_keys = {tile['key'] for tile in report['tiles']}
-    work = list(report['tiles']) + [cell for cell in plan['next_cells'] if cell['key'] not in existing_keys]
+    # Reserve a bounded portion for freshness; use the rest for expansion.
+    # Rotate old cells by check date so neither workload starves the other.
+    oldest = sorted(report['tiles'], key=lambda t: t.get('catalog_checked_at', ''))
+    work = oldest[:12] + [cell for cell in plan['next_cells'] if cell['key'] not in existing_keys] + oldest[12:]
     policy = hashlib.sha256((INFERENCE_PIPELINE + mask[0]['version']
                             + hashlib.sha256(mask[1]['land'].wkb + mask[1]['coast'].wkb).hexdigest()).encode()).hexdigest()
     attempts = dict(report.get('scan_attempts', {}))
+    started = time.monotonic()
+    def checkpoint():
+        report['tiles'] = list(tiles_by_key.values())
+        report['scan_attempts'] = attempts
+        if updated:
+            report.update(generated_at=datetime.now(timezone.utc).isoformat(),
+                          observation_day_utc=max(t['observation_day_utc'] for t in report['tiles']),
+                          date_scope='Each image retains its own observation day.')
+        report['worker_progress'] = {'checked_at': datetime.now(timezone.utc).isoformat(),
+                                    'region': args.region, 'remaining_at_start': len(plan['next_cells']),
+                                    'updated_this_run': updated, 'failed_this_run': failed}
+        pending = report_path.with_suffix('.pending.json')
+        pending.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')
+        pending.replace(report_path)
     for old in work:
+        if time.monotonic() - started >= args.time_budget_seconds:
+            print('Time budget reached; saved work will resume on the next run', flush=True)
+            break
         existing = old['key'] in existing_keys
         try:
             if existing:
@@ -153,7 +176,8 @@ def main(argv=None):
             attempts.pop(old['key'], None)
             if (old.get('reference_product') == product.product_id and old.get('weights_sha256') == weights_hash
                     and old.get('inference_policy_sha256') == policy):
-                tiles.append(old)
+                tiles_by_key[old['key']] = dict(old, catalog_checked_at=datetime.now(timezone.utc).isoformat())
+                checkpoint()
                 continue
             if existing and old.get('reference_product') == product.product_id:
                 raw = (ROOT / old['asset_dir'] / 'sar.png').read_bytes()
@@ -163,8 +187,9 @@ def main(argv=None):
                                               width=1024, polarization=product.polarization)
             image = Image.open(BytesIO(raw)).convert('RGBA')
             image.load()
-            if float(np.mean(np.asarray(image)[:,:,3] > 0)) < .9:
-                raise ValueError('Less than 90% valid radar coverage; keep previous observation')
+            valid_fraction = float(np.mean(np.asarray(image)[:,:,3] > 0))
+            if valid_fraction == 0:
+                raise ValueError('No valid radar pixels; keep previous observation')
             inference_audit = {}
             candidates, annotated = infer_tile(model, image, old['bbox'], mask=mask, device=args.device, audit=inference_audit)
             image_hash = hashlib.sha256(raw).hexdigest()
@@ -180,34 +205,28 @@ def main(argv=None):
                         reference_product=product.product_id, observation_day_utc=product.acquired_at[:10],
                         image_sha256=image_hash, weights_sha256=weights_hash, device=args.device,
                         confidence_threshold=.35, inference_policy_sha256=policy,
+                        valid_pixel_fraction=valid_fraction,
+                        catalog_checked_at=datetime.now(timezone.utc).isoformat(),
                         inference_pipeline=INFERENCE_PIPELINE, inference_audit=inference_audit,
                         validation='Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.',
                         generated_at=datetime.now(timezone.utc).isoformat(), detections=candidates)
             validate_tile(ROOT, tile)
             (destination/'manifest.json').write_text(json.dumps(tile, ensure_ascii=False, indent=2)+'\n')
-            tiles.append(tile)
+            tiles_by_key[tile['key']] = tile
             updated += 1
             print(f"Updated {old['key']}: {len(candidates)} experimental candidates on {tile['observation_day_utc']}", flush=True)
         except Exception as error:
             # One unavailable scene must not erase the last usable evidence.
-            if existing:
-                tiles.append(old)
             failed += 1
             now = datetime.now(timezone.utc)
             attempts[old['key']] = {'last_checked_at': now.isoformat(),
                                     'retry_after': (now+timedelta(hours=6)).isoformat(),
                                     'status': 'retry_later', 'error_type': type(error).__name__}
             print(f"Retained {old['key']}: {type(error).__name__}", flush=True)
-    if updated:
-        report.update(tiles=tiles, generated_at=datetime.now(timezone.utc).isoformat(),
-                      observation_day_utc=max(tile['observation_day_utc'] for tile in tiles),
-                      date_scope='Each tile retains its own UTC observation day; headline is the newest day.')
-    report['scan_attempts'] = attempts
-    pending = report_path.with_suffix('.pending.json')
-    pending.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')
-    pending.replace(report_path)
+        checkpoint()
+    checkpoint()
     write_plan(ROOT, report, mask=mask, limit=12, region_key=args.region)
-    print(f'Catalog checked {checked}/{len(tiles)}; updated {updated}; retained after error {failed}')
+    print(f'Catalog checked {checked}; published {len(tiles_by_key)}; updated {updated}; retained after error {failed}')
     if not checked:
         raise RuntimeError('No catalog checks succeeded; previous image evidence retained')
 

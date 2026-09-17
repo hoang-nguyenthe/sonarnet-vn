@@ -4,12 +4,14 @@ Only display pixels are warped. Detector inputs, coordinates and evidence
 hashes remain in their original geographic raster grid.
 """
 import base64
+import hashlib
 from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
 import numpy as np
 from PIL import Image
 from folium.utilities import mercator_transform
+from branca.element import MacroElement, Template
 
 
 def project_rgba(image, south, north):
@@ -36,3 +38,56 @@ def _projected_source(path, mtime_ns, south, north):
 def overlay_source(path, bbox):
     path = Path(path)
     return _projected_source(str(path), path.stat().st_mtime_ns, bbox[1], bbox[3])
+
+
+def static_overlay_source(path, bbox, static_dir):
+    """Cache display-only pixels outside the iframe; never expose source paths."""
+    path = Path(path)
+    identity = f'{path.resolve()}:{path.stat().st_mtime_ns}:{bbox}:mercator-v1'
+    filename = hashlib.sha256(identity.encode()).hexdigest() + '.webp'
+    directory = Path(static_dir) / 'radar'
+    directory.mkdir(parents=True, exist_ok=True)
+    destination = directory / filename
+    if not destination.exists():
+        with Image.open(path) as picture:
+            result = project_rgba(picture, bbox[1], bbox[3])
+        # Content-addressed output makes concurrent renders equivalent.
+        buffer = BytesIO()
+        result.save(buffer, format='WEBP', lossless=True)
+        destination.write_bytes(buffer.getvalue())
+    return '/app/static/radar/' + filename
+
+
+class ViewportRadar(MacroElement):
+    """Load high-resolution imagery only after zooming into its footprint."""
+    _template = Template('''
+    {% macro script(this, kwargs) %}
+    (function () {
+        const map = {{ this.map_name }}, group = {{ this.group_name }};
+        const records = {{ this.records | tojson }};
+        const layers = new Map();
+        function update() {
+            const view = map.getBounds(), detailed = map.getZoom() >= 8;
+            records.forEach(function (record, index) {
+                const visible = detailed && view.intersects(record.bounds);
+                if (visible && !layers.has(index)) {
+                    const layer = L.imageOverlay(record.url, record.bounds, {
+                        opacity: 1, interactive: true, alt: record.label
+                    }).bindPopup(record.popup);
+                    layers.set(index, layer); group.addLayer(layer);
+                } else if (!visible && layers.has(index)) {
+                    group.removeLayer(layers.get(index)); layers.delete(index);
+                }
+            });
+        }
+        map.on('moveend zoomend', update); update();
+    })();
+    {% endmacro %}
+    ''')
+
+    def __init__(self, chart, group, records):
+        super().__init__()
+        self._name = 'ViewportRadar'
+        self.map_name = chart.get_name()
+        self.group_name = group.get_name()
+        self.records = records

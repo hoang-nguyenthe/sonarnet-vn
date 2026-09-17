@@ -1,0 +1,60 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "device": "mps",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260912T110238_20260912T110307_004544_00873C_70DA_COG.SAFE",
+  "observation_day_utc": "2026-09-12",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "bbox": [
+    107.7,
+    10.55,
+    107.8,
+    10.65
+  ],
+  "image_size": [
+    1024,
+    1024
+  ],
+  "confidence_threshold": 0.35,
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "image_sha256": "e3a8575fa6c518fa1007bf9fb6266b591bfa7443d7de092a1b3d6b4113f4480b",
+  "generated_at": "2026-09-17T03:35:35.905429+00:00",
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        656.1039428710938,
+        938.724853515625,
+        671.4022827148438,
+        953.70361328125
+      ],
+      "confidence": 0.6857492923736572,
+      "longitude": 107.76481963992119,
+      "latitude": 10.557596266269684
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        193.67465209960938,
+        758.05859375,
+        207.34036254882812,
+        770.43017578125
+      ],
+      "confidence": 0.6762819290161133,
+      "longitude": 107.71958081126213,
+      "latitude": 10.575366759300232
+    }
+  ],
+  "key": "cell_2_0",
+  "status": "processed",
+  "asset_dir": "assets/real_scan/published/12f2bac8449084e2/cell_2_0",
+  "band": "VV",
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.8357944488525391,
+    "excluded_candidates": []
+  }
+}
