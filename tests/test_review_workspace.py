@@ -7,7 +7,7 @@ import zipfile
 from io import BytesIO
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'scripts'))
-from review_workspace import export_workspace, import_workspace, printable_review, evidence_bundle
+from review_workspace import export_workspace, import_workspace, printable_review, evidence_bundle, session_reviews
 
 
 class WorkspaceTests(unittest.TestCase):
@@ -18,6 +18,26 @@ class WorkspaceTests(unittest.TestCase):
     def test_roundtrip(self):
         notes = {'cell_0':{'status':'Cần kiểm tra tiếp','note':'Điểm sáng ở gần bờ'}}
         self.assertEqual(import_workspace(export_workspace(self.report,notes),self.report),notes)
+
+    def test_live_notes_survive_added_images(self):
+        state = {}
+        notes = session_reviews(state, self.report)
+        notes['cell_0'] = {'status': 'Cần kiểm tra tiếp', 'note': 'Giữ lại'}
+        expanded = {'tiles': [dict(self.tile, key='new'), self.tile]}
+        self.assertEqual(session_reviews(state, expanded), notes)
+
+    def test_changed_evidence_clears_widgets_not_archived_notes(self):
+        state = {}
+        notes = session_reviews(state, self.report)
+        notes['cell_0'] = {'status': 'Cần kiểm tra tiếp', 'note': 'Ảnh cũ'}
+        state.update(verdict_cell_0='Cần kiểm tra tiếp', note_cell_0='Ảnh cũ',
+                     candidate_status_cell_0_1='Có khả năng là tàu')
+        changed = {'tiles': [dict(self.tile, image_sha256='new')]}
+        self.assertEqual(session_reviews(state, changed), {})
+        self.assertNotIn('verdict_cell_0', state)
+        self.assertNotIn('note_cell_0', state)
+        self.assertNotIn('candidate_status_cell_0_1', state)
+        self.assertEqual(session_reviews(state, self.report), notes)
 
     def test_new_images_do_not_invalidate_saved_notes(self):
         notes = {'cell_0': {'status': 'Cần kiểm tra tiếp', 'note': 'Giữ lại'}}

@@ -4,10 +4,44 @@ import html
 import json
 from io import BytesIO
 import zipfile
+from copy import deepcopy
 from datetime import date
 
 STATUSES = ['Chưa xem xét', 'Cần kiểm tra tiếp', 'Đã xem, chưa thấy mục tiêu rõ']
 CANDIDATE_STATUSES = ['Chưa đánh giá', 'Có khả năng là tàu', 'Nhiễu / không phải tàu']
+
+
+def session_reviews(state, report):
+    """Keep reviews across appended observations, isolated by exact evidence.
+
+    Older evidence stays in session memory and becomes available again if
+    that exact observation is restored. Never copy verdicts to changed pixels.
+    """
+    bank = state.setdefault('review_evidence_bank', {})
+    previous = state.get('review_active_identities', {})
+    for key, review in state.get('review_active_notes', {}).items():
+        if key in previous:
+            bank[(key, previous[key])] = deepcopy(review)
+    current = {t['key']: tile_identity(t) for t in report['tiles']
+               if t['status'] == 'processed'}
+    if not previous:
+        legacy = state.get('workspace_' + report_id(report), {})
+        for key, review in legacy.items():
+            if key in current:
+                bank[(key, current[key])] = deepcopy(review)
+    if current == previous and 'review_active_notes' in state:
+        return state['review_active_notes']
+    for key in set(previous) | set(current):
+        if previous.get(key) != current.get(key):
+            # Streamlit widgets otherwise retain the previous image's verdict.
+            for widget in list(state):
+                if widget in (f'verdict_{key}', f'note_{key}') or widget.startswith(f'candidate_status_{key}_'):
+                    del state[widget]
+    notes = {key: deepcopy(bank[(key, identity)]) for key, identity in current.items()
+             if (key, identity) in bank}
+    state['review_active_identities'] = current
+    state['review_active_notes'] = notes
+    return notes
 
 
 def report_id(report):

@@ -7,7 +7,7 @@ import folium
 import streamlit as st
 from PIL import Image
 from streamlit.components.v1 import html
-from review_workspace import STATUSES, CANDIDATE_STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
+from review_workspace import STATUSES, CANDIDATE_STATUSES, session_reviews, export_workspace, import_workspace, printable_review, evidence_bundle
 from scan_assets import validated_report
 from land_mask import add_map_layer, annotated_image, summary as land_summary
 from observation_labels import tile_label
@@ -23,8 +23,7 @@ def render_scan(root: Path):
     except (ValueError, KeyError, TypeError, OSError):
         st.warning('Hồ sơ quan sát đang được kiểm tra. Chuyển sang Xem ảnh toàn cảnh; không sử dụng kết quả chưa xác thực.')
         return
-    workspace_key = 'workspace_' + report_id(report)
-    reviews = st.session_state.setdefault(workspace_key, {})
+    reviews = session_reviews(st.session_state, report)
     day = report['observation_day_utc']
     day_label = date.fromisoformat(day).strftime('%d/%m/%Y')
     tiles = report['tiles']
