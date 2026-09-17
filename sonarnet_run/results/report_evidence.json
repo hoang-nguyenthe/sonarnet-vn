@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "checks": {
+    "detection_arithmetic": true,
+    "fusion_matrix": true,
+    "interpolation_comparison": true,
+    "behavior_matrix": true,
+    "real_model_candidate_metadata": true,
+    "published_coverage_consistency": true
+  },
+  "scope": "Kiểm tra tính nhất quán của tệp kết quả đã có; không phải đánh giá độc lập trên dữ liệu thực địa.",
+  "artifacts": {
+    "detection": {
+      "path": "sonarnet_run/results/detection_metrics_test.json",
+      "sha256": "e71650bb23a921930918979c509fb29b6db61b60abcfd8e62969fc378cb783da"
+    },
+    "fusion": {
+      "path": "sonarnet_run/results/fusion_metrics.json",
+      "sha256": "37643c2644ec191b95cd7e109e363a619b61f7b6f873b37037a065644e45af4b"
+    },
+    "interpolation": {
+      "path": "sonarnet_run/results/interpolation_comparison.json",
+      "sha256": "7a7d3834e628ad6ee9e0a8c44102e1d3122d63235557d50da43bcb3fd35f4d4b"
+    },
+    "behavior": {
+      "path": "sonarnet_run/results/behavior_metrics.json",
+      "sha256": "11b46224e0f0c7309385a54902e52a0962dc26d1465c963dbf82633f7680a20c"
+    },
+    "real_model_evaluation": {
+      "path": "assets/real_model_evaluation.json",
+      "sha256": "6301b564fcdc2f308b83e48002a5a6835d43988c349e2c2c7395d965fffef56d"
+    },
+    "coverage": {
+      "path": "assets/real_scan/coverage.json",
+      "sha256": "4ffebe774674a0b8eb7d7e290698b342b10b9c46a85a5b021945698d753c7b9a"
+    },
+    "real_scan_report": {
+      "path": "assets/real_scan/report.json",
+      "sha256": "f29a683ccd00004599c31c1ad5a712d61f797b77bc59d4d6c4756e1b307dcd7f"
+    }
+  },
+  "summary": {
+    "detection": {
+      "mAP@0.5": 0.9312,
+      "mAP@0.5:0.95": 0.4689,
+      "precision": 0.9252,
+      "recall": 0.9568,
+      "f1": 0.9407,
+      "n_ground_truth": 672,
+      "n_predictions": 695,
+      "true_positive": 643,
+      "false_positive": 52,
+      "false_negative": 29
+    },
+    "fusion": {
+      "match_accuracy": 1.0,
+      "mean_match_error_m": 39.08,
+      "median_match_error_m": 36.15,
+      "p90_match_error_m": 68.03,
+      "state_accuracy": 0.9693,
+      "state_macro_f1": 0.9656,
+      "n_evaluated": 652
+    },
+    "interpolation": {
+      "kalman": {
+        "mean_error_m": 38.09632449407791,
+        "median_error_m": 35.744352544530045,
+        "p90_error_m": 64.77959316555307,
+        "n": 471
+      },
+      "linear": {
+        "mean_error_m": 48.9540482075337,
+        "median_error_m": 43.989119890804304,
+        "p90_error_m": 84.42302624461028,
+        "n": 471
+      }
+    },
+    "behavior": {
+      "backend": "xgboost",
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "n_train": 960,
+      "n_test": 320
+    },
+    "real_model_candidate": {
+      "status": "research_candidate_not_promoted",
+      "benchmark": {
+        "source": "CAESAR-Radi SAR-Ship-Dataset (Sentinel-prefixed subset)",
+        "split": "held-out test",
+        "images": 1953,
+        "objects": 2110,
+        "precision": 0.891217,
+        "recall": 0.807617,
+        "map50": 0.879492,
+        "map50_95": 0.444075
+      },
+      "real_vietnam_check": {
+        "area": "Bình Thuận",
+        "date_utc": "2026-09-12",
+        "tiles": 12,
+        "candidate_count": 0,
+        "interpretation": "No candidates at confidence 0.35; this is not evidence of no vessels. Domain shift from benchmark remains unresolved."
+      },
+      "promotion_decision": "Chưa đủ điều kiện dùng cho nghiệp vụ: cần nhãn ảnh VV đại diện Việt Nam, ảnh nền ven bờ và đánh giá báo động giả."
+    },
+    "published_vietnam_scan": {
+      "cells": 1490,
+      "candidates": 1196,
+      "latest_detail_day_utc": "2026-09-16",
+      "states": {
+        "excluded_land_coast": 6720,
+        "processed": 1478,
+        "no_observation": 8283,
+        "pending": 4059
+      },
+      "limitations": "Synthetic-trained model. Candidates unverified; not fishing classification. Daily composite. No ground-truth accuracy measured."
+    }
+  }
+}

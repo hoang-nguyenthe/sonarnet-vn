@@ -142,6 +142,9 @@ python scripts/run_pipeline.py --quick
 
 # Chạy đầy đủ
 python scripts/run_pipeline.py
+
+# Kiểm chứng các số liệu dùng trong báo cáo nghiên cứu
+python scripts/verify_report_evidence.py
 ```
 
 Các tuỳ chọn dòng lệnh:
