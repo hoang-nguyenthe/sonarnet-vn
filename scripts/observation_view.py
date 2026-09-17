@@ -18,6 +18,7 @@ from streamlit.components.v1 import html as embed
 from map_raster import overlay_source, static_overlay_source, ViewportRadar
 from coverage_status import coverage_rows, waiting_cells
 from observation_labels import candidate_label, coordinates
+from illustrative_vessels import profile, popup as illustrative_popup
 
 VN_VIEW = [[6, 102], [24, 115]]
 
@@ -169,10 +170,10 @@ def render(root):
         help="Các vùng ảnh được hệ thống đánh dấu để bạn kiểm tra; chưa xác nhận là tàu.",
     )
     yolo_result = None
-    illustrative = st.toggle('Xem tình huống có dữ liệu tàu', value=False,
+    illustrative = st.toggle('Trình diễn đội tàu', value=True,
                              help='Hồ sơ minh hoạ để trải nghiệm đối chiếu; không phải AIS thật hoặc danh tính của mục tiêu trong ảnh.')
     if illustrative:
-        st.info('Đang xem hồ sơ minh hoạ, không phải dữ liệu tàu thật. Xanh ngọc: tình huống có bản tin phù hợp · xám: chưa có bản tin. Loại tàu và thông số là giả định.')
+        st.info('Dữ liệu minh hoạ · Xanh ngọc: AIS khớp · Cam: AIS lệch · Xám: chưa có AIS. Loại tàu và thông số là giả định, không phải danh tính thật của mục tiêu trong ảnh.')
     yolo_result = published_yolo_result(root, record)
     if yolo_enabled:
         if yolo_result and yolo_result['tiles']:
@@ -240,12 +241,12 @@ def render(root):
         from illustrative_vessels import profile, popup as illustrative_popup
         for candidate in yolo_result["detections"]:
             crop_b64 = base64.b64encode(candidate_crop(root, candidate)).decode()
-            color = ('#64d8c6' if profile(candidate)['matched'] else '#c1ccd4') if illustrative else '#bde8ee'
+            color = profile(candidate)['color'] if illustrative else '#bde8ee'
             folium.CircleMarker(
                 [candidate["latitude"], candidate["longitude"]], radius=4,
                 color=color, weight=1.2, fill=False,
                 popup=folium.Popup(
-                    f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>"
+                    (f"<b>{profile(candidate)['name']} · Dữ liệu trình diễn</b><br>" if illustrative else f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>") +
                     f"<img src='data:image/jpeg;base64,{crop_b64}' width='180' alt='Ảnh radar gốc tại ứng viên'><br>"
                     f"Sentinel-1 · Copernicus · {date_label(candidate['observation_day_utc'])} UTC<br>"
                     "Ngoài vùng bỏ qua trên đất và sát bờ.<br>"
@@ -254,7 +255,7 @@ def render(root):
                     + (illustrative_popup(candidate) if illustrative else ''),
                     max_width=320,
                 ),
-                tooltip=f"Mở ảnh kiểm tra · {candidate['id']}",
+                tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']} · Trình diễn" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
             ).add_to(cluster)
     from land_mask import add_map_layer
     add_map_layer(chart, root, detail_bounds=[t['bbox'] for t in yolo_result['tiles']] if yolo_result else [])
@@ -317,12 +318,13 @@ def render(root):
     embed(chart.get_root().render(), height=540)
     if yolo_result and yolo_result['tiles']:
         st.caption('Điểm sáng: vùng nghi là tàu, cần xác minh. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ. Xem tiến độ và độ phủ bên dưới. Dải bỏ qua sát bờ 500 m hiện quanh ảnh chi tiết khi phóng gần.')
+    st.caption(('Số trong cụm = số tàu trong kịch bản trình diễn. ' if illustrative else 'Số trong cụm = số điểm quan sát gần nhau, không phải số tàu đã xác nhận. ') + 'Bấm cụm để phóng to; bấm vòng khoanh để xem hồ sơ. Cụm có thể gồm nhiều trạng thái nên giữ màu trung tính.')
     st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn và ngày quan sát · Chạm tên quần đảo để xem nguồn địa danh.')
     if yolo_result and yolo_result['detections']:
         options = {item['id']: item for item in yolo_result['detections']}
         point_numbers = {key: index+1 for index, key in enumerate(options)}
-        chosen = st.selectbox('Chọn điểm cần kiểm tra', list(options), key='panorama_candidate',
-                              format_func=lambda key: candidate_label(options[key], point_numbers[key]))
+        chosen = st.selectbox('Chọn tàu' if illustrative else 'Chọn điểm cần kiểm tra', list(options), key='panorama_candidate',
+                              format_func=lambda key: (profile(options[key])['name'] + ' · ' + profile(options[key])['label']) if illustrative else candidate_label(options[key], point_numbers[key]))
         candidate = options[chosen]
         with st.expander('Ảnh bằng chứng & thông tin đối chiếu', expanded=True):
             photo, details = st.columns([1, 2])
@@ -332,8 +334,11 @@ def render(root):
                 st.write(f"**Điểm cần kiểm tra {point_numbers[chosen]}**")
                 st.write(f"Ngày ảnh: {date_label(candidate['observation_day_utc'])} UTC · Copernicus")
                 st.caption(f"{coordinates(candidate['latitude'], candidate['longitude'])} · ảnh ghép trong ngày")
-                st.write('**Thông tin tàu: chưa xác định.**')
-                st.caption('Chưa có tên tàu, số đăng ký và tín hiệu vị trí cùng thời điểm để đối chiếu.')
+                if illustrative:
+                    st.markdown(illustrative_popup(candidate), unsafe_allow_html=True)
+                else:
+                    st.write('**Thông tin tàu: chưa xác định.**')
+                    st.caption('Chưa có tên tàu, số đăng ký và tín hiệu vị trí cùng thời điểm để đối chiếu.')
                 def open_evidence():
                     st.session_state['observation_workflow'] = 'Kiểm tra chi tiết'
                     st.session_state['review_tile'] = candidate['tile_key']
