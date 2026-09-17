@@ -29,6 +29,22 @@ def render_introduction():
 <div class="sn-strip"><span>Sentinel-1 · Ảnh radar</span><span>YOLO · Nhận diện</span><span>SAR × AIS · Đối chiếu</span><span>MPS · Xử lý cục bộ</span></div>
 ''', unsafe_allow_html=True)
     st.caption('Ảnh radar thật · Hồ sơ tàu & AIS: dữ liệu mẫu')
+    st.markdown('''<div class="sn-story">
+<section class="sn-panel"><small>BÀI TOÁN</small><h3>Ảnh có mục tiêu.<br>Tín hiệu có khớp?</h3><p>Một dấu sáng trên radar chưa cho biết đó là tàu nào. Một bản tin vị trí cũng chưa đủ để xác nhận mục tiêu trên ảnh.</p><p>SonarNet hướng tới đặt hai nguồn cạnh nhau — giúp người kiểm tra biết vị trí nào cần được xem xét trước.</p></section>
+<section class="sn-panel"><small>GIÁ TRỊ SỬ DỤNG</small><h3>Bớt tìm kiếm.<br>Thêm bằng chứng.</h3><p>Thay vì rà từng ảnh rời, người xem có một bản đồ quan sát, danh sách điểm cần kiểm tra và hồ sơ ảnh tại từng vị trí.</p><p>Dành cho nhóm nghiên cứu và người phân tích giám sát biển; hỗ trợ rà soát, không tự đưa ra kết luận vi phạm.</p></section>
+</div>
+<section class="sn-panel"><small>LUỒNG XỬ LÝ</small><h3>Từ ảnh vệ tinh đến hồ sơ quan sát.</h3><div class="sn-story">
+<div><h4>01 — Thu nhận ảnh</h4><p>Lấy ảnh Sentinel-1 theo khu vực và ngày quan sát. Lưu nguồn gốc cùng ảnh; mỗi vùng có thể được chụp ở thời điểm khác nhau.</p></div>
+<div><h4>02 — Tìm mục tiêu</h4><p>Chia ảnh chi tiết thành các ô để nhận diện. Loại đất liền và dải sát bờ 500 m; giữ tọa độ cho từng vùng nghi là tàu.</p></div>
+<div><h4>03 — Đối chiếu vị trí</h4><p>Khi có AIS: đưa vị trí tàu về cùng thời điểm quan sát để kiểm tra mức phù hợp. Hiện giao diện sử dụng dữ liệu mẫu cho bước này.</p></div>
+<div><h4>04 — Lưu hồ sơ</h4><p>Giữ ảnh gốc, ngày chụp, vị trí, kết quả nhận diện và đánh giá của người kiểm tra trong hồ sơ tải xuống.</p></div>
+</div></section>
+<div class="sn-story">
+<section class="sn-panel"><small>NHẬN DIỆN / YOLO</small><h3>Tìm dấu vết.<br>Không đoán danh tính.</h3><p>YOLO tìm vùng có đặc trưng giống tàu trên ảnh radar. Tên tàu, chủ phương tiện và số đăng ký phải đến từ nguồn hồ sơ riêng, không được suy ra chỉ từ ảnh.</p><p>Việc huấn luyện trên dữ liệu radar thật và kiểm chứng tại Việt Nam là hai bước khác nhau.</p></section>
+<section class="sn-panel"><small>ĐỒNG BỘ / KALMAN–RTS</small><h3>Khác thời điểm.<br>Cần cùng vị trí.</h3><p>Bộ làm trơn dùng chuỗi bản tin AIS để ước lượng vị trí tại thời điểm radar quan sát, thay vì ghép với bản tin gần nhất một cách máy móc.</p><p>Mô-đun đã có trong mã nghiên cứu; chưa được nối vào luồng web vì chưa có AIS thật phù hợp.</p></section>
+</div>
+<section class="sn-panel"><small>BƯỚC TIẾP THEO / KẾT NỐI DỮ LIỆU</small><h3>Từ trải nghiệm mẫu<br>đến đối chiếu thực tế.</h3><p>Cần bản tin AIS có mã phương tiện, tọa độ, thời gian, tốc độ và hướng đi; hồ sơ đăng ký từ nguồn được phép sử dụng. Sau tích hợp, phải kiểm chứng sai số ghép vị trí và đánh giá các trường hợp lệch hoặc thiếu tín hiệu trước khi triển khai nghiệp vụ.</p><div class="sn-status"><span>Ảnh Sentinel-1: có thật</span><span>Nhận diện: đang kiểm chứng</span><span>Hồ sơ & AIS: dữ liệu mẫu</span></div></section>
+''', unsafe_allow_html=True)
     with st.expander('Công nghệ & trạng thái triển khai'):
         st.markdown('''**Sentinel-1:** ảnh ghép nhiều lượt chụp, không phải luồng trực tiếp.
 
