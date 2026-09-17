@@ -15,6 +15,7 @@ from PIL import Image
 from branca.element import Element, MacroElement, Template
 from streamlit.components.v1 import html as embed
 from map_raster import overlay_source, static_overlay_source, ViewportRadar
+from coverage_status import coverage_rows, waiting_cells
 
 VN_VIEW = [[6, 102], [24, 115]]
 
@@ -176,8 +177,8 @@ def render(root):
             st.info("Khu vực này chưa được kiểm tra tự động trên ảnh chi tiết. Bạn vẫn có thể xem ảnh; chưa có kết quả không có nghĩa là không có tàu.")
     coverage = read_json(root/'assets/real_scan/coverage.json')
     area_plan = next((area for area in coverage.get('regions', []) if area['key'] == record['key']), None)
-    if area_plan and area_plan.get('states', {}).get('pending', 0):
-        st.caption(f"Đang mở rộng vùng kiểm tra: còn {area_plan['states']['pending']:,} ô ảnh chờ xử lý. Kết quả được bổ sung sau mỗi lượt đồng bộ, chưa phủ kín khu vực.")
+    if area_plan and waiting_cells(area_plan):
+        st.caption(f"Đang mở rộng vùng kiểm tra: còn {waiting_cells(area_plan):,} ô ảnh chờ xử lý hoặc tải lại. Kết quả được bổ sung sau mỗi lượt đồng bộ, chưa phủ kín khu vực.")
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
     folium.TileLayer(
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -354,8 +355,10 @@ def render(root):
         plan = next((r for r in coverage.get('regions', []) if r['key'] == record['key']), None)
         if plan:
             states = plan['states']
-            pending = states.get('pending', 0) + states.get('retry_later', 0)
+            pending = waiting_cells(plan)
             st.write(f"Đã công bố {plan['published_detail_cells']} ô ảnh chi tiết. Còn {pending:,} ô trong kế hoạch cần xử lý; đây không phải vùng đã tìm xong tàu.")
+            st.dataframe(pd.DataFrame(coverage_rows(plan)), hide_index=True, width='stretch')
+            st.caption('Số ô trên lưới kế hoạch có thể khác số ảnh công bố: các ảnh thử nghiệm ban đầu không cùng lưới. Không cộng hai số này để tính độ phủ.')
             if states.get('blocked_missing_mask'):
                 st.caption('Một phần khu vực chưa có đường bờ được kiểm tra để loại đất và vùng ven bờ, nên chưa chạy nhận diện ở đó.')
         st.write("Hệ thống tìm vùng giống tàu trong từng ảnh chi tiết, rồi đánh dấu đúng vị trí lên toàn cảnh. Viền xanh là vùng đã kiểm tra; phần ngoài viền chưa có kết quả. Chưa có dữ liệu định danh và vị trí trực tiếp từ tàu.")
