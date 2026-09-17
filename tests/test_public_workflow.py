@@ -9,7 +9,7 @@ class PublicWorkflowTests(unittest.TestCase):
     def test_plain_language_and_evidence_navigation(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=90).run()
         self.assertFalse(app.exception)
-        self.assertEqual([tab.label for tab in app.tabs], ['Quan sát', 'Hướng dẫn'])
+        self.assertEqual([tab.label for tab in app.tabs], ['Giới thiệu', 'Quan sát', 'Hướng dẫn'])
         controls = ' '.join(x.label for name in ('radio','toggle','button','selectbox') for x in getattr(app, name))
         for forbidden in ('YOLO', 'DEMO', 'giả lập', 'mô phỏng', 'AIS'):
             self.assertNotIn(forbidden, controls)

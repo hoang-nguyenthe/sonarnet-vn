@@ -16,7 +16,7 @@ class VesselFilterTests(unittest.TestCase):
             self.assertTrue(all(profile(c)['status'] == status for c in filter_vessels(candidates, label)))
 
     def test_three_explicit_colors(self):
-        self.assertEqual([v[1] for v in STATES.values()], ['#30d158', '#ffd60a', '#ff453a'])
+        self.assertEqual([v[1] for v in STATES.values()], ['#0a84ff', '#ffd60a', '#ff453a'])
 
     def test_empty_filter(self):
         self.assertEqual(filter_vessels([], 'Đỏ · Chưa có AIS'), [])

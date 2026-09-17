@@ -173,7 +173,7 @@ def render(root):
     illustrative = st.toggle('Trình diễn đội tàu', value=True,
                              help='Hồ sơ minh hoạ để trải nghiệm đối chiếu; không phải AIS thật hoặc danh tính của mục tiêu trong ảnh.')
     if illustrative:
-        st.caption('Dữ liệu trình diễn · 🟢 AIS khớp · 🟡 AIS lệch · 🔴 Chưa có AIS. Màu đỏ không phải kết luận vi phạm.')
+        st.caption('Dữ liệu trình diễn · 🔵 AIS khớp · 🟡 AIS lệch · 🔴 Chưa có AIS. Màu đỏ không phải kết luận vi phạm.')
     yolo_result = published_yolo_result(root, record)
     visible_candidates = yolo_result['detections'] if yolo_result else []
     if illustrative:

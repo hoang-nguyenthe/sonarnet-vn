@@ -32,6 +32,11 @@ h1,h2,h3{letter-spacing:-.025em!important}
 [role="tablist"]{background:#e9edf2;border-radius:14px;padding:4px;gap:5px}
 [role="tab"]{border-radius:11px;min-height:44px;padding:10px 24px!important}
 [role="tab"][aria-selected="true"]{background:white;box-shadow:0 2px 8px #17304910}
+[role="tab"]{transition:background .2s ease,box-shadow .2s ease,color .2s ease}
+@keyframes section-arrive{from{opacity:.55;translate:0 12px}to{opacity:1;translate:0 0}}
+@supports(animation-timeline:view()){
+  [data-testid="stExpander"],.observation-meta{animation:section-arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+}
 [data-baseweb="tab-highlight"],[data-baseweb="tab-border"]{display:none}
 [data-testid="stSidebar"]{background:#fff}
 :focus-visible{outline:3px solid #168cff!important;outline-offset:3px}
@@ -52,7 +57,10 @@ with st.sidebar:
     st.caption('Ngày chụp ảnh khác với giờ hiện tại. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ; xem tiến độ xử lý của khu vực.')
     st.info('Chưa có dữ liệu định danh tàu. Kết quả cần người có chuyên môn xác minh.')
 
-observation, guide = st.tabs(['Quan sát', 'Hướng dẫn'])
+intro, observation, guide = st.tabs(['Giới thiệu', 'Quan sát', 'Hướng dẫn'])
+with intro:
+    from introduction import render_introduction
+    render_introduction()
 with observation:
     render(ROOT)
 with guide:

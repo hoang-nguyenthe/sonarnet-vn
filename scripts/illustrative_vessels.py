@@ -3,12 +3,12 @@ import hashlib
 from html import escape
 
 STATES = {
-    'matched': ('AIS khớp', '#30d158'),
+    'matched': ('AIS khớp', '#0a84ff'),
     'mismatch': ('AIS lệch', '#ffd60a'),
     'missing': ('Chưa có AIS', '#ff453a'),
 }
 
-FILTERS = {'Tất cả': None, 'Xanh · AIS khớp': 'matched',
+FILTERS = {'Tất cả': None, 'Xanh dương · AIS khớp': 'matched',
            'Vàng · AIS lệch': 'mismatch', 'Đỏ · Chưa có AIS': 'missing'}
 
 
