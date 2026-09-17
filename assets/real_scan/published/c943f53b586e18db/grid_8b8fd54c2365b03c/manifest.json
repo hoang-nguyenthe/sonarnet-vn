@@ -1,0 +1,92 @@
+{
+  "key": "grid_8b8fd54c2365b03c",
+  "bbox": [
+    107.5,
+    21.0,
+    107.6,
+    21.1
+  ],
+  "row": 150,
+  "column": 55,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/c943f53b586e18db/grid_8b8fd54c2365b03c",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260907T105711_20260907T105736_004471_0084B6_28FA_COG.SAFE",
+  "observation_day_utc": "2026-09-07",
+  "image_sha256": "84a4606815ef44fb70512f8aa9504a71b7131c694954cc17cc11779d8f4c1f74",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-09-17T07:47:08.119299+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.11726188659667969,
+    "excluded_candidates": [
+      {
+        "id": 1,
+        "bbox_px": [
+          397.98052978515625,
+          535.584228515625,
+          407.93170166015625,
+          545.065185546875
+        ],
+        "confidence": 0.6617261171340942,
+        "longitude": 107.53935118317604,
+        "latitude": 21.04723391532898,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-17T07:47:08.119323+00:00",
+  "detections": [
+    {
+      "id": 2,
+      "bbox_px": [
+        816.01904296875,
+        499.67724609375,
+        827.765869140625,
+        510.6478271484375
+      ],
+      "confidence": 0.6155111193656921,
+      "longitude": 107.58026293516158,
+      "latitude": 21.050667721033097
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        1000.807373046875,
+        70.56919860839844,
+        1011.018798828125,
+        80.83663940429688
+      ],
+      "confidence": 0.6143048405647278,
+      "longitude": 107.59823369979858,
+      "latitude": 21.092607136815786
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        79.50236511230469,
+        188.78565979003906,
+        91.24882507324219,
+        199.0666961669922
+      ],
+      "confidence": 0.4428443908691406,
+      "longitude": 107.50833746045828,
+      "latitude": 21.08106189668179
+    }
+  ]
+}
