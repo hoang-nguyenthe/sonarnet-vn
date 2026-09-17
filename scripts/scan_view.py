@@ -63,7 +63,7 @@ def render_scan(root: Path):
                 st.error(str(error))
         st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews), 'sonarnet-review-session.json', 'application/json')
     with st.expander('Cần biết trước khi dùng kết quả'):
-        st.write('Mô hình công bố học trên ảnh mô phỏng. Mặt nạ GSHHG loại ứng viên có toàn bộ khung nằm sâu hơn 500 m trong đất; giữ vùng sát bờ để kiểm tra thủ công. Đường bờ phiên bản 2017 có thể khác thực địa hiện tại, nhất là khu lấn biển. Vùng ngoài phạm vi mặt nạ không được coi là đã lọc. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
+        st.write('Mô hình công bố học trên ảnh mô phỏng. Mặt nạ GSHHG loại mọi khung ứng viên chạm đất hoặc vùng 500 m từ bờ ra biển, bao gồm tàu trong cảng và sát bờ. Đường bờ phiên bản 2017 có thể khác thực địa hiện tại, nhất là khu lấn biển. Vùng ngoài phạm vi mặt nạ không được coi là đã lọc. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
         st.write('Mỗi ô giữ ngày quan sát của chính ảnh đó. Lịch kiểm tra 6 giờ giữ lại ảnh cũ nếu chưa có ảnh mới hợp lệ. Ảnh ghép trong ngày chưa có thời điểm riêng từng pixel. Không phát hiện không chứng minh không có tàu.')
     chart = folium.Map(tiles=None, zoom_snap=.25)
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attr='Esri, Maxar, Earthstar Geographics').add_to(chart)

@@ -17,8 +17,9 @@ class LandMaskTests(unittest.TestCase):
         def result(bounds):
             return classify(tile, {'bbox_px': bounds}, metadata, geometries)
         self.assertEqual(result([10, 10, 20, 20]), 'excluded_land')
-        self.assertEqual(result([45, 10, 55, 20]), 'near_coast')
-        self.assertEqual(result([35, 10, 65, 20]), 'near_coast')
+        self.assertEqual(result([45, 10, 55, 20]), 'excluded_land')
+        self.assertEqual(result([35, 10, 65, 20]), 'excluded_land')
+        self.assertEqual(result([51, 10, 59, 20]), 'excluded_coast')
         self.assertEqual(result([70, 10, 80, 20]), 'water')
         self.assertEqual(result([95, 10, 105, 20]), 'unknown')
 
@@ -32,8 +33,8 @@ class LandMaskTests(unittest.TestCase):
             if tile['status'] != 'processed':
                 continue
             self.assertEqual(tile['raw_detection_count'], len(tile['detections']) + len(tile['excluded_detections']))
-            self.assertFalse(any(d['surface'] == 'excluded_land' for d in tile['detections']))
-            self.assertTrue(all(d['surface'] == 'excluded_land' for d in tile['excluded_detections']))
+            self.assertFalse(any(d['surface'].startswith('excluded_') for d in tile['detections']))
+            self.assertTrue(all(d['surface'].startswith('excluded_') for d in tile['excluded_detections']))
 
 
 if __name__ == '__main__':

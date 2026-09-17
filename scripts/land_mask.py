@@ -25,10 +25,10 @@ def classify(tile, candidate, data, geometries):
                     w+x2/width*(e-w), n-y1/height*(n-s))
     if not box(*data['coverage_bbox']).covers(footprint):
         return 'unknown'
-    if geometries['core'].covers(footprint):
+    if geometries['land'].intersects(footprint):
         return 'excluded_land'
-    if geometries['coast'].intersects(footprint) or geometries['land'].intersects(footprint):
-        return 'near_coast'
+    if geometries['coast'].intersects(footprint):
+        return 'excluded_coast'
     return 'water'
 
 
@@ -41,13 +41,13 @@ def filter_tile(root, tile):
         for candidate in tile['detections']:
             candidate['surface'] = 'unknown'
         return
-    tile['land_mask_version'] = data['version']
+    tile['land_mask_version'] = data['version'] + '-exclude-coast-500m-v2'
     tile['land_mask_status'] = 'applied'
     tile['raw_detection_count'] = len(tile['detections'])
     kept, excluded = [], []
     for original in tile['detections']:
         candidate = dict(original, surface=classify(tile, original, data, geometries))
-        (excluded if candidate['surface'] == 'excluded_land' else kept).append(candidate)
+        (excluded if candidate['surface'].startswith('excluded_') else kept).append(candidate)
     tile['detections'], tile['excluded_detections'] = kept, excluded
 
 
@@ -70,20 +70,20 @@ def add_map_layer(chart, root):
     except (OSError, ValueError, KeyError):
         return
     layer = folium.FeatureGroup(name='Đất liền · loại trừ YOLO (Việt Nam)', show=True).add_to(chart)
-    folium.GeoJson(mapping(geometries['core'].simplify(.0001, preserve_topology=True)),
+    folium.GeoJson(mapping(geometries['land'].simplify(.0001, preserve_topology=True)),
         style_function=lambda _: {'color': '#919aa8', 'weight': .5, 'fillColor': '#64748b', 'fillOpacity': .22},
         tooltip='Vùng loại trừ trên đất · GSHHG 2.3.7 · không phải ranh giới hành chính',
         ).add_to(layer)
-    coastal = folium.FeatureGroup(name='Vùng sát bờ ±500 m · cần kiểm tra', show=True).add_to(chart)
+    coastal = folium.FeatureGroup(name='Ven bờ 500 m · loại trừ YOLO', show=True).add_to(chart)
     folium.GeoJson(mapping(geometries['coast'].simplify(.0001, preserve_topology=True)),
         style_function=lambda _: {'color': '#ff9f0a', 'weight': .7, 'fillColor': '#ff9f0a', 'fillOpacity': .25},
-        tooltip='Cách đường bờ tối đa 500 m về hai phía · giữ ứng viên để kiểm tra, không tự kết luận là tàu',
+        tooltip='Vùng loại trừ: từ đường bờ ra biển 500 m · không hiển thị ứng viên YOLO/AIS minh hoạ',
         ).add_to(coastal)
 
 
 def summary(tiles):
-    excluded = sum(len(t.get('excluded_detections', [])) for t in tiles)
-    coastal = sum(d.get('surface') == 'near_coast' for t in tiles for d in t['detections'])
+    excluded = sum(d.get('surface') == 'excluded_land' for t in tiles for d in t.get('excluded_detections', []))
+    coastal = sum(d.get('surface') == 'excluded_coast' for t in tiles for d in t.get('excluded_detections', []))
     unknown = sum(d.get('surface') == 'unknown' for t in tiles for d in t['detections'])
-    return (f'Bộ lọc đất liền: loại {excluded} ứng viên nằm sâu trên đất; giữ {coastal} ứng viên sát bờ để kiểm tra. '
-            f'{unknown} ứng viên chưa xác định loại bề mặt. Đệm ven bờ 500 m; không coi điểm ngoài đất là tàu đã xác minh.')
+    return (f'Vùng loại trừ YOLO: đất liền và 500 m từ bờ ra biển. Đã loại {excluded} ứng viên chạm đất, {coastal} ứng viên ven bờ. '
+            f'{unknown} ứng viên chưa xác định loại bề mặt. Tàu trong cảng/sát bờ cũng bị bỏ qua; điểm còn lại chưa phải tàu đã xác minh.')

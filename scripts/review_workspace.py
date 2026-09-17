@@ -69,7 +69,7 @@ def printable_review(tile, review, day):
 <style>body{{font:16px system-ui;max-width:850px;margin:40px auto;padding:20px;color:#193249}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;padding:10px;border-bottom:1px solid #ddd}}.note{{white-space:pre-wrap}}small{{overflow-wrap:anywhere}}@media print{{body{{margin:0}}}}</style>
 <h1>Hồ sơ kiểm tra ảnh SAR</h1><p>{esc(tile['key'])} · Ngày ảnh UTC: {esc(day)}</p>
 <p>Nguồn: {esc(tile['source'])}<br>Phạm vi WGS84: {esc(tile['bbox'])}</p>
-<p>Bộ lọc đất: {esc(tile.get('land_mask_version', 'Chưa áp dụng'))} · Loại {len(tile.get('excluded_detections', []))} ứng viên sâu trên đất. Khung màu cam sát bờ cần kiểm tra. Kết quả gốc được giữ riêng trong gói bằng chứng.</p>
+<p>Bộ lọc đất: {esc(tile.get('land_mask_version', 'Chưa áp dụng'))} · Loại {len(tile.get('excluded_detections', []))} ứng viên chạm đất hoặc vùng 500 m từ bờ ra biển. Tàu trong cảng/sát bờ cũng bị bỏ qua. Kết quả gốc được giữ riêng trong gói bằng chứng.</p>
 <p><b>Đánh dấu của người xem:</b> {esc(review['status'])}</p><p class="note">{esc(review['note'])}</p>
 <h2>Ứng viên mô hình — chưa xác minh</h2><table><tr><th>ID</th><th>Điểm mô hình</th><th>Vĩ độ</th><th>Kinh độ</th></tr>{rows}</table>
 <p>Không phải xác nhận tàu, tàu cá hay vi phạm. Không phát hiện không chứng minh không có tàu. Ảnh ghép trong ngày; chưa có thời điểm riêng từng pixel.</p>
