@@ -261,17 +261,19 @@ def render(root):
         from illustrative_vessels import profile, popup as illustrative_popup
         for candidate in visible_candidates:
             color = profile(candidate)['color'] if illustrative else '#bde8ee'
+            marker_profile = profile(candidate)
+            card = (
+                "<div class='glass-vessel-card'>"
+                + (f"<div class='vessel-popup-title'>{marker_profile['name']}</div>" if illustrative else f"<div class='vessel-popup-title'>Điểm cần kiểm tra · {candidate['id']}</div>")
+                + f"<img src='{popup_crop_url(candidate)}' width='104' alt='Ảnh radar tại vị trí quan sát' loading='lazy'>"
+                + f"<div class='vessel-popup-meta'>{date_label(candidate['observation_day_utc'])} UTC · {candidate['latitude']:.3f}°, {candidate['longitude']:.3f}°</div>"
+                + (illustrative_popup(candidate) if illustrative else "<span class='marker-status'>Chưa xác minh</span>")
+                + "</div>"
+            )
             folium.CircleMarker(
                 [candidate["latitude"], candidate["longitude"]], radius=4,
                 color=color, weight=1.2, fill=False,
-                popup=folium.Popup(
-                    (f"<b>{profile(candidate)['name']}</b><br>" if illustrative else f"<b>Điểm cần kiểm tra · {candidate['id']}</b><br>") +
-                    f"<img src='{popup_crop_url(candidate)}' width='148' alt='Ảnh radar tại vị trí quan sát' loading='lazy'><br>"
-                    f"<span class='marker-status' style='color:{color}'>{profile(candidate)['label'] if illustrative else 'Điểm cần kiểm tra'}</span><br>"
-                    f"{date_label(candidate['observation_day_utc'])} UTC · {candidate['latitude']:.3f}°, {candidate['longitude']:.3f}°<br>"
-                    "Hồ sơ đầy đủ ở dưới bản đồ.",
-                    max_width=210,
-                ),
+                popup=folium.Popup(card, max_width=246),
                 tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']}" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
             ).add_to(yolo_layer)
     # The coastal mask remains part of detector filtering. Do not serialize a
@@ -321,13 +323,20 @@ def render(root):
     chart.get_root().header.add_child(Element("""<style>
       .leaflet-container{font-family:-apple-system,BlinkMacSystemFont,sans-serif}
       .leaflet-control-layers{border:0!important;border-radius:12px!important;padding:10px!important;box-shadow:0 4px 20px #0002!important}
-      .leaflet-popup-content{font-size:12px;line-height:1.45}
-      .leaflet-popup-content-wrapper{border-radius:18px;background:rgba(250,253,255,.97);color:#20313c;box-shadow:0 12px 36px #08182740;border:1px solid #ffffffb3}
-      .leaflet-popup-content{margin:12px 14px;max-width:min(185px,calc(100vw - 64px))}
-      .leaflet-popup-content img{display:block;width:100%;max-width:148px;border-radius:9px;margin:7px 0}
+      .leaflet-popup-content{font-size:11px;line-height:1.35}
+      .leaflet-popup-content-wrapper{border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(236,245,251,.64));backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);color:#20313c;box-shadow:0 18px 48px #071a2c33,0 2px 8px #071a2c16;border:1px solid rgba(255,255,255,.82)}
+      .leaflet-popup-tip{background:rgba(242,248,252,.8)}
+      .leaflet-popup-content{margin:10px 12px;max-width:min(222px,calc(100vw - 54px))}
+      .leaflet-popup-content img{display:block;width:104px;max-width:104px;border-radius:12px;margin:7px 0;box-shadow:0 5px 14px #0b253126}
       .marker-status{font-weight:650}
+      .glass-vessel-card{min-width:198px;max-width:222px}
+      .vessel-popup-title{font-size:13px;font-weight:700;letter-spacing:-.01em;margin:0 0 2px}
+      .vessel-popup-meta{font-size:10px;color:#5e7182;margin:4px 0 7px}
+      .vessel-popup-details dl{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;margin:7px 0}
+      .vessel-popup-details dt{color:#607385}.vessel-popup-details dd{margin:0;font-weight:560}
+      .vessel-popup-kinematics{color:#4a5f70;margin:6px 0 3px}
       .leaflet-popup-content strong,.leaflet-popup-content b{font-weight:600}
-      .leaflet-popup-content hr{border:0;border-top:1px solid #dce5eb;margin:14px 0}
+      .leaflet-popup-content hr{border:0;border-top:1px solid #dce5eb;margin:8px 0}
       .observation-cluster{background:transparent;border:0}
       .observation-cluster>div{transition:transform .18s ease,box-shadow .18s ease}
       .observation-cluster:hover>div{transform:scale(1.12);box-shadow:0 4px 18px #0005!important}

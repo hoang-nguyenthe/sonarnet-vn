@@ -35,16 +35,15 @@ def profile(candidate):
 
 def popup(candidate):
     p = profile(candidate)
-    head = f"<hr><strong>{escape(p['name'])}</strong><br>"
-    head += '<dl style="display:grid;grid-template-columns:1fr 1.3fr;gap:5px 12px;margin:12px 0">'
+    head = '<div class="vessel-popup-details"><dl>'
     for label, value in [('Mã tàu', p['registration']), ('Loại phương tiện', p['category']),
                          ('Chủ phương tiện', p['owner']), ('Cảng đăng ký', p['port']),
                          ('Chiều dài', f"{p['length_m']} m"), ('Thuyền viên', f"{p['crew']} người"),
                          ('Năm đóng', p['year'])]:
-        head += f'<dt style="color:#647580">{label}</dt><dd style="margin:0">{escape(str(value))}</dd>'
+        head += f'<dt>{label}</dt><dd>{escape(str(value))}</dd>'
     head += '</dl>'
-    head += f"Tốc độ: {p['speed']} hải lý/giờ · Hướng: {p['heading']}°<br>"
-    head += f"<span style='color:{p['color']}'>{p['label']}</span><br>"
+    head += f"<div class='vessel-popup-kinematics'>Tốc độ {p['speed']} hl/g · Hướng {p['heading']}°</div>"
+    head += f"<span class='marker-status' style='color:{p['color']}'>{p['label']}</span><br></div>"
     if p['status'] == 'missing':
         return head
     return (head +
