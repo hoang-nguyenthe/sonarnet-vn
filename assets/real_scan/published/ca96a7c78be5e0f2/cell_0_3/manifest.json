@@ -1,6 +1,6 @@
 {
   "source": "Copernicus Data Space · Sentinel-1 GRD",
-  "device": "mps",
+  "device": "cpu",
   "reference_product": "S1D_IW_GRDH_1SDV_20260912T110238_20260912T110307_004544_00873C_70DA_COG.SAFE",
   "observation_day_utc": "2026-09-12",
   "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
@@ -17,7 +17,7 @@
   "confidence_threshold": 0.35,
   "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
   "image_sha256": "1de465af6ddc1798d459a768f7d7987870c4f619eba9f3e200083cec238ab821",
-  "generated_at": "2026-09-17T03:32:55.537950+00:00",
+  "generated_at": "2026-09-17T04:59:50.728927+00:00",
   "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
   "detections": [],
   "key": "cell_0_3",

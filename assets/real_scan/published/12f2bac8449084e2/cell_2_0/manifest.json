@@ -1,6 +1,6 @@
 {
   "source": "Copernicus Data Space · Sentinel-1 GRD",
-  "device": "mps",
+  "device": "cpu",
   "reference_product": "S1D_IW_GRDH_1SDV_20260912T110238_20260912T110307_004544_00873C_70DA_COG.SAFE",
   "observation_day_utc": "2026-09-12",
   "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
@@ -17,7 +17,7 @@
   "confidence_threshold": 0.35,
   "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
   "image_sha256": "e3a8575fa6c518fa1007bf9fb6266b591bfa7443d7de092a1b3d6b4113f4480b",
-  "generated_at": "2026-09-17T03:35:35.905429+00:00",
+  "generated_at": "2026-09-17T04:59:55.301470+00:00",
   "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
   "detections": [
     {
@@ -28,7 +28,7 @@
         671.4022827148438,
         953.70361328125
       ],
-      "confidence": 0.6857492923736572,
+      "confidence": 0.6857495307922363,
       "longitude": 107.76481963992119,
       "latitude": 10.557596266269684
     },
@@ -40,7 +40,7 @@
         207.34036254882812,
         770.43017578125
       ],
-      "confidence": 0.6762819290161133,
+      "confidence": 0.6762818098068237,
       "longitude": 107.71958081126213,
       "latitude": 10.575366759300232
     }
