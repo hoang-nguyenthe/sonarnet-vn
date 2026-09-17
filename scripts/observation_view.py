@@ -16,6 +16,7 @@ from branca.element import Element, MacroElement, Template
 from streamlit.components.v1 import html as embed
 from map_raster import overlay_source, static_overlay_source, ViewportRadar
 from coverage_status import coverage_rows, waiting_cells
+from observation_labels import candidate_label, coordinates
 
 VN_VIEW = [[6, 102], [24, 115]]
 
@@ -306,16 +307,18 @@ def render(root):
     st.caption('Kéo để di chuyển · Chạm ảnh để xem nguồn. Nét đứt xanh nhạt là phạm vi biển tham khảo, không phải ranh giới pháp lý.')
     if yolo_result and yolo_result['detections']:
         options = {item['id']: item for item in yolo_result['detections']}
-        chosen = st.selectbox('Chọn điểm cần kiểm tra', list(options), key='panorama_candidate')
+        point_numbers = {key: index+1 for index, key in enumerate(options)}
+        chosen = st.selectbox('Chọn điểm cần kiểm tra', list(options), key='panorama_candidate',
+                              format_func=lambda key: candidate_label(options[key], point_numbers[key]))
         candidate = options[chosen]
         with st.expander('Ảnh bằng chứng & thông tin đối chiếu', expanded=True):
             photo, details = st.columns([1, 2])
             with photo:
                 st.image(candidate_crop(root, candidate), width=220, caption='Ảnh radar gốc · vùng quanh ứng viên')
             with details:
-                st.write(f"**Mã quan sát: {chosen}**")
+                st.write(f"**Điểm cần kiểm tra {point_numbers[chosen]}**")
                 st.write(f"Ngày ảnh: {date_label(candidate['observation_day_utc'])} UTC · Copernicus")
-                st.caption(f"{candidate['latitude']:.5f}°B, {candidate['longitude']:.5f}°Đ · ảnh ghép trong ngày")
+                st.caption(f"{coordinates(candidate['latitude'], candidate['longitude'])} · ảnh ghép trong ngày")
                 st.write('**Thông tin tàu: chưa xác định.**')
                 st.caption('Chưa có tên tàu, số đăng ký và tín hiệu vị trí cùng thời điểm để đối chiếu.')
                 def open_evidence():
@@ -326,7 +329,8 @@ def render(root):
         with st.expander("Danh sách điểm cần kiểm tra"):
             rows = [
                 {
-                    "ID": item["id"],
+                    "Điểm": point_numbers[item['id']],
+                    "Ngày ảnh (UTC)": date_label(item['observation_day_utc']),
                     "Vĩ độ xấp xỉ": round(item["latitude"], 5),
                     "Kinh độ xấp xỉ": round(item["longitude"], 5),
                 }

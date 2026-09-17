@@ -10,6 +10,7 @@ from streamlit.components.v1 import html
 from review_workspace import STATUSES, CANDIDATE_STATUSES, report_id, export_workspace, import_workspace, printable_review, evidence_bundle
 from scan_assets import validated_report
 from land_mask import add_map_layer, annotated_image, summary as land_summary
+from observation_labels import tile_label
 
 
 def render_scan(root: Path):
@@ -90,12 +91,12 @@ def render_scan(root: Path):
     if not ready:
         return
     by_key = {t['key']:t for t in sorted(ready, key=lambda t: -len(t['detections']))}
-    chosen = st.selectbox('Chọn ảnh', list(by_key), format_func=lambda key: f"{key.replace('cell_', 'Ô ')} · {len(by_key[key]['detections'])} điểm cần kiểm tra", key='review_tile')
+    chosen = st.selectbox('Chọn ảnh', list(by_key), format_func=lambda key: tile_label(by_key[key]), key='review_tile')
     tile = by_key[chosen]
     st.caption(f"Ngày ảnh đã chọn: {date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')} UTC · Copernicus")
     original = st.toggle('Xem ảnh gốc không khung đánh dấu', value=False)
     st.image(str(root / tile['asset_dir'] / 'sar.png') if original else annotated_image(root, tile), use_container_width=True,
-             caption=f"{chosen} · Ảnh radar gốc và các vùng cần kiểm tra")
+             caption=f"{tile_label(tile)} · Ảnh radar và các vùng cần kiểm tra")
     if tile['detections']:
         target = st.session_state.pop('review_target_id', None)
         target_index = next((i for i, d in enumerate(tile['detections']) if str(d['id']) == target), 0)
