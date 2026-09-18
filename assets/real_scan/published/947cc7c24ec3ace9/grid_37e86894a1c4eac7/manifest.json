@@ -1,0 +1,66 @@
+{
+  "key": "grid_37e86894a1c4eac7",
+  "bbox": [
+    109.0,
+    15.0,
+    109.1,
+    15.1
+  ],
+  "row": 90,
+  "column": 70,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/947cc7c24ec3ace9/grid_37e86894a1c4eac7",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1C_IW_GRDH_1SDV_20260917T223509_20260917T223539_009493_012E33_6B42_COG.SAFE",
+  "observation_day_utc": "2026-09-17",
+  "image_sha256": "4865648653684b1ea406345c79c591632ad41083d6bbb1a436edcf829590eecb",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-18T16:30:28.260712+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        382.1875,
+        179.2989501953125,
+        399.6126708984375,
+        198.29098510742188
+      ],
+      "confidence": 0.6200986504554749,
+      "longitude": 109.03817383646965,
+      "latitude": 15.081562991440295
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        371.7216796875,
+        226.78659057617188,
+        387.2177734375,
+        245.32772827148438
+      ],
+      "confidence": 0.5951101183891296,
+      "longitude": 109.03705759048462,
+      "latitude": 15.076947543025016
+    }
+  ],
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-09-18T16:30:28.260690+00:00"
+}

@@ -1,0 +1,66 @@
+{
+  "key": "grid_f3ad3f12af2ce40a",
+  "bbox": [
+    102.3,
+    8.3,
+    102.4,
+    8.4
+  ],
+  "row": 23,
+  "column": 3,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/1be467436a52eb2c/grid_f3ad3f12af2ce40a",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260915T112650_20260915T112715_004588_0088BA_6C7E_COG.SAFE",
+  "observation_day_utc": "2026-09-15",
+  "image_sha256": "d72638ce6ab89f6cc6c44f86e513fa7612b603d226777f5f2373d0a930b2f2a5",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-09-18T17:16:58.543912+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-18T17:16:58.543935+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        955.4791259765625,
+        333.2012939453125,
+        966.0799560546875,
+        344.5123291015625
+      ],
+      "confidence": 0.7381106615066528,
+      "longitude": 102.39382612705231,
+      "latitude": 8.366908514499665
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        942.9063720703125,
+        646.7938842773438,
+        953.7703857421875,
+        661.9859008789062
+      ],
+      "confidence": 0.6607752442359924,
+      "longitude": 102.39261116981507,
+      "latitude": 8.336094737052917
+    }
+  ]
+}
