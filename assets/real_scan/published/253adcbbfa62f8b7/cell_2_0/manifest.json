@@ -1,0 +1,74 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "device": "cpu",
+  "reference_product": "S1C_IW_GRDH_1SDV_20260917T223629_20260917T223645_009493_012E33_A9A5_COG.SAFE",
+  "observation_day_utc": "2026-09-17",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "bbox": [
+    107.7,
+    10.55,
+    107.8,
+    10.65
+  ],
+  "image_size": [
+    1024,
+    1024
+  ],
+  "confidence_threshold": 0.35,
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "image_sha256": "3dd4aaa8a02a64546f3c26c34cb12366363a5fc9dfe0441b91c9da02271e2f9c",
+  "generated_at": "2026-09-18T21:02:37.324437+00:00",
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        445.56793212890625,
+        455.59100341796875,
+        456.53546142578125,
+        468.76312255859375
+      ],
+      "confidence": 0.6844770312309265,
+      "longitude": 107.74404801726341,
+      "latitude": 10.60486552119255
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        563.0848999023438,
+        360.544677734375,
+        574.3361206054688,
+        373.493896484375
+      ],
+      "confidence": 0.6552919745445251,
+      "longitude": 107.75553813576698,
+      "latitude": 10.614158272743225
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        958.3906860351562,
+        203.60626220703125,
+        971.2781372070312,
+        218.88681030273438
+      ],
+      "confidence": 0.629822850227356,
+      "longitude": 107.79422211050986,
+      "latitude": 10.62937045544386
+    }
+  ],
+  "key": "cell_2_0",
+  "status": "processed",
+  "asset_dir": "assets/real_scan/published/253adcbbfa62f8b7/cell_2_0",
+  "band": "VV",
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.8357944488525391,
+    "excluded_candidates": []
+  },
+  "catalog_checked_at": "2026-09-18T21:02:37.324414+00:00",
+  "valid_pixel_fraction": 1.0
+}

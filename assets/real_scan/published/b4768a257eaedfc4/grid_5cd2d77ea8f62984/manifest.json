@@ -1,0 +1,78 @@
+{
+  "key": "grid_5cd2d77ea8f62984",
+  "bbox": [
+    107.9,
+    19.4,
+    108.0,
+    19.5
+  ],
+  "row": 134,
+  "column": 59,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/b4768a257eaedfc4/grid_5cd2d77ea8f62984",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260907T105646_20260907T105711_004471_0084B6_4B01_COG.SAFE",
+  "observation_day_utc": "2026-09-07",
+  "image_sha256": "8d32e0ea3e551142d345ca785e50d23705f46ef62d4915bc8b8691547226f3d3",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-09-18T21:48:21.663996+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-18T21:48:21.664014+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        447.447509765625,
+        548.6483154296875,
+        459.9263916015625,
+        564.1766357421875
+      ],
+      "confidence": 0.6189976334571838,
+      "longitude": 107.9443053662777,
+      "latitude": 19.44566284418106
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        645.0823974609375,
+        322.8320617675781,
+        654.2974853515625,
+        332.0916442871094
+      ],
+      "confidence": 0.5036347508430481,
+      "longitude": 107.96344628334046,
+      "latitude": 19.4680213034153
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        102.98779296875,
+        968.1197509765625,
+        112.06005859375,
+        980.1903076171875
+      ],
+      "confidence": 0.46823543310165405,
+      "longitude": 107.91050038337708,
+      "latitude": 19.404867672920226
+    }
+  ]
+}

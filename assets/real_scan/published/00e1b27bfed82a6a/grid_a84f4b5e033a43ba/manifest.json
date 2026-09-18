@@ -1,0 +1,142 @@
+{
+  "key": "grid_a84f4b5e033a43ba",
+  "bbox": [
+    109.8,
+    20.3,
+    109.9,
+    20.4
+  ],
+  "row": 143,
+  "column": 78,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/00e1b27bfed82a6a/grid_a84f4b5e033a43ba",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260914T104901_20260914T104926_004573_008842_1E82_COG.SAFE",
+  "observation_day_utc": "2026-09-14",
+  "image_sha256": "3def68ca3246365922d1eb5a23ddfeb689015f3b8c8e92508971e9dbb393dc03",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-09-18T21:55:05.645234+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.9027471542358398,
+    "excluded_candidates": [
+      {
+        "id": 2,
+        "bbox_px": [
+          879.2650146484375,
+          407.1124267578125,
+          927.9627685546875,
+          447.535400390625
+        ],
+        "confidence": 0.4979054927825928,
+        "longitude": 109.88824354410173,
+        "latitude": 20.358269149065016,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 6,
+        "bbox_px": [
+          785.11279296875,
+          232.0467529296875,
+          820.648681640625,
+          262.37359619140625
+        ],
+        "confidence": 0.4144544303417206,
+        "longitude": 109.87840632200242,
+        "latitude": 20.37585838139057,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 7,
+        "bbox_px": [
+          880.887939453125,
+          407.64593505859375,
+          907.290283203125,
+          444.40557861328125
+        ],
+        "confidence": 0.396855890750885,
+        "longitude": 109.88731338977814,
+        "latitude": 20.35839592218399,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-18T21:55:05.645257+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        606.045166015625,
+        601.392822265625,
+        616.82421875,
+        611.45361328125
+      ],
+      "confidence": 0.508030354976654,
+      "longitude": 109.85971041917801,
+      "latitude": 20.340778982639314
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        908.53271484375,
+        1005.821533203125,
+        920.69580078125,
+        1017.138427734375
+      ],
+      "confidence": 0.47132328152656555,
+      "longitude": 109.88931779861451,
+      "latitude": 20.30122265815735
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        802.9759521484375,
+        804.9117431640625,
+        814.5789794921875,
+        816.2745361328125
+      ],
+      "confidence": 0.4684735834598541,
+      "longitude": 109.87898217439651,
+      "latitude": 20.32084051370621
+    },
+    {
+      "id": 5,
+      "bbox_px": [
+        756.4971923828125,
+        794.0235595703125,
+        768.8096923828125,
+        806.4864501953125
+      ],
+      "confidence": 0.42738819122314453,
+      "longitude": 109.8744778752327,
+      "latitude": 20.321850097179414
+    },
+    {
+      "id": 8,
+      "bbox_px": [
+        627.5748901367188,
+        653.2022705078125,
+        639.9061889648438,
+        664.485107421875
+      ],
+      "confidence": 0.3781340718269348,
+      "longitude": 109.8618887245655,
+      "latitude": 20.335659795999526
+    }
+  ]
+}

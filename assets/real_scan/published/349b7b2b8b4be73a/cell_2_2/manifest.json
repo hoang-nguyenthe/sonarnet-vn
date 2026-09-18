@@ -1,0 +1,110 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "device": "cpu",
+  "reference_product": "S1C_IW_GRDH_1SDV_20260917T223629_20260917T223645_009493_012E33_A9A5_COG.SAFE",
+  "observation_day_utc": "2026-09-17",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "bbox": [
+    107.9,
+    10.55,
+    108.0,
+    10.65
+  ],
+  "image_size": [
+    1024,
+    1024
+  ],
+  "confidence_threshold": 0.35,
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "image_sha256": "43881f063c50dce4afa606176cef9f5a470a1b0657b2192345eb6c101437eb4a",
+  "generated_at": "2026-09-18T21:02:44.625125+00:00",
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        298.0687255859375,
+        440.9897766113281,
+        312.216796875,
+        453.9878234863281
+      ],
+      "confidence": 0.7400863766670227,
+      "longitude": 107.92979909777641,
+      "latitude": 10.606299921870232
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        797.4295043945312,
+        353.4248046875,
+        809.9009399414062,
+        362.7747802734375
+      ],
+      "confidence": 0.6734191179275513,
+      "longitude": 107.97848293185234,
+      "latitude": 10.61502931714058
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        327.8913269042969,
+        549.4048461914062,
+        340.6413879394531,
+        560.9474487304688
+      ],
+      "confidence": 0.6712178587913513,
+      "longitude": 107.93264319896699,
+      "latitude": 10.595783579349519
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        991.63623046875,
+        296.5968017578125,
+        1011.48779296875,
+        310.215087890625
+      ],
+      "confidence": 0.5709352493286133,
+      "longitude": 107.9978087902069,
+      "latitude": 10.62037051320076
+    },
+    {
+      "id": 5,
+      "bbox_px": [
+        304.72747802734375,
+        90.31608581542969,
+        314.54412841796875,
+        99.50798034667969
+      ],
+      "confidence": 0.5493088364601135,
+      "longitude": 107.93023787140847,
+      "latitude": 10.640731246769429
+    },
+    {
+      "id": 6,
+      "bbox_px": [
+        328.55474853515625,
+        82.10891723632812,
+        339.66339111328125,
+        91.371337890625
+      ],
+      "confidence": 0.49388760328292847,
+      "longitude": 107.93262783885002,
+      "latitude": 10.64152928441763
+    }
+  ],
+  "key": "cell_2_2",
+  "status": "processed",
+  "asset_dir": "assets/real_scan/published/349b7b2b8b4be73a/cell_2_2",
+  "band": "VV",
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "catalog_checked_at": "2026-09-18T21:02:44.625100+00:00",
+  "valid_pixel_fraction": 1.0
+}
