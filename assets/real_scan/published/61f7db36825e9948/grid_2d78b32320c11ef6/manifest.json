@@ -1,0 +1,68 @@
+{
+  "key": "grid_2d78b32320c11ef6",
+  "bbox": [
+    104.4,
+    10.4,
+    104.5,
+    10.5
+  ],
+  "row": 44,
+  "column": 24,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/61f7db36825e9948/grid_2d78b32320c11ef6",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20260917T111053_20260917T111118_004617_0089BE_46E9_COG.SAFE",
+  "observation_day_utc": "2026-09-17",
+  "image_sha256": "f20dbec0cbcd5ed9c3db0de0333ae1a289bbb7fe8f6530a501956d8b2ce4c90b",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-09-20T16:22:23.088049+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.1575174331665039,
+    "excluded_candidates": [
+      {
+        "id": 1,
+        "bbox_px": [
+          245.19512939453125,
+          584.466064453125,
+          265.314697265625,
+          601.53662109375
+        ],
+        "confidence": 0.4296635389328003,
+        "longitude": 104.4249272376299,
+        "latitude": 10.442089712619781,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-09-20T16:22:23.088069+00:00",
+  "detections": [
+    {
+      "id": 2,
+      "bbox_px": [
+        276.19219970703125,
+        884.9327392578125,
+        307.69793701171875,
+        922.68310546875
+      ],
+      "confidence": 0.41797927021980286,
+      "longitude": 104.42851026058197,
+      "latitude": 10.41173750758171
+    }
+  ]
+}
