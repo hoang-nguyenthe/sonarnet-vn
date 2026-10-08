@@ -215,6 +215,11 @@ def render(root):
         else:
             st.info("Khu vực này chưa được kiểm tra tự động trên ảnh chi tiết. Bạn vẫn có thể xem ảnh; chưa có kết quả không có nghĩa là không có tàu.")
     coverage = read_json(root/'assets/real_scan/coverage.json')
+    refresh = read_json(root/'assets/real_scan/refresh_status.json')
+    if refresh.get('state') in {'blocked','error'}:
+        st.warning('Lượt cập nhật mới đã dừng do nguồn ảnh hoặc xử lý gặp lỗi. Ảnh và kết quả đã lưu vẫn xem được.')
+    elif refresh.get('source') == 'planetary' and refresh.get('state') == 'ready':
+        st.caption('Ảnh chi tiết được cập nhật từ kho Sentinel-1 dự phòng. Mỗi điểm giữ nguyên nguồn và ngày chụp của ảnh.')
     area_plan = next((area for area in coverage.get('regions', []) if area['key'] == record['key']), None)
     if area_plan and waiting_cells(area_plan):
         st.caption(f"Còn {waiting_cells(area_plan):,} ô ảnh chưa xử lý hoặc cần tải lại. Đây là phần chưa có kết quả, không phải số ô đang chạy. Phạm vi kiểm tra chưa phủ kín khu vực.")
