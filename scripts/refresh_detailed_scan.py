@@ -182,6 +182,10 @@ def main(argv=None):
         if not products:
             raise ValueError('No recent catalog acquisition for cell')
         product = max(products, key=lambda item: item.acquired_at)
+        # A fallback archive can lag behind the primary. Never replace newer
+        # published evidence by an older observation merely to change source.
+        if product.acquired_at[:10] < old.get('observation_day_utc', ''):
+            return product, None
         unchanged = (old.get('reference_product') == product.product_id
                      and old.get('weights_sha256') == weights_hash
                      and old.get('inference_policy_sha256') == policy)
