@@ -25,7 +25,8 @@ from shapely.ops import unary_union
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
-from sonarnet.data.copernicus import access_token_info, search_sentinel1_grd, sentinel1_mosaic_preview
+from sonarnet.data.copernicus import access_token_info, search_sentinel1_grd, sentinel1_mosaic_preview, CopernicusQuotaError
+from sonarnet.data.planetary import search_rtc, render_rtc, provenance, PlanetaryAccessError
 from worker_auth import RefreshingToken
 from refresh_global_sentinel_tiles import credentials
 from scan_assets import validate_tile
@@ -114,10 +115,12 @@ def main(argv=None):
     parser.add_argument('--all-pending', action='store_true', help='Process the complete pending region queue, resuming across runs')
     parser.add_argument('--time-budget-seconds', type=int, default=1500, help='Checkpoint and exit cleanly before the job deadline')
     parser.add_argument('--region', default='vietnam', help='Published region to expand; default Vietnam')
+    parser.add_argument('--source', choices=['copernicus', 'planetary'], default='copernicus')
+    parser.add_argument('--max-updates', type=int, default=0, help='Stop after N published cells; 0 uses time budget')
     parser.add_argument('--device', choices=['cpu', 'mps'], default='cpu')
     parser.add_argument('--prefetch', type=int, default=2, choices=range(1, 5), help='Bounded network look-ahead; one downloader avoids API bursts')
     args = parser.parse_args(argv)
-    if args.max_new_cells < 0 or args.time_budget_seconds < 60:
+    if args.max_new_cells < 0 or args.max_updates < 0 or args.time_budget_seconds < 60:
         parser.error('Use nonnegative cell count and time budget >=60 seconds')
     from land_mask import get_mask
     from scan_coverage import write_plan
@@ -138,7 +141,7 @@ def main(argv=None):
     weights = ROOT / 'assets/models/sonarnet_baseline.pt'
     weights_hash = hashlib.sha256(weights.read_bytes()).hexdigest()
     model = YOLO(str(weights))
-    tokens = RefreshingToken(lambda: access_token_info(*credentials()))
+    tokens = RefreshingToken(lambda: access_token_info(*credentials())) if args.source == 'copernicus' else None
     end = datetime.now(timezone.utc).date()
     updated, checked, failed = 0, 0, 0
     tiles_by_key = {t['key']: t for t in report['tiles']}
@@ -147,7 +150,8 @@ def main(argv=None):
     # Rotate old cells by check date so neither workload starves the other.
     oldest = sorted(report['tiles'], key=lambda t: t.get('catalog_checked_at', ''))
     work = oldest[:12] + [cell for cell in plan['next_cells'] if cell['key'] not in existing_keys] + oldest[12:]
-    policy = hashlib.sha256((INFERENCE_PIPELINE + mask[0]['version']
+    pipeline = INFERENCE_PIPELINE if args.source == 'copernicus' else 'detailed-vv-rtc-land-coast-masked-v1'
+    policy = hashlib.sha256((pipeline + mask[0]['version']
                             + hashlib.sha256(mask[1]['land'].wkb + mask[1]['coast'].wkb).hexdigest()).encode()).hexdigest()
     attempts = dict(report.get('scan_attempts', {}))
     started = time.monotonic()
@@ -171,7 +175,9 @@ def main(argv=None):
             validate_tile(ROOT, old)
         if not geometry_box(*mask[0]['coverage_bbox']).covers(geometry_box(*old['bbox'])):
             raise ValueError('No validated shoreline mask for this area')
-        products = search_sentinel1_grd(tokens.get(), tuple(old['bbox']), end-timedelta(days=30), end, limit=50)
+        products = (search_rtc(tuple(old['bbox']), end-timedelta(days=30), end)
+                    if args.source == 'planetary' else
+                    search_sentinel1_grd(tokens.get(), tuple(old['bbox']), end-timedelta(days=30), end, limit=50))
         products = [p for p in products if p.polarization in {'DV', 'SV', 'VV'}]
         if not products:
             raise ValueError('No recent catalog acquisition for cell')
@@ -181,16 +187,19 @@ def main(argv=None):
                      and old.get('inference_policy_sha256') == policy)
         if unchanged:
             return product, None
-        if old['key'] in existing_keys and old.get('reference_product') == product.product_id:
+        if (old['key'] in existing_keys and old.get('reference_product') == product.product_id
+                and old.get('source_provider', 'copernicus') == args.source):
             raw = (ROOT / old['asset_dir'] / 'sar.png').read_bytes()
         else:
             acquired_day = date.fromisoformat(product.acquired_at[:10])
-            raw = sentinel1_mosaic_preview(tokens.get(), tuple(old['bbox']), acquired_day, acquired_day,
-                                          width=1024, polarization=product.polarization)
+            raw = (render_rtc(product, tuple(old['bbox'])) if args.source == 'planetary' else
+                   sentinel1_mosaic_preview(tokens.get(), tuple(old['bbox']), acquired_day, acquired_day,
+                                            width=1024, polarization=product.polarization))
         return product, raw
 
     from scan_prefetch import prefetched
     prepared = prefetched(work, fetch, depth=args.prefetch)
+    blocked_error = None
     for old, fetched, fetch_error in prepared:
         if shutil.disk_usage(ROOT).free < 5 * 1024**3:
             print('Disk reserve reached; checkpoint retained', flush=True)
@@ -236,14 +245,29 @@ def main(argv=None):
                         confidence_threshold=.35, inference_policy_sha256=policy,
                         valid_pixel_fraction=valid_fraction,
                         catalog_checked_at=datetime.now(timezone.utc).isoformat(),
-                        inference_pipeline=INFERENCE_PIPELINE, inference_audit=inference_audit,
+                        inference_pipeline=pipeline, inference_audit=inference_audit,
                         validation='Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.',
                         generated_at=datetime.now(timezone.utc).isoformat(), detections=candidates)
+            if args.source == 'planetary':
+                tile.update(provenance(product))
+            else:
+                tile['source_provider'] = 'copernicus'
+                for field in ('source_collection','source_item_url','source_asset_url','source_acquired_at',
+                              'source_native_pixel_spacing_m','radiometry','license'):
+                    tile.pop(field, None)
             validate_tile(ROOT, tile)
             (destination/'manifest.json').write_text(json.dumps(tile, ensure_ascii=False, indent=2)+'\n')
             tiles_by_key[tile['key']] = tile
             updated += 1
             print(f"Updated {old['key']}: {len(candidates)} experimental candidates on {tile['observation_day_utc']}", flush=True)
+        except (CopernicusQuotaError, PlanetaryAccessError) as error:
+            # An account/service block applies to the entire queue. Preserve
+            # already-published work and stop instead of retrying thousands.
+            failed += 1
+            blocked_error = error
+            print(f'Source blocked: {type(error).__name__}; checkpoint retained', flush=True)
+            checkpoint()
+            break
         except Exception as error:
             # One unavailable scene must not erase the last usable evidence.
             failed += 1
@@ -253,10 +277,15 @@ def main(argv=None):
                                     'status': 'retry_later', 'error_type': type(error).__name__}
             print(f"Retained {old['key']}: {type(error).__name__}", flush=True)
         checkpoint()
+        if args.max_updates and updated >= args.max_updates:
+            print('Publication limit reached; remaining cells retained in queue', flush=True)
+            break
     prepared.close()
     checkpoint()
     write_plan(ROOT, report, mask=mask, limit=12, region_key=args.region)
     print(f'Catalog checked {checked}; published {len(tiles_by_key)}; updated {updated}; retained after error {failed}')
+    if blocked_error is not None:
+        raise blocked_error
     if not checked:
         raise RuntimeError('No catalog checks succeeded; previous image evidence retained')
 
