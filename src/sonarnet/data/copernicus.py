@@ -23,6 +23,16 @@ class CopernicusError(RuntimeError):
     """An API error that is safe to show in the dashboard."""
 
 
+class CopernicusQuotaError(CopernicusError):
+    """Account processing allowance exhausted; do not retry every cell."""
+
+
+def process_error(code, detail, label):
+    if code == 403 and 'insufficient processing units or requests' in detail.lower():
+        return CopernicusQuotaError('Copernicus Process API quota exhausted (HTTP 403)')
+    return CopernicusError(f'{label} (HTTP {code}): {detail}')
+
+
 @dataclass(frozen=True)
 class SentinelProduct:
     product_id: str
@@ -149,7 +159,7 @@ function evaluatePixel(sample) {
             image = response.read()
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:400]
-        raise CopernicusError(f"Không tạo được ảnh Sentinel-1 (HTTP {exc.code}): {detail}") from exc
+        raise process_error(exc.code, detail, 'Không tạo được ảnh Sentinel-1') from exc
     except URLError as exc:
         raise CopernicusError("Không thể tải ảnh Sentinel-1. Kiểm tra mạng rồi thử lại.") from exc
     if not image.startswith(b"\x89PNG"):
@@ -201,7 +211,7 @@ function evaluatePixel(sample) {
             image = response.read()
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:400]
-        raise CopernicusError(f"Không tạo được mosaic Sentinel-1 (HTTP {exc.code}): {detail}") from exc
+        raise process_error(exc.code, detail, 'Không tạo được mosaic Sentinel-1') from exc
     except URLError as exc:
         raise CopernicusError("Không thể tải mosaic Sentinel-1. Kiểm tra mạng rồi thử lại.") from exc
     if not image.startswith(b"\x89PNG"):
