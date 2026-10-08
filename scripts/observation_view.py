@@ -19,7 +19,7 @@ from streamlit.components.v1 import html as embed
 from map_raster import overlay_source
 from coverage_status import coverage_rows, waiting_cells
 from popup_evidence import evidence_url
-from observation_labels import candidate_label, coordinates
+from observation_labels import candidate_label, coordinates, observation_time
 from illustrative_vessels import profile, popup as illustrative_popup, FILTERS, filter_vessels
 
 VN_VIEW = [[6, 102], [24, 115]]
@@ -119,6 +119,8 @@ def published_yolo_result(root: Path, record: dict):
             candidates.append(dict(candidate, id=f"{tile['key']}/{candidate['id']}",
                                    tile_key=tile['key'], asset_dir=tile['asset_dir'],
                                    observation_day_utc=tile['observation_day_utc'],
+                                   source_provider=tile.get('source_provider','copernicus'),
+                                   source_acquired_at=tile.get('source_acquired_at'),
                                    weights_sha256=tile['weights_sha256']))
     return dict(detections=candidates, tiles=tiles, generated_at=report['generated_at'])
 
@@ -274,7 +276,7 @@ def render(root):
                 "<div class='glass-vessel-card'>"
                 + (f"<div class='vessel-popup-title'>{marker_profile['name']}</div>" if illustrative else f"<div class='vessel-popup-title'>Điểm cần kiểm tra · {candidate['id']}</div>")
                 + evidence
-                + f"<div class='vessel-popup-meta'>{date_label(candidate['observation_day_utc'])} UTC · {candidate['latitude']:.3f}°, {candidate['longitude']:.3f}°</div>"
+                + f"<div class='vessel-popup-meta'>{observation_time(candidate)} · {candidate['latitude']:.3f}°, {candidate['longitude']:.3f}°<br>Sentinel-1 · {'Planetary Computer' if candidate.get('source_provider') == 'planetary' else 'Copernicus Data Space'}</div>"
                 + (illustrative_popup(candidate) if illustrative else "<span class='marker-status'>Chưa xác minh</span>")
                 + "</div>"
             )
@@ -364,8 +366,9 @@ def render(root):
                 st.image(candidate_crop(root, candidate), width=220, caption='Ảnh radar gốc · vùng quanh ứng viên')
             with details:
                 st.write(f"**Điểm cần kiểm tra {point_numbers[chosen]}**")
-                st.write(f"Ngày ảnh: {date_label(candidate['observation_day_utc'])} UTC · Copernicus")
-                st.caption(f"{coordinates(candidate['latitude'], candidate['longitude'])} · ảnh ghép trong ngày")
+                st.write(f"Ngày ảnh: {observation_time(candidate)}")
+                origin = 'Sentinel-1 · Planetary Computer · một lượt chụp' if candidate.get('source_provider') == 'planetary' else 'Copernicus Data Space · ảnh ghép trong ngày'
+                st.caption(f"{coordinates(candidate['latitude'], candidate['longitude'])} · {origin}")
                 if illustrative:
                     st.markdown(illustrative_popup(candidate), unsafe_allow_html=True)
                 else:
