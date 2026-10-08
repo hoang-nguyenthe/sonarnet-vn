@@ -1,0 +1,40 @@
+name: Verify alternative Sentinel-1 source
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sentinel-asset-refresh
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            scripts
+            tests
+            assets/models
+            assets/land_mask
+            assets/coastline
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install CPU inference and bounded raster reader
+        run: |
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt 'ultralytics>=8.3,<9' 'rasterio>=1.4,<2'
+      - name: Run reader regression tests
+        run: python -m unittest discover -s tests -p test_planetary_source.py -v
+      - name: Verify actual image, coordinates, shoreline mask and inference
+        run: python scripts/probe_rtc_source.py
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: rtc-source-probe
+          path: artifacts/rtc-probe
+          retention-days: 3
+          if-no-files-found: warn
