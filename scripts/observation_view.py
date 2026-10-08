@@ -263,7 +263,7 @@ def render(root):
             color = profile(candidate)['color'] if illustrative else '#bde8ee'
             marker_profile = profile(candidate)
             crop_url = popup_crop_url(candidate, root)
-            evidence = (f"<img src='{crop_url}' width='104' alt='Ảnh radar tại vị trí quan sát' loading='lazy'>"
+            evidence = (f"<img src='{crop_url}' width='104' height='104' alt='Ảnh radar tại vị trí quan sát' loading='lazy'>"
                         if crop_url else "<div>Ảnh nguồn hiện chưa có sẵn.</div>")
             card = (
                 "<div class='glass-vessel-card'>"
@@ -330,7 +330,7 @@ def render(root):
       .leaflet-popup-content-wrapper{border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(236,245,251,.64));backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);color:#20313c;box-shadow:0 18px 48px #071a2c33,0 2px 8px #071a2c16;border:1px solid rgba(255,255,255,.82)}
       .leaflet-popup-tip{background:rgba(242,248,252,.8)}
       .leaflet-popup-content{margin:10px 12px;max-width:min(222px,calc(100vw - 54px))}
-      .leaflet-popup-content img{display:block;width:104px;max-width:104px;border-radius:12px;margin:7px 0;box-shadow:0 5px 14px #0b253126}
+      .leaflet-popup-content img{display:block;width:104px;height:104px;max-width:104px;object-fit:contain;background:#15232c;border-radius:12px;margin:7px 0;box-shadow:0 5px 14px #0b253126}
       .marker-status{font-weight:650}
       .glass-vessel-card{min-width:198px;max-width:222px}
       .vessel-popup-title{font-size:13px;font-weight:700;letter-spacing:-.01em;margin:0 0 2px}
