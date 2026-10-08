@@ -18,6 +18,7 @@ from branca.element import Element, MacroElement, Template
 from streamlit.components.v1 import html as embed
 from map_raster import overlay_source
 from coverage_status import coverage_rows, waiting_cells
+from popup_evidence import evidence_url
 from observation_labels import candidate_label, coordinates
 from illustrative_vessels import profile, popup as illustrative_popup, FILTERS, filter_vessels
 
@@ -135,10 +136,9 @@ def candidate_crop(root, candidate):
         return buffer.getvalue()
 
 
-def popup_crop_url(candidate):
+def popup_crop_url(candidate, root=None):
     """A pre-built local crop; fetched by the browser only when its marker opens."""
-    name = f"{candidate['tile_key']}--{str(candidate['id']).rsplit('/', 1)[-1]}.jpg"
-    return 'app/static/crops/' + quote(name)
+    return evidence_url(root or Path(__file__).resolve().parents[1], candidate)
 
 
 def points_in_region(points, bounds):
@@ -262,10 +262,13 @@ def render(root):
         for candidate in visible_candidates:
             color = profile(candidate)['color'] if illustrative else '#bde8ee'
             marker_profile = profile(candidate)
+            crop_url = popup_crop_url(candidate, root)
+            evidence = (f"<img src='{crop_url}' width='104' alt='Ảnh radar tại vị trí quan sát' loading='lazy'>"
+                        if crop_url else "<div>Ảnh nguồn hiện chưa có sẵn.</div>")
             card = (
                 "<div class='glass-vessel-card'>"
                 + (f"<div class='vessel-popup-title'>{marker_profile['name']}</div>" if illustrative else f"<div class='vessel-popup-title'>Điểm cần kiểm tra · {candidate['id']}</div>")
-                + f"<img src='{popup_crop_url(candidate)}' width='104' alt='Ảnh radar tại vị trí quan sát' loading='lazy'>"
+                + evidence
                 + f"<div class='vessel-popup-meta'>{date_label(candidate['observation_day_utc'])} UTC · {candidate['latitude']:.3f}°, {candidate['longitude']:.3f}°</div>"
                 + (illustrative_popup(candidate) if illustrative else "<span class='marker-status'>Chưa xác minh</span>")
                 + "</div>"
