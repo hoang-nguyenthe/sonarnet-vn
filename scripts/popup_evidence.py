@@ -35,4 +35,8 @@ def evidence_url(root, candidate):
             finally:
                 if os.path.exists(temporary):
                     os.unlink(temporary)
-    return '/app/static/crops/' + name
+    # A srcdoc map inherits the Streamlit app document's base URL. On
+    # Community Cloud that document lives at /~/+/, not the outer site root.
+    # A leading slash drops that prefix and returns an HTML auth redirect
+    # instead of the JPEG. Keep this relative for Cloud AND local deployments.
+    return 'app/static/crops/' + name

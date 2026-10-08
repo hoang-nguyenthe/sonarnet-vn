@@ -217,7 +217,7 @@ def render(root):
     coverage = read_json(root/'assets/real_scan/coverage.json')
     area_plan = next((area for area in coverage.get('regions', []) if area['key'] == record['key']), None)
     if area_plan and waiting_cells(area_plan):
-        st.caption(f"Đang mở rộng vùng kiểm tra: còn {waiting_cells(area_plan):,} ô ảnh chờ xử lý hoặc tải lại. Kết quả được bổ sung sau mỗi lượt đồng bộ, chưa phủ kín khu vực.")
+        st.caption(f"Còn {waiting_cells(area_plan):,} ô ảnh chưa xử lý hoặc cần tải lại. Đây là phần chưa có kết quả, không phải số ô đang chạy. Phạm vi kiểm tra chưa phủ kín khu vực.")
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
     Fullscreen(position='topleft', title='Toàn màn hình', title_cancel='Thu nhỏ', force_separate_button=True).add_to(chart)
     folium.TileLayer(
