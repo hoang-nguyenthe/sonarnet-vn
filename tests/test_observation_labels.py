@@ -2,10 +2,16 @@ import sys
 from pathlib import Path
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'scripts'))
-from observation_labels import coordinates, candidate_label, tile_label
+from observation_labels import coordinates, candidate_label, tile_label, observation_time
 
 
 class LabelTests(unittest.TestCase):
+    def test_exact_time_is_preserved_for_rtc(self):
+        self.assertEqual(observation_time({'source_acquired_at':'2026-10-01T10:55:19.123Z'}),
+                         '01/10/2026 10:55:19 UTC')
+
+    def test_daily_mosaic_does_not_invent_an_exact_time(self):
+        self.assertEqual(observation_time({'observation_day_utc':'2026-09-20'}),'20/09/2026 UTC')
     def test_hemispheres_are_not_always_vietnam(self):
         self.assertEqual(coordinates(-12, -75), '12.000°N, 75.000°T')
         self.assertEqual(coordinates(12, 109), '12.000°B, 109.000°Đ')
