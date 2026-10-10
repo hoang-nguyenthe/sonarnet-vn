@@ -1,0 +1,49 @@
+{
+  "key": "grid_f65a151660134d9d",
+  "bbox": [
+    106.1,
+    19.0,
+    106.2,
+    19.1
+  ],
+  "row": 130,
+  "column": 41,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/fce79ac47979e02e/grid_f65a151660134d9d",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+  "band": "VV",
+  "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+  "reference_product": "S1C_IW_GRDH_1SDV_20261009T225047_20261009T225117_009814_0138CA_rtc",
+  "observation_day_utc": "2026-10-09",
+  "image_sha256": "54328928fcc0f17087e1277e0526e0a5824788b3a017f9f1d6320515af752a91",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
+  "valid_pixel_fraction": 0.31702327728271484,
+  "catalog_checked_at": "2026-10-10T21:58:02.463201+00:00",
+  "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.31702327728271484,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-10-10T21:58:02.463242+00:00",
+  "detections": [],
+  "source_collection": "sentinel-1-rtc",
+  "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1C_IW_GRDH_1SDV_20261009T225047_20261009T225117_009814_0138CA_rtc",
+  "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/9/IW/DV/S1C_IW_GRDH_1SDV_20261009T225047_20261009T225117_009814_0138CA_0DD2/measurement/iw-vv.rtc.tiff",
+  "source_acquired_at": "2026-10-09T22:51:02.367547Z",
+  "source_native_pixel_spacing_m": 10.0,
+  "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+  "license": "CC-BY-4.0",
+  "source_provider": "planetary"
+}
