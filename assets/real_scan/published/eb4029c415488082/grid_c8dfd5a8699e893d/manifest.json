@@ -1,0 +1,115 @@
+{
+  "key": "grid_c8dfd5a8699e893d",
+  "bbox": [
+    107.4,
+    21.0,
+    107.5,
+    21.1
+  ],
+  "row": 150,
+  "column": 54,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/eb4029c415488082/grid_c8dfd5a8699e893d",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+  "band": "VV",
+  "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+  "reference_product": "S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_rtc",
+  "observation_day_utc": "2026-10-01",
+  "image_sha256": "84352b359ae9b787036763a9efd4538f79c413a70a284871aac3107cf3221499",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-10-14T05:08:08.192952+00:00",
+  "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.13561344146728516,
+    "excluded_candidates": [
+      {
+        "id": 1,
+        "bbox_px": [
+          850.6878051757812,
+          42.53068542480469,
+          863.8007202148438,
+          55.91923522949219
+        ],
+        "confidence": 0.6623415946960449,
+        "longitude": 107.48371526002884,
+        "latitude": 21.095192874968053,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 2,
+        "bbox_px": [
+          29.167339324951172,
+          1012.857177734375,
+          44.30300521850586,
+          1023.952392578125
+        ],
+        "confidence": 0.5686737298965454,
+        "longitude": 107.40358741916717,
+        "latitude": 21.000546407699584,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 3,
+        "bbox_px": [
+          240.66114807128906,
+          1014.6990966796875,
+          254.2764434814453,
+          1024
+        ],
+        "confidence": 0.5092370510101318,
+        "longitude": 107.42416687458754,
+        "latitude": 21.000454145669938,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 4,
+        "bbox_px": [
+          1004.3336181640625,
+          28.9157772064209,
+          1021.602294921875,
+          53.120567321777344
+        ],
+        "confidence": 0.44957801699638367,
+        "longitude": 107.49892265200614,
+        "latitude": 21.095994319114837,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 5,
+        "bbox_px": [
+          935.2514038085938,
+          60.87339782714844,
+          947.6343383789062,
+          73.53434753417969
+        ],
+        "confidence": 0.4311656951904297,
+        "longitude": 107.49193778038025,
+        "latitude": 21.09343712180853,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-10-14T05:08:08.192969+00:00",
+  "detections": [],
+  "source_collection": "sentinel-1-rtc",
+  "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_rtc",
+  "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/1/IW/DV/S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_97EE/measurement/iw-vv.rtc.tiff",
+  "source_acquired_at": "2026-10-01T10:57:24.913854Z",
+  "source_native_pixel_spacing_m": 10.0,
+  "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+  "license": "CC-BY-4.0",
+  "source_provider": "planetary"
+}
