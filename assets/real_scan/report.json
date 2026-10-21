@@ -6,7 +6,7 @@
     10.65
   ],
   "observation_day_utc": "2026-10-18",
-  "generated_at": "2026-10-19T22:34:29.748516+00:00",
+  "generated_at": "2026-10-21T05:04:11.451997+00:00",
   "threshold": 0.35,
   "tiles": [
     {
@@ -8962,25 +8962,25 @@
       "column": 72,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/dda4378ec25e80d6/grid_7286c64a04de9d21",
+      "asset_dir": "assets/real_scan/published/c2c9e3c97d28f6f5/grid_7286c64a04de9d21",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260911T223549_20260911T223614_004536_0086FA_7470_COG.SAFE",
-      "observation_day_utc": "2026-09-11",
-      "image_sha256": "81af0b1c995cd4c7430f196d4e2e47924bf0c695e8891d1e1a28ea3b49beda91",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261017T223549_20261017T223614_005061_00992B_rtc",
+      "observation_day_utc": "2026-10-17",
+      "image_sha256": "1d676770510502edbed87ffaad264b219d56f7a0caa1708fd42596c4d97e10de",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:49:37.768766+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:03:54.642595+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -8988,8 +8988,16 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:49:37.768790+00:00",
-      "detections": []
+      "generated_at": "2026-10-21T05:03:54.642618+00:00",
+      "detections": [],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261017T223549_20261017T223614_005061_00992B_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/17/IW/DV/S1D_IW_GRDH_1SDV_20261017T223549_20261017T223614_005061_00992B_4AA2/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-17T22:36:02.204005Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_d1a984fd8ccc0f4c",
@@ -9003,25 +9011,25 @@
       "column": 72,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/e81538249ebed7f5/grid_d1a984fd8ccc0f4c",
+      "asset_dir": "assets/real_scan/published/60c034bfd70e5853/grid_d1a984fd8ccc0f4c",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260911T223614_20260911T223639_004536_0086FA_A492_COG.SAFE",
-      "observation_day_utc": "2026-09-11",
-      "image_sha256": "4335a409370674f9d8901df540feb6753630d6bb91f7e141b795f5bce1354e63",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261017T223614_20261017T223639_005061_00992B_rtc",
+      "observation_day_utc": "2026-10-17",
+      "image_sha256": "96f5c313d06edc205802e4f6ff45f24e3f399889e2cf2c92a8e1d9e1bffed993",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:49:41.379892+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:03:57.892138+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -9029,8 +9037,16 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:49:41.379916+00:00",
-      "detections": []
+      "generated_at": "2026-10-21T05:03:57.892158+00:00",
+      "detections": [],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261017T223614_20261017T223639_005061_00992B_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/17/IW/DV/S1D_IW_GRDH_1SDV_20261017T223614_20261017T223639_005061_00992B_540F/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-17T22:36:27.204120Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_d3b9d580eace98a9",
@@ -9044,25 +9060,25 @@
       "column": 9,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/af564ece7250efff/grid_d3b9d580eace98a9",
+      "asset_dir": "assets/real_scan/published/74acbf89efa74023/grid_d3b9d580eace98a9",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1C_IW_GRDH_1SDV_20260916T111903_20260916T111933_009472_012D77_AF59_COG.SAFE",
-      "observation_day_utc": "2026-09-16",
-      "image_sha256": "8df82344dca65ebc879a1797f4f62f923da926f9f71a9af22c187ce9cd693785",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261016T111915_20261016T111940_005040_00986D_rtc",
+      "observation_day_utc": "2026-10-16",
+      "image_sha256": "fc6ee44cd5076f058edd9a6aa9c2ee5c0261865704d333280728bc6436b13be1",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:49:45.256512+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:03:59.063006+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -9070,33 +9086,29 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:49:45.256537+00:00",
+      "generated_at": "2026-10-21T05:03:59.063028+00:00",
       "detections": [
         {
           "id": 1,
           "bbox_px": [
-            525.692626953125,
-            279.34527587890625,
-            542.83251953125,
-            308.99578857421875
+            211.8251953125,
+            630.838623046875,
+            227.30947875976562,
+            647.1630859375
           ],
-          "confidence": 0.5330740809440613,
-          "longitude": 102.95217407941819,
-          "latitude": 11.07127240896225
-        },
-        {
-          "id": 2,
-          "bbox_px": [
-            541.3050537109375,
-            318.8612060546875,
-            549.6390380859375,
-            331.33502197265625
-          ],
-          "confidence": 0.5269690155982971,
-          "longitude": 102.95326875448227,
-          "latitude": 11.068252137303352
+          "confidence": 0.7088111042976379,
+          "longitude": 102.92144212275744,
+          "latitude": 11.037597572803497
         }
-      ]
+      ],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261016T111915_20261016T111940_005040_00986D_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/16/IW/DV/S1D_IW_GRDH_1SDV_20261016T111915_20261016T111940_005040_00986D_166C/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-16T11:19:27.691921Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_e9d0094f875f992b",
@@ -9110,25 +9122,25 @@
       "column": 9,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/5657f1517b919f70/grid_e9d0094f875f992b",
+      "asset_dir": "assets/real_scan/published/8d94772ab6574752/grid_e9d0094f875f992b",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260910T111849_20260910T111914_004515_00863D_931B_COG.SAFE",
-      "observation_day_utc": "2026-09-10",
-      "image_sha256": "233ecefd36b45c56eb11b3128a50fe097e4cd2da77e57b8e75c90f3cf763580d",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261016T111850_20261016T111915_005040_00986D_rtc",
+      "observation_day_utc": "2026-10-16",
+      "image_sha256": "9e6735d737cc3330aeba945d21d4610d6c8ce9a43f1829b175bafd96b27b33cb",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:49:48.927755+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:04:01.678668+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -9136,8 +9148,16 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:49:48.927778+00:00",
-      "detections": []
+      "generated_at": "2026-10-21T05:04:01.678692+00:00",
+      "detections": [],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261016T111850_20261016T111915_005040_00986D_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/16/IW/DV/S1D_IW_GRDH_1SDV_20261016T111850_20261016T111915_005040_00986D_C77B/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-16T11:19:02.692301Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_c89333682ddf8ca7",
@@ -9151,25 +9171,25 @@
       "column": 9,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/408ea092a132432e/grid_c89333682ddf8ca7",
+      "asset_dir": "assets/real_scan/published/a34ac63dd0c97cce/grid_c89333682ddf8ca7",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260910T111849_20260910T111914_004515_00863D_931B_COG.SAFE",
-      "observation_day_utc": "2026-09-10",
-      "image_sha256": "6929760eb44b9a4008dcc934ffa818c53c31d814dc7edcd72adda6f5b9a0a66d",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261016T111850_20261016T111915_005040_00986D_rtc",
+      "observation_day_utc": "2026-10-16",
+      "image_sha256": "7db7fbb8071c239d38dd50e448377a1296a46bad4050faf8094bd8c312671fa7",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:49:52.274390+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:04:02.854648+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -9177,8 +9197,16 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:49:52.274414+00:00",
-      "detections": []
+      "generated_at": "2026-10-21T05:04:02.854669+00:00",
+      "detections": [],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261016T111850_20261016T111915_005040_00986D_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/16/IW/DV/S1D_IW_GRDH_1SDV_20261016T111850_20261016T111915_005040_00986D_C77B/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-16T11:19:02.692301Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_ce6fc575a874debd",
@@ -9192,34 +9220,42 @@
       "column": 9,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/c7e001033d83edc5/grid_ce6fc575a874debd",
+      "asset_dir": "assets/real_scan/published/774be9d214c90c1b/grid_ce6fc575a874debd",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260915T112625_20260915T112650_004588_0088BA_8852_COG.SAFE",
-      "observation_day_utc": "2026-09-15",
-      "image_sha256": "54648e54c5fe985277bcf53892fad9a7351c002b9dfbfcf2e4b1f96270627b66",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261016T111825_20261016T111850_005040_00986D_rtc",
+      "observation_day_utc": "2026-10-16",
+      "image_sha256": "408fc59af0122afb55242769cb6a66c8400e5d34f386a94140339e09e251821c",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
-      "valid_pixel_fraction": 0.228851318359375,
-      "catalog_checked_at": "2026-09-17T07:49:54.686179+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
+      "valid_pixel_fraction": 1.0,
+      "catalog_checked_at": "2026-10-21T05:04:04.789727+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
-        "allowed_pixel_fraction": 0.228851318359375,
+        "allowed_pixel_fraction": 1.0,
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:49:54.686200+00:00",
-      "detections": []
+      "generated_at": "2026-10-21T05:04:04.789750+00:00",
+      "detections": [],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261016T111825_20261016T111850_005040_00986D_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/16/IW/DV/S1D_IW_GRDH_1SDV_20261016T111825_20261016T111850_005040_00986D_EFD9/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-16T11:18:37.692616Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_5be7b5cc5bbbfa7d",
@@ -9233,25 +9269,25 @@
       "column": 9,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/c87ffe38aa899c27/grid_5be7b5cc5bbbfa7d",
+      "asset_dir": "assets/real_scan/published/0ca05cc151ebe437/grid_5be7b5cc5bbbfa7d",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260915T112625_20260915T112650_004588_0088BA_8852_COG.SAFE",
-      "observation_day_utc": "2026-09-15",
-      "image_sha256": "f06d739e763bdfd6426000c53d5c567193f12614315c291cfd45c632dd9b8be7",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261016T111825_20261016T111850_005040_00986D_rtc",
+      "observation_day_utc": "2026-10-16",
+      "image_sha256": "25bbdf0773349a2521db67e3972081fb9a64b52bb5cb25b0268f7ea49e526391",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:49:57.754285+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:04:06.255377+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -9259,8 +9295,16 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:49:57.754308+00:00",
-      "detections": []
+      "generated_at": "2026-10-21T05:04:06.255401+00:00",
+      "detections": [],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261016T111825_20261016T111850_005040_00986D_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/16/IW/DV/S1D_IW_GRDH_1SDV_20261016T111825_20261016T111850_005040_00986D_EFD9/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-16T11:18:37.692616Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_c04b3582b195a61a",
@@ -9274,25 +9318,25 @@
       "column": 16,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/24db776caa2e4df6/grid_c04b3582b195a61a",
+      "asset_dir": "assets/real_scan/published/209edbe82580c4ab/grid_c04b3582b195a61a",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260910T111759_20260910T111824_004515_00863D_1B93_COG.SAFE",
-      "observation_day_utc": "2026-09-10",
-      "image_sha256": "5930b0aaa660fa55132e0cf4ff5d346351a274031531869887bf763bb74b067a",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261016T111800_20261016T111825_005040_00986D_rtc",
+      "observation_day_utc": "2026-10-16",
+      "image_sha256": "1f25dbe6c48cdcb5cfaf90bfba886733d57b2572727734e201964988dad2603f",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:50:01.282595+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:04:08.019377+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -9300,21 +9344,16 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:50:01.282618+00:00",
-      "detections": [
-        {
-          "id": 1,
-          "bbox_px": [
-            687.3644409179688,
-            92.66053009033203,
-            696.3263549804688,
-            105.5910415649414
-          ],
-          "confidence": 0.7061254978179932,
-          "longitude": 103.66756302714347,
-          "latitude": 6.0903197474777695
-        }
-      ]
+      "generated_at": "2026-10-21T05:04:08.019398+00:00",
+      "detections": [],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261016T111800_20261016T111825_005040_00986D_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/16/IW/DV/S1D_IW_GRDH_1SDV_20261016T111800_20261016T111825_005040_00986D_7612/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-16T11:18:12.692196Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_5f02407480ea9338",
@@ -9328,98 +9367,133 @@
       "column": 58,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/e066aa36848cc273/grid_5f02407480ea9338",
+      "asset_dir": "assets/real_scan/published/c41dc547bfcc30e9/grid_5f02407480ea9338",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260907T105711_20260907T105736_004471_0084B6_28FA_COG.SAFE",
-      "observation_day_utc": "2026-09-07",
-      "image_sha256": "1dadba816a7e17adb3c541769639b4ac5273cf9b29c6bf10c7eea4973f541cca",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_rtc",
+      "observation_day_utc": "2026-10-01",
+      "image_sha256": "7effce5e19d96ffa6f420a3d60d735b7bc27299ea0a125727914a5dd7538e2a9",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:50:04.366009+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:04:09.379076+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
         "allowed_pixel_fraction": 0.7300806045532227,
         "excluded_candidates": [
           {
-            "id": 1,
+            "id": 2,
             "bbox_px": [
-              101.49510192871094,
-              865.7032470703125,
-              116.01785278320312,
-              881.9791259765625
+              505.1722412109375,
+              571.769287109375,
+              516.6141357421875,
+              582.322265625
             ],
-            "confidence": 0.6895043253898621,
-            "longitude": 107.81062074974179,
-            "latitude": 21.01466394662857,
+            "confidence": 0.5298765897750854,
+            "longitude": 107.84989191293717,
+            "latitude": 21.043647873401643,
             "reason": "land_or_coastal_exclusion"
           },
           {
-            "id": 2,
+            "id": 3,
             "bbox_px": [
-              372.25531005859375,
-              536.7667236328125,
-              390.46038818359375,
-              554.2191162109375
+              91.3512954711914,
+              860.2752685546875,
+              120.5207748413086,
+              893.9708251953125
             ],
-            "confidence": 0.551001787185669,
-            "longitude": 107.83724197745323,
-            "latitude": 21.04672920703888,
+            "confidence": 0.48082292079925537,
+            "longitude": 107.81034531593322,
+            "latitude": 21.014343452453613,
+            "reason": "land_or_coastal_exclusion"
+          },
+          {
+            "id": 5,
+            "bbox_px": [
+              349.72222900390625,
+              535.6436157226562,
+              389.86859130859375,
+              565.4871215820312
+            ],
+            "confidence": 0.47210803627967834,
+            "longitude": 107.83611283302307,
+            "latitude": 21.046233850717545,
+            "reason": "land_or_coastal_exclusion"
+          },
+          {
+            "id": 6,
+            "bbox_px": [
+              350.120361328125,
+              528.9254150390625,
+              390.49169921875,
+              570.9520263671875
+            ],
+            "confidence": 0.41161996126174927,
+            "longitude": 107.8361626982689,
+            "latitude": 21.046295046806335,
+            "reason": "land_or_coastal_exclusion"
+          },
+          {
+            "id": 7,
+            "bbox_px": [
+              505.2908935546875,
+              569.2406005859375,
+              518.2267456054688,
+              580.9630126953125
+            ],
+            "confidence": 0.3915643095970154,
+            "longitude": 107.84997644722462,
+            "latitude": 21.043837714195252,
             "reason": "land_or_coastal_exclusion"
           }
         ]
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:50:04.366032+00:00",
+      "generated_at": "2026-10-21T05:04:09.379097+00:00",
       "detections": [
         {
-          "id": 3,
+          "id": 1,
           "bbox_px": [
-            959.6148681640625,
-            234.49472045898438,
-            968.251708984375,
-            243.30416870117188
+            316.87017822265625,
+            572.75634765625,
+            330.44122314453125,
+            587.88330078125
           ],
-          "confidence": 0.5416969656944275,
-          "longitude": 107.89413411021233,
-          "latitude": 21.076669976115227
+          "confidence": 0.6262807846069336,
+          "longitude": 107.83160700201988,
+          "latitude": 21.04332814216614
         },
         {
           "id": 4,
           "bbox_px": [
-            455.2108154296875,
-            497.4618225097656,
-            465.1746826171875,
-            506.6005554199219
+            448.009521484375,
+            495.41864013671875,
+            463.828125,
+            508.84637451171875
           ],
-          "confidence": 0.4864267408847809,
-          "longitude": 107.84494069814681,
-          "latitude": 21.05097351670265
-        },
-        {
-          "id": 5,
-          "bbox_px": [
-            65.9773941040039,
-            1005.411376953125,
-            77.8366928100586,
-            1017.505126953125
-          ],
-          "confidence": 0.44874829053878784,
-          "longitude": 107.8070221722126,
-          "latitude": 21.0012247800827
+          "confidence": 0.47791603207588196,
+          "longitude": 107.84452332258225,
+          "latitude": 21.05096362233162
         }
-      ]
+      ],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/1/IW/DV/S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_97EE/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-01T10:57:24.913854Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_2110d07384ec9443",
@@ -9433,25 +9507,25 @@
       "column": 52,
       "region_key": "vietnam",
       "region_label": "Việt Nam",
-      "asset_dir": "assets/real_scan/published/94e6bfcce76453d9/grid_2110d07384ec9443",
+      "asset_dir": "assets/real_scan/published/53cf969a631c19cc/grid_2110d07384ec9443",
       "image_size": [
         1024,
         1024
       ],
       "status": "processed",
-      "source": "Copernicus Data Space · Sentinel-1 GRD",
+      "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
       "band": "VV",
-      "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
-      "reference_product": "S1D_IW_GRDH_1SDV_20260907T105711_20260907T105736_004471_0084B6_28FA_COG.SAFE",
-      "observation_day_utc": "2026-09-07",
-      "image_sha256": "15eab639877d573f007c06f5828eecd4c45a023439a157190a439ca97b76fb1d",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "reference_product": "S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_rtc",
+      "observation_day_utc": "2026-10-01",
+      "image_sha256": "6961ace61f28f29461a7c6cf864253777904bb44136b69cc0d170627beaaaf2e",
       "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
       "device": "cpu",
       "confidence_threshold": 0.35,
-      "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+      "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
       "valid_pixel_fraction": 1.0,
-      "catalog_checked_at": "2026-09-17T07:50:08.015765+00:00",
-      "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+      "catalog_checked_at": "2026-10-21T05:04:10.566566+00:00",
+      "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
       "inference_audit": {
         "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
         "input_mask_buffer_m": 500,
@@ -9459,8 +9533,29 @@
         "excluded_candidates": []
       },
       "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
-      "generated_at": "2026-09-17T07:50:08.015789+00:00",
-      "detections": []
+      "generated_at": "2026-10-21T05:04:10.566590+00:00",
+      "detections": [
+        {
+          "id": 1,
+          "bbox_px": [
+            344.43951416015625,
+            1009.3951416015625,
+            353.61639404296875,
+            1021.2249755859375
+          ],
+          "confidence": 0.42874637246131897,
+          "longitude": 107.23408476114273,
+          "latitude": 20.000848627090456
+        }
+      ],
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/1/IW/DV/S1D_IW_GRDH_1SDV_20261001T105712_20261001T105737_004821_0090D7_97EE/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2026-10-01T10:57:24.913854Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
     },
     {
       "key": "grid_86798fe9841f204d",
@@ -215877,66 +215972,6 @@
       "status": "retry_later",
       "error_type": "CopernicusError"
     },
-    "grid_7286c64a04de9d21": {
-      "last_checked_at": "2026-10-08T06:35:12.266549+00:00",
-      "retry_after": "2026-10-08T12:35:12.266549+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_d1a984fd8ccc0f4c": {
-      "last_checked_at": "2026-10-08T06:35:12.800537+00:00",
-      "retry_after": "2026-10-08T12:35:12.800537+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_d3b9d580eace98a9": {
-      "last_checked_at": "2026-10-08T06:35:13.327962+00:00",
-      "retry_after": "2026-10-08T12:35:13.327962+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_e9d0094f875f992b": {
-      "last_checked_at": "2026-10-08T06:35:13.873582+00:00",
-      "retry_after": "2026-10-08T12:35:13.873582+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_c89333682ddf8ca7": {
-      "last_checked_at": "2026-10-08T06:35:14.422424+00:00",
-      "retry_after": "2026-10-08T12:35:14.422424+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_ce6fc575a874debd": {
-      "last_checked_at": "2026-10-08T06:35:14.928189+00:00",
-      "retry_after": "2026-10-08T12:35:14.928189+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_5be7b5cc5bbbfa7d": {
-      "last_checked_at": "2026-10-08T06:35:15.482887+00:00",
-      "retry_after": "2026-10-08T12:35:15.482887+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_c04b3582b195a61a": {
-      "last_checked_at": "2026-10-08T06:35:16.031118+00:00",
-      "retry_after": "2026-10-08T12:35:16.031118+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_5f02407480ea9338": {
-      "last_checked_at": "2026-10-08T06:35:16.737174+00:00",
-      "retry_after": "2026-10-08T12:35:16.737174+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
-    "grid_2110d07384ec9443": {
-      "last_checked_at": "2026-10-08T06:35:17.276066+00:00",
-      "retry_after": "2026-10-08T12:35:17.276066+00:00",
-      "status": "retry_later",
-      "error_type": "CopernicusError"
-    },
     "grid_86798fe9841f204d": {
       "last_checked_at": "2026-10-08T06:35:17.814317+00:00",
       "retry_after": "2026-10-08T12:35:17.814317+00:00",
@@ -237311,7 +237346,7 @@
     }
   },
   "worker_progress": {
-    "checked_at": "2026-10-19T22:34:29.749387+00:00",
+    "checked_at": "2026-10-21T05:04:11.452626+00:00",
     "region": "vietnam",
     "remaining_at_start": 1868,
     "updated_this_run": 10,
