@@ -1,0 +1,62 @@
+{
+  "key": "grid_4ba8e01e723b4416",
+  "bbox": [
+    109.4,
+    16.0,
+    109.5,
+    16.1
+  ],
+  "row": 100,
+  "column": 74,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/5abf60c5e423854b/grid_4ba8e01e723b4416",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+  "band": "VV",
+  "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+  "reference_product": "S1D_IW_GRDH_1SDV_20261025T105557_20261025T105622_005171_009CF7_rtc",
+  "observation_day_utc": "2026-10-25",
+  "image_sha256": "8018c0b00bfa6252f6bb02f18a79965a32319ccc4551be4c9ae0e320f41b6b47",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-10-26T22:53:56.250868+00:00",
+  "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-10-26T22:53:56.250893+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        171.0329132080078,
+        771.8670043945312,
+        180.4948272705078,
+        785.7515258789062
+      ],
+      "confidence": 0.5631186366081238,
+      "longitude": 109.41716444045306,
+      "latitude": 16.023944407701492
+    }
+  ],
+  "source_collection": "sentinel-1-rtc",
+  "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261025T105557_20261025T105622_005171_009CF7_rtc",
+  "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/10/25/IW/DV/S1D_IW_GRDH_1SDV_20261025T105557_20261025T105622_005171_009CF7_F064/measurement/iw-vv.rtc.tiff",
+  "source_acquired_at": "2026-10-25T10:56:10.051141Z",
+  "source_native_pixel_spacing_m": 10.0,
+  "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+  "license": "CC-BY-4.0",
+  "source_provider": "planetary"
+}
