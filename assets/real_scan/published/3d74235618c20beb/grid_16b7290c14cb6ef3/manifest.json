@@ -1,0 +1,67 @@
+{
+  "key": "grid_16b7290c14cb6ef3",
+  "bbox": [
+    114.7,
+    21.3,
+    114.8,
+    21.4
+  ],
+  "row": 153,
+  "column": 127,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/3d74235618c20beb/grid_16b7290c14cb6ef3",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20261022T103247_20261022T103316_005127_009B76_9D1A_COG.SAFE",
+  "observation_day_utc": "2026-10-22",
+  "image_sha256": "6d59a2fac20c5373e4a2a9583626a5c726747e4efb46300a86775a43ba3291f3",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 0.17884063720703125,
+  "catalog_checked_at": "2026-11-01T13:51:29.074574+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.17884063720703125,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-01T13:51:29.074591+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        107.63337707519531,
+        318.227294921875,
+        118.31497192382812,
+        334.5760498046875
+      ],
+      "confidence": 0.6570116877555847,
+      "longitude": 114.71103263422847,
+      "latitude": 21.368124836683272
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        158.435546875,
+        486.1499328613281,
+        175.84109497070312,
+        510.2552795410156
+      ],
+      "confidence": 0.5619522333145142,
+      "longitude": 114.71632210165262,
+      "latitude": 21.351347401738167
+    }
+  ],
+  "source_provider": "copernicus"
+}

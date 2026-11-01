@@ -1,0 +1,134 @@
+{
+  "key": "grid_5a561ed740198d0f",
+  "bbox": [
+    110.8,
+    19.5,
+    110.9,
+    19.6
+  ],
+  "row": 135,
+  "column": 88,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/53de4cfbec4fce0f/grid_5a561ed740198d0f",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1C_IW_GRDH_1SDV_20261026T104816_20261026T104845_010055_01411E_D77D_COG.SAFE",
+  "observation_day_utc": "2026-10-26",
+  "image_sha256": "aba758ae88f33fbbd65c2da5f1e5224d641bb8d41d560dfd89cc0e499d332253",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-11-01T13:59:20.962796+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.3075246810913086,
+    "excluded_candidates": [
+      {
+        "id": 1,
+        "bbox_px": [
+          197.61062622070312,
+          171.0231475830078,
+          213.62289428710938,
+          189.57371520996094
+        ],
+        "confidence": 0.6277515888214111,
+        "longitude": 110.82007976174354,
+        "latitude": 19.58239273130894,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 2,
+        "bbox_px": [
+          143.854248046875,
+          93.69560241699219,
+          155.24893188476562,
+          105.02986145019531
+        ],
+        "confidence": 0.6153580546379089,
+        "longitude": 110.8146046474576,
+        "latitude": 19.590296608209613,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 3,
+        "bbox_px": [
+          172.40444946289062,
+          654.89697265625,
+          188.75595092773438,
+          671.379638671875
+        ],
+        "confidence": 0.6091837882995605,
+        "longitude": 110.81763478517533,
+        "latitude": 19.535240399837495,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 4,
+        "bbox_px": [
+          192.99465942382812,
+          205.16021728515625,
+          216.45742797851562,
+          233.06759643554688
+        ],
+        "confidence": 0.54838627576828,
+        "longitude": 110.8199927777052,
+        "latitude": 19.57860215753317,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 5,
+        "bbox_px": [
+          191.0787353515625,
+          239.60205078125,
+          205.6756591796875,
+          253.47735595703125
+        ],
+        "confidence": 0.547557532787323,
+        "longitude": 110.81937277317047,
+        "latitude": 19.57592385709286,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 7,
+        "bbox_px": [
+          350.48980712890625,
+          589.9253540039062,
+          392.23321533203125,
+          637.2050170898438
+        ],
+        "confidence": 0.39525359869003296,
+        "longitude": 110.8362657725811,
+        "latitude": 19.54008152484894,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-01T13:59:20.962815+00:00",
+  "detections": [
+    {
+      "id": 6,
+      "bbox_px": [
+        146.5710906982422,
+        122.20965576171875,
+        158.0446014404297,
+        133.37139892578125
+      ],
+      "confidence": 0.5473859906196594,
+      "longitude": 110.8148738130927,
+      "latitude": 19.58752045631409
+    }
+  ],
+  "source_provider": "copernicus"
+}
