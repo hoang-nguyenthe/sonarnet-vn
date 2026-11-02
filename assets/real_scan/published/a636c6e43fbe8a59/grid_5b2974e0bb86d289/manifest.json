@@ -1,0 +1,151 @@
+{
+  "key": "grid_5b2974e0bb86d289",
+  "bbox": [
+    108.8,
+    20.8,
+    108.9,
+    20.9
+  ],
+  "row": 148,
+  "column": 68,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/a636c6e43fbe8a59/grid_5b2974e0bb86d289",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1C_IW_GRDH_1SDV_20261026T104845_20261026T104919_010055_01411E_2FC0_COG.SAFE",
+  "observation_day_utc": "2026-10-26",
+  "image_sha256": "3788e655e61699b0cc50f2b2739a16ff5603347397907b018f9b762e78670185",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-11-02T16:46:01.715151+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-02T16:46:01.715175+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        905.56396484375,
+        147.68988037109375,
+        915.046630859375,
+        162.32562255859375
+      ],
+      "confidence": 0.7592330574989319,
+      "longitude": 108.88889700174332,
+      "latitude": 20.88486252427101
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        471.8459777832031,
+        572.2298583984375,
+        487.7558288574219,
+        582.9693603515625
+      ],
+      "confidence": 0.6993667483329773,
+      "longitude": 108.84685555696487,
+      "latitude": 20.843593788146972
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        78.29054260253906,
+        607.715576171875,
+        99.49943542480469,
+        622.1546630859375
+      ],
+      "confidence": 0.6254674792289734,
+      "longitude": 108.80868115127086,
+      "latitude": 20.83994774222374
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        1003.1890869140625,
+        849.3857421875,
+        1023.8277587890625,
+        885.29150390625
+      ],
+      "confidence": 0.6105833053588867,
+      "longitude": 108.8989754319191,
+      "latitude": 20.81529896259308
+    },
+    {
+      "id": 5,
+      "bbox_px": [
+        1013.3516845703125,
+        256.826171875,
+        1023.9083251953125,
+        273.03076171875
+      ],
+      "confidence": 0.5184483528137207,
+      "longitude": 108.89947558641434,
+      "latitude": 20.874128079414366
+    },
+    {
+      "id": 6,
+      "bbox_px": [
+        1015.1180419921875,
+        853.78857421875,
+        1023.9404296875,
+        886.9423828125
+      ],
+      "confidence": 0.47445234656333923,
+      "longitude": 108.89956340193748,
+      "latitude": 20.81500337123871
+    },
+    {
+      "id": 7,
+      "bbox_px": [
+        82.33492279052734,
+        589.1361083984375,
+        91.74382781982422,
+        601.7060546875
+      ],
+      "confidence": 0.4477211833000183,
+      "longitude": 108.80849993899464,
+      "latitude": 20.84185341000557
+    },
+    {
+      "id": 8,
+      "bbox_px": [
+        1017.58056640625,
+        642.3495483398438,
+        1024,
+        656.1141967773438
+      ],
+      "confidence": 0.4173097014427185,
+      "longitude": 108.89968655109406,
+      "latitude": 20.83659844994545
+    },
+    {
+      "id": 9,
+      "bbox_px": [
+        1016.80859375,
+        869.5255126953125,
+        1024,
+        888.0469970703125
+      ],
+      "confidence": 0.3628183901309967,
+      "longitude": 108.8996488571167,
+      "latitude": 20.8141810297966
+    }
+  ],
+  "source_provider": "copernicus"
+}
