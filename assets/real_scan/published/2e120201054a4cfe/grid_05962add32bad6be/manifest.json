@@ -1,0 +1,67 @@
+{
+  "key": "grid_05962add32bad6be",
+  "bbox": [
+    102.0,
+    12.0,
+    102.1,
+    12.1
+  ],
+  "row": 60,
+  "column": 0,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/2e120201054a4cfe/grid_05962add32bad6be",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1C_IW_GRDH_1SDV_20261103T111933_20261103T111958_010172_0144DD_8018_COG.SAFE",
+  "observation_day_utc": "2026-11-03",
+  "image_sha256": "ab5f382732ef29e3e615fbb45b2b32df92c8f99be5ed8426cae6c721ed669d80",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-03T14:52:35.878856+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        21.89346694946289,
+        0.12319183349609375,
+        45.687435150146484,
+        21.700298309326172
+      ],
+      "confidence": 0.6784582138061523,
+      "longitude": 102.00329984873534,
+      "latitude": 12.09893439989537
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        130.74667358398438,
+        12.269424438476562,
+        143.19735717773438,
+        25.270156860351562
+      ],
+      "confidence": 0.37501004338264465,
+      "longitude": 102.01337617337704,
+      "latitude": 12.098167012631892
+    }
+  ],
+  "catalog_checked_at": "2026-11-03T14:52:35.878830+00:00",
+  "valid_pixel_fraction": 1.0,
+  "source_provider": "copernicus"
+}
