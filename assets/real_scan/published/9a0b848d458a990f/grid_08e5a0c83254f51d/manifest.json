@@ -1,0 +1,142 @@
+{
+  "key": "grid_08e5a0c83254f51d",
+  "bbox": [
+    106.3,
+    18.1,
+    106.4,
+    18.2
+  ],
+  "row": 121,
+  "column": 43,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/9a0b848d458a990f/grid_08e5a0c83254f51d",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20261103T224257_20261103T224326_005309_00A1B1_601D_COG.SAFE",
+  "observation_day_utc": "2026-11-03",
+  "image_sha256": "8c732cd84e73f2d29ce201fba2d04bf1af72c9e867b44c3e1af7c4d6bea436cf",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-11-07T22:30:22.516321+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.6974391937255859,
+    "excluded_candidates": [
+      {
+        "id": 5,
+        "bbox_px": [
+          896.7186279296875,
+          901.712158203125,
+          939.6387939453125,
+          948.361083984375
+        ],
+        "confidence": 0.6167345643043518,
+        "longitude": 106.38966588974,
+        "latitude": 18.109664392471316,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 7,
+        "bbox_px": [
+          897.123291015625,
+          890.9075927734375,
+          945.166259765625,
+          946.4522705078125
+        ],
+        "confidence": 0.5842764973640442,
+        "longitude": 106.38995554447175,
+        "latitude": 18.11028516292572,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-07T22:30:22.516346+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        1007.7191162109375,
+        128.778564453125,
+        1023.9779052734375,
+        152.2799072265625
+      ],
+      "confidence": 0.7441546320915222,
+      "longitude": 106.39920395612717,
+      "latitude": 18.186276441812513
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        525.2802124023438,
+        347.9022521972656,
+        538.4640502929688,
+        361.6755676269531
+      ],
+      "confidence": 0.7055209875106812,
+      "longitude": 106.35194063782693,
+      "latitude": 18.165352645516396
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        158.44232177734375,
+        343.98529052734375,
+        174.60833740234375,
+        360.0899658203125
+      ],
+      "confidence": 0.6999082565307617,
+      "longitude": 106.31626223921775,
+      "latitude": 18.16562132537365
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        945.086669921875,
+        823.0908203125,
+        958.5498046875,
+        836.609375
+      ],
+      "confidence": 0.6490818858146667,
+      "longitude": 106.3929509997368,
+      "latitude": 18.118959951400758
+    },
+    {
+      "id": 6,
+      "bbox_px": [
+        950.4342041015625,
+        517.387939453125,
+        999.4093017578125,
+        570.750244140625
+      ],
+      "confidence": 0.6149153113365173,
+      "longitude": 106.39520720243455,
+      "latitude": 18.146868252754214
+    },
+    {
+      "id": 8,
+      "bbox_px": [
+        1014.9473876953125,
+        897.5877685546875,
+        1023.9576416015625,
+        911.3768310546875
+      ],
+      "confidence": 0.437812477350235,
+      "longitude": 106.39955590963365,
+      "latitude": 18.1116716504097
+    }
+  ],
+  "source_provider": "copernicus"
+}
