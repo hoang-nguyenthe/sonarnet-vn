@@ -1,0 +1,55 @@
+{
+  "key": "grid_3c3c924ad0ab4a66",
+  "bbox": [
+    107.9,
+    19.3,
+    108.0,
+    19.4
+  ],
+  "row": 133,
+  "column": 59,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/ee2263a7f5e9c18c/grid_3c3c924ad0ab4a66",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "band": "VV",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "reference_product": "S1D_IW_GRDH_1SDV_20261106T105647_20261106T105712_005346_00A2F2_F75B_COG.SAFE",
+  "observation_day_utc": "2026-11-06",
+  "image_sha256": "e6f973269a8979830e6dd5c1d2f01de49bf7bd144aa0e8394b841bacc0b4e174",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-11-08T06:42:32.220627+00:00",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-08T06:42:32.220648+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        200.52761840820312,
+        227.67080688476562,
+        210.77984619140625,
+        237.06625366210938
+      ],
+      "confidence": 0.583408772945404,
+      "longitude": 107.92008337229491,
+      "latitude": 19.377307760715485
+    }
+  ],
+  "source_provider": "copernicus"
+}

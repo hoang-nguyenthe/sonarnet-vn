@@ -1,0 +1,63 @@
+{
+  "source": "Copernicus Data Space · Sentinel-1 GRD",
+  "device": "cpu",
+  "reference_product": "S1C_IW_GRDH_1SDV_20261104T223629_20261104T223645_010193_01459C_AB98_COG.SAFE",
+  "observation_day_utc": "2026-11-04",
+  "time_scope": "Daily VV Process API mosaic; reference product is not exact per-pixel attribution",
+  "bbox": [
+    108.0,
+    10.45,
+    108.1,
+    10.55
+  ],
+  "image_size": [
+    1024,
+    1024
+  ],
+  "confidence_threshold": 0.35,
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "image_sha256": "cc59e76393f2509762a5277010377e39d8e8e3391cab4d0e6e927e05456a712e",
+  "generated_at": "2026-11-08T06:39:52.780479+00:00",
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        955.8158569335938,
+        449.8875427246094,
+        968.1913452148438,
+        470.3513488769531
+      ],
+      "confidence": 0.7150901556015015,
+      "longitude": 108.09394566416739,
+      "latitude": 10.505066460371017
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        948.8744506835938,
+        479.7703857421875,
+        958.0425415039062,
+        494.3900146484375
+      ],
+      "confidence": 0.36471500992774963,
+      "longitude": 108.09311118125915,
+      "latitude": 10.502433574199676
+    }
+  ],
+  "key": "cell_1_3",
+  "status": "processed",
+  "asset_dir": "assets/real_scan/published/74b0123e7ce12d00/cell_1_3",
+  "band": "VV",
+  "inference_policy_sha256": "8cb0176fb826f9de702240abc7c90280be9e04f9b279ab4fbd31b09c71728376",
+  "inference_pipeline": "detailed-vv-preview-land-coast-masked-v2",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "catalog_checked_at": "2026-11-08T06:39:52.780457+00:00",
+  "valid_pixel_fraction": 1.0,
+  "source_provider": "copernicus"
+}
