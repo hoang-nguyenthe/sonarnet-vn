@@ -26,6 +26,21 @@ cd /Volumes/SonarNetWork/sonarnet-final
 
 Không dùng số liệu của checkpoint mới để ghi đè kết quả hoặc mã mô hình lịch sử trong bản đồ. Chưa xác minh việc cập nhật bản công khai.
 
+## Gói bàn giao và liên kết rà soát
+
+ZIP trên SSD: `/Volumes/T7/SonarNet-20261116/SonarNet_Chang1_Ban_ra_soat_20261117.zip`.
+Đọc `docs/PACKAGE_README.md` trước khi chạy. Gói có dự đoán thô và checkpoint,
+không chứa toàn bộ ảnh huấn luyện hoặc 13 GB ảnh bản đồ; có công cụ khôi phục ảnh
+bản đồ theo revision và checksum. SHA-256 toàn gói nằm trong tệp `.zip.sha256`
+bên cạnh; SHA-256 từng thành phần nằm trong `PACKAGE_MANIFEST.json` bên trong.
+
+- Mã nguồn mới: https://github.com/hoang-nguyenthe/sonarnet-vn/tree/final/chang-1
+- PR nháp: https://github.com/hoang-nguyenthe/sonarnet-vn/pull/3
+- PDF trên nhánh: https://github.com/hoang-nguyenthe/sonarnet-vn/blob/final/chang-1/output/pdf/SonarNet_Bao_cao_cai_tien_Chang1.pdf
+
+Đây là nhánh rà soát, chưa phải bản chạy công khai. Không điền link demo cũ như
+thể nó đã có toàn bộ cải tiến mới. Chưa thực hiện cam kết/nộp hồ sơ trên portal.
+
 ## Những thông tin tác giả cần chốt
 
 - Tên đội chính thức và thông tin thành viên theo tài khoản BTC.

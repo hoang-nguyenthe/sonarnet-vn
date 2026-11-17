@@ -11,7 +11,7 @@ Hạn hiển thị khi đối chiếu: 23:59 ngày 26/11/2026, giờ Việt Nam.
 | Ghép AIS theo độ tin cậy | Cổng tuổi AIS, sigma, khoảng cách kết hợp; từ chối cặp mơ hồ; 600 kịch bản mô phỏng đối chứng khoảng cách-only | Hiệu chỉnh ngưỡng trên AIS thực địa khi có dữ liệu; không tuyên bố mô phỏng là độ chính xác thực địa |
 | Đánh giá SAR độc lập | Dữ liệu gốc LS-SSDD tải đủ; split riêng theo cảnh/vùng/ngày UTC; checksum từng tệp; cách ly ảnh tương tự; công cụ đánh giá baseline và YOLO cùng CPU | Đã đo holdout; còn kiểm chứng quy đổi mét/diện tích |
 | Sản phẩm dễ kiểm tra | Trang Minh chứng cải tiến, 7 tình huống tương tác; cụm điểm bản đồ; chỉnh độ đậm radar; đã khôi phục 22.064 tệp và xác minh checksum | Kiểm tra bản triển khai công khai và bản xuất từ bản đó |
-| Ba liên kết nộp bài HTTPS | Có repository và demo cũ | Cập nhật nguồn/demo, tải báo cáo mới, kiểm tra quyền truy cập; chưa nộp chính thức |
+| Ba liên kết nộp bài HTTPS | Mã nguồn và PDF mới có trên nhánh `final/chang-1`, PR nháp #3 | Kiểm tra truy cập ẩn danh; cập nhật/kiểm tra demo công khai; chưa nộp chính thức |
 
 ## Dữ liệu và huấn luyện lại
 
@@ -27,7 +27,9 @@ Trang Minh chứng cải tiến đã hiển thị kết quả mới và giới h
 
 Ổ trong hết chỗ trong quá trình làm việc. Bản tiếp tục hiện tại nằm tại /Volumes/SonarNetWork/sonarnet-final, ảnh công bố tại /Volumes/T7/SonarNet-20261116/published-assets. Bản Documents giữ lại nhưng không còn là bản mới nhất. Xem docs/FINAL_HANDOFF.md.
 
-Đã tạo báo cáo 9 trang và slide 12 trang với kịch bản dự kiến 300 giây. File PowerPoint cuối đã import/render lại, 12 ảnh khớp pixel với bản đã kiểm tra. Chưa cập nhật source/demo công khai hoặc nộp portal.
+Đã tạo báo cáo 9 trang và slide 12 trang với kịch bản dự kiến 300 giây. File PowerPoint cuối đã import/render lại, 12 ảnh khớp pixel với bản đã kiểm tra. Mã nguồn đã được đẩy lên nhánh `final/chang-1`; PR nháp https://github.com/hoang-nguyenthe/sonarnet-vn/pull/3 được GitHub xác nhận có thể hợp nhất. Chưa hợp nhất, cập nhật demo công khai hoặc nộp portal.
+
+Ngày 17/11: đã kiểm chứng bản xuất từ ô ảnh thật `cell_0_1` trên SSD, kiểm tra SHA-256 từng tệp bên trong, trạng thái thiếu dữ liệu được giữ nguyên. Đã sửa Docker để chứa số liệu/ảnh minh chứng mới; AppTest với nhóm tệp triển khai tương ứng chạy không có exception và hiển thị 3.000 ảnh test. Docker daemon chưa chạy, nên chưa tuyên bố đã build hoặc kiểm tra container thật. Gói ZIP tạo bằng `scripts/package_review.py` có manifest SHA-256 và kiểm tra lại nội dung sau khi ghi.
 
 Checkpoint SAR cũ đã bị xoá theo xác nhận của tác giả. Lượt mới khởi tạo từ YOLO11n COCO do Ultralytics phát hành, không coi là khôi phục chính xác kết quả cũ.
 
