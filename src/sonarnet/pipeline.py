@@ -22,7 +22,7 @@ from .data.dataset import (
     georef_from_dict,
 )
 from .data.simulator import AIS_MISMATCH, AIS_OK, DARK
-from .evaluation.ablation import format_ablation_table, run_ablation
+from .evaluation.ablation import format_ablation_table, run_ablation, _metrics_from_records
 from .evaluation.detection_metrics import (
     evaluate_multi_iou,
     match_predictions_to_truth,
@@ -295,6 +295,10 @@ def run_fusion_records(
                     "scene_id": sid,
                     "true_state": v["identity_state"],
                     "pred_state": result.states[new_i],
+                    "match_reason": result.match_reasons[new_i],
+                    "review_status": "pending",
+                    "business_conclusion": None,
+                    "data_kind": "synthetic",
                     "true_mmsi": v["mmsi"],
                     "pred_mmsi": result.matched_mmsi[new_i],
                     "match_error_m": result.match_distance_m[new_i],
@@ -317,18 +321,7 @@ def step_fusion(cfg, eval_out: Dict, split: str = "test") -> Dict:
             use_kalman=True, use_size_check=True,
         )
 
-    visible = [r for r in records if r["pred_state"] is not None]
-    missed_dark = [
-        r for r in records if r["pred_state"] is None and r["true_state"] == DARK
-    ]
-
-    true_states = [r["true_state"] for r in visible] + [DARK] * len(missed_dark)
-    pred_states = [r["pred_state"] for r in visible] + [AIS_OK] * len(missed_dark)
-    true_mmsi = [r["true_mmsi"] for r in visible] + [None] * len(missed_dark)
-    pred_mmsi = [r["pred_mmsi"] for r in visible] + [None] * len(missed_dark)
-    errs = [r["match_error_m"] for r in visible] + [float("nan")] * len(missed_dark)
-
-    metrics = evaluate_fusion(true_states, pred_states, true_mmsi, pred_mmsi, errs)
+    metrics = _metrics_from_records(records)
     LOG.info(
         "Chỉ tiêu hợp nhất: %s",
         json.dumps(metrics.to_dict(), ensure_ascii=False),

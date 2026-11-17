@@ -1,0 +1,102 @@
+{
+  "dataset": "Real CAESAR Sentinel subset",
+  "archive_sha256": "6a185fbf2f51408d19ca941745581a8e1aabbacd33db6494985621086495481e",
+  "source": "https://github.com/CAESAR-Radi/SAR-Ship-Dataset/tree/2021-04-update",
+  "hardware": "macOS-26.6.2-arm64-arm-64bit / arm64",
+  "python": "3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "cohort_counts": {
+    "train": 14216,
+    "val": 3413,
+    "test": 1953
+  },
+  "evaluated_counts": {
+    "val": 300,
+    "test": 300
+  },
+  "skipped": {},
+  "split": "SHA256 filename acquisition-date token; exact pixel deduplication; first N sorted per split",
+  "limitations": [
+    "Scene/region metadata unavailable; date is inferred from filename.",
+    "No physical GSD/valid-area/nearshore labels; corresponding metrics are null.",
+    "Classical baseline comparison only. Fine-tuned YOLO checkpoint unavailable.",
+    "No claim that scene/region split or near-duplicate audit has passed."
+  ],
+  "models": {
+    "global_threshold": {
+      "threshold": 0.85,
+      "validation_grid": [
+        [
+          0.0444,
+          0.55
+        ],
+        [
+          0.0538,
+          0.7
+        ],
+        [
+          0.0586,
+          0.85
+        ]
+      ],
+      "metrics": {
+        "mAP@0.5": 0.2059,
+        "mAP@0.5:0.95": 0.0841,
+        "precision": 0.2111,
+        "recall": 0.8471,
+        "f1": 0.338,
+        "n_ground_truth": 314,
+        "n_predictions": 1260,
+        "true_positive": 266,
+        "false_positive": 994,
+        "false_negative": 48,
+        "false_alarms_per_km2": null,
+        "nearshore_recall": null,
+        "nearshore_ground_truth": null,
+        "center_error_m_median": null,
+        "box_width_error_m_median": null,
+        "box_height_error_m_median": null,
+        "georeferenced_matches": 0,
+        "latency_ms_median": 1.2139374994148966,
+        "latency_ms_p95": 1.7384877959557343
+      }
+    },
+    "local_contrast": {
+      "threshold": 2.0,
+      "validation_grid": [
+        [
+          0.0004,
+          2.0
+        ],
+        [
+          0.0,
+          3.0
+        ],
+        [
+          0.0,
+          4.0
+        ]
+      ],
+      "metrics": {
+        "mAP@0.5": 0.0,
+        "mAP@0.5:0.95": 0.0,
+        "precision": 0.0001,
+        "recall": 0.0096,
+        "f1": 0.0002,
+        "n_ground_truth": 314,
+        "n_predictions": 37725,
+        "true_positive": 3,
+        "false_positive": 37722,
+        "false_negative": 311,
+        "false_alarms_per_km2": null,
+        "nearshore_recall": null,
+        "nearshore_ground_truth": null,
+        "center_error_m_median": null,
+        "box_width_error_m_median": null,
+        "box_height_error_m_median": null,
+        "georeferenced_matches": 0,
+        "latency_ms_median": 3.122354497463675,
+        "latency_ms_p95": 4.648388949135552
+      }
+    }
+  }
+}

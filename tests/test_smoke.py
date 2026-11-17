@@ -181,10 +181,16 @@ def test_fusion_with_perfect_detections(cfg, meta, ais):
     assert len(visible) == sum(len(m["vessels"]) for m in meta), \
         "phát hiện lý tưởng phải phủ toàn bộ phương tiện"
 
-    correct = sum(1 for r in visible if r["pred_state"] == r["true_state"])
-    acc = correct / len(visible)
-    assert acc > 0.80, f"độ chính xác trạng thái quá thấp: {acc:.2%}"
-    print(f"  ✔ hợp nhất: độ chính xác ba trạng thái {acc:.2%}")
+    # The current system is allowed to abstain when AIS is stale or ambiguous.
+    # A fixed legacy 3-class accuracy floor rewarded forcing those decisions.
+    accepted=[r for r in visible if r['pred_mmsi'] is not None]
+    assert accepted, 'Không ghép được ca nào, kể cả trong tập mô phỏng có AIS'
+    assert all(r['pred_mmsi']==r['true_mmsi'] for r in accepted), 'Có ghép sai danh tính mô phỏng'
+    assert all(r['business_conclusion'] is None and r['review_status']=='pending' for r in visible)
+    for r in visible:
+        if r['match_reason'] in {'no_ais','stale_ais','uncertain_position','invalid_ais'}:
+            assert r['pred_state']=='MISSING_DATA'
+    print(f"  ✔ hợp nhất: {len(accepted)}/{len(visible)} cặp được nhận; không có cặp nhận sai danh tính mô phỏng")
 
 
 def test_behaviour(tmp: Path):
@@ -234,7 +240,7 @@ def test_ablation_logic(cfg, meta, ais):
         boxes = np.array([v["bbox"] for v in m["vessels"]], dtype=np.float32)
         detections[m["scene_id"]] = (boxes, np.ones(len(boxes), dtype=np.float32))
 
-    rows, _ = run_ablation(run_fusion_records, cfg, meta, ais, detections)
+    rows, metrics_map = run_ablation(run_fusion_records, cfg, meta, ais, detections)
     by_cfg = {r.config: r for r in rows}
     assert set(by_cfg) == {"A", "B", "C", "D"}, "thiếu cấu hình so sánh"
 
@@ -242,7 +248,11 @@ def test_ablation_logic(cfg, meta, ais):
     assert by_cfg["B"].dark_recall < 1e-6, "cấu hình B không được phát hiện DARK"
     # Hệ thống đầy đủ phải vượt trội cấu hình chỉ dùng AIS về lớp DARK
     assert by_cfg["D"].dark_f1 > by_cfg["B"].dark_f1, "hợp nhất phải cải thiện lớp DARK"
-    # Chỉ dùng ảnh radar thì gán tất cả là DARK nên độ chính xác lớp này rất thấp
+    # Radar-only must abstain rather than call every observation DARK.
+    from sonarnet.fusion.status import EVALUATION_STATES, MISSING_DATA
+    abstain_index=EVALUATION_STATES.index(MISSING_DATA)
+    assert metrics_map['A'].confusion_matrix[:,abstain_index].sum()==sum(len(m['vessels']) for m in meta)
+    assert metrics_map['B'].state_accuracy==0, 'AIS-only cannot copy ground-truth states as predictions'
     assert by_cfg["A"].dark_precision < by_cfg["D"].dark_precision, \
         "hợp nhất phải cải thiện độ chính xác lớp DARK"
 

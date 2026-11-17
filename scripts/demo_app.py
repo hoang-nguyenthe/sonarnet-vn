@@ -55,7 +55,7 @@ with st.sidebar:
     st.caption('Ngày chụp ảnh khác với giờ hiện tại. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ; xem tiến độ xử lý của khu vực.')
     st.info('Chưa có dữ liệu định danh tàu. Kết quả cần người có chuyên môn xác minh.')
 
-section = st.radio('Điều hướng', ['Nghiên cứu', 'Quan sát', 'Hướng dẫn'], horizontal=True,
+section = st.radio('Điều hướng', ['Nghiên cứu', 'Quan sát', 'Minh chứng cải tiến', 'Hướng dẫn'], horizontal=True,
                    label_visibility='collapsed', key='main_section')
 # st.tabs evaluates every tab on every rerun.  Do not construct the national
 # raster workspace while a visitor is reading the lightweight introduction.
@@ -64,6 +64,9 @@ if section == 'Nghiên cứu':
     render_introduction(ROOT)
 elif section == 'Quan sát':
     render(ROOT)
+elif section == 'Minh chứng cải tiến':
+    from improvement_view import render_improvements
+    render_improvements(ROOT)
 else:
     st.subheader('Từ xem ảnh đến kiểm tra bằng chứng.')
     st.markdown('''1. **Chọn khu vực:** xem ảnh vệ tinh và thời gian quan sát. Ảnh màu bên dưới chỉ là nền tham chiếu.

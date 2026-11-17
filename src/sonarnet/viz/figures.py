@@ -33,9 +33,10 @@ STATE_COLORS = {
     "DARK": BLUSH,
 }
 STATE_LABELS = {
-    "AIS_OK": "Phát tín hiệu trung thực",
-    "AIS_MISMATCH": "Kích thước khai báo sai lệch",
-    "DARK": "Không phát tín hiệu",
+    "AIS_OK": "Ghép được; chờ xác minh",
+    "AIS_MISMATCH": "Đang xác minh: kích thước lệch",
+    "DARK": "Không ghép được",
+    "MISSING_DATA": "Thiếu dữ liệu",
 }
 
 
@@ -200,7 +201,7 @@ def plot_ablation(rows: Sequence[Dict], out_path: Path) -> Path:
     metrics = [
         ("Độ nhạy phát hiện", BLUE),
         ("F1 lớp DARK", BLUSH),
-        ("F1 vĩ mô 3 trạng thái", MINT),
+        ("F1 vĩ mô nhãn mô phỏng", MINT),
     ]
 
     x = np.arange(len(configs))

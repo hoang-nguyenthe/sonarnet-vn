@@ -5,13 +5,8 @@ Quy trình gồm ba bước, đúng như mô tả trong đề xuất:
 1. **Nội suy quỹ đạo AIS** về đúng thời điểm chụp ảnh bằng bộ lọc Kalman.
 2. **Ghép cặp tối ưu toàn cục** giữa tập phát hiện và tập vị trí AIS bằng thuật
    toán Hungarian, với ma trận chi phí là khoảng cách địa lý và ngưỡng chặn trên.
-3. **Phân loại trạng thái định danh** của từng phát hiện thành một trong ba mức:
-   phát tín hiệu trung thực, phát tín hiệu nhưng kích thước khai báo sai lệch,
-   hoặc không phát tín hiệu.
-
-Bước thứ ba là điểm mấu chốt: một phương tiện xuất hiện rõ trên ảnh radar mà
-không có bản ghi AIS tương ứng chính là dấu hiệu đặc trưng của hành vi chủ động
-ngắt định danh.
+3. Trả trạng thái quan sát: thiếu dữ liệu, không ghép được hoặc chờ xác minh.
+Không ghép được AIS không chứng minh tàu ngắt thiết bị hay vi phạm.
 """
 
 from __future__ import annotations
@@ -23,6 +18,7 @@ import numpy as np
 
 from ..data.geo import haversine_m
 from ..data.simulator import AIS_MISMATCH, AIS_OK, DARK
+from .status import MISSING_DATA, EVALUATION_STATES
 from .kalman import ConstantVelocityKalman, KalmanEstimate, linear_interpolate_to_time
 
 try:
@@ -85,13 +81,14 @@ class FusionResult:
     states: List[str] = field(default_factory=list)
     matched_mmsi: List[Optional[int]] = field(default_factory=list)
     match_distance_m: List[float] = field(default_factory=list)
+    match_reasons: List[str] = field(default_factory=list)
     # Các MMSI có phát AIS nhưng không ghép được với phát hiện nào
     unmatched_mmsi: List[int] = field(default_factory=list)
     n_detections: int = 0
     n_ais_vessels: int = 0
 
     def summary(self) -> Dict[str, int]:
-        out = {s: 0 for s in (AIS_OK, AIS_MISMATCH, DARK)}
+        out = {s: 0 for s in EVALUATION_STATES}
         for s in self.states:
             out[s] = out.get(s, 0) + 1
         return out
@@ -115,17 +112,32 @@ class SARAISFusion:
         """Ước lượng vị trí của mọi phương tiện có AIS tại thời điểm chụp."""
         by_mmsi: Dict[int, List[dict]] = {}
         for rec in ais_records:
-            by_mmsi.setdefault(int(rec["mmsi"]), []).append(rec)
+            # A missing/invalid record cannot become evidence for identity.
+            try:
+                mmsi = int(rec['mmsi'])
+                timestamp, lat, lon = (float(rec[k]) for k in ('timestamp','lat','lon'))
+                if not all(np.isfinite(v) for v in (timestamp,lat,lon)) or abs(lat)>90 or abs(lon)>180:
+                    continue
+                if mmsi <= 0:
+                    continue
+            except (KeyError, TypeError, ValueError, OverflowError):
+                continue
+            by_mmsi.setdefault(mmsi, []).append(dict(rec,timestamp=timestamp,lat=lat,lon=lon))
 
         out: Dict[int, KalmanEstimate] = {}
         for mmsi, recs in by_mmsi.items():
             est = (
                 self.kf.smooth_to_time(recs, capture_time_s)
                 if self.use_kalman
-                else linear_interpolate_to_time(recs, capture_time_s)
+                else linear_interpolate_to_time(recs, capture_time_s,
+                    measurement_noise=self.cfg.fusion.kalman_measurement_noise,
+                    process_noise=self.cfg.fusion.kalman_process_noise)
             )
             if est is not None:
-                est_declared = float(recs[0].get("declared_length_m", float("nan")))
+                try:
+                    est_declared = float(recs[0].get("declared_length_m", float("nan")))
+                except (TypeError, ValueError):
+                    est_declared = float('nan')
                 out[mmsi] = est
                 setattr(out[mmsi], "declared_length_m", est_declared)
         return out
@@ -137,10 +149,37 @@ class SARAISFusion:
         ais_estimates: Dict[int, KalmanEstimate],
     ) -> Tuple[Dict[int, int], Dict[int, float]]:
         """Ghép phát hiện với vị trí AIS. Trả về ánh xạ chỉ số phát hiện → MMSI."""
-        if not detections or not ais_estimates:
-            return {}, {}
+        matches, distances, _ = self.match_with_reasons(detections, ais_estimates)
+        return matches, distances
 
-        mmsis = list(ais_estimates.keys())
+    def match_with_reasons(self, detections, ais_estimates):
+        """Gate age/uncertainty before assignment and abstain at ambiguous crossings.
+
+        A narrow spatial residual cannot rescue stale or uncertain AIS. Candidate
+        edges must satisfy both the absolute cap and a combined SAR/AIS 3-sigma
+        gate. Near-ties sharing either endpoint are withheld for human review.
+        Reasons are aligned to the input detection order, including rejected rows.
+        """
+        if not detections:
+            return {}, {}, []
+        if not ais_estimates:
+            return {}, {}, ["no_ais"] * len(detections)
+        cfg = self.cfg.fusion
+        rejected = {}
+        for m, est in ais_estimates.items():
+            values = [est.lat, est.lon, est.gap_to_nearest_s, est.position_sigma_m]
+            if (not all(np.isfinite(v) for v in values) or abs(est.lat) > 90
+                    or abs(est.lon) > 180 or est.gap_to_nearest_s < 0
+                    or est.position_sigma_m < 0 or est.n_observations < 1):
+                rejected[m] = "invalid_ais"
+            elif est.gap_to_nearest_s > cfg.max_ais_age_s:
+                rejected[m] = "stale_ais"
+            elif est.position_sigma_m > cfg.max_position_sigma_m:
+                rejected[m] = "uncertain_position"
+        mmsis = [m for m in ais_estimates if m not in rejected]
+        if not mmsis:
+            reason = next(iter(rejected.values())) if len(set(rejected.values())) == 1 else "uncertain_position"
+            return {}, {}, [reason] * len(detections)
         det_lat = np.array([d.lat for d in detections])
         det_lon = np.array([d.lon for d in detections])
         ais_lat = np.array([ais_estimates[m].lat for m in mmsis])
@@ -150,19 +189,58 @@ class SARAISFusion:
         cost = haversine_m(
             det_lat[:, None], det_lon[:, None], ais_lat[None, :], ais_lon[None, :]
         )
-        thr = self.cfg.fusion.max_match_distance_m
-        cost_masked = np.where(cost <= thr, cost, np.inf)
-
+        sigma = np.hypot(cfg.sar_position_sigma_m,
+                         [ais_estimates[m].position_sigma_m for m in mmsis])
+        gate = np.minimum(cfg.max_match_distance_m, cfg.match_sigma_multiplier * sigma)
+        cost_masked = np.where(np.isfinite(cost) & (cost <= gate[None, :]), cost, np.inf)
+        reasons = ["out_of_range"] * len(detections)
+        invalid_detections = set(np.flatnonzero(~np.isfinite(det_lat) | ~np.isfinite(det_lon)
+                                               | (np.abs(det_lat)>90) | (np.abs(det_lon)>180)))
+        for i in invalid_detections:
+            cost_masked[i,:] = np.inf
+        # Record nearby discarded AIS so absent usable evidence is not labelled
+        # an ordinary spatial mismatch. Never use it to produce a match.
+        for i, det in enumerate(detections):
+            if not np.any(np.isfinite(cost_masked[i])):
+                for m, reason in rejected.items():
+                    est = ais_estimates[m]
+                    if float(haversine_m(det.lat, det.lon, est.lat, est.lon)) <= cfg.max_match_distance_m:
+                        reasons[i] = reason
+                        break
+        ambiguous = set()
+        for i in range(len(detections)):
+            candidates = np.flatnonzero(np.isfinite(cost_masked[i]))
+            if len(candidates) >= 2:
+                nearest = candidates[np.argsort(cost_masked[i, candidates])[:2]]
+                margin = max(cfg.min_assignment_margin_m, float(max(sigma[nearest])))
+                if abs(cost_masked[i, nearest[1]] - cost_masked[i, nearest[0]]) <= margin:
+                    ambiguous.add(i)
+        for j in range(len(mmsis)):
+            candidates = np.flatnonzero(np.isfinite(cost_masked[:, j]))
+            if len(candidates) >= 2:
+                nearest = candidates[np.argsort(cost_masked[candidates, j])[:2]]
+                margin = max(cfg.min_assignment_margin_m, float(sigma[j]))
+                if abs(cost_masked[nearest[1], j] - cost_masked[nearest[0], j]) <= margin:
+                    ambiguous.update(int(i) for i in nearest)
+        for i in range(len(detections)):
+            if np.any(np.isfinite(cost_masked[i])):
+                reasons[i] = "assigned_elsewhere"
+        for i in ambiguous:
+            cost_masked[i, :] = np.inf
+            reasons[i] = "ambiguous"
+        for i in invalid_detections:
+            reasons[i] = 'invalid_detection'
         rows, cols = solve_assignment(cost_masked)
 
         det_to_mmsi: Dict[int, int] = {}
         distances: Dict[int, float] = {}
         for r, c in zip(rows, cols):
             d = float(cost[r, c])
-            if d <= thr:
+            if np.isfinite(cost_masked[r, c]):
                 det_to_mmsi[int(r)] = int(mmsis[int(c)])
                 distances[int(r)] = d
-        return det_to_mmsi, distances
+                reasons[int(r)] = "matched"
+        return det_to_mmsi, distances, reasons
 
     # -- Bước 3: phân loại trạng thái -------------------------------------
     def classify_states(
@@ -170,18 +248,20 @@ class SARAISFusion:
         detections: Sequence[Detection],
         det_to_mmsi: Dict[int, int],
         ais_estimates: Dict[int, KalmanEstimate],
+        reasons: Optional[List[str]] = None,
     ) -> List[str]:
-        """Gán một trong ba trạng thái định danh cho từng phát hiện."""
+        """Describe evidence sufficiency without inferring identity or intent."""
         ratio_thr = self.cfg.fusion.size_mismatch_ratio
         states: List[str] = []
         for i, det in enumerate(detections):
             mmsi = det_to_mmsi.get(i)
             if mmsi is None:
-                states.append(DARK)
+                reason = reasons[i] if reasons else ('no_ais' if not ais_estimates else 'out_of_range')
+                states.append(MISSING_DATA if reason in {'no_ais', 'stale_ais', 'uncertain_position', 'invalid_ais', 'invalid_detection'} else DARK)
                 continue
             declared = getattr(ais_estimates[mmsi], "declared_length_m", float("nan"))
-            if not np.isfinite(declared) or declared <= 0 or det.length_m <= 0:
-                states.append(AIS_OK)
+            if not np.isfinite(declared) or declared <= 0 or not np.isfinite(det.length_m) or det.length_m <= 0:
+                states.append(MISSING_DATA)
                 continue
             # Sai lệch tương đối giữa kích thước khai báo và kích thước quan sát
             rel = abs(declared - det.length_m) / max(declared, det.length_m)
@@ -197,8 +277,8 @@ class SARAISFusion:
         capture_time_s: float,
     ) -> FusionResult:
         est = self.interpolate_ais(ais_records, capture_time_s)
-        det_to_mmsi, dists = self.match(detections, est)
-        states = self.classify_states(detections, det_to_mmsi, est)
+        det_to_mmsi, dists, reasons = self.match_with_reasons(detections, est)
+        states = self.classify_states(detections, det_to_mmsi, est, reasons)
 
         matched = set(det_to_mmsi.values())
         return FusionResult(
@@ -206,6 +286,7 @@ class SARAISFusion:
             states=states,
             matched_mmsi=[det_to_mmsi.get(i) for i in range(len(detections))],
             match_distance_m=[dists.get(i, float("nan")) for i in range(len(detections))],
+            match_reasons=reasons,
             unmatched_mmsi=[m for m in est.keys() if m not in matched],
             n_detections=len(detections),
             n_ais_vessels=len(est),

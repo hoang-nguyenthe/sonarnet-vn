@@ -17,6 +17,7 @@ from PIL import Image
 from branca.element import Element, MacroElement, Template
 from streamlit.components.v1 import html as embed
 from map_raster import overlay_source
+from map_experience import add_observation_cluster, add_radar_control
 from coverage_status import coverage_rows, waiting_cells
 from popup_evidence import evidence_url
 from observation_labels import candidate_label, coordinates, observation_time
@@ -197,16 +198,16 @@ def render(root):
         help="Các vùng ảnh được hệ thống đánh dấu để bạn kiểm tra; chưa xác nhận là tàu.",
     )
     yolo_result = None
-    illustrative = st.toggle('Hồ sơ đội tàu', value=True,
+    illustrative = st.toggle('Hồ sơ minh họa (dữ liệu giả lập)', value=False,
                              help='Hồ sơ và AIS dùng dữ liệu mẫu; ảnh radar giữ nguyên nguồn thật.')
     if illustrative:
-        st.caption('Dữ liệu mẫu — hồ sơ tàu & AIS · 🔵 AIS khớp · 🟡 AIS lệch · 🔴 Chưa có AIS')
+        st.warning('CHẾ ĐỘ MÔ PHỎNG: tên tàu, chủ tàu và AIS được tạo giả lập. Không phải danh tính của điểm ảnh SAR đang xem.')
     yolo_result = published_yolo_result(root, record)
     visible_candidates = yolo_result['detections'] if yolo_result else []
     if illustrative:
         selected_status = st.radio('Lọc tàu theo trạng thái', list(FILTERS), horizontal=True, key='vessel_status_filter')
         visible_candidates = filter_vessels(visible_candidates, selected_status)
-        st.caption(f"Hiển thị {len(visible_candidates)} / {len(yolo_result['detections']) if yolo_result else 0} tàu.")
+        st.caption(f"Hiển thị {len(visible_candidates)} / {len(yolo_result['detections']) if yolo_result else 0} hồ sơ minh họa.")
         if not visible_candidates:
             st.info('Không có tàu thuộc trạng thái đã chọn trong khu vực này. Chọn Tất cả để xem lại.')
     if yolo_enabled:
@@ -233,6 +234,8 @@ def render(root):
     ).add_to(chart)
     radar = folium.FeatureGroup(name="Ảnh radar", show=True).add_to(chart)
     yolo_layer = folium.FeatureGroup(name="Vùng nghi là tàu", show=bool(yolo_enabled)).add_to(chart)
+    candidate_layer = add_observation_cluster(yolo_layer)
+    add_radar_control(chart, radar)
     # Load only the chosen area's radar raster. Do not send all global images
     # into a phone's map iframe on every rerun.
     for item in [record]:
@@ -280,12 +283,13 @@ def render(root):
                 + (illustrative_popup(candidate) if illustrative else "<span class='marker-status'>Chưa xác minh</span>")
                 + "</div>"
             )
-            folium.CircleMarker(
-                [candidate["latitude"], candidate["longitude"]], radius=4,
-                color=color, weight=1.2, fill=False,
+            folium.Marker(
+                [candidate["latitude"], candidate["longitude"]],
+                icon=folium.DivIcon(icon_size=(16, 16), icon_anchor=(8, 8),
+                    html=f'<span style="display:block;width:12px;height:12px;border-radius:50%;background:{color};border:2px solid #143e55;box-shadow:0 1px 5px #0005"></span>'),
                 popup=folium.Popup(card, max_width=246),
                 tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']}" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
-            ).add_to(yolo_layer)
+            ).add_to(candidate_layer)
     # The coastal mask remains part of detector filtering. Do not serialize a
     # union of every national tile's geometry into the public overview; that
     # payload is too large for a small hosted process.
@@ -372,7 +376,7 @@ def render(root):
                 if illustrative:
                     st.markdown(illustrative_popup(candidate), unsafe_allow_html=True)
                 else:
-                    st.write('**Thông tin tàu: chưa xác định.**')
+                    st.write('**Thiếu dữ liệu AIS · Đang xác minh.**')
                     st.caption('Chưa có tên tàu, số đăng ký và tín hiệu vị trí cùng thời điểm để đối chiếu.')
                 def open_evidence():
                     st.session_state['observation_workflow'] = 'Kiểm tra chi tiết'

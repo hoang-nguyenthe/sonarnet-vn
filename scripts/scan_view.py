@@ -8,6 +8,7 @@ import streamlit as st
 from PIL import Image
 from streamlit.components.v1 import html
 from review_workspace import STATUSES, CANDIDATE_STATUSES, session_reviews, export_workspace, import_workspace, printable_review, evidence_bundle
+from review_workspace import OPERATIONAL_DECISIONS, confirm_operational_review, operational_assessment
 from scan_assets import validated_report
 from land_mask import add_map_layer, annotated_image, summary as land_summary
 from observation_labels import tile_label
@@ -19,7 +20,8 @@ def render_scan(root: Path):
         st.info('Chưa có hồ sơ xử lý ảnh thật được công bố.')
         return
     try:
-        report = validated_report(root)
+        with st.spinner('Đang kiểm chứng ảnh nguồn và mã băm. Lần mở đầu có thể lâu hơn.'):
+            report = validated_report(root)
     except (ValueError, KeyError, TypeError, OSError):
         st.warning('Hồ sơ quan sát đang được kiểm tra. Chuyển sang Xem ảnh toàn cảnh; không sử dụng kết quả chưa xác thực.')
         return
@@ -127,13 +129,35 @@ def render_scan(root: Path):
             # labelling a candidate then saving the tile would silently erase
             # the candidate review from the map and exported session.
             candidate_labels = reviews.get(chosen, {}).get('candidate_labels', {})
+            previous_operational = reviews.get(chosen, {}).get('operational_review')
             reviews[chosen] = {'status': verdict, 'note': note}
             if candidate_labels:
                 reviews[chosen]['candidate_labels'] = candidate_labels
+            if previous_operational:
+                reviews[chosen]['operational_review'] = previous_operational
             st.rerun()
     saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
+    with st.expander('Xác nhận của chuyên viên'):
+        st.caption('Thiếu dữ liệu AIS cùng thời điểm. Đánh giá ảnh không xác nhận danh tính hay hành vi. Danh tính chuyên viên tự khai; ứng dụng chưa xác thực tài khoản hoặc ký số.')
+        current = operational_assessment(tile, saved)
+        st.write('Đang xác minh; chưa có kết luận nghiệp vụ' if current['status'] == 'pending' else
+                 f"Đã ghi nhận: {current['conclusion']} · {current['reviewer']}")
+        with st.form(f'operational_{chosen}_form'):
+            reviewer = st.text_input('Tên chuyên viên xác nhận', max_chars=200, key=f'operational_{chosen}_name')
+            decision = st.selectbox('Hướng xử lý sau rà soát', OPERATIONAL_DECISIONS, key=f'operational_{chosen}_decision')
+            basis = st.text_area('Căn cứ kiểm tra / tài liệu đối chiếu', max_chars=5000, key=f'operational_{chosen}_basis')
+            checked = st.checkbox('Tôi đã xem bằng chứng và chịu trách nhiệm về đánh giá này', key=f'operational_{chosen}_confirm')
+            if st.form_submit_button('Xác nhận hướng xử lý'):
+                try:
+                    assessment = confirm_operational_review(tile, reviewer, decision, basis, checked)
+                    reviews.setdefault(chosen, {'status': STATUSES[0], 'note': ''})['operational_review'] = assessment
+                    st.rerun()
+                except ValueError as error:
+                    st.error(str(error))
+    saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
     st.caption(f"Đã lưu trong phiên: {saved['status']}. Bấm lưu trước khi đổi ô. Tải hồ sơ để giữ lại sau khi đóng trang.")
-    evidence = dict(tile, reviewer_status=saved['status'], reviewer_note=saved['note'], scan_report_date=report['generated_at'])
+    evidence = dict(tile, reviewer_status=saved['status'], reviewer_note=saved['note'], scan_report_date=report['generated_at'],
+                    data_status='MISSING_DATA', operational_assessment=operational_assessment(tile, saved))
     st.download_button('Tải hồ sơ kèm ảnh', evidence_bundle(root, tile, saved, day_label), f'{chosen}-evidence.zip', 'application/zip', type='primary')
     st.caption('Gồm ảnh gốc, ảnh đánh dấu và ghi chú của bạn. Tải xuống để giữ hồ sơ sau khi đóng trang.')
     with st.expander('Thông tin toàn bộ lần quét'):

@@ -1,0 +1,13 @@
+scenario,method,detections,accepted,correct_identity,wrong_identity,abstained,unsafe_accepted
+fresh_separated,distance_only,200,200,200,0,0,0
+fresh_separated,quality_gated,200,200,200,0,0,0
+crossing_ambiguous,distance_only,200,200,122,78,0,200
+crossing_ambiguous,quality_gated,200,0,0,0,200,0
+noisy_ais,distance_only,200,177,152,25,23,177
+noisy_ais,quality_gated,200,0,0,0,200,0
+stale_ais,distance_only,200,200,200,0,0,200
+stale_ais,quality_gated,200,0,0,0,200,0
+missing_ais,distance_only,200,0,0,0,200,0
+missing_ais,quality_gated,200,0,0,0,200,0
+unknown_sigma,distance_only,200,200,200,0,0,200
+unknown_sigma,quality_gated,200,0,0,0,200,0

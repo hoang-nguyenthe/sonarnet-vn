@@ -100,6 +100,12 @@ class FusionConfig:
 
     # Ngưỡng khoảng cách tối đa để chấp nhận một cặp ghép (mét)
     max_match_distance_m: float = 500.0
+    # Conservative research defaults; calibrate on held-out, licensed AIS.
+    max_ais_age_s: float = 180.0
+    max_position_sigma_m: float = 150.0
+    sar_position_sigma_m: float = 30.0
+    match_sigma_multiplier: float = 3.0
+    min_assignment_margin_m: float = 30.0
     # Độ lệch chuẩn gia tốc nhiễu của mô hình động học, mét trên giây bình phương.
     # Giá trị được chọn theo quán tính thực tế của phương tiện đường thuỷ: trong
     # một khoảng mười lăm phút, tàu biển gần như giữ nguyên hướng và tốc độ, biến

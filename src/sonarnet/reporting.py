@@ -11,6 +11,7 @@ import numpy as np
 
 from .data.dataset import load_image
 from .data.simulator import AIS_MISMATCH, AIS_OK, DARK, IDENTITY_STATES
+from .fusion.status import STATE_LABELS, EVALUATION_STATES
 from .utils import get_logger, save_json, timed
 from .viz import dashboard as dash
 from .viz import figures as fig
@@ -23,11 +24,7 @@ BEHAVIOUR_LABELS = {
     "keo_luoi": "Kéo lưới",
     "neo_dau": "Neo đậu",
 }
-STATE_SHORT = {
-    AIS_OK: "Trung thực",
-    AIS_MISMATCH: "Sai kích thước",
-    DARK: "Không phát AIS",
-}
+STATE_SHORT = STATE_LABELS
 
 
 def make_figures(
@@ -80,10 +77,10 @@ def make_figures(
     fm = fusion_out["metrics"]
     out["fusion_confusion"] = str(
         fig.plot_confusion(
-            fm.confusion_matrix, list(IDENTITY_STATES),
+            fm.confusion_matrix, list(EVALUATION_STATES),
             figs / "03_ma_tran_hop_nhat.png",
-            title="Phân loại ba trạng thái định danh",
-            display_labels=[STATE_SHORT[s] for s in IDENTITY_STATES],
+            title="Trạng thái đối chiếu trên dữ liệu mô phỏng",
+            display_labels=[STATE_SHORT[s] for s in EVALUATION_STATES],
         )
     )
 
@@ -177,9 +174,9 @@ def write_report(
     A("")
     A(f"*Thời điểm kết xuất: {datetime.now().strftime('%d/%m/%Y %H:%M')}*")
     A("")
-    A("Hệ thống giám sát tuân thủ quy định chống khai thác thuỷ sản bất hợp pháp, "
-      "không khai báo và không theo quy định, trên cơ sở hợp nhất ảnh vệ tinh radar "
-      "khẩu độ tổng hợp với tín hiệu giám sát hành trình tàu cá.")
+    A("Thử nghiệm mô phỏng ghép SAR–AIS và hành vi. Các số liệu dưới đây không phải "
+      "kết quả xác minh tàu thật hoặc hành vi IUU. Mọi kết quả tự động chờ chuyên viên xác nhận.")
+    A("Nhãn: " + "; ".join(f"{code}: {label}" for code, label in STATE_SHORT.items()))
     A("")
 
     # ---- Cấu hình --------------------------------------------------------
@@ -191,7 +188,7 @@ def write_report(
     A(f"| Hạt giống ngẫu nhiên | {cfg.seed} |")
     A(f"| Kích thước cảnh | {cfg.data.scene_size} × {cfg.data.scene_size} điểm ảnh |")
     A(f"| Độ phân giải mặt đất | {cfg.geo.pixel_spacing_m:.0f} m/điểm ảnh |")
-    A(f"| Tỉ lệ phương tiện ngắt định danh | {cfg.data.dark_vessel_ratio:.0%} |")
+    A(f"| Tỉ lệ thiếu AIS trong bộ mô phỏng | {cfg.data.dark_vessel_ratio:.0%} |")
     A(f"| Số chu kỳ huấn luyện | {cfg.detect.epochs} |")
     if train_info:
         A(f"| Phương án phát hiện | {train_info.get('backend', 'không rõ')} |")
@@ -234,9 +231,9 @@ def write_report(
     A(f"| Tỉ lệ ghép cặp chính xác | {fm['match_accuracy']:.4f} | ≥ 0,85 |")
     A(f"| Sai số ghép cặp trung bình | {_fmt(fm['mean_match_error_m'], 1)} m | ≤ 200 m |")
     A(f"| Sai số ghép cặp trung vị | {_fmt(fm['median_match_error_m'], 1)} m | — |")
-    A(f"| Độ chính xác lớp không phát AIS | {fm['dark_precision']:.4f} | ≥ 0,75 |")
-    A(f"| Độ nhạy lớp không phát AIS | {fm['dark_recall']:.4f} | ≥ 0,70 |")
-    A(f"| F1 lớp không phát AIS | {fm['dark_f1']:.4f} | — |")
+    A(f"| Precision không ghép được (đối chứng mô phỏng) | {fm['dark_precision']:.4f} | — |")
+    A(f"| Recall không ghép được (đối chứng mô phỏng) | {fm['dark_recall']:.4f} | — |")
+    A(f"| F1 không ghép được (đối chứng mô phỏng) | {fm['dark_f1']:.4f} | — |")
     A(f"| Độ chính xác ba trạng thái | {fm['state_accuracy']:.4f} | — |")
     A(f"| F1 vĩ mô ba trạng thái | {fm['state_macro_f1']:.4f} | — |")
     A("")
@@ -280,12 +277,9 @@ def write_report(
             A("| " + " | ".join(_fmt(r[h]) if isinstance(r[h], float) else str(r[h] if r[h] is not None else "—")
                                 for h in headers) + " |")
     A("")
-    A("Bảng trên cho thấy giá trị cốt lõi của việc hợp nhất hai nguồn dữ liệu. "
-      "Cấu hình chỉ dùng ảnh radar phát hiện được phương tiện nhưng không có căn cứ "
-      "để xác định trạng thái định danh. Cấu hình chỉ dùng AIS bỏ sót hoàn toàn các "
-      "phương tiện chủ động ngắt tín hiệu — đúng những trường hợp cần phát hiện nhất. "
-      "Chỉ khi hợp nhất cả hai nguồn, hệ thống mới đồng thời đạt độ nhạy phát hiện cao "
-      "và khả năng nhận diện phương tiện ngắt định danh.")
+    A("Bảng so sánh các cấu hình trên cùng dữ liệu mô phỏng. Thiếu dữ liệu hoặc "
+      "không ghép được không chứng minh tàu chủ động ngắt AIS. Khi dữ liệu không đủ, "
+      "hệ thống từ chối ghép; các trường hợp này vẫn nằm trong mẫu số đánh giá.")
     A("")
 
     # ---- Hình và sản phẩm ------------------------------------------------

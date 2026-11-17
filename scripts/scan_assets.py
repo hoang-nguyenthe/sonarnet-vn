@@ -9,10 +9,13 @@ from pathlib import Path
 from PIL import Image
 
 
-@lru_cache(maxsize=2048)
+@lru_cache(maxsize=32768)
 def _validate_image(path, fingerprint, size, expected_sha256):
     # Cache only a successful validation, never image bytes. Deployment or
     # file replacement invalidates the key; failed validation is not cached.
+    # The national report has 5,516 tiles and two checked images per tile.
+    # A 2,048-entry cache evicts the first tiles before the next rerun and
+    # repeatedly hashes the entire archive. These entries contain no pixels.
     with Image.open(path) as image:
         if image.size != size:
             raise ValueError('Image dimensions do not match manifest')
@@ -24,10 +27,18 @@ def _validate_image(path, fingerprint, size, expected_sha256):
             raise ValueError('Image checksum mismatch')
 
 
-def validate_tile(root, tile):
+def resolve_scan_directory(root, tile):
+    """Allow a published asset root on an SSD, but not escaping child links."""
     directory = (root / tile['asset_dir']).resolve()
-    if not directory.is_relative_to((root / 'assets/real_scan').resolve()):
+    roots = [(root / 'assets/real_scan').resolve(),
+             (root / 'assets/real_scan/published').resolve()]
+    if not any(directory.is_relative_to(base) for base in roots):
         raise ValueError('Path outside published scan')
+    return directory
+
+
+def validate_tile(root, tile):
+    directory = resolve_scan_directory(root, tile)
     w,s,e,n = tile['bbox']
     if not (-180 <= w < e <= 180 and -90 <= s < n <= 90):
         raise ValueError('Invalid geographic bounds')
