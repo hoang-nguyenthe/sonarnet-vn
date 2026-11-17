@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY --chown=appuser:appuser scripts/ ./scripts/
 COPY --chown=appuser:appuser src/ ./src/
 COPY --chown=appuser:appuser assets/ ./assets/
+COPY --chown=appuser:appuser reports/final/ ./reports/final/
 COPY --chown=appuser:appuser .streamlit/config.toml ./.streamlit/config.toml
 USER appuser
 EXPOSE 7860

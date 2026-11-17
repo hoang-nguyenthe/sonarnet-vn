@@ -5,10 +5,35 @@ import json
 from io import BytesIO
 import zipfile
 from copy import deepcopy
-from datetime import date
+from datetime import date, datetime, timezone
 
 STATUSES = ['Chưa xem xét', 'Cần kiểm tra tiếp', 'Đã xem, chưa thấy mục tiêu rõ']
 CANDIDATE_STATUSES = ['Chưa đánh giá', 'Có khả năng là tàu', 'Nhiễu / không phải tàu']
+OPERATIONAL_DECISIONS = ['Cần bổ sung dữ liệu', 'Chuyển chuyên viên xác minh', 'Khép lại lượt rà soát này']
+
+
+def confirm_operational_review(tile, reviewer, conclusion, basis, confirmed):
+    """Record an explicit human assessment tied to exact evidence, not a legal verdict."""
+    if confirmed is not True or not isinstance(reviewer, str) or not reviewer.strip():
+        raise ValueError('Cần tên chuyên viên và xác nhận trực tiếp.')
+    if conclusion not in OPERATIONAL_DECISIONS or not isinstance(basis, str) or not basis.strip():
+        raise ValueError('Cần quyết định hợp lệ và căn cứ kiểm tra.')
+    return dict(status='confirmed', reviewer=reviewer.strip()[:200], conclusion=conclusion,
+                basis=basis.strip()[:5000], confirmed_at=datetime.now(timezone.utc).isoformat(),
+                evidence_identity=tile_identity(tile), authentication='self_declared')
+
+
+def operational_assessment(tile, review):
+    value = review.get('operational_review')
+    if value is None:
+        return {'status': 'pending', 'conclusion': None, 'reviewer': None}
+    if (not isinstance(value, dict) or value.get('status') != 'confirmed'
+        or value.get('conclusion') not in OPERATIONAL_DECISIONS
+        or not all(isinstance(value.get(k), str) and value[k].strip()
+                   for k in ('reviewer', 'basis', 'confirmed_at'))
+        or value.get('evidence_identity') != tile_identity(tile)):
+        raise ValueError('Xác nhận chuyên viên thiếu căn cứ hoặc không khớp bằng chứng.')
+    return value
 
 
 def session_reviews(state, report):
@@ -35,7 +60,7 @@ def session_reviews(state, report):
         if previous.get(key) != current.get(key):
             # Streamlit widgets otherwise retain the previous image's verdict.
             for widget in list(state):
-                if widget in (f'verdict_{key}', f'note_{key}') or widget.startswith(f'candidate_status_{key}_'):
+                if widget in (f'verdict_{key}', f'note_{key}') or widget.startswith((f'candidate_status_{key}_', f'operational_{key}_')):
                     del state[widget]
     notes = {key: deepcopy(bank[(key, identity)]) for key, identity in current.items()
              if (key, identity) in bank}
@@ -102,6 +127,7 @@ def import_workspace(raw, report):
         if not isinstance(labels, dict):
             raise ValueError('Đánh giá ứng viên không hợp lệ.')
         tile = next(tile for tile in report['tiles'] if tile['key'] == key)
+        operational_assessment(tile, item)
         candidate_ids = {str(candidate['id']) for candidate in tile.get('detections', [])}
         for candidate_id, label in labels.items():
             if str(candidate_id) not in candidate_ids or label not in CANDIDATE_STATUSES:
@@ -115,6 +141,8 @@ def import_workspace(raw, report):
         review = {'status': value['status'], 'note': value['note']}
         if value.get('candidate_labels'):
             review['candidate_labels'] = value['candidate_labels']
+        if value.get('operational_review'):
+            review['operational_review'] = value['operational_review']
         result[key] = review
     return result
 
@@ -125,6 +153,9 @@ def printable_review(tile, review, day):
     if tile.get('observation_day_utc'):
         day = date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')
     esc = lambda value: html.escape(str(value))
+    assessment = operational_assessment(tile, review)
+    decision = ('Đang xác minh; chưa có kết luận nghiệp vụ' if assessment['status'] == 'pending' else
+                f"{assessment['conclusion']} — chuyên viên: {assessment['reviewer']}; căn cứ: {assessment['basis']}; UTC: {assessment['confirmed_at']}")
     rows = ''.join(f'<tr><td>{d["id"]}</td><td>{d["confidence"]:.3f}</td><td>{d["latitude"]:.5f}</td><td>{d["longitude"]:.5f}</td></tr>' for d in tile['detections'])
     return f'''<!doctype html><html lang="vi"><meta charset="utf-8"><title>SonarNet — hồ sơ kiểm tra</title>
 <style>body{{font:16px system-ui;max-width:850px;margin:40px auto;padding:20px;color:#193249}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;padding:10px;border-bottom:1px solid #ddd}}.note{{white-space:pre-wrap}}small{{overflow-wrap:anywhere}}@media print{{body{{margin:0}}}}</style>
@@ -132,6 +163,9 @@ def printable_review(tile, review, day):
 <p>Nguồn: {esc(tile['source'])}<br>Phạm vi WGS84: {esc(tile['bbox'])}</p>
 <p>Bộ lọc đất: {esc(tile.get('land_mask_version', 'Chưa áp dụng'))} · Loại {len(tile.get('excluded_detections', []))} ứng viên chạm đất hoặc vùng 500 m từ bờ ra biển. Tàu trong cảng/sát bờ cũng bị bỏ qua. Kết quả gốc được giữ riêng trong gói bằng chứng.</p>
 <p><b>Đánh dấu của người xem:</b> {esc(review['status'])}</p><p class="note">{esc(review['note'])}</p>
+<p><b>Đối chiếu AIS:</b> Thiếu dữ liệu. Chưa có nguồn AIS cùng thời điểm để ghép.</p>
+<p><b>Xác nhận nghiệp vụ:</b> {esc(decision)}</p>
+<p>Người xác nhận tự khai danh tính trong phiên; đây không phải chữ ký số hay kết luận pháp lý.</p>
 <h2>Ứng viên mô hình — chưa xác minh</h2><table><tr><th>ID</th><th>Điểm mô hình</th><th>Vĩ độ</th><th>Kinh độ</th></tr>{rows}</table>
 <p>Không phải xác nhận tàu, tàu cá hay vi phạm. Không phát hiện không chứng minh không có tàu. Ảnh ghép trong ngày; chưa có thời điểm riêng từng pixel.</p>
 <small>Mã ảnh: {esc(tile['image_sha256'])}<br>Mã mô hình: {esc(tile['weights_sha256'])}</small></html>'''
@@ -139,9 +173,8 @@ def printable_review(tile, review, day):
 
 def evidence_bundle(root, tile, review, day):
     """An offline packet with exact image files, notes and integrity hashes."""
-    directory = (root / tile['asset_dir']).resolve()
-    if not directory.is_relative_to((root / 'assets/real_scan').resolve()):
-        raise ValueError('Evidence must belong to the published scan directory')
+    from scan_assets import resolve_scan_directory
+    directory = resolve_scan_directory(root, tile)
     from land_mask import annotated_image
     marked = BytesIO()
     annotated_image(root, tile).save(marked, format='JPEG', quality=95)
@@ -150,7 +183,8 @@ def evidence_bundle(root, tile, review, day):
         'candidates.jpg': marked.getvalue(),
         'raw-model-candidates.jpg': (directory / 'detections.jpg').read_bytes(),
         'review.html': printable_review(tile, review, day).encode('utf-8'),
-        'evidence.json': json.dumps(dict(tile, review=review), ensure_ascii=False, indent=2).encode('utf-8'),
+        'evidence.json': json.dumps(dict(tile, review=review, data_status='MISSING_DATA',
+            operational_assessment=operational_assessment(tile, review)), ensure_ascii=False, indent=2).encode('utf-8'),
     }
     payloads['checksums.json'] = json.dumps({name:hashlib.sha256(data).hexdigest() for name,data in payloads.items()},indent=2).encode()
     buffer = BytesIO()

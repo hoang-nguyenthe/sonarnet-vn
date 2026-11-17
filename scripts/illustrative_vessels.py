@@ -35,7 +35,7 @@ def profile(candidate):
 
 def popup(candidate):
     p = profile(candidate)
-    head = '<div class="vessel-popup-details"><dl>'
+    head = '<strong>HỒ SƠ GIẢ LẬP</strong><p>Tên và AIS minh họa, không phải định danh từ ảnh.</p><div class="vessel-popup-details"><dl>'
     for label, value in [('Mã tàu', p['registration']), ('Loại phương tiện', p['category']),
                          ('Chủ phương tiện', p['owner']), ('Cảng đăng ký', p['port']),
                          ('Chiều dài', f"{p['length_m']} m"), ('Thuyền viên', f"{p['crew']} người"),

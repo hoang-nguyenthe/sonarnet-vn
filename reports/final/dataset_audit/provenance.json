@@ -1,0 +1,16 @@
+{
+  "metadata_source": "Zhang et al. (2020), LS-SSDD-v1.0, Table 2 and Figure 3: https://doi.org/10.3390/rs12182997; UTC dates from original Tools/user_manual.pdf product IDs (the paper dates differ for scenes 08 and 13).",
+  "selection_rule": "Predeclared before training. Remove original training scenes 06 and 09 near test Gulf of Cadiz/Gibraltar, and 07 near validation English Channel. Keep dates, named geographic groups and scene IDs disjoint. This is a custom strict split, not the official random/scene benchmark score.",
+  "policy_sha256": "1a74b93e0196ff7f6e8a082409cefac6b14581b2458ba20f8c1da33a4b6e712c",
+  "nearshore_definition": "Official test_inshore.txt: image contains land, not a measured distance-to-shore threshold.",
+  "metric_limits": "Physical calibration not assumed from radar resolution. Metre/area metrics await verified pixel spacing.",
+  "quarantine": {
+    "removed_images": 115,
+    "reason": "Conservative cross-split dHash<=3 quarantine; similarity is not confirmed duplication"
+  },
+  "counts": {
+    "train": 3491,
+    "val": 594,
+    "test": 3000
+  }
+}

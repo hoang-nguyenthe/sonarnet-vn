@@ -9,12 +9,14 @@ class PublicWorkflowTests(unittest.TestCase):
     def test_plain_language_and_evidence_navigation(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=90).run()
         self.assertFalse(app.exception)
-        self.assertEqual(app.radio[0].options, ['Nghiên cứu', 'Quan sát', 'Hướng dẫn'])
+        self.assertEqual(app.radio[0].options, ['Nghiên cứu', 'Quan sát', 'Minh chứng cải tiến', 'Hướng dẫn'])
         app.radio[0].set_value('Quan sát').run()
         self.assertFalse(app.exception)
         controls = ' '.join(x.label for name in ('radio','toggle','button','selectbox') for x in getattr(app, name))
-        for forbidden in ('YOLO', 'DEMO', 'giả lập', 'mô phỏng', 'AIS'):
+        for forbidden in ('YOLO', 'DEMO', 'AIS'):
             self.assertNotIn(forbidden, controls)
+        mock_toggle = next(x for x in app.toggle if 'giả lập' in x.label)
+        self.assertFalse(mock_toggle.value, 'Invented identities must be off by default')
         evidence_button = next((x for x in app.button if x.label == 'Kiểm tra điểm này'), None)
         if evidence_button:
             evidence_button.click().run()

@@ -87,6 +87,9 @@ def evaluate_detections(
     ``ground_truth`` ánh xạ định danh ảnh sang khung bao đối chứng.
     """
     records: List[Tuple[float, int]] = []  # (điểm tin cậy, là dương tính thật)
+    unknown = set(predictions) - set(ground_truth)
+    if unknown:
+        raise ValueError(f"Predictions without annotation records: {sorted(unknown)}")
     n_gt_total = 0
 
     for image_id, gt_boxes in ground_truth.items():
@@ -99,10 +102,18 @@ def evaluate_detections(
         pred_boxes = np.asarray(pred_boxes, dtype=np.float32).reshape(-1, 4)
         pred_scores = np.asarray(pred_scores, dtype=np.float32).reshape(-1)
 
+        if len(pred_boxes) != len(pred_scores):
+            raise ValueError(f'{image_id}: one confidence score required per box')
+        for name, boxes in [('truth', gt_boxes), ('prediction', pred_boxes)]:
+            if not np.isfinite(boxes).all() or np.any(boxes[:, 2:] <= boxes[:, :2]):
+                raise ValueError(f'{image_id}: invalid {name} box')
+        if not np.isfinite(pred_scores).all() or np.any((pred_scores < 0) | (pred_scores > 1)):
+            raise ValueError(f'{image_id}: confidence must be finite in [0, 1]')
+
         if pred_boxes.size == 0:
             continue
 
-        order = np.argsort(-pred_scores)
+        order = np.argsort(-pred_scores, kind='stable')
         pred_boxes, pred_scores = pred_boxes[order], pred_scores[order]
 
         ious = box_iou(pred_boxes, gt_boxes)
@@ -120,8 +131,11 @@ def evaluate_detections(
                 records.append((float(pred_scores[i]), 0))
 
     if not records or n_gt_total == 0:
+        # Background-only test images still contain false alarms. Do not erase
+        # these counts simply because recall/AP have no positive denominator.
+        fp = sum(score >= score_threshold for score, _ in records)
         return DetectionMetrics(
-            0.0, 0.0, 0.0, 0.0, 0.0, n_gt_total, 0, 0, 0, n_gt_total,
+            0.0, 0.0, 0.0, 0.0, 0.0, n_gt_total, len(records), 0, fp, n_gt_total,
             (np.array([]), np.array([])),
         )
 

@@ -202,6 +202,16 @@ class ConstantVelocityKalman:
         speed_ms = float(np.hypot(xs[2], xs[3]))
         course = float(np.degrees(np.arctan2(xs[2], xs[3])) % 360.0)
         sigma = float(np.sqrt(max((Ps[0, 0] + Ps[1, 1]) / 2.0, 0.0)))
+        # A covariance from fixed measurement noise can be falsely confident
+        # when incoming AIS is noisier than that model. Inflate conservatively
+        # with observed departure from constant-velocity motion (turns included).
+        if len(set(obs_times)) >= 3:
+            local_positions = np.array([to_local(float(r['lat']), float(r['lon'])) for r in recs])
+            centered_times = np.array(obs_times) - np.mean(obs_times)
+            design = np.column_stack([np.ones(len(recs)), centered_times])
+            fitted = design @ np.linalg.lstsq(design, local_positions, rcond=None)[0]
+            residual_sigma = float(np.sqrt(np.sum((local_positions - fitted)**2) / (2 * max(len(recs)-2, 1))))
+            sigma = max(sigma, residual_sigma)
         gap = float(min(abs(t - float(target_time_s)) for t in obs_times))
 
         return KalmanEstimate(
@@ -215,7 +225,8 @@ class ConstantVelocityKalman:
 
 
 def linear_interpolate_to_time(
-    records: Sequence[dict], target_time_s: float
+    records: Sequence[dict], target_time_s: float,
+    measurement_noise: float = 45.0, process_noise: float = 0.01,
 ) -> Optional[KalmanEstimate]:
     """Nội suy tuyến tính — phương án cơ sở để so sánh với bộ làm trơn Kalman.
 
@@ -248,6 +259,8 @@ def linear_interpolate_to_time(
 
     return KalmanEstimate(
         lat=lat, lon=lon, speed_kn=speed, course_deg=course,
-        position_sigma_m=float("nan"), gap_to_nearest_s=gap,
+        # Conservative proxy, not a Kalman covariance. Include temporal motion
+        # uncertainty so the linear baseline can use the same quality gates.
+        position_sigma_m=float(np.hypot(measurement_noise, 0.5 * process_noise * gap**2)), gap_to_nearest_s=gap,
         n_observations=len(recs),
     )

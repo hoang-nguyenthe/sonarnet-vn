@@ -64,3 +64,14 @@ training_real/
 scripts/static/radar/
 sonarnet_run/data/yolo/ais/train.jsonl
 sonarnet_run/data/yolo/ais/val.jsonl
+
+# Private artifact build and rendering cache
+.deck-build/
+tmp/pdfs/
+
+# Full raw benchmark outputs are included in the review ZIP, not Git history.
+reports/final/**/*_predictions.json
+reports/final/independent_sar/global_threshold_failures.json
+.local-asset-backup/
+.chart-data-*/
+output/slides/SonarNet_Chang1_Thuyet_trinh.pptx

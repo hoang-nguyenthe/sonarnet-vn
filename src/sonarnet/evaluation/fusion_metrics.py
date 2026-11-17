@@ -17,6 +17,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 import numpy as np
 
 from ..data.simulator import AIS_MISMATCH, AIS_OK, DARK, IDENTITY_STATES
+from ..fusion.status import EVALUATION_STATES
 
 
 @dataclass
@@ -51,7 +52,7 @@ class FusionMetrics:
             "state_accuracy": round(float(self.state_accuracy), 4),
             "state_macro_f1": round(float(self.state_macro_f1), 4),
             "confusion_matrix": self.confusion_matrix.tolist(),
-            "confusion_labels": list(IDENTITY_STATES),
+            "confusion_labels": list(EVALUATION_STATES),
             "per_state_f1": {k: round(float(v), 4) for k, v in self.per_state_f1.items()},
             "n_evaluated": self.n_evaluated,
         }
@@ -83,7 +84,7 @@ def evaluate_fusion(
     if n == 0:
         return FusionMetrics(
             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-            np.zeros((3, 3), dtype=int), {}, 0,
+            np.zeros((4, 4), dtype=int), {}, 0,
         )
 
     # -- Ghép cặp ----------------------------------------------------------
@@ -111,19 +112,20 @@ def evaluate_fusion(
     d_p, d_r, d_f = _prf(tp, fp, fn)
 
     # -- Phân loại ba trạng thái -------------------------------------------
-    idx = {s: i for i, s in enumerate(IDENTITY_STATES)}
-    cm = np.zeros((len(IDENTITY_STATES), len(IDENTITY_STATES)), dtype=int)
+    idx = {s: i for i, s in enumerate(EVALUATION_STATES)}
+    cm = np.zeros((len(EVALUATION_STATES), len(EVALUATION_STATES)), dtype=int)
     for t, p in zip(true_states, pred_states):
         if t in idx and p in idx:
             cm[idx[t], idx[p]] += 1
 
-    acc = float(np.trace(cm) / max(cm.sum(), 1))
+    # Abstentions and unknown predictions count as errors, not dropped rows.
+    acc = float(np.trace(cm) / max(n, 1))
     per_state: Dict[str, float] = {}
     for s in IDENTITY_STATES:
         i = idx[s]
         s_tp = int(cm[i, i])
         s_fp = int(cm[:, i].sum() - s_tp)
-        s_fn = int(cm[i, :].sum() - s_tp)
+        s_fn = sum(t == s and p != s for t, p in zip(true_states, pred_states))
         per_state[s] = _prf(s_tp, s_fp, s_fn)[2]
     macro_f1 = float(np.mean(list(per_state.values())))
 

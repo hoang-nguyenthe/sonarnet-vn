@@ -28,6 +28,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 import numpy as np
 
 from ..data.simulator import AIS_MISMATCH, AIS_OK, DARK
+from ..fusion.status import MISSING_DATA
 from ..utils import get_logger
 from .fusion_metrics import FusionMetrics, evaluate_fusion
 
@@ -63,8 +64,8 @@ class AblationRow:
             "Chính xác lớp DARK": round(self.dark_precision, 4),
             "Độ nhạy lớp DARK": round(self.dark_recall, 4),
             "F1 lớp DARK": round(self.dark_f1, 4),
-            "Chính xác 3 trạng thái": round(self.state_accuracy, 4),
-            "F1 vĩ mô 3 trạng thái": round(self.state_macro_f1, 4),
+            "Chính xác trạng thái (tính cả từ chối)": round(self.state_accuracy, 4),
+            "F1 vĩ mô nhãn mô phỏng": round(self.state_macro_f1, 4),
             "Sai số ghép cặp (m)": (
                 round(self.mean_match_error_m, 1)
                 if np.isfinite(self.mean_match_error_m) else None
@@ -130,7 +131,8 @@ def run_ablation(
     # phương tiện nào; mọi phát hiện đều phải bị coi là chưa xác định.
     recs_a = [dict(r) for r in recs_d]
     for r in recs_a:
-        r["pred_state"] = DARK
+        r["pred_state"] = MISSING_DATA if r.get('detected') else None
+        r['match_reason'] = 'no_ais'
         r["pred_mmsi"] = None
         r["match_error_m"] = float("nan")
     m_a = _metrics_from_records(recs_a)
@@ -146,16 +148,19 @@ def run_ablation(
     # ---- Cấu hình B: chỉ dữ liệu AIS -------------------------------------
     # Phương tiện không phát tín hiệu hoàn toàn không xuất hiện trong hệ thống.
     recs_b = []
+    from ..fusion.matching import SARAISFusion
+    ais_estimates = {m['scene_id']:SARAISFusion(cfg).interpolate_ais(
+        ais_by_scene.get(m['scene_id'],[]),float(m['capture_time_s'])) for m in scenes_meta}
     for r in recs_d:
         rb = dict(r)
-        if rb["true_state"] == DARK:
-            rb["detected"] = False
-            rb["pred_state"] = None      # hệ thống không biết phương tiện này tồn tại
-        else:
-            rb["detected"] = True
-            rb["pred_state"] = rb["true_state"]
-            rb["pred_mmsi"] = rb["true_mmsi"]
-            rb["match_error_m"] = 0.0
+        # Ground-truth ID is used only to measure visibility in the simulated
+        # stream. It must never supply a predicted state (the old oracle did).
+        visible = rb['true_mmsi'] in ais_estimates.get(rb['scene_id'],{})
+        rb['detected'] = visible
+        rb['pred_state'] = MISSING_DATA if visible else None
+        rb['pred_mmsi'] = None  # no radar association exists in AIS-only mode
+        rb['match_reason'] = 'no_radar'
+        rb['match_error_m'] = float('nan')
         recs_b.append(rb)
     m_b = _metrics_from_records(recs_b)
     metrics_map["B"] = m_b
@@ -189,13 +194,12 @@ def _metrics_from_records(records: Sequence[Dict]) -> FusionMetrics:
     pred_mmsi = [r.get("pred_mmsi") for r in visible]
     errs = [r.get("match_error_m", float("nan")) for r in visible]
 
-    # Bổ sung các phương tiện ngắt định danh bị bỏ sót hoàn toàn
+    # Keep every missed ground-truth vessel in the denominator, regardless of
+    # identity class. Missing evidence must not be represented as AIS_OK.
     for r in invisible:
-        if r["true_state"] != DARK:
-            continue
-        true_states.append(DARK)
-        pred_states.append(AIS_OK)  # nhãn giữ chỗ, chắc chắn khác DARK
-        true_mmsi.append(None)
+        true_states.append(r['true_state'])
+        pred_states.append(MISSING_DATA)
+        true_mmsi.append(r.get('true_mmsi'))
         pred_mmsi.append(None)
         errs.append(float("nan"))
 

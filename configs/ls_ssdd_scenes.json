@@ -1,0 +1,190 @@
+{
+  "metadata_source": "Zhang et al. (2020), LS-SSDD-v1.0, Table 2 and Figure 3: https://doi.org/10.3390/rs12182997; UTC dates from original Tools/user_manual.pdf product IDs (the paper dates differ for scenes 08 and 13).",
+  "selection_rule": "Predeclared before training. Remove original training scenes 06 and 09 near test Gulf of Cadiz/Gibraltar, and 07 near validation English Channel. Keep dates, named geographic groups and scene IDs disjoint. This is a custom strict split, not the official random/scene benchmark score.",
+  "nearshore_definition": "Official test_inshore.txt: image contains land, not a measured distance-to-shore threshold.",
+  "scenes": [
+    {
+      "scene_id": "01",
+      "region_id": "tokyo",
+      "acquired_date_utc": "2020-06-20",
+      "split": "train",
+      "original_size": [
+        25479,
+        16709
+      ],
+      "paper_date": "2020-06-20",
+      "source_product_id": "S1B_IW_GRDH_1SDV_20200620T084112_20200620T084137_022115_029F80_B189"
+    },
+    {
+      "scene_id": "02",
+      "region_id": "adriatic",
+      "acquired_date_utc": "2020-06-20",
+      "split": "train",
+      "original_size": [
+        26609,
+        16687
+      ],
+      "paper_date": "2020-06-20",
+      "source_product_id": "S1B_IW_GRDH_1SDV_20200620T165738_20200620T165803_022120_029FAC_17D8"
+    },
+    {
+      "scene_id": "03",
+      "region_id": "skagerrak",
+      "acquired_date_utc": "2020-06-20",
+      "split": "train",
+      "original_size": [
+        26713,
+        16687
+      ],
+      "paper_date": "2020-06-20",
+      "source_product_id": "S1B_IW_GRDH_1SDV_20200620T170123_20200620T170148_022120_029FAC_EB9E"
+    },
+    {
+      "scene_id": "04",
+      "region_id": "qushm",
+      "acquired_date_utc": "2020-06-11",
+      "split": "train",
+      "original_size": [
+        25729,
+        16717
+      ],
+      "paper_date": "2020-06-11",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200611T021508_20200611T021533_032963_03D175_8263"
+    },
+    {
+      "scene_id": "05",
+      "region_id": "campeche",
+      "acquired_date_utc": "2020-06-21",
+      "split": "train",
+      "original_size": [
+        25629,
+        16742
+      ],
+      "paper_date": "2020-06-21",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200621T001544_20200621T001609_033108_03D5E1_330F"
+    },
+    {
+      "scene_id": "06",
+      "region_id": "gibraltar_cadiz",
+      "acquired_date_utc": "2020-06-17",
+      "split": "excluded",
+      "reason": "Alboran Sea may overlap test Gibraltar region",
+      "original_size": [
+        26446,
+        16672
+      ],
+      "paper_date": "2020-06-17",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200617T061925_20200617T061950_033053_03D42C_FD7D"
+    },
+    {
+      "scene_id": "07",
+      "region_id": "english_channel",
+      "acquired_date_utc": "2020-06-21",
+      "split": "excluded",
+      "reason": "Plymouth may overlap validation English Channel",
+      "original_size": [
+        26474,
+        16689
+      ],
+      "paper_date": "2020-06-21",
+      "source_product_id": "S1B_IW_GRDH_1SDV_20200621T063116_20200621T063141_022128_029FED_BA3F"
+    },
+    {
+      "scene_id": "08",
+      "region_id": "basilan",
+      "acquired_date_utc": "2020-06-20",
+      "split": "train",
+      "original_size": [
+        25538,
+        16810
+      ],
+      "paper_date": "2020-06-21",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200620T214051_20200620T214116_033106_03D5D5_3DBC"
+    },
+    {
+      "scene_id": "09",
+      "region_id": "gibraltar_cadiz",
+      "acquired_date_utc": "2020-06-21",
+      "split": "excluded",
+      "reason": "Gulf of Cadiz is already in test",
+      "original_size": [
+        25710,
+        16707
+      ],
+      "paper_date": "2020-06-21",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200621T182638_20200621T182703_033119_03D62E_7D45"
+    },
+    {
+      "scene_id": "10",
+      "region_id": "english_channel",
+      "acquired_date_utc": "2020-06-19",
+      "split": "val",
+      "original_size": [
+        26275,
+        16679
+      ],
+      "paper_date": "2020-06-19",
+      "source_product_id": "S1B_IW_GRDH_1SDV_20200619T175644_20200619T175709_022106_029F35_D269"
+    },
+    {
+      "scene_id": "11",
+      "region_id": "taiwan_strait",
+      "acquired_date_utc": "2020-06-16",
+      "split": "test",
+      "original_size": [
+        26275,
+        16720
+      ],
+      "paper_date": "2020-06-16",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200616T100139_20200616T100204_033041_03D3CE_D4B2"
+    },
+    {
+      "scene_id": "12",
+      "region_id": "singapore_malacca",
+      "acquired_date_utc": "2020-06-06",
+      "split": "test",
+      "original_size": [
+        25650,
+        16768
+      ],
+      "paper_date": "2020-06-06",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200606T111723_20200606T111748_032895_03CF78_2122"
+    },
+    {
+      "scene_id": "13",
+      "region_id": "singapore_malacca",
+      "acquired_date_utc": "2020-04-11",
+      "split": "test",
+      "original_size": [
+        25427,
+        16769
+      ],
+      "paper_date": "2020-04-12",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200411T230355_20200411T230420_032086_03B552_CAB1"
+    },
+    {
+      "scene_id": "14",
+      "region_id": "gibraltar_cadiz",
+      "acquired_date_utc": "2020-06-18",
+      "split": "test",
+      "original_size": [
+        25644,
+        16722
+      ],
+      "paper_date": "2020-06-18",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200618T020711_20200618T020736_033065_03D491_EC43"
+    },
+    {
+      "scene_id": "15",
+      "region_id": "gibraltar_cadiz",
+      "acquired_date_utc": "2020-06-16",
+      "split": "test",
+      "original_size": [
+        25667,
+        16705
+      ],
+      "paper_date": "2020-06-16",
+      "source_product_id": "S1A_IW_GRDH_1SDV_20200616T181812_20200616T181837_033046_03D3F4_9027"
+    }
+  ]
+}

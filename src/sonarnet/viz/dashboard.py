@@ -19,14 +19,16 @@ from typing import Dict, List, Optional, Sequence
 import numpy as np
 
 from ..data.simulator import AIS_MISMATCH, AIS_OK, DARK
+from ..fusion.status import STATE_LABELS, MISSING_DATA
 from ..utils import get_logger, package_available
 
 LOG = get_logger("viz.dashboard")
 
 STATE_STYLE = {
-    AIS_OK: {"color": "#2E7D5B", "label": "Phát tín hiệu trung thực", "radius": 5},
-    AIS_MISMATCH: {"color": "#C79A2E", "label": "Kích thước khai báo sai lệch", "radius": 6},
-    DARK: {"color": "#C2412C", "label": "Không phát tín hiệu", "radius": 8},
+    AIS_OK: {"color": "#2E7D5B", "label": STATE_LABELS[AIS_OK], "radius": 5},
+    AIS_MISMATCH: {"color": "#C79A2E", "label": STATE_LABELS[AIS_MISMATCH], "radius": 6},
+    DARK: {"color": "#C2412C", "label": STATE_LABELS[DARK], "radius": 8},
+    MISSING_DATA: {"color": "#738797", "label": STATE_LABELS[MISSING_DATA], "radius": 5},
 }
 
 
@@ -55,6 +57,9 @@ def build_marker_table(
                     "lat": float(v["lat"]),
                     "lon": float(v["lon"]),
                     "state": state,
+                    "review_status": "pending",
+                    "business_conclusion": None,
+                    "data_kind": "synthetic",
                     "true_state": r["true_state"],
                     "mmsi": r.get("pred_mmsi"),
                     "length_m": float(v["length_m"]),
@@ -89,7 +94,7 @@ def _folium_map(markers: Sequence[Dict], out_path: Path, center) -> Path:
         popup = folium.Popup(
             html=(
                 f"<div style='font-family:sans-serif;font-size:12px;min-width:220px'>"
-                f"<b style='color:#1C3557'>Phương tiện phát hiện</b><br>"
+                f"<b style='color:#1C3557'>DỮ LIỆU MÔ PHỎNG · Chờ chuyên viên xác minh</b><br>"
                 f"Trạng thái: <b>{style['label']}</b><br>"
                 f"Định danh ghép được: {mk['mmsi'] or 'không có'}<br>"
                 f"Chiều dài ước lượng: {mk['length_m']:.0f} m<br>"
@@ -124,11 +129,12 @@ def _folium_map(markers: Sequence[Dict], out_path: Path, center) -> Path:
                 font-family: sans-serif; font-size: 12px; color: #1C3557;">
       <div style="font-weight:700; margin-bottom:6px;">Trạng thái định danh</div>
       <div><span style="display:inline-block;width:11px;height:11px;border-radius:50%;
-           background:#2E7D5B;margin-right:7px;"></span>Phát tín hiệu trung thực</div>
+           background:#2E7D5B;margin-right:7px;"></span>Ghép được; chờ xác minh</div>
       <div><span style="display:inline-block;width:11px;height:11px;border-radius:50%;
-           background:#C79A2E;margin-right:7px;"></span>Kích thước khai báo sai lệch</div>
+           background:#C79A2E;margin-right:7px;"></span>Đang xác minh: kích thước lệch</div>
       <div><span style="display:inline-block;width:11px;height:11px;border-radius:50%;
-           background:#C2412C;margin-right:7px;"></span>Không phát tín hiệu</div>
+           background:#C2412C;margin-right:7px;"></span>Không ghép được</div>
+      <div>● Thiếu dữ liệu (xám)</div><p>Dữ liệu mô phỏng. Không kết luận vi phạm.</p>
     </div>
     """
     m.get_root().html.add_child(folium.Element(legend))
