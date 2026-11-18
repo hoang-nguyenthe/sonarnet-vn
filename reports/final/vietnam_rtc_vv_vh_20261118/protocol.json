@@ -1,0 +1,26 @@
+{
+  "started_utc": "2026-11-18T16:24:45.945179+00:00",
+  "code_sha256": "85b95df1d4540866790e1039732a62214f1c30592a2d8c5c2743efa242546b57",
+  "manifests": {
+    "development": {
+      "vv": "d29f2bc9c82ccbd561a0b952980de5d0aee48351a71df062c2d9d821bbb324b6",
+      "vh": "f9e0f435637c226c37986b6749490406df080bc277dadfcdc57e53bc0aa4618b"
+    },
+    "test": {
+      "vv": "bdcc58e32153530bea2cb24b02bdd8f109995065316422145bb87cb6f634fe06",
+      "vh": "e5dcd7ff912e0d96c29178a3f8e8fac0643831676e327469b46f4803f10f3916"
+    }
+  },
+  "source_vv_features": {
+    "development": "dcd6219e879c15627b0db09cda3e51ad6937a20b7de766b41bdb16b6de4397fd",
+    "fresh": "e01baea0964edbdb5ee7dd837541a7eeb734696d58b9f53d8fd239f1f067b1b1"
+  },
+  "alphas": [
+    0.125,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "cv": "Leave one acquisition out on five development sets. Select within each band family by matched count and prefer weaker adjustment on a tie. Keep the map as recommendation when it ties.",
+  "scope": "Rerank only the earlier 0.05 threshold proposals. Exactly the incumbent candidate count in common paired image support per scene. The 12 test scenes were scored before but not used for this ranking fit or alpha selection."
+}

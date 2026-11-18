@@ -67,6 +67,8 @@ CHANG1_FILES = {
     'scripts/prepare_vn_reference_rtc.py',
     'scripts/prepare_fresh_vn_references.py',
     'scripts/evaluate_review_ranking.py',
+    'scripts/export_vn_recall_example.py',
+    'scripts/evaluate_polarimetric_ranking.py',
     'scripts/fetch_vn_reference_rtc.py',
     'scripts/score_vn_reference_rtc.py',
     'scripts/build_chang1_adaptation_pdf.py',

@@ -1,0 +1,2066 @@
+{
+  "catalogue_sha256": "1fb67a7ae4cadea63ae577374f2bd799f8b0237f0add34d103ebde8b68fff67e",
+  "screen_sha256": "eae5d5e8ef003b89936ffe7e28658f2ff689cb3fca644607010aee545d1c579a",
+  "shape": [
+    512,
+    512
+  ],
+  "cohorts": [
+    {
+      "region": "quang_ninh_gulf",
+      "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+      "windows": [
+        {
+          "window_id": 38459,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.28125,
+            20.46818922264095,
+            108.369140625,
+            20.550508894195637
+          ],
+          "file": "window-38459.npz",
+          "sha256": "5190cc4e4f5ff5973802734bfb1dc7de803a3f16d0405195d4400d5065e181c0",
+          "valid_fraction": 0.6542434692382812
+        },
+        {
+          "window_id": 38469,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.6328125,
+            21.289374355860417,
+            108.720703125,
+            21.37124437061831
+          ],
+          "file": "window-38469.npz",
+          "sha256": "4b6e455f48a595468be30a66c8d89ae82170353a4aa7cb48c34e1a163c44a104",
+          "valid_fraction": 0.6517829895019531
+        },
+        {
+          "window_id": 38510,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.28125,
+            20.961439614096836,
+            108.369140625,
+            21.04349121680354
+          ],
+          "file": "window-38510.npz",
+          "sha256": "11c99610a94dfc2a202d768d5e01e08bde58cb95e04c606d510630fed20725b8",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38515,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            21.04349121680354,
+            108.544921875,
+            21.125497636606273
+          ],
+          "file": "window-38515.npz",
+          "sha256": "de63ea60dd8485dc9cda53b79f568ffe9f32303cf5de105af7b3146778349fdb",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38521,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.369140625,
+            21.289374355860417,
+            108.45703125,
+            21.37124437061831
+          ],
+          "file": "window-38521.npz",
+          "sha256": "a6944c4e8bf87fe4fa69daa2865adc0bd7b9962cdf7e1d6218ea80447d49c655",
+          "valid_fraction": 0.06987380981445312
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          108.28777313232422,
+          21.015851917866115
+        ],
+        [
+          108.3127498626709,
+          20.523743778160117
+        ],
+        [
+          108.31292152404785,
+          20.509033027136255
+        ],
+        [
+          108.31609725952148,
+          20.510078099797557
+        ],
+        [
+          108.32124710083008,
+          20.96865298814198
+        ],
+        [
+          108.34107398986816,
+          20.986204077714
+        ],
+        [
+          108.34519386291504,
+          20.50364677035154
+        ],
+        [
+          108.48346710205078,
+          21.094750533140193
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/6/24/IW/DV/S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-06-24T10:50:05.334078Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "quang_ninh_gulf",
+      "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+      "windows": [
+        {
+          "window_id": 44544,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.6328125,
+            20.632784250388017,
+            108.720703125,
+            20.71501514551209
+          ],
+          "file": "window-44544.npz",
+          "sha256": "35959fc45acbb27992ac0132c9ffc77917f17eb93ff60c9c0eff50e208e28714",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44551,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            20.79720143430699,
+            108.544921875,
+            20.879342971957897
+          ],
+          "file": "window-44551.npz",
+          "sha256": "00dc241ff9c04f35d78c42ad17686238c20e18314009aefad04cb1a78ad825b0",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44563,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            21.125497636606273,
+            108.544921875,
+            21.207458730482642
+          ],
+          "file": "window-44563.npz",
+          "sha256": "e5ea52e71a70aaa76b80110a48ed9a2e2aadff02f7615a46c03cfac588f32d31",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44564,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.544921875,
+            21.289374355860417,
+            108.6328125,
+            21.37124437061831
+          ],
+          "file": "window-44564.npz",
+          "sha256": "b37e6fa6c68b9939e6bcf9544b79771595ee3df04b683d00d37b5562ce5f06b7",
+          "valid_fraction": 0.4578742980957031
+        },
+        {
+          "window_id": 44570,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.6328125,
+            20.961439614096836,
+            108.720703125,
+            21.04349121680354
+          ],
+          "file": "window-44570.npz",
+          "sha256": "c2239441df7dfaba1227b75b2e3039c1b3555f634557cd03c9b63d3459fc154a",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44574,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.369140625,
+            21.207458730482642,
+            108.45703125,
+            21.289374355860417
+          ],
+          "file": "window-44574.npz",
+          "sha256": "06d69909f3f82d751e4df16514a16a6ad884f06b1ea87c717a35ead7aa5c9786",
+          "valid_fraction": 0.9976959228515625
+        },
+        {
+          "window_id": 44578,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.369140625,
+            21.289374355860417,
+            108.45703125,
+            21.37124437061831
+          ],
+          "file": "window-44578.npz",
+          "sha256": "1b4e2e6564b3238cf1cc0627d745fc4b1fe8f12206c81701d9ad1723c8db17f8",
+          "valid_fraction": 0.07007217407226562
+        },
+        {
+          "window_id": 44583,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            21.289374355860417,
+            108.544921875,
+            21.37124437061831
+          ],
+          "file": "window-44583.npz",
+          "sha256": "a84331cf0750c6dba7e7db5b09d2a0c9eabfb0b08c9a5f317b6c1851a2511725",
+          "valid_fraction": 0.2631187438964844
+        },
+        {
+          "window_id": 44585,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.544921875,
+            20.961439614096836,
+            108.6328125,
+            21.04349121680354
+          ],
+          "file": "window-44585.npz",
+          "sha256": "9246c54da0ced896756d13993bdf13dd9b13197829b832d14e89ba0483849590",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44603,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.369140625,
+            20.961439614096836,
+            108.45703125,
+            21.04349121680354
+          ],
+          "file": "window-44603.npz",
+          "sha256": "bddc26de6b06975e839f5d77c8e79e6462bac4cbdd4cb7c66d2edbc820ae6b8a",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44606,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.369140625,
+            20.79720143430699,
+            108.45703125,
+            20.879342971957897
+          ],
+          "file": "window-44606.npz",
+          "sha256": "50cb6883b3ef67195571093bee377b118cf52dc26769681dc8dd31e1eac6bc37",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44614,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.369140625,
+            20.879342971957897,
+            108.45703125,
+            20.961439614096836
+          ],
+          "file": "window-44614.npz",
+          "sha256": "0e40ff2ecd8d8e3d25ed6550149d1ded81eea9e3d73c907956408b7f8e149954",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44624,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            20.71501514551209,
+            108.544921875,
+            20.79720143430699
+          ],
+          "file": "window-44624.npz",
+          "sha256": "5eb59ab7676f19365b04155fb9c19edd04ce77040fe7ae6d9646c14d5a845fb4",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44627,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.544921875,
+            20.71501514551209,
+            108.6328125,
+            20.79720143430699
+          ],
+          "file": "window-44627.npz",
+          "sha256": "f207db020a2668df2bc10e0418558a5c6c1c505460353a7e54a803cc6178322e",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44628,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.193359375,
+            20.71501514551209,
+            108.28125,
+            20.79720143430699
+          ],
+          "file": "window-44628.npz",
+          "sha256": "351bba0a4032e953262b4aede82645cb5440f25ad0054d70405e168bd49c0881",
+          "valid_fraction": 0.23416900634765625
+        },
+        {
+          "window_id": 44629,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.6328125,
+            20.79720143430699,
+            108.720703125,
+            20.879342971957897
+          ],
+          "file": "window-44629.npz",
+          "sha256": "e95a6971b3b3f9652ab0f6f648b08138cf460e42bbf349c6e74810d5aea3c08e",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44631,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.6328125,
+            20.71501514551209,
+            108.720703125,
+            20.79720143430699
+          ],
+          "file": "window-44631.npz",
+          "sha256": "155840aa6b6e4c9e995db9c9fab462a8a9f2e3054bbdfa82dfd097aa57d50d81",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44632,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.544921875,
+            21.207458730482642,
+            108.6328125,
+            21.289374355860417
+          ],
+          "file": "window-44632.npz",
+          "sha256": "c583805e293075321db645187cb2b86af2960d6a382f62d72ff98f26a02293a3",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44634,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.6328125,
+            20.879342971957897,
+            108.720703125,
+            20.961439614096836
+          ],
+          "file": "window-44634.npz",
+          "sha256": "f790710712004fb60283335f105f2e31a9c06c394b6c5dfc65cad0b886cccfd2",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44635,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.544921875,
+            20.79720143430699,
+            108.6328125,
+            20.879342971957897
+          ],
+          "file": "window-44635.npz",
+          "sha256": "05512cc820bb5f4531d64de62cc97e5f8700ceef9da2bd35de69da463f849bf0",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44636,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.544921875,
+            21.125497636606273,
+            108.6328125,
+            21.207458730482642
+          ],
+          "file": "window-44636.npz",
+          "sha256": "c0da732d195ba10eab72e1d0ef1188035bcf6c2894bf9013fd0649417efe1ef6",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44641,
+          "split": "jun-july-aug-2022-point-val",
+          "bbox": [
+            108.544921875,
+            20.632784250388017,
+            108.6328125,
+            20.71501514551209
+          ],
+          "file": "window-44641.npz",
+          "sha256": "90ff1c23152c521a7f8c16d908878a9ed231b9e264edb26f4a12e9b892aa3277",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44650,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            20.961439614096836,
+            108.544921875,
+            21.04349121680354
+          ],
+          "file": "window-44650.npz",
+          "sha256": "bc0332dc7737aa9034efdc26e6b18557277a1f5c0e833c830ec84d1a7bb5a564",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44653,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            20.879342971957897,
+            108.544921875,
+            20.961439614096836
+          ],
+          "file": "window-44653.npz",
+          "sha256": "d2c6eddb7102a7b44964ec28ee6b5a3768dab141e04dd6febbbcfe566fcca9ff",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 44657,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.28125,
+            20.632784250388017,
+            108.369140625,
+            20.71501514551209
+          ],
+          "file": "window-44657.npz",
+          "sha256": "60ba87082a8592999adf053d4f0b89c9bda9e895ccc78898e94453bd63182f47",
+          "valid_fraction": 0.9906845092773438
+        },
+        {
+          "window_id": 44658,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.45703125,
+            21.207458730482642,
+            108.544921875,
+            21.289374355860417
+          ],
+          "file": "window-44658.npz",
+          "sha256": "3f0abfa51ddedc75969c04ad1a2370de5f71a578d2b76e28faa2afe6f1e7e7d4",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          108.40484619140625,
+          20.861699157674426
+        ],
+        [
+          108.45660209655762,
+          20.968893427950402
+        ],
+        [
+          108.47728729248047,
+          20.82656576325119
+        ],
+        [
+          108.48981857299805,
+          20.965527235445418
+        ],
+        [
+          108.50629806518555,
+          21.041728863824435
+        ],
+        [
+          108.51273536682129,
+          21.15655854847167
+        ],
+        [
+          108.51788520812988,
+          20.965447087081145
+        ],
+        [
+          108.52011680603027,
+          20.75948475942807
+        ],
+        [
+          108.5240650177002,
+          20.94051886223244
+        ],
+        [
+          108.5287857055664,
+          21.21353996963236
+        ],
+        [
+          108.53024482727051,
+          20.974503580362672
+        ],
+        [
+          108.53041648864746,
+          21.12637831913464
+        ],
+        [
+          108.53264808654785,
+          21.312484874618303
+        ],
+        [
+          108.53453636169434,
+          21.30184968940667
+        ],
+        [
+          108.5397720336914,
+          21.292493288506606
+        ],
+        [
+          108.5434627532959,
+          21.31368428327799
+        ],
+        [
+          108.54861259460449,
+          21.31488368214165
+        ],
+        [
+          108.5500717163086,
+          21.271859120832747
+        ],
+        [
+          108.55230331420898,
+          20.756675694092955
+        ],
+        [
+          108.55384826660156,
+          21.317762199444026
+        ],
+        [
+          108.555908203125,
+          21.314963641717583
+        ],
+        [
+          108.55856895446777,
+          21.206258456317094
+        ],
+        [
+          108.5617446899414,
+          21.218820842495766
+        ],
+        [
+          108.56337547302246,
+          20.726495015288528
+        ],
+        [
+          108.56629371643066,
+          21.269539595467037
+        ],
+        [
+          108.56775283813477,
+          21.158719761304628
+        ],
+        [
+          108.56921195983887,
+          20.703534405836308
+        ],
+        [
+          108.5767650604248,
+          20.801694707706137
+        ],
+        [
+          108.58174324035645,
+          21.16512316962949
+        ],
+        [
+          108.58620643615723,
+          21.18009005570781
+        ],
+        [
+          108.58637809753418,
+          21.163122134288017
+        ],
+        [
+          108.58663558959961,
+          21.142710028763087
+        ],
+        [
+          108.58860969543457,
+          21.1966559118128
+        ],
+        [
+          108.58912467956543,
+          21.002551182859317
+        ],
+        [
+          108.5899829864502,
+          20.843732419105027
+        ],
+        [
+          108.59195709228516,
+          21.212819835966542
+        ],
+        [
+          108.59204292297363,
+          20.68273840528223
+        ],
+        [
+          108.59247207641602,
+          21.19617576820155
+        ],
+        [
+          108.59315872192383,
+          21.229061996669326
+        ],
+        [
+          108.5940170288086,
+          20.712606670818964
+        ],
+        [
+          108.5954761505127,
+          21.212899850991786
+        ],
+        [
+          108.59642028808594,
+          20.712847520011042
+        ],
+        [
+          108.59908103942871,
+          21.191694352589387
+        ],
+        [
+          108.59925270080566,
+          20.716701055017353
+        ],
+        [
+          108.59968185424805,
+          20.691651326062058
+        ],
+        [
+          108.60045433044434,
+          20.970416204423834
+        ],
+        [
+          108.60062599182129,
+          20.74864950553774
+        ],
+        [
+          108.60114097595215,
+          20.655032742851272
+        ],
+        [
+          108.60234260559082,
+          20.658968057875175
+        ],
+        [
+          108.60285758972168,
+          20.67149613712871
+        ],
+        [
+          108.60543251037598,
+          20.782196141101792
+        ],
+        [
+          108.61006736755371,
+          21.022421722828902
+        ],
+        [
+          108.61650466918945,
+          20.674226478790793
+        ],
+        [
+          108.61719131469727,
+          20.706665602905435
+        ],
+        [
+          108.61968040466309,
+          20.664509451129682
+        ],
+        [
+          108.61985206604004,
+          20.64338682603997
+        ],
+        [
+          108.62079620361328,
+          20.830255957222956
+        ],
+        [
+          108.62156867980957,
+          20.836111948994716
+        ],
+        [
+          108.62259864807129,
+          20.838438238675906
+        ],
+        [
+          108.6247444152832,
+          20.655916189788165
+        ],
+        [
+          108.62500190734863,
+          20.719992538549842
+        ],
+        [
+          108.62525939941406,
+          20.69293602822341
+        ],
+        [
+          108.6258602142334,
+          20.674788601862065
+        ],
+        [
+          108.63066673278809,
+          20.679044609010408
+        ],
+        [
+          108.63204002380371,
+          21.234822333444487
+        ],
+        [
+          108.63341331481934,
+          20.835229553849874
+        ],
+        [
+          108.63367080688477,
+          20.64700117154757
+        ],
+        [
+          108.63384246826172,
+          20.836994338967624
+        ],
+        [
+          108.6342716217041,
+          20.69373896154893
+        ],
+        [
+          108.63444328308105,
+          20.851753549715532
+        ],
+        [
+          108.63487243652344,
+          20.832261459499854
+        ],
+        [
+          108.63521575927734,
+          20.669890030865727
+        ],
+        [
+          108.63590240478516,
+          20.738856978671873
+        ],
+        [
+          108.63727569580078,
+          20.76173197411026
+        ],
+        [
+          108.64242553710938,
+          20.688359227112933
+        ],
+        [
+          108.64311218261719,
+          20.67462799548263
+        ],
+        [
+          108.6441421508789,
+          20.711723553839448
+        ],
+        [
+          108.64431381225586,
+          20.64266394663017
+        ],
+        [
+          108.6463737487793,
+          20.64338682603997
+        ],
+        [
+          108.64654541015625,
+          20.7118038374139
+        ],
+        [
+          108.64680290222168,
+          20.649491004031997
+        ],
+        [
+          108.64680290222168,
+          20.691731620265905
+        ],
+        [
+          108.64740371704102,
+          20.661377384123444
+        ],
+        [
+          108.64791870117188,
+          20.67414617532501
+        ],
+        [
+          108.6481761932373,
+          20.655273683434245
+        ],
+        [
+          108.64826202392578,
+          20.965206641730575
+        ],
+        [
+          108.64860534667969,
+          20.74600076982987
+        ],
+        [
+          108.64886283874512,
+          20.720072817742523
+        ],
+        [
+          108.6496353149414,
+          20.693337495417463
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/8/23/IW/DV/S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-08-23T10:50:08.730927Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "khanh_hoa_binh_thuan",
+      "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+      "windows": [
+        {
+          "window_id": 32130,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.16015625,
+            11.78132529611228,
+            109.248046875,
+            11.86735091145931
+          ],
+          "file": "window-32130.npz",
+          "sha256": "735850dd69b659962c622bfb13be895e2ae5fc440251b11d6c591d7d1d587535",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          109.20144081115723,
+          11.81938488451681
+        ],
+        [
+          109.20470237731934,
+          11.816780533651354
+        ],
+        [
+          109.21045303344727,
+          11.790903702997335
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/3/13/IW/DV/S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-03-13T10:55:38.907611Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "khanh_hoa_binh_thuan",
+      "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+      "windows": [
+        {
+          "window_id": 33130,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            108.984375,
+            11.350796722383674,
+            109.072265625,
+            11.436955216143183
+          ],
+          "file": "window-33130.npz",
+          "sha256": "8faff375558e1c89899dea88ab36cc5602a841f6690cfd68b7a6fcdc42118e9e",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 33133,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.3359375,
+            11.695272733029404,
+            109.423828125,
+            11.78132529611228
+          ],
+          "file": "window-33133.npz",
+          "sha256": "6736452d43cea5ed7d4439fa53be4981db95c0b0bf5734b410efb916ff52031d",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          109.02952194213867,
+          11.372254646598309
+        ],
+        [
+          109.03072357177734,
+          11.360642323378686
+        ],
+        [
+          109.37919616699219,
+          11.695692976729251
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/1/24/IW/DV/S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-01-24T10:55:39.567315Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "khanh_hoa_binh_thuan",
+      "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+      "windows": [
+        {
+          "window_id": 36144,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.248046875,
+            11.78132529611228,
+            109.3359375,
+            11.86735091145931
+          ],
+          "file": "window-36144.npz",
+          "sha256": "a4f18cd54aefb10c09b262ac092d54ee0372e833973a36bc75daa1465eb2431f",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 36145,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.599609375,
+            12.125264218331585,
+            109.6875,
+            12.21118019150399
+          ],
+          "file": "window-36145.npz",
+          "sha256": "d3ad02354539cb7cabe72e2124eac828cc825bd017c6deda4079686e2228bc0d",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 36150,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.3359375,
+            11.78132529611228,
+            109.423828125,
+            11.86735091145931
+          ],
+          "file": "window-36150.npz",
+          "sha256": "03632c6d0aad41a81e1e9d0533182caadaaa063f199bc7d91a63afebb3cb1d1b",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 36151,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.248046875,
+            11.264612212504435,
+            109.3359375,
+            11.350796722383674
+          ],
+          "file": "window-36151.npz",
+          "sha256": "1ac91fe7bc3e30cc1628d03526fcb9da2299226237e67f4da23e812c6a933c9f",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 36153,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.3359375,
+            11.95334939364342,
+            109.423828125,
+            12.039320557540568
+          ],
+          "file": "window-36153.npz",
+          "sha256": "a0227f1f1a4bd5f03c57612f1f912dbd7920d33626cc61b673fcdcbc6d36b86c",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 36156,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.3359375,
+            11.695272733029404,
+            109.423828125,
+            11.78132529611228
+          ],
+          "file": "window-36156.npz",
+          "sha256": "d90852d914754da497b6864e07f28feaae8b733559d49fa6ffdaf01d1ff4e36d",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 36157,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            109.248046875,
+            11.178401873711781,
+            109.3359375,
+            11.264612212504435
+          ],
+          "file": "window-36157.npz",
+          "sha256": "b4e931bcfedba5dfad799ea3ee48fca22aa4a84ed81d2b0be2461de566bf27d1",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 36158,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            108.984375,
+            11.178401873711781,
+            109.072265625,
+            11.264612212504435
+          ],
+          "file": "window-36158.npz",
+          "sha256": "062dae733d48309da34adc4c3f74748d2fe172ad3f427b5b7cac92ce58fad9a0",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          109.06977653503418,
+          11.259140642301215
+        ],
+        [
+          109.26083564758301,
+          11.819468895422634
+        ],
+        [
+          109.29336547851562,
+          11.280857953649782
+        ],
+        [
+          109.30503845214844,
+          11.255184211348906
+        ],
+        [
+          109.3630599975586,
+          11.826861754169714
+        ],
+        [
+          109.3703556060791,
+          11.977531552647784
+        ],
+        [
+          109.38220024108887,
+          11.967623846295444
+        ],
+        [
+          109.3960189819336,
+          11.840890834542712
+        ],
+        [
+          109.40108299255371,
+          11.715191582360218
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/5/24/IW/DV/S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-05-24T10:55:41.722196Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "khanh_hoa_binh_thuan",
+      "scene": "S1A_IW_GRDH_1SDV_20220406T105524_20220406T105553_042652_0516BC_74D8.SAFE",
+      "windows": [
+        {
+          "window_id": 54410,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            109.599609375,
+            11.95334939364342,
+            109.6875,
+            12.039320557540568
+          ],
+          "file": "window-54410.npz",
+          "sha256": "9114c9ecaaefb17aedb4c84c688b3155c91456cac39120252628d0a9ea708e5c",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 54415,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            109.51171875,
+            12.125264218331585,
+            109.599609375,
+            12.21118019150399
+          ],
+          "file": "window-54415.npz",
+          "sha256": "a7b8962e39845b25abc87da8e0c86dd156233def8d260868f8af5086bcf77b38",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 54417,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            109.3359375,
+            11.86735091145931,
+            109.423828125,
+            11.95334939364342
+          ],
+          "file": "window-54417.npz",
+          "sha256": "7e11e78d391da49a49501931e2d34a317a2fe3b92d983741b74557be54dca788",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          109.3498420715332,
+          11.921187133812003
+        ],
+        [
+          109.3674373626709,
+          11.930928586662166
+        ],
+        [
+          109.63376998901367,
+          12.00515366113878
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220406T105524_20220406T105553_042652_0516BC_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/4/6/IW/DV/S1A_IW_GRDH_1SDV_20220406T105524_20220406T105553_042652_0516BC_74D8/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-04-06T10:55:39.333741Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "south_mekong_coast",
+      "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+      "windows": [
+        {
+          "window_id": 31071,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.69921875,
+            9.362352822055602,
+            106.787109375,
+            9.449061826881424
+          ],
+          "file": "window-31071.npz",
+          "sha256": "7d14ca8b53ab8a06a747a511a52b0e3e3c86fafecc470cfb69f2648c6a916fd0",
+          "valid_fraction": 0.7880706787109375
+        },
+        {
+          "window_id": 31072,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.875,
+            8.407168163601074,
+            106.962890625,
+            8.49410453755188
+          ],
+          "file": "window-31072.npz",
+          "sha256": "7dc00d982819ddbd370617cc582fa17e7c1cb1b97109e59d5a59cecd95013d56",
+          "valid_fraction": 0.9530754089355469
+        },
+        {
+          "window_id": 31073,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.259765625,
+            8.320212289522946,
+            106.34765625,
+            8.407168163601074
+          ],
+          "file": "window-31073.npz",
+          "sha256": "e2d7cd1224e766434336a50d3aa62d70bc00bd850d482062327216ec3d1b7112",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          106.28336906433105,
+          8.32760089523997
+        ],
+        [
+          106.32551193237305,
+          8.359531654792203
+        ],
+        [
+          106.73157691955566,
+          9.414855011865937
+        ],
+        [
+          106.73440933227539,
+          9.41697186864343
+        ],
+        [
+          106.95207595825195,
+          8.484257262005082
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/5/10/IW/DV/S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-05-10T11:11:26.714089Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "south_mekong_coast",
+      "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+      "windows": [
+        {
+          "window_id": 31469,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.875,
+            8.581021215641847,
+            106.962890625,
+            8.667918002363118
+          ],
+          "file": "window-31469.npz",
+          "sha256": "84193fede27c210ebeb3e34c73c4dee1caa95941b77a47e45e2807f69f9c73aa",
+          "valid_fraction": 0.5629043579101562
+        },
+        {
+          "window_id": 31470,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.787109375,
+            8.233237111274555,
+            106.875,
+            8.320212289522946
+          ],
+          "file": "window-31470.npz",
+          "sha256": "c543e5c0aa96c9bf47756203548b3696b941cb10b6e7480b667f9d43fa7c46ed",
+          "valid_fraction": 0.4839973449707031
+        },
+        {
+          "window_id": 31472,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.5234375,
+            8.581021215641847,
+            106.611328125,
+            8.667918002363118
+          ],
+          "file": "window-31472.npz",
+          "sha256": "8c936630bf3f434db032f8c195cc4cad9f3019f18821e5a9ae2fb5c4a00effb9",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 31473,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.5234375,
+            9.362352822055602,
+            106.611328125,
+            9.449061826881424
+          ],
+          "file": "window-31473.npz",
+          "sha256": "4306165356b4a257b0b686ae610f741649febdabe6e657180a667e453eb4eb7f",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 31474,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.5234375,
+            8.667918002363118,
+            106.611328125,
+            8.754794702435612
+          ],
+          "file": "window-31474.npz",
+          "sha256": "62b5a4cc84140ade39f2ee60618450ebafaf07949bcc9db9778e2298eaeabbaa",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 31475,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.787109375,
+            8.667918002363118,
+            106.875,
+            8.754794702435612
+          ],
+          "file": "window-31475.npz",
+          "sha256": "59c0470107786144beb3f517fb12597b295b9be7447c873752bae866c1114afa",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 31476,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.962890625,
+            8.407168163601074,
+            107.05078125,
+            8.49410453755188
+          ],
+          "file": "window-31476.npz",
+          "sha256": "b47ecf97e42a285519d526789947d34c5f9c3244e2798f45ebf8cfbf522b1a69",
+          "valid_fraction": 0.009521484375
+        },
+        {
+          "window_id": 31477,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.69921875,
+            8.581021215641847,
+            106.787109375,
+            8.667918002363118
+          ],
+          "file": "window-31477.npz",
+          "sha256": "55160a5bb3611ae5332fb8279bb463ac2b138bddf52f19d9bfbaaa44726b49a5",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 31479,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.435546875,
+            9.188870084473402,
+            106.5234375,
+            9.2756221767921
+          ],
+          "file": "window-31479.npz",
+          "sha256": "7aecde428a284562880a1f1fbd887dfe95f3d23c1de5883fae154ca9a3eec1bf",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 31480,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.875,
+            8.407168163601074,
+            106.962890625,
+            8.49410453755188
+          ],
+          "file": "window-31480.npz",
+          "sha256": "0fcd7fb5e77bd5c2e5bec257e330698dad8594abc54053d30cf58f161c4a3e6c",
+          "valid_fraction": 0.9519081115722656
+        },
+        {
+          "window_id": 31481,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.611328125,
+            9.102096738726448,
+            106.69921875,
+            9.188870084473402
+          ],
+          "file": "window-31481.npz",
+          "sha256": "fc8345126210dcbf0bb2c74e62a7071ef9b1570c5435852ee9bf2e9bb9ae6072",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 31482,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.611328125,
+            8.49410453755188,
+            106.69921875,
+            8.581021215641847
+          ],
+          "file": "window-31482.npz",
+          "sha256": "5c56c9926d97dca3e588012b3ea6a9ffff0adcdc20bf34eeab4364514f25fe6e",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          106.47262573242188,
+          9.2219129484849
+        ],
+        [
+          106.5483283996582,
+          9.37776557969829
+        ],
+        [
+          106.56420707702637,
+          9.42399974010971
+        ],
+        [
+          106.56618118286133,
+          9.425269822100494
+        ],
+        [
+          106.78479194641113,
+          8.606311599062415
+        ],
+        [
+          106.92031860351562,
+          8.493680091230061
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/1/22/IW/DV/S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-01-22T11:11:25.369355Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "south_mekong_coast",
+      "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+      "windows": [
+        {
+          "window_id": 35801,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.5234375,
+            8.667918002363118,
+            106.611328125,
+            8.754794702435612
+          ],
+          "file": "window-35801.npz",
+          "sha256": "3f1bd8cd894161cba52b0d80ff05f783368cafbb18bc3eca337d1b9422d8b803",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 35802,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.69921875,
+            9.535748998133618,
+            106.787109375,
+            9.622414142924804
+          ],
+          "file": "window-35802.npz",
+          "sha256": "ea92a82e0f82e18debc76543b80ba2fb998b37d1e2578f9bfda43a7dde8c8fc0",
+          "valid_fraction": 0.3778228759765625
+        },
+        {
+          "window_id": 35803,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.962890625,
+            8.407168163601074,
+            107.05078125,
+            8.49410453755188
+          ],
+          "file": "window-35803.npz",
+          "sha256": "26efb6c6ebb9025be86de2879098c11b35375258ce54b07070d45c534cac0c36",
+          "valid_fraction": 0.00537872314453125
+        },
+        {
+          "window_id": 35804,
+          "split": "jan-march-may-2022-point-train",
+          "bbox": [
+            106.962890625,
+            8.320212289522946,
+            107.05078125,
+            8.407168163601074
+          ],
+          "file": "window-35804.npz",
+          "sha256": "bb2fda2a9c88f71f04ec12d6e1c793e9bfe9388e8b0c891d9c0cbe2955039663",
+          "valid_fraction": 0.14513397216796875
+        }
+      ],
+      "failed_windows": [
+        {
+          "window_id": 35800,
+          "kind": "RasterioIOError",
+          "category": "other"
+        }
+      ],
+      "points": [
+        [
+          106.53450965881348,
+          8.752843592232697
+        ],
+        [
+          106.53940200805664,
+          8.752843592232697
+        ],
+        [
+          106.54609680175781,
+          8.675978700770873
+        ],
+        [
+          106.94117546081543,
+          8.361739536305732
+        ],
+        [
+          106.95816993713379,
+          8.33906569692243
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/3/23/IW/DV/S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-03-23T11:11:25.052245Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "south_mekong_coast",
+      "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+      "windows": [
+        {
+          "window_id": 52572,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.611328125,
+            8.754794702435612,
+            106.69921875,
+            8.841651120809141
+          ],
+          "file": "window-52572.npz",
+          "sha256": "abd06e0cfcb72b456eebf11a22310261faaba0a6d3b762e83cad26ef425869de",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52574,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.5234375,
+            9.449061826881424,
+            106.611328125,
+            9.535748998133618
+          ],
+          "file": "window-52574.npz",
+          "sha256": "11ebe63878a0f3919aef42afa6fa211269093267a7b6a1a3deb2064eb55a61fb",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52575,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.435546875,
+            8.754794702435612,
+            106.5234375,
+            8.841651120809141
+          ],
+          "file": "window-52575.npz",
+          "sha256": "93501a70979df4da83bf0886bc91db8af0861cd98812af4e976c332abf20cc91",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52576,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.69921875,
+            8.49410453755188,
+            106.787109375,
+            8.581021215641847
+          ],
+          "file": "window-52576.npz",
+          "sha256": "3576b9130d58aad326dafbf5a810a51d1da054fcb87a4becb5cc12cce8e2d28c",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52577,
+          "split": "apr-2022-point-val",
+          "bbox": [
+            106.787109375,
+            8.320212289522946,
+            106.875,
+            8.407168163601074
+          ],
+          "file": "window-52577.npz",
+          "sha256": "deef509269ed69788a684764b9c2ba06e428107f1b4b7f45f231673acf738880",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52578,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.083984375,
+            8.754794702435612,
+            106.171875,
+            8.841651120809141
+          ],
+          "file": "window-52578.npz",
+          "sha256": "38a9ad07ec62c90f1934114097cbef2b19820b100c00f32c94f585187427ff81",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52579,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.435546875,
+            9.2756221767921,
+            106.5234375,
+            9.362352822055602
+          ],
+          "file": "window-52579.npz",
+          "sha256": "e97732615dd200f8e8307c565df0cec073bb2756fac9132f3f649590a5c1af5a",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52580,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.34765625,
+            8.667918002363118,
+            106.435546875,
+            8.754794702435612
+          ],
+          "file": "window-52580.npz",
+          "sha256": "6acaffe1f1bb5a1d51aa7e1541452612c2fca1d9596979e0a75a180acaee67d5",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52581,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.962890625,
+            8.407168163601074,
+            107.05078125,
+            8.49410453755188
+          ],
+          "file": "window-52581.npz",
+          "sha256": "c31cc4cd190c9cb51c11e56b5fe4a486687bb89acb75991dfca1aab734b18277",
+          "valid_fraction": 0.008365631103515625
+        },
+        {
+          "window_id": 52582,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.875,
+            8.49410453755188,
+            106.962890625,
+            8.581021215641847
+          ],
+          "file": "window-52582.npz",
+          "sha256": "410cc3b3c4bc1defec8b7f7ca047633146bc634ddaf99d2a2bf6f03846cc93b3",
+          "valid_fraction": 0.757720947265625
+        },
+        {
+          "window_id": 52583,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.5234375,
+            8.754794702435612,
+            106.611328125,
+            8.841651120809141
+          ],
+          "file": "window-52583.npz",
+          "sha256": "b8b7f294505528f6dd3a793b60f5bc28071478ba40be22347a07c38ce28ea85c",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52585,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.259765625,
+            8.667918002363118,
+            106.34765625,
+            8.754794702435612
+          ],
+          "file": "window-52585.npz",
+          "sha256": "8c8e024905c2a8ed245ca53fef1148ac18aeffe4c2ba2e255444c3af8b16ba05",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52588,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.962890625,
+            8.320212289522946,
+            107.05078125,
+            8.407168163601074
+          ],
+          "file": "window-52588.npz",
+          "sha256": "2f7873df8ceac271c73d68782bbb8e554e19aae496d95d3230811d4cdd362880",
+          "valid_fraction": 0.15655517578125
+        },
+        {
+          "window_id": 52589,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.5234375,
+            8.581021215641847,
+            106.611328125,
+            8.667918002363118
+          ],
+          "file": "window-52589.npz",
+          "sha256": "c695d19dfc63329df67f3d9f521d70adf83c9f3ab50ebe1419e23898204d4408",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52590,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.787109375,
+            8.581021215641847,
+            106.875,
+            8.667918002363118
+          ],
+          "file": "window-52590.npz",
+          "sha256": "26f8b661b54d7c1ec9e864efb12bbed75908fed70799d462332773bd76b0f19d",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52591,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.69921875,
+            8.407168163601074,
+            106.787109375,
+            8.49410453755188
+          ],
+          "file": "window-52591.npz",
+          "sha256": "82eb6196ea63e5899394b78a72051a069a19970f0f25055c2b03e73ff816f7c4",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 52592,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            106.435546875,
+            8.667918002363118,
+            106.5234375,
+            8.754794702435612
+          ],
+          "file": "window-52592.npz",
+          "sha256": "3b25ce53142f97b404c3c9ea7643fd464ec996373a618cfef04e455826f74890",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          106.13822937011719,
+          8.823840432061582
+        ],
+        [
+          106.26903533935547,
+          8.708559127279836
+        ],
+        [
+          106.27427101135254,
+          8.709662060869896
+        ],
+        [
+          106.51013374328613,
+          8.74648120529812
+        ],
+        [
+          106.51657104492188,
+          8.74648120529812
+        ],
+        [
+          106.51734352111816,
+          8.742239553615047
+        ],
+        [
+          106.5399169921875,
+          9.535241129453864
+        ],
+        [
+          106.5512466430664,
+          9.484450449230406
+        ],
+        [
+          106.55776977539062,
+          8.84003971294985
+        ],
+        [
+          106.56103134155273,
+          9.4810641359681
+        ],
+        [
+          106.5615463256836,
+          9.519920068980122
+        ],
+        [
+          106.56403541564941,
+          9.531008861052564
+        ],
+        [
+          106.57819747924805,
+          9.510269987563689
+        ],
+        [
+          106.57991409301758,
+          9.523390645670279
+        ],
+        [
+          106.5824031829834,
+          8.76938528899916
+        ],
+        [
+          106.58540725708008,
+          9.513909962551738
+        ],
+        [
+          106.59167289733887,
+          9.518227091947022
+        ],
+        [
+          106.6054916381836,
+          9.53193996460528
+        ],
+        [
+          106.78522109985352,
+          8.438667882324996
+        ],
+        [
+          106.83860778808594,
+          8.39027103274929
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/4/16/IW/DV/S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-04-16T11:11:25.460879Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "kien_giang_west",
+      "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+      "windows": [
+        {
+          "window_id": 37733,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            103.53515625,
+            10.487811882056686,
+            103.623046875,
+            10.574222078332808
+          ],
+          "file": "window-37733.npz",
+          "sha256": "6f487c72a39cdda2a5f76b3434f936c701cf63d08fb4d7671e54745dcd95a375",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 37738,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            103.53515625,
+            10.401377554543547,
+            103.623046875,
+            10.487811882056686
+          ],
+          "file": "window-37738.npz",
+          "sha256": "7da99e2cd9af8e87a800e2444a9dc4c950b1cee499ffe4b2170047ad05b7c0c9",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          103.61223220825195,
+          10.485786352924357
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/7/1/IW/DV/S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-07-01T22:54:16.966885Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "kien_giang_west",
+      "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+      "windows": [
+        {
+          "window_id": 38191,
+          "split": "jun-july-aug-2022-point-val",
+          "bbox": [
+            103.447265625,
+            10.574222078332808,
+            103.53515625,
+            10.660607953624764
+          ],
+          "file": "window-38191.npz",
+          "sha256": "8002aa0e1f3e37f1a81ba607e56fc9a5dd7f71f3e54315eca6472f815a249f8a",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38193,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            103.447265625,
+            10.487811882056686,
+            103.53515625,
+            10.574222078332808
+          ],
+          "file": "window-38193.npz",
+          "sha256": "fc4c130c59926e24634be7270482294e195a01bfcd163948f1e7289660c94f56",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38195,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            103.53515625,
+            10.314919285813154,
+            103.623046875,
+            10.401377554543547
+          ],
+          "file": "window-38195.npz",
+          "sha256": "a6ae69972abc12eab1b04397954fed7385a7b7179cdd5a6322ba992bbd739c58",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38196,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            103.53515625,
+            10.141931686131025,
+            103.623046875,
+            10.228437266155941
+          ],
+          "file": "window-38196.npz",
+          "sha256": "c67a0fc0729be492200a772cb64e10b2c85e8554c9b1098fdbc3b76b20e8fab2",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          103.5490608215332,
+          10.18180826683826
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/6/19/IW/DV/S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-06-19T22:54:16.269826Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "kien_giang_west",
+      "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+      "windows": [
+        {
+          "window_id": 52881,
+          "split": "apr-2022-point-train",
+          "bbox": [
+            103.53515625,
+            10.055402736564231,
+            103.623046875,
+            10.141931686131025
+          ],
+          "file": "window-52881.npz",
+          "sha256": "3507b512086b1bdd78651a17944d8a387093a47e5a7507d007860b170372f225",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          103.56742858886719,
+          10.137960652786477
+        ],
+        [
+          103.59309196472168,
+          10.110922522766517
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VH",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/4/9/IW/DV/S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9/measurement/iw-vh.rtc.tiff",
+        "source_acquired_at": "2022-04-09T11:19:49.143390Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    }
+  ]
+}

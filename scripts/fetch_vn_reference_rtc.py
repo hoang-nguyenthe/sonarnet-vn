@@ -25,7 +25,7 @@ def digest(path):
         return file_digest(f, 'sha256').hexdigest()
 
 
-def download(row, all_regions, output):
+def download(row, all_regions, output, band):
     region = row['region']
     scene_name = row['scene']
     scene = all_regions[region][scene_name]
@@ -35,7 +35,14 @@ def download(row, all_regions, output):
     if (int(props['sat:absolute_orbit']) != int(orbit)
             or abs((start - datetime.strptime(ts, '%Y%m%dT%H%M%S')).total_seconds()) >= 1):
         raise ValueError('RTC orbit or start time mismatch')
-    href = row['rtc']['source_asset_url']
+    provenance = dict(row['rtc'])
+    if band != 'vv':
+        item = get_json(provenance['source_item_url'])
+        if item['assets']['vv']['href'] != provenance['source_asset_url']:
+            raise ValueError('RTC asset lineage changed')
+        provenance['source_asset_url'] = item['assets'][band]['href']
+        provenance['band'] = band.upper()
+    href = provenance['source_asset_url']
     validate_asset_url(href)
     signed = None
     out, failed = [], []
@@ -97,21 +104,23 @@ def download(row, all_regions, output):
                 raise ValueError('Invalid cached gamma0')
             out.append(dict(w,file=p.name,sha256=digest(p),valid_fraction=float(np.mean(values>0))))
     print(region, orbit, len(out), 'bounded RTC windows',flush=True)
-    return dict(region=region,scene=scene_name,windows=out,failed_windows=failed,points=scene['points'],source=row['rtc'])
+    return dict(region=region,scene=scene_name,windows=out,failed_windows=failed,points=scene['points'],source=provenance)
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('root',type=Path)
+    parser.add_argument('--band', choices=('vv','vh'), default='vv')
     args=parser.parse_args()
     source=args.root/'rtc-matching-with-lineage.json'
     labels=args.root/'screened.json'
     catalogue=json.loads(source.read_text())
     regions=json.loads(labels.read_text())['regions']
-    output=args.root/'rtc-512'
+    directory = 'rtc-512' if args.band == 'vv' else 'rtc-vh-512'
+    output=args.root/directory
     output.mkdir(exist_ok=True)
     with ThreadPoolExecutor(max_workers=4) as pool:
-        cohorts=list(pool.map(lambda row:download(row,regions,output),catalogue))
+        cohorts=list(pool.map(lambda row:download(row,regions,output,args.band),catalogue))
     manifest=dict(catalogue_sha256=digest(source),screen_sha256=digest(labels),shape=[SIZE,SIZE],cohorts=cohorts)
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2))
     print('Downloaded',sum(len(c['windows']) for c in cohorts),'windows across',len(cohorts),'acquisitions',flush=True)

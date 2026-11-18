@@ -27,3 +27,9 @@ OMP_NUM_THREADS=2 python scripts/evaluate_review_ranking.py --development DEV_DI
 ```
 
 Tệp results.json lưu số đếm theo từng lượt chụp ở cả hai điều kiện rà. Tệp equal_count_selection.json lưu kiểm tra khóa riêng trên tập phát triển khi tiêu chí là đúng số lượt rà của bản đồ.
+
+## Hình minh họa từ ảnh SAR thật
+
+Ô ảnh được chọn tự động theo số nhãn tăng thêm khi hạ ngưỡng, với ít nhất ba nhãn trong mô-đun chấm. Hình có hai lớp so sánh trên cùng ảnh Sentinel-1. Nhãn nguồn được giữ riêng với ứng viên của mô hình. Đây là ca minh họa có mức cải thiện lớn trong một ô. Số đo tổng hợp vẫn tính trên mọi ô và các lượt chụp trong bảng. Xem example.json để đối chiếu số đếm và định danh ảnh.
+
+Tạo lại hình bằng scripts/export_vn_recall_example.py với --source là FRESH_DIR, --cache là fresh_features.json.gz từ phép xếp hạng, --font là tệp DejaVu Sans TTF và --output là thư mục đích.

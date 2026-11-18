@@ -76,7 +76,9 @@ def inspect_page(page, *, evidence=False):
                 ready = ready or all(frame.get_by_text(marker, exact=True).first.is_visible() for marker in (
                     "Kết quả trước và sau cải tiến", "Kiểm tra thêm cách đọc SAR ở hai tỷ lệ",
                     "Kiểm tra trên ảnh ven biển Việt Nam", "Huấn luyện ở 640 px giữ thêm mục tiêu",
-                    "Recall trên 12 lượt chụp mới", "Tải báo cáo cải tiến Chặng 1", "Mở hồ sơ ảnh SAR thật thiếu AIS",
+                    "Recall trên 12 lượt chụp mới", "Tải báo cáo cải tiến Chặng 1",
+                    "Xem ảnh radar thật và các điểm được tìm thêm",
+                    "Thử xếp hạng bằng hai kênh radar VV và VH", "Mở hồ sơ ảnh SAR thật thiếu AIS",
                     "Kiểm tra lỗi đổi đối tác sau khi lọc AIS",
                     "Xem cảnh Sentinel-1 và AIS cùng lượt chụp",
                 ))

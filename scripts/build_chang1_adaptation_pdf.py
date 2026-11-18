@@ -67,7 +67,10 @@ def build(args):
     local = json.loads(local_path.read_text()) if local_path.is_file() else None
     fresh_path = ROOT/'reports/final/vietnam_rtc_ranking_20261118/results.json'
     fresh = json.loads(fresh_path.read_text()) if fresh_path.is_file() else None
-    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh)
+    polar_path = ROOT/'reports/final/vietnam_rtc_vv_vh_20261118/results.json'
+    polar = json.loads(polar_path.read_text()) if polar_path.is_file() else None
+    example_path = fresh_path.with_name('example.png')
+    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh) + bool(polar)
     b = BytesIO()
     c = Canvas(b, pagesize=A4)
 
@@ -409,6 +412,41 @@ def build(args):
                  'Mục Minh chứng công bố số liệu và phương pháp để chấm lại.', y)-11
         y = text('Tệp kết quả, lựa chọn khóa và phép kiểm theo từng cảnh nằm tại '
                  'reports/final/vietnam_rtc_ranking_20261118/.',y,muted)
+        assert y > 66,y
+        footer(7 + bool(retest) + bool(local) + bool(fresh))
+
+    if polar:
+        y=header('ĐỐI CHỨNG VV VÀ VH', 'Hai kênh radar, cùng số lượt rà')
+        cases = polar['outside_development']
+        windows = sum(c['paired_windows'] for c in cases)
+        missing = sum(c['missing_vh_windows'] for c in cases)
+        labels = sum(c['results']['map_default']['labels'] for c in cases)
+        y=text(f'Thử đặc trưng độ sáng, tương phản và độ phân tán nền cục bộ của hai kênh Sentinel-1 RTC. '
+               f'Tập chấm lại có {len(cases)} lượt chụp, {windows} ô ghép đủ VV/VH và {labels} nhãn điểm '
+               'trong vùng chấm. Các ô thiếu VH được loại khỏi mọi phương án. '
+               'Chọn trọng số xếp hạng bằng năm lượt phát triển, tách toàn bộ từng lượt khi kiểm tra.',y)-12
+        if missing:
+            y=text(f'{missing} ô ở tập chấm lại thiếu VH từ nguồn tải. Các cách xếp hạng được đo trên cùng vùng nước có cặp ảnh.',y,muted)-8
+        rows=[['Cách xếp hạng', 'Nhãn khớp', 'Điểm cần rà']]
+        for method,name in (('map_default','Điểm gốc trên bản đồ'),
+                            (polar['selected']['vv'],'Đặc trưng VV'),
+                            (polar['selected']['vv_vh'],'Đặc trưng VV và VH')):
+            records=[c['results'][method] for c in cases]
+            rows.append([name,f"{sum(c['matched'] for c in records)}/{labels}",
+                         sum(c['predictions'] for c in records)])
+        y = table(rows,[270,115,116],y)-12
+        y = text('Hai cách dùng đặc trưng radar xếp lại danh sách mở rộng ở ngưỡng 0,05. Với đúng số lượt rà '
+                 'của bản đồ, cả hai đều khớp ít hơn một nhãn. Kết quả giữ nguyên lựa chọn xếp hạng gốc. '
+                 'Xem lựa chọn khóa trong reports/final/vietnam_rtc_vv_vh_20261118/.',y,muted)-18
+        if example_path.is_file():
+            y = text('Hạ ngưỡng trên cùng một ô ảnh',y,sub)-8
+            image_width=501
+            image_height=299
+            c.drawImage(str(example_path),47,y-image_height,image_width,image_height,mask='auto')
+            y -= image_height+7
+            y = text('Ví dụ được chọn theo số nhãn tìm thêm trong một ô. '
+                     'Ảnh Sentinel-1 RTC VV ngày 23/08/2022, ô 44544. '
+                     'Nguồn ảnh Copernicus/Catalyst qua Microsoft Planetary Computer, nhãn điểm Ai2.',y,muted)
         assert y > 66,y
         footer(total_update_pages)
     c.save()

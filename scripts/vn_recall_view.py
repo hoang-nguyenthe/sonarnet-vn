@@ -6,6 +6,7 @@ import streamlit as st
 
 RESULTS = 'reports/final/vietnam_rtc_recall_20261118/results.json'
 RANKING_RESULTS = 'reports/final/vietnam_rtc_ranking_20261118/results.json'
+POLARIMETRIC_RESULTS = 'reports/final/vietnam_rtc_vv_vh_20261118/results.json'
 NAMES = {
     'map_default': 'Cấu hình bản đồ hiện tại',
     'map_lower_threshold': 'Bản đồ, hạ ngưỡng điểm',
@@ -117,3 +118,42 @@ def render_fresh_recall(root: Path) -> None:
                'Khi cố định ở 116 lượt rà, vẫn khớp 80 nhãn. Cấu hình hạ ngưỡng đang được đánh giá bằng phép phát lại.')
     st.download_button('Tải kết quả 12 lượt chụp mới', path.read_bytes(),
                        'sonarnet-recall-tap-viet-nam-moi.json', 'application/json')
+    image_path = path.with_name('example.png')
+    example_path = path.with_name('example.json')
+    if image_path.is_file() and example_path.is_file():
+        with st.expander('Xem ảnh radar thật và các điểm được tìm thêm'):
+            example = json.loads(example_path.read_text())
+            acquired = example['source']['source_acquired_at'][:10]
+            st.image(str(image_path), width='stretch',
+                     caption=f"Sentinel-1 RTC VV · {acquired} · ô {example['window_id']}. "
+                             "Chọn ô tìm thêm nhiều nhãn nhất để minh họa. "
+                             "Chỉ đánh dấu điểm thuộc vùng nước dùng chấm.")
+            st.download_button('Tải nguồn và số đếm của ảnh minh họa',example_path.read_bytes(),
+                               'sonarnet-nguon-anh-minh-hoa.json','application/json')
+    render_polarimetric_recall(root)
+
+
+
+def render_polarimetric_recall(root: Path) -> None:
+    path = root / POLARIMETRIC_RESULTS
+    if not path.is_file():
+        return
+    report = json.loads(path.read_text())
+    cases = report['outside_development']
+    with st.expander('Thử xếp hạng bằng hai kênh radar VV và VH'):
+        windows = sum(case['paired_windows'] for case in cases)
+        missing = sum(case['missing_vh_windows'] for case in cases)
+        st.caption(f'VV và VH cùng lưới ở {windows} ô thuộc {len(cases)} lượt chụp đã chấm lại. '
+                   f'Bỏ {missing} ô thiếu VH khỏi cả ba cách đo. '
+                   'Khóa cấu hình trên năm lượt phát triển rồi chấm ở đúng số lượt rà của bản đồ.')
+        method = [('map_default','Xếp theo bản đồ'),
+                  (report['selected']['vv'],'Xếp lại với đặc trưng VV'),
+                  (report['selected']['vv_vh'],'Xếp lại với đặc trưng VV và VH')]
+        rows = []
+        for key,name in method:
+            data = [case['results'][key] for case in cases]
+            matches, labels, n = (sum(d[field] for d in data) for field in ('matched','labels','predictions'))
+            rows.append({'Cách xếp hạng':name,'Nhãn điểm khớp':f'{matches}/{labels}','Điểm cần rà':n})
+        st.dataframe(rows, hide_index=True, width='stretch')
+        st.download_button('Tải kết quả VV và VH', path.read_bytes(),
+                           'sonarnet-recall-vv-vh.json','application/json')

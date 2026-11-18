@@ -94,6 +94,9 @@ class ImprovementEvidenceTests(unittest.TestCase):
                      and 'Bản đồ · ngưỡng 0,35' in item.value.get('Phương án', []).values)
         self.assertEqual(table.iloc[0]['Nhãn khớp'], '80/152')
         self.assertEqual(table.iloc[1]['Nhãn khớp'], '80/152')
+        expected = {'Xem ảnh radar thật và các điểm được tìm thêm',
+                    'Thử xếp hạng bằng hai kênh radar VV và VH'}
+        self.assertTrue(expected <= {item.label for item in app.expander})
 
     def test_repeatability_failure_is_visible_not_silently_aggregated(self):
         app=AppTest.from_file(str(ROOT/'scripts/demo_app.py'),default_timeout=60).run()
