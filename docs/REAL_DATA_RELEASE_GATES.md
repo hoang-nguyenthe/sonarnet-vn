@@ -4,6 +4,20 @@ The current model and UI are experimental, not an operational vessel-alert servi
 
 ## Evidence currently available
 
+### Latest independent checks (18 November 2026)
+
+- Rebuilt YOLO11n: 3,000 held-out LS-SSDD chips, 63.54% overall recall, 27.86% recall on chips with land. Scene, region and acquisition-day separation with exact and dHash checks. This is not a standalone Vietnam deployment benchmark.
+- OpenSAR Insight with image-plane georeferencing and valid-ocean area: 96/298 label matches on 503 SLC VV chips; only 4/14 within 500 m of mapped shore. On **three geographically separate confirmation scenes**, the locked model matched only **3/147** labels, including **1/35** within 500 m. Do not pool the two cohorts or promote this model on the strength of the first result. See `reports/final/opensar_confirmation_20261118/`.
+- Absolute position and hull size still need independent ground truth. No verified reviewer credentials or verified local vessel-level AIS association. Publish no operational alert or identity claims from this evidence.
+
+### Vietnam RTC point-label evidence
+
+- Ai2 point labels were paired to the Sentinel-1 acquisition start, platform and absolute orbit. See [RTC benchmark](../reports/final/vietnam_rtc_recall_20261118/) and [12-acquisition comparison](../reports/final/vietnam_rtc_ranking_20261118/).
+- On the 12-acquisition holdout, dropping the threshold from 0.35 to 0.05 matched 96/152 vs. 80/152 and flagged 191 vs. 116 candidates. At the same 116 reviews both matched 80/152. The VV/VH ranking check on 85 paired windows did not improve at the incumbent review count. [VV/VH evaluation](../reports/final/vietnam_rtc_vv_vh_20261118/).
+- These sources support point-label matching. Operational vessel identity, absolute position accuracy and physical dimensions still require independently verified reference data and reviewer confirmation.
+
+### Earlier experiments, retained for historical context
+
 - Official SAR-Ship-Dataset archive pinned by SHA-256 in `prepare_real_training.py`.
 - 19,582 Sentinel-prefixed images, date-token grouped splits: 14,216 train,
   3,413 validation, 1,953 test. Date grouping is inferred from filenames,

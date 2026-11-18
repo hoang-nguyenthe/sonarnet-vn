@@ -1,36 +1,19 @@
-# Demo SonarNet - Chặng cải tiến 1
+# Mở minh chứng SonarNet trong khoảng 2 phút
 
-Kịch bản 12 slide và lời thoại khoảng 5 phút: `output/slides/SonarNet_Kich_ban_5_phut.md`. Thời lượng là dự kiến, cần bấm giờ tập trước.
+Mở [demo công khai](https://sonarnet.streamlit.app/?trang=minh-chung). Dùng [hướng dẫn nộp và chạy ngoại tuyến](../NOP_CHANG_1.md) để kiểm tra bản ZIP hoặc tải báo cáo.
 
-## Bản đang kiểm chứng
+| Thời gian dự kiến | Thao tác | Điểm cần quan sát |
+| --- | --- | --- |
+| 0:00–0:25 | Bật **Mở hồ sơ ảnh SAR thật thiếu AIS** | Ảnh, ngày chụp và trạng thái thiếu AIS. Hồ sơ ảnh ở trạng thái chờ xác minh. |
+| 0:25–0:50 | Thử **Kích thước mâu thuẫn** và **AIS gần nhất đã cũ, có tín hiệu khác gần đó** | Đây là vị trí mô phỏng chạy qua bộ ghép thật. Khi đề xuất thiếu chất lượng, hệ thống giữ ca để rà và tránh chuyển sang mã kế cận. |
+| 0:50–1:20 | Xem **Recall trên 12 lượt chụp mới**, bật **Đúng số lượt rà của bản đồ** | Hạ ngưỡng có lợi khi có thêm lượt rà. Với đúng số lượt rà của bản đồ, hai ngưỡng cho cùng 80/152. |
+| 1:20–1:45 | Mở **Xem ảnh radar thật và các điểm được tìm thêm** | Hình cho thấy điểm khớp và chưa khớp trên cùng một ô Sentinel-1. |
+| 1:45–2:00 | Mở **Tải báo cáo cải tiến Chặng 1** | Báo cáo có phương pháp, phép đối chứng và giới hạn của từng chỉ số. |
 
-Bản làm việc hiện tại: /Volumes/SonarNetWork/sonarnet-final. Giữ SSD kết nối. Chạy `python -m streamlit run scripts/demo_app.py`.
+## Thao tác và câu trả lời khi xem kỹ hơn
 
-## Phần demo trong bài nói
-
-1. Mở sẵn **Minh chứng cải tiến**.
-2. Chọn **Thiếu AIS**: bảng ghi “Thiếu dữ liệu”, chưa có định danh đã ghép, kết luận nghiệp vụ chờ xác minh.
-3. Chọn **Kích thước mâu thuẫn**: bảng ghi “Đang xác minh: kích thước lệch”. Nói rõ đây là mô phỏng chạy qua thuật toán thật.
-4. Nếu còn thời gian, chọn **Hai quỹ đạo giao nhau** và tải JSON để xem nguyên nhân từ chối.
-5. Nếu ứng dụng lỗi quá 5 giây, quay lại slide 10 và tiếp tục.
-
-## Demo mở rộng khi hội đồng hỏi
-
-- **Quan sát**: bản đồ Sentinel-1, ngày ảnh, độ đậm radar và cụm ứng viên. Các mảnh xám là ảnh radar. Ảnh nền toàn cảnh không chứng minh vùng đó đã được mô hình kiểm tra.
-- **Kiểm tra chi tiết**: chọn ô có ảnh hợp lệ, xem ảnh gốc và ứng viên. Ô thiếu hoặc sai checksum không được coi là vùng không có tàu.
-- Ghi chú và xuất bằng chứng. Người rà soát phải tự khai tên, căn cứ, quyết định và xác nhận. Không dùng danh tính chuyên viên hư cấu.
-- Mở ZIP, đối chiếu review.html, evidence.json và checksums.json. Các trạng thái phải thống nhất.
-- Mục SAR mới có 3.000 ảnh test LS-SSDD, precision 69,25%, recall 63,54%, AP50 0,6618 theo VOC. Nhấn mạnh recall nhóm ảnh có đất liền chỉ 27,86%.
-- Không gán chỉ số của checkpoint mới cho mô hình lịch sử trong bản đồ Việt Nam.
-
-## Các câu trả lời cần nhất quán
-
-**Có AIS thật chưa?** Chưa có nguồn cùng thời điểm đủ để đánh giá thực địa. Phần ghép được kiểm tra bằng mô phỏng, tách riêng khỏi SAR thật.
-
-**Không ghép được có phải tắt AIS không?** Không. Có thể do thiếu nguồn, lệch thời gian, độ bất định hoặc ứng viên cạnh tranh.
-
-**Số điểm trên bản đồ là số tàu?** Đây là ứng viên cần kiểm tra, có thể có nhiễu hoặc trùng giữa các thời điểm.
-
-**Đã chứng minh tốt hơn mô hình cũ?** Checkpoint cũ đã mất. Mô hình mới có đánh giá riêng và baseline đơn giản cùng điều kiện, chưa có so sánh trực tiếp hai checkpoint.
-
-**Đủ mọi chỉ tiêu BTC chưa?** Còn thiếu quy đổi mét/diện tích có metadata kiểm chứng và xác nhận bản công khai đã cập nhật. Báo cáo giữ rõ những mục còn mở.
+- **Kiểm tra chi tiết** trong **Quan sát** có thể lưu ghi chú, lấy ảnh nguồn và xuất ZIP gồm `review.html`, `evidence.json` và `checksums.json`. Khi chưa có kho ảnh đầy đủ, dùng hồ sơ mẫu thật.
+- **Không ghép AIS** có nhiều nguyên nhân như không có dữ liệu phù hợp, lệch thời gian, độ bất định hoặc ứng viên cạnh tranh. Chỉ người có chuyên môn xác nhận kết luận nghiệp vụ và căn cứ.
+- **Có dữ liệu AIS thật** trong phép phát lại NOAA và phép thử cùng cảnh ở New York Harbor. Phép ghép trực tiếp có bốn mốc vị trí tham chiếu. So sánh danh tính thật ở Việt Nam cần nguồn độc lập.
+- **Có dữ liệu SAR có vị trí** trong đối chứng OpenSAR và ảnh Sentinel-1 RTC có nhãn điểm Ai2 ở Việt Nam. Điểm khớp trong 100 m đo độ phủ theo nhãn điểm. Khớp hộp theo IoU là phép chấm khác.
+- **Bản đồ** hiển thị ứng viên cần rà theo từng ô và ngày chụp. Cấu hình hạ ngưỡng, đa tỷ lệ và huấn luyện 640 px có kết quả riêng trong Minh chứng.

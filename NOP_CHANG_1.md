@@ -4,6 +4,8 @@
 
 ## Ba ô bắt buộc trên cổng
 
+Trong ZIP phát hành, mở **NOI_DUNG_DIEN_CONG.md** để sao chép ba liên kết và mã commit đã ghim.
+
 | Ô trên cổng | Giá trị để điền |
 | --- | --- |
 | Liên kết mã nguồn | https://github.com/hoang-nguyenthe/sonarnet-vn. Ghi thêm mã commit đã thử vào ô phiên bản nếu dùng. |
@@ -11,6 +13,16 @@
 | Liên kết báo cáo cải tiến PDF/Word | https://raw.githubusercontent.com/hoang-nguyenthe/sonarnet-vn/main/output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf. Dùng URL ghim theo commit khi chốt bản nộp. |
 
 Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng C. ZIP là bản bàn giao mã nguồn và bằng chứng để rà soát. Chủ dự án kiểm tra quyền mở cả ba liên kết rồi tự xác nhận cam kết và nộp chính thức.
+
+## Đối chiếu yêu cầu với minh chứng
+
+| Nhóm yêu cầu | Mở trên web | Vị trí trong PDF hoặc dữ liệu |
+| --- | --- | --- |
+| Phân biệt thiếu dữ liệu, không ghép và đang xác minh | **Mở hồ sơ ảnh SAR thật thiếu AIS**, sau đó thử **Kích thước mâu thuẫn** | Trang 1 và 7. [Hồ sơ xuất mẫu](reports/final/export_verification/sample_evidence.zip) |
+| Dùng thời gian và bất định để ghép AIS | **Vì sao một cặp ghép bị từ chối?**, **Kiểm tra lỗi đổi đối tác sau khi lọc AIS** | Trang 3, 5–7. [Số liệu đối chứng AIS](reports/final/ais_preserve_proposal_20261118/held_out.json) |
+| Đánh giá độc lập trên ảnh SAR thật và ghi giới hạn | **Đánh giá trên ảnh SAR thật**, **Đối chứng SAR có tọa độ**, **Recall trên 12 lượt chụp mới** | Trang 2, 4, 8–11. [Kết quả theo cảnh ở Việt Nam](reports/final/vietnam_rtc_ranking_20261118/results.json) |
+| Truy về ảnh nguồn, xuất hồ sơ phục vụ người rà | **Quan sát → Kiểm tra chi tiết**, lưu ghi chú và tải bản xuất | [Hướng dẫn demo](docs/DEMO_RUNBOOK.md) và lệnh kiểm tra ZIP ở dưới |
+| Bộ hồ sơ và khai báo nguồn | Link demo, PDF, mã nguồn ở đầu trang | [Khai báo AI](docs/AI_DECLARATION_CHANG1.md) và [các điểm còn cần xác nhận](docs/FINAL_STATUS.md) |
 
 ## Hướng dẫn dùng thử
 
@@ -31,7 +43,7 @@ python -m pip install -r requirements.txt
 python -m streamlit run scripts/demo_app.py
 ```
 
-Mở `http://localhost:8501/?trang=minh-chung` sau khi chạy. Ảnh bản đồ công bố được phục hồi theo README. Hồ sơ mẫu và trang minh chứng dùng các tệp gọn trong ZIP. SHA-256 từng tệp nằm trong `PACKAGE_MANIFEST.json`.
+Mở `http://localhost:8501/?trang=minh-chung` sau khi chạy. Ảnh bản đồ công bố được phục hồi theo README. Hồ sơ mẫu và trang minh chứng dùng các tệp gọn trong ZIP. SHA-256 từng tệp nằm trong `PACKAGE_MANIFEST.json`. Bản ZIP phát hành ghi commit nguồn đã ghim, mã Git blob của các tệp thuộc commit và SHA-256 của các tệp dữ liệu nghiên cứu kèm theo.
 
 Trong bản chạy từ ZIP, **Quan sát → Kiểm tra chi tiết** mở hồ sơ ảnh thật đã xác minh khi kho ảnh chưa sẵn sàng. Có thể giữ ghi chú của phiên và xuất ZIP kèm ảnh, mã băm và trạng thái thiếu AIS. Chạy `python scripts/verify_chang1_runtime.py` để kiểm tra luồng này trong thư mục vừa giải nén.
 

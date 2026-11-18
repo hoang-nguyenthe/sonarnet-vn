@@ -272,10 +272,12 @@ Quy trình đánh giá đúng là:
 3. Ghép bằng Kalman và Hungarian với ngưỡng chất lượng khi có AIS cùng giờ.
 4. Ghi số ca đồng thuận, khác nhau và chưa đủ mốc xác minh nếu đối chiếu GFW.
 
-Các phép đo đã thực hiện trong Chặng 1 dùng LS-SSDD, OSSDD, OpenSAR Insight và AIS
-lịch sử NOAA theo phương pháp ghi trong [báo cáo cải tiến](output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf).
-Phép thử ghép trực tiếp SAR–AIS có bốn mốc vị trí tham chiếu. Chưa có đánh giá
-độ chính xác bằng mốc độc lập cho bản đồ ảnh Việt Nam.
+Chặng 1 có đối chứng ảnh LS-SSDD, OSSDD, OpenSAR Insight, ảnh Sentinel-1 RTC
+ven biển Việt Nam với nhãn điểm Ai2 và phép phát lại AIS lịch sử NOAA.
+Phép thử trực tiếp SAR–AIS có bốn mốc vị trí tham chiếu. Phép thử ở Việt Nam
+đo khớp với nhãn điểm trong 100 m và ghi riêng số ứng viên cần rà.
+Phương pháp và giới hạn đo có trong [báo cáo cải tiến](output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf).
+Mở [bảng đối chiếu minh chứng Chặng 1](NOP_CHANG_1.md) để kiểm tra từng phần.
 
 ### 6.4. Dashboard public và cập nhật dữ liệu
 

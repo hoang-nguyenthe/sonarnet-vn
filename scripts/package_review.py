@@ -41,6 +41,11 @@ VIDEO_FILES = {'video-verification.json'} | {
     for kind in ('Thuyet_trinh', 'Demo')
     for suffix in ('.mp4', '.srt', '_Loi_doc.md')
 }
+CHANG1_SUPPLEMENT = {
+    'reports/final/independent_sar/global_threshold_failures.json',
+    'reports/final/independent_sar/global_threshold_predictions.json',
+    'reports/final/opensar_geo_20261118/test_manifest.json.gz',
+}
 CHANG1_REPORT = 'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
 CHANG1_FILES = {
     name for name in FOLLOWUP_FILES
@@ -50,6 +55,9 @@ CHANG1_FILES = {
 } | {
     CHANG1_REPORT,
     'NOP_CHANG_1.md',
+    'docs/FINAL_STATUS.md',
+    'docs/DEMO_RUNBOOK.md',
+    'docs/AI_DECLARATION_CHANG1.md',
     'assets/models/sonarnet_slc_vv_20261118.pt',
     'scripts/evaluate_ais_trajectories.py',
     'scripts/evaluate_coincident_sar_ais.py',
@@ -80,10 +88,76 @@ CHANG1_FILES = {
 }
 
 
+def git_release(repository, commit):
+    git = ['git', '-C', str(repository)]
+    source = subprocess.check_output(
+        git + ['rev-parse', '--verify', '--end-of-options', commit+'^{commit}'],
+        text=True,
+    ).strip()
+    paths = {}
+    for row in subprocess.check_output(git + ['ls-tree', '-rz', source]).split(b'\0'):
+        if not row:
+            continue
+        entry, name = row.split(b'\t', 1)
+        mode, kind, digest = entry.decode().split()
+        if kind == 'blob' and mode in {'100644', '100755'}:
+            paths[name.decode()] = digest
+    return source, paths
+
+
+def git_blob_id(data):
+    # Git prefixes the file data with a typed header before hashing.
+    sha = hashlib.sha1(f'blob {len(data)}\0'.encode())
+    sha.update(data)
+    return sha.hexdigest()
+
+
+def file_from_commit(name, path, object_id, repository):
+    if path.is_file() and not path.is_symlink():
+        data = path.read_bytes()
+        if git_blob_id(data) == object_id:
+            return data
+    data = subprocess.check_output(['git', '-C', str(repository), 'cat-file', 'blob', object_id])
+    if git_blob_id(data) != object_id:
+        raise ValueError('Git blob does not match pinned source: ' + name)
+    return data
+
+
+def submission_fields(commit):
+    github = 'https://github.com/hoang-nguyenthe/sonarnet-vn'
+    pdf = 'https://raw.githubusercontent.com/hoang-nguyenthe/sonarnet-vn'
+    return f'''# Nội dung điền cổng Chặng 1
+
+## Mã nguồn
+
+{github}/tree/{commit}
+
+## Sản phẩm chạy thử
+
+https://sonarnet.streamlit.app/?trang=minh-chung
+
+## Báo cáo PDF
+
+{pdf}/{commit}/{CHANG1_REPORT}
+
+## Phiên bản mã nguồn
+
+{commit}
+
+Ba ô liên kết là bắt buộc. Ô phiên bản là tùy chọn. Xem [hướng dẫn nộp](NOP_CHANG_1.md)
+để lấy nội dung dùng thử và khai báo AI. Chủ dự án kiểm tra lại cam kết và lưu
+biên nhận từ [cổng nộp](https://ai.tainangviet.vn/dashboard/final) sau khi nộp.
+'''.encode()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--include-published', action='store_true')
+    parser.add_argument('--source-commit',
+                        help='Use exactly this Git revision for all tracked Chặng 1 files.')
+    parser.add_argument('--git-repository', type=Path, default=ROOT,
+                        help='Git repository containing the pinned commit. Defaults to this checkout.')
     parser.add_argument('--include-btc-followup', action='store_true',
                         help='Include the allowlisted Bảng C drafts and 18 Nov evidence.')
     parser.add_argument('--chang1', action='store_true',
@@ -93,15 +167,24 @@ def main():
     args = parser.parse_args()
     if args.chang1 and (args.include_btc_followup or args.review_videos):
         parser.error('--chang1 cannot be combined with previous-round drafts or videos')
-    tracked = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
-    candidates = set(filter(None, tracked))
-    candidates.update(str(p.relative_to(ROOT)) for p in (ROOT/'reports/final').rglob('*') if p.is_file())
+    pinned = bool(args.source_commit)
+    if pinned and not args.chang1:
+        parser.error('--source-commit requires --chang1')
+    if pinned:
+        source_commit, published_tree = git_release(args.git_repository, args.source_commit)
+        tracked = set(published_tree)
+        candidates = tracked | {name for name in CHANG1_SUPPLEMENT if (ROOT / name).is_file()}
+    else:
+        tracked = set(filter(None, subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')))
+        source_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+        published_tree = {}
+        candidates = set(tracked)
+        candidates.update(str(p.relative_to(ROOT)) for p in (ROOT/'reports/final').rglob('*') if p.is_file())
     required = CHANG1_FILES if args.chang1 else FOLLOWUP_FILES if args.include_btc_followup else set()
-    if required:
-        missing = sorted(n for n in required if not (ROOT / n).is_file())
-        if missing:
-            raise FileNotFoundError(f'Expected follow-up files missing: {missing}')
-        candidates.update(required)
+    missing = sorted(required - tracked) if pinned else sorted(n for n in required if not (ROOT / n).is_file())
+    if missing:
+        raise FileNotFoundError(f'Expected follow-up files missing: {missing}')
+    candidates.update(required)
     included, omitted = {}, []
     for name in sorted(candidates):
         path = ROOT/name
@@ -117,7 +200,9 @@ def main():
         published = name.startswith('assets/real_scan/published/')
         include_scan = published and args.include_published
         earlier_output = args.chang1 and name.startswith('output/') and name != CHANG1_REPORT
-        if private or training or earlier_output or (scan_asset and not include_scan) or not path.is_file():
+        earlier_handoff = args.chang1 and name in {'docs/PACKAGE_README.md', 'docs/FINAL_HANDOFF.md'}
+        available = name in published_tree or (path.is_file() and not path.is_symlink())
+        if private or training or earlier_output or earlier_handoff or (scan_asset and not include_scan) or not available:
             omitted.append(name)
             continue
         included[name] = path
@@ -137,19 +222,32 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temp = args.output.with_suffix('.zip.part')
     hashes = {}
+    generated = {'NOI_DUNG_DIEN_CONG.md': submission_fields(source_commit)} if pinned else {}
     with zipfile.ZipFile(temp, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=3, allowZip64=True) as archive:
         for i, (name, path) in enumerate(included.items()):
-            data = path.read_bytes()
+            if name in published_tree:
+                data = file_from_commit(name, path, published_tree[name], args.git_repository)
+            else:
+                data = path.read_bytes()
             hashes[name] = hashlib.sha256(data).hexdigest()
             archive.writestr('SonarNet/'+name, data,
                              compress_type=zipfile.ZIP_STORED if path.suffix == '.mp4' else zipfile.ZIP_DEFLATED)
             if i and i % 1000 == 0:
                 print(f'Packed {i}/{len(included)} files', flush=True)
+        for name, data in generated.items():
+            archive.writestr('SonarNet/'+name, data)
+            hashes[name] = hashlib.sha256(data).hexdigest()
         manifest = {
-            'schema_version': 2,
-            'source_base_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-            'snapshot': 'Working tree at packaging time; new and modified files may not be in source_base_commit.',
-            'untracked_files_included': sorted(set(hashes) - set(tracked)),
+            'schema_version': 3,
+            'source_base_commit': source_commit,
+            'snapshot': ('Published Git tree at source_base_commit; additional research files are listed separately.'
+                         if pinned else 'Working tree at packaging time; files may differ from source_base_commit.'),
+            'untracked_files_included': sorted(set(hashes) - tracked),
+            'verified_git_blob_ids': {name: published_tree[name] for name in hashes if name in published_tree},
+            'additional_research_files_sha256': {
+                name: hashes[name] for name in hashes if pinned and name not in tracked and name not in generated
+            },
+            'generated_files_sha256': {name: hashes[name] for name in generated},
             'includes_published_map_images': args.include_published,
             'files_sha256': hashes,
             'omitted_tracked_files': omitted,
