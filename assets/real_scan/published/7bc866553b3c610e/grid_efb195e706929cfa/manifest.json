@@ -1,0 +1,221 @@
+{
+  "key": "grid_efb195e706929cfa",
+  "bbox": [
+    104.5,
+    10.0,
+    104.6,
+    10.1
+  ],
+  "row": 40,
+  "column": 25,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/7bc866553b3c610e/grid_efb195e706929cfa",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+  "band": "VV",
+  "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+  "reference_product": "S1D_IW_GRDH_1SDV_20261116T111052_20261116T111117_005492_00A7EE_rtc",
+  "observation_day_utc": "2026-11-16",
+  "image_sha256": "b3875bd0dfb9e0f7a93aa1e3ef3cce50eba6722e1fabab423e5c35e824b353ce",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-11-18T20:45:15.495208+00:00",
+  "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 0.899322509765625,
+    "excluded_candidates": [
+      {
+        "id": 7,
+        "bbox_px": [
+          490.96112060546875,
+          621.2178955078125,
+          505.340576171875,
+          632.5081787109375
+        ],
+        "confidence": 0.5653014183044434,
+        "longitude": 104.54864754378795,
+        "latitude": 10.038782906532287,
+        "reason": "land_or_coastal_exclusion"
+      },
+      {
+        "id": 14,
+        "bbox_px": [
+          438.4034423828125,
+          700.984619140625,
+          475.930908203125,
+          751.755859375
+        ],
+        "confidence": 0.39441218972206116,
+        "longitude": 104.5446452319622,
+        "latitude": 10.029065406322479,
+        "reason": "land_or_coastal_exclusion"
+      }
+    ]
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-18T20:45:15.495227+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        458.59326171875,
+        183.4168243408203,
+        474.4927978515625,
+        196.6154327392578
+      ],
+      "confidence": 0.7053430080413818,
+      "longitude": 104.54556084275245,
+      "latitude": 10.08144373744726
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        472.81182861328125,
+        389.5045166015625,
+        485.94244384765625,
+        402.1715087890625
+      ],
+      "confidence": 0.6706468462944031,
+      "longitude": 104.54681417346,
+      "latitude": 10.061343944072723
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        453.066162109375,
+        91.07870483398438,
+        468.5362548828125,
+        103.59095764160156
+      ],
+      "confidence": 0.6626491546630859,
+      "longitude": 104.5450001180172,
+      "latitude": 10.090494645386935
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        464.7158203125,
+        277.2719421386719,
+        479.56219482421875,
+        290.5140075683594
+      ],
+      "confidence": 0.641914963722229,
+      "longitude": 104.54610732495784,
+      "latitude": 10.072276076674461
+    },
+    {
+      "id": 5,
+      "bbox_px": [
+        461.3847961425781,
+        230.162841796875,
+        477.7084045410156,
+        243.705810546875
+      ],
+      "confidence": 0.6390404105186462,
+      "longitude": 104.54585416018962,
+      "latitude": 10.076861882209778
+    },
+    {
+      "id": 6,
+      "bbox_px": [
+        456.20379638671875,
+        135.94110107421875,
+        473.15948486328125,
+        149.70050048828125
+      ],
+      "confidence": 0.583882212638855,
+      "longitude": 104.54537906646728,
+      "latitude": 10.086052656173706
+    },
+    {
+      "id": 8,
+      "bbox_px": [
+        451.87969970703125,
+        58.04429626464844,
+        465.70501708984375,
+        68.81724548339844
+      ],
+      "confidence": 0.5592737197875977,
+      "longitude": 104.54480394124984,
+      "latitude": 10.093805588781834
+    },
+    {
+      "id": 9,
+      "bbox_px": [
+        470.00421142578125,
+        323.76776123046875,
+        483.26812744140625,
+        334.5849609375
+      ],
+      "confidence": 0.5395568609237671,
+      "longitude": 104.54654650092125,
+      "latitude": 10.067853870987891
+    },
+    {
+      "id": 10,
+      "bbox_px": [
+        472.147216796875,
+        355.6321716308594,
+        487.282470703125,
+        367.4865417480469
+      ],
+      "confidence": 0.48577040433883667,
+      "longitude": 104.54684715270996,
+      "latitude": 10.064691469073296
+    },
+    {
+      "id": 11,
+      "bbox_px": [
+        480.8346862792969,
+        524.22607421875,
+        498.2569885253906,
+        542.496826171875
+      ],
+      "confidence": 0.46003517508506775,
+      "longitude": 104.54780721068381,
+      "latitude": 10.047913920879363
+    },
+    {
+      "id": 12,
+      "bbox_px": [
+        453.5804138183594,
+        21.40695571899414,
+        467.5211486816406,
+        35.868709564208984
+      ],
+      "confidence": 0.4337103068828583,
+      "longitude": 104.54497566223144,
+      "latitude": 10.097203336656094
+    },
+    {
+      "id": 13,
+      "bbox_px": [
+        479.08917236328125,
+        481.82550048828125,
+        495.2581787109375,
+        495.83282470703125
+      ],
+      "confidence": 0.4337003529071808,
+      "longitude": 104.54757555425167,
+      "latitude": 10.052262777090073
+    }
+  ],
+  "source_provider": "planetary",
+  "source_collection": "sentinel-1-rtc",
+  "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1D_IW_GRDH_1SDV_20261116T111052_20261116T111117_005492_00A7EE_rtc",
+  "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/11/16/IW/DV/S1D_IW_GRDH_1SDV_20261116T111052_20261116T111117_005492_00A7EE_26A2/measurement/iw-vv.rtc.tiff",
+  "source_acquired_at": "2026-11-16T11:11:05.018792Z",
+  "source_native_pixel_spacing_m": 10.0,
+  "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+  "license": "CC-BY-4.0"
+}
