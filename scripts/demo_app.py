@@ -63,6 +63,11 @@ def update_section_url():
     st.query_params['trang'] = slug
 
 
+def open_evidence():
+    st.session_state.main_section = SECTIONS['minh-chung']
+    update_section_url()
+
+
 if 'main_section' not in st.session_state:
     st.session_state.main_section = SECTIONS.get(st.query_params.get('trang'), SECTIONS['gioi-thieu'])
 section = st.radio('Điều hướng', list(SECTIONS.values()), horizontal=True, index=None,
@@ -71,7 +76,7 @@ section = st.radio('Điều hướng', list(SECTIONS.values()), horizontal=True,
 # raster workspace while a visitor is reading the lightweight introduction.
 if section == 'Nghiên cứu':
     from introduction import render_introduction
-    render_introduction(ROOT)
+    render_introduction(ROOT, open_evidence=open_evidence)
 elif section == 'Quan sát':
     from observation_view import render
     render(ROOT)

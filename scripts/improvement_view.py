@@ -7,6 +7,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from demo_snapshot import render_snapshot
+from evaluation_summary import render_evaluation_summary
 from sonarnet.config import RunConfig
 from sonarnet.fusion.kalman import KalmanEstimate
 from sonarnet.fusion.matching import Detection, SARAISFusion
@@ -119,7 +120,7 @@ def render_improvements(root: Path):
     st.markdown('''<div class="sonar-hero"><div class="sonar-eyebrow">KIỂM TRA BẰNG CHỨNG</div>
     <div class="sonar-title">Biết khi nào chưa thể kết luận.</div>
     <div class="sonar-copy">Tự kiểm tra cách SonarNet xử lý thiếu dữ liệu, thông tin mâu thuẫn và những cặp ghép không chắc chắn.</div></div>''', unsafe_allow_html=True)
-    st.caption('Xem hồ sơ ảnh thật, thử ghép AIS hoặc kiểm tra từng phép đo SAR đã lưu.')
+    render_evaluation_summary(root, detailed=True)
     final_report = root/'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
     if final_report.is_file():
         st.download_button('Tải báo cáo cải tiến Chặng 1', final_report.read_bytes(),

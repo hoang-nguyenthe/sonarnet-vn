@@ -53,6 +53,26 @@ class ImprovementEvidenceTests(unittest.TestCase):
         app.radio(key='main_section').set_value('Hướng dẫn').run()
         self.assertEqual(app.query_params['trang'], 'huong-dan')
 
+    def test_home_shows_benchmark_and_opens_evidence(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60).run()
+        self.assertFalse(app.exception)
+        self.assertIn('Kết quả trước và sau cải tiến', [item.value for item in app.subheader])
+        summary = next(item.value for item in app.markdown if 'chang1-results' in item.value)
+        for value in ('3/147', '51/147', '36 lên 211', '898 xuống 879', '3.722'):
+            self.assertIn(value, summary)
+        proceed = next(button for button in app.button if button.label == 'Mở minh chứng và tải báo cáo')
+        proceed.click().run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.radio(key='main_section').value, 'Minh chứng cải tiến')
+        self.assertEqual(app.query_params['trang'], 'minh-chung')
+        self.assertIn('Kết quả trước và sau cải tiến', [item.value for item in app.subheader])
+        self.assertIn('51/147 → 60/147', [item.value for item in app.metric])
+        self.assertIn('69/146 → 87/146', [item.value for item in app.metric])
+        app.radio(key='recall_retest_mode').set_value('fixed_budget').run()
+        self.assertFalse(app.exception)
+        self.assertIn('36/147 → 38/147', [item.value for item in app.metric])
+        self.assertIn('20/146 → 22/146', [item.value for item in app.metric])
+
     def test_repeatability_failure_is_visible_not_silently_aggregated(self):
         app=AppTest.from_file(str(ROOT/'scripts/demo_app.py'),default_timeout=60).run()
         app.radio[0].set_value('Minh chứng cải tiến').run()

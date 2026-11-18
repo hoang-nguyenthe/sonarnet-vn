@@ -14,6 +14,8 @@ Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng
 
 ## Hướng dẫn dùng thử
 
+> Ở đầu trang Minh chứng, chuyển **Phạm vi so sánh** giữa mọi ứng viên qua ngưỡng và cùng giới hạn rà soát để xem recall SAR trước–sau. Mở **Xem tác động của ngưỡng điểm và ưu tiên ven bờ** để xem kết quả riêng khi chỉ hạ ngưỡng. Bảng giữ cả số điểm không khớp nhãn và độ trễ.
+
 > Mở **Minh chứng cải tiến** và bật **Mở hồ sơ ảnh SAR thật thiếu AIS** để xem và tải bằng chứng. Thử **Kích thước mâu thuẫn**, **Hai quỹ đạo giao nhau** và **AIS gần nhất đã cũ, có tín hiệu khác gần đó**. Mở **Xem cảnh Sentinel-1 và AIS cùng lượt chụp** để xem ảnh, mức đồng thuận với bản tin giữ lại và ca cần rà. Trong phần kiểm thử SLC VV, có hai nhóm ảnh độc lập và ảnh lỗi. Hồ sơ mẫu mở được khi thiếu nguồn bản đồ.
 
 Chạy bản bàn giao bằng Python 3.12 từ thư mục `SonarNet` trong ZIP.

@@ -1,0 +1,59 @@
+{
+  "created_utc": "2026-11-18T15:03:52.858294+00:00",
+  "code_sha256": "529f27b82fc7cae38798dbb299e39c0ac5b00cebd455cac312c5a043cab74aa5",
+  "weights_sha256": "b610df7fb3b732646540257194e075b52012e434755e77595227a9dde9a31a1b",
+  "previous_results_sha256": "eb7dd4d9798872475dfcb4c5413e250666922d831726f36880b868dcfea01562",
+  "tune_sha256": "57e91e30a2aceda3d9101d0c0147c41fb5462f081567de091d93b1d365643e6e",
+  "test_manifest_sha256": {
+    "diagnostic": "490d9d9891551c5928e00b2f8ebb87fc2849a3723c7e8d9e693b47c11c6b2cf2",
+    "north_sea": "cbfa0d4ffba54323e0e3b0ad7fad682df1a37d4cd548937a534cffd5f15f7c3b"
+  },
+  "methods": {
+    "native_512": [
+      "512"
+    ],
+    "whole_768": [
+      "768"
+    ],
+    "whole_1024": [
+      "1024"
+    ],
+    "dual_scale": [
+      "512",
+      "768"
+    ],
+    "dual_scale_flip": [
+      "512",
+      "768",
+      "768_flip"
+    ],
+    "native_and_tiles": [
+      "512",
+      "tiles"
+    ],
+    "dual_scale_and_tiles": [
+      "512",
+      "768",
+      "tiles"
+    ]
+  },
+  "thresholds": [
+    0.005,
+    0.01,
+    0.025,
+    0.05,
+    0.1
+  ],
+  "original_operating_point": [
+    "native_512",
+    0.025
+  ],
+  "nms_iou": 0.45,
+  "review_candidates_per_water_km2": 0.05,
+  "validation_rule": "Maximize matches at the fixed budget, then reduce unmatched candidates; use unrestricted counts and threshold as tie-breakers.",
+  "use": "Validation scene selects a single policy. Diagnostic and North Sea are previously scored test scenes, kept out of fitting and policy selection.",
+  "timing": "Median and p95 sum of CPU stages after pixel reads. Shared passes computed once; each policy charged for every pass it uses.",
+  "torch": "2.8.0",
+  "ultralytics": "8.3.253",
+  "cpu_threads": 4
+}

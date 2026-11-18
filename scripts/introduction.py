@@ -6,6 +6,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from evaluation_summary import render_evaluation_summary
+
 
 def _research_snapshot(root: Path | None) -> tuple[str, str, str]:
     """Read lightweight published facts without starting the raster pipeline."""
@@ -34,10 +36,10 @@ def _research_snapshot(root: Path | None) -> tuple[str, str, str]:
         return fallback
 
 
-def render_introduction(root: Path | None = None) -> None:
+def render_introduction(root: Path, *, open_evidence) -> None:
     first, second, third = _research_snapshot(root)
     hero = '''<style>
-.research-hero{position:relative;overflow:hidden;isolation:isolate;min-height:560px;display:flex;align-items:flex-end;padding:clamp(34px,7vw,92px);border-radius:34px;color:#f8fbff;background:linear-gradient(135deg,#051326,#0a3250 52%,#14626a);box-shadow:0 30px 80px #071d3133}
+.research-hero{position:relative;overflow:hidden;isolation:isolate;min-height:430px;display:flex;align-items:flex-start;padding:clamp(34px,7vw,92px);border-radius:34px;color:#f8fbff;background:linear-gradient(135deg,#051326,#0a3250 52%,#14626a);box-shadow:0 30px 80px #071d3133}
 .research-hero:before{content:"";position:absolute;inset:-36%;z-index:-2;background:radial-gradient(ellipse at 22% 32%,#1595d966,transparent 28%),radial-gradient(ellipse at 76% 57%,#57e0cf44,transparent 27%),radial-gradient(ellipse at 44% 92%,#1677cf55,transparent 32%);animation:research-aurora 16s ease-in-out infinite alternate}
 .research-hero:after{content:"";position:absolute;width:560px;height:560px;right:-215px;top:-245px;z-index:-1;border-radius:50%;border:1px solid #b5eff22c;box-shadow:0 0 0 56px #b5eff209,0 0 0 128px #b5eff207,0 0 0 218px #b5eff205;animation:research-orbit 18s linear infinite}
 .research-kicker{font:650 11px system-ui;letter-spacing:.21em;color:#9cd8e6}.research-hero h1{max-width:850px;margin:18px 0!important;color:#fff!important;font-size:clamp(44px,7vw,96px)!important;line-height:.99;letter-spacing:-.065em!important;font-weight:680}.research-hero h1 em{font-style:normal;color:#7ee5d7}.research-lede{max-width:610px;margin:0;color:#c0d4e3;font-size:clamp(16px,1.8vw,21px);line-height:1.48}.research-hero-copy{animation:research-rise .8s cubic-bezier(.2,.75,.3,1) both}
@@ -56,6 +58,8 @@ def render_introduction(root: Path | None = None) -> None:
 <section class="research-hero"><div class="research-hero-copy"><div class="research-kicker">SONARNET · KHÔNG GIAN NGHIÊN CỨU</div><h1>Đọc tín hiệu biển.<br><em>Rõ từng dấu vết.</em></h1><p class="research-lede">Một không gian để nhìn ảnh radar, phát hiện các điểm cần kiểm tra và giữ bằng chứng đúng nơi, đúng thời điểm.</p></div><div class="research-facts"><span class="research-fact">__FIRST__</span><span class="research-fact">__SECOND__</span><span class="research-fact">__THIRD__</span></div></section>
 '''
     st.markdown(hero.replace("__FIRST__", first).replace("__SECOND__", second).replace("__THIRD__", third), unsafe_allow_html=True)
+    if render_evaluation_summary(root):
+        st.button("Mở minh chứng và tải báo cáo", on_click=open_evidence, type="primary")
     st.markdown('''<div class="research-grid">
 <section class="glass-card research-wide"><div class="section-tag">CÂU HỎI TRUNG TÂM</div><h2>Một điểm sáng<br>nói được gì?</h2><p>Trên ảnh radar, mục tiêu trên biển thường hiện thành điểm sáng. Nhưng ảnh đơn lẻ không tự nói đó là phương tiện nào, có di chuyển hay có liên quan tới một bản tin vị trí hay không.</p><p>SonarNet biến câu hỏi đó thành một quy trình có thể kiểm tra lại: giữ ảnh nguồn, thời gian, tọa độ và nhận xét cùng một điểm quan sát.</p><div class="journey"><div class="journey-step">Ảnh Sentinel-1 được lưu cùng thời điểm quan sát.</div><div class="journey-step">Đất liền và vùng sát bờ được loại khỏi phạm vi đọc ảnh.</div><div class="journey-step">Các điểm có tín hiệu giống mục tiêu được đưa lên bản đồ.</div><div class="journey-step">Người phân tích mở ảnh gốc và đối chiếu nguồn phù hợp.</div></div></section>
 <section class="glass-card research-side"><div class="section-tag">MỘT BẢN ĐỒ, BA LỚP BẰNG CHỨNG</div><h3>Không chỉ là các chấm trên bản đồ.</h3><div class="signal-row"><i class="signal-dot" style="background:#0a84ff"></i><b>Ảnh tại điểm quan sát</b><span>có ngày chụp</span></div><div class="signal-row"><i class="signal-dot" style="background:#31c0b0"></i><b>Tọa độ & vùng ảnh</b><span>truy về nguồn</span></div><div class="signal-row"><i class="signal-dot" style="background:#ffb52a"></i><b>Nhận xét nghiệp vụ</b><span>có thể lưu lại</span></div></section>
