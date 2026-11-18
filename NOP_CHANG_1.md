@@ -14,6 +14,8 @@ Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng
 
 ## Hướng dẫn dùng thử
 
+> Ở mục **Kiểm tra trên ảnh ven biển Việt Nam**, xem mẫu Sentinel-1 có nhãn điểm Ai2 ở Đà Nẵng và Vũng Tàu. Có thể đổi bán kính 50, 100, 150 m và xem số ứng viên cần rà. Đây là phép so sánh với nhãn điểm, khác với IoU 0,50 dùng để chấm hộp trên SLC.
+
 > Ở đầu trang Minh chứng, chuyển **Phạm vi so sánh** giữa mọi ứng viên qua ngưỡng và cùng giới hạn rà soát để xem recall SAR trước–sau. Mở **Xem tác động của ngưỡng điểm và ưu tiên ven bờ** để xem kết quả riêng khi chỉ hạ ngưỡng. Bảng giữ cả số điểm không khớp nhãn và độ trễ.
 
 > Mở **Minh chứng cải tiến** và bật **Mở hồ sơ ảnh SAR thật thiếu AIS** để xem và tải bằng chứng. Thử **Kích thước mâu thuẫn**, **Hai quỹ đạo giao nhau** và **AIS gần nhất đã cũ, có tín hiệu khác gần đó**. Mở **Xem cảnh Sentinel-1 và AIS cùng lượt chụp** để xem ảnh, mức đồng thuận với bản tin giữ lại và ca cần rà. Trong phần kiểm thử SLC VV, có hai nhóm ảnh độc lập và ảnh lỗi. Hồ sơ mẫu mở được khi thiếu nguồn bản đồ.
@@ -33,6 +35,6 @@ Trong bản chạy từ ZIP, **Quan sát → Kiểm tra chi tiết** mở hồ s
 
 ## Nội dung khai báo AI và nguồn để đối chiếu trước khi điền
 
-> Trong lượt cải tiến Chặng 1, OpenAI Codex hỗ trợ đối chiếu yêu cầu, sửa mã, viết kiểm thử, chuẩn bị và kiểm tra dữ liệu, chạy huấn luyện và đối chứng, trình bày báo cáo. Số liệu lấy từ đầu ra chạy thực nghiệm trong reports/final. Dữ liệu SAR sử dụng Copernicus Sentinel-1, LS-SSDD, OSSDD và OpenSAR Insight. GSHHG dùng để xác định đường bờ. YOLO11n khởi tạo từ trọng số COCO của Ultralytics. AIS có bài thử mô phỏng và đối chứng giữ lại bản tin lịch sử NOAA Marine Cadastre. Nguồn, phiên bản, mã băm và phạm vi đánh giá nằm trong báo cáo và tài liệu tái lập.
+> Trong lượt cải tiến Chặng 1, OpenAI Codex hỗ trợ đối chiếu yêu cầu, sửa mã, viết kiểm thử, chuẩn bị và kiểm tra dữ liệu, chạy huấn luyện và đối chứng, trình bày báo cáo. Số liệu lấy từ đầu ra chạy thực nghiệm trong reports/final. Dữ liệu SAR sử dụng Copernicus Sentinel-1, LS-SSDD, OSSDD và OpenSAR Insight. GSHHG dùng để xác định đường bờ. YOLO11n khởi tạo từ trọng số COCO của Ultralytics. AIS có bài thử mô phỏng và đối chứng giữ lại bản tin lịch sử NOAA Marine Cadastre. Phép kiểm tra ven biển Việt Nam dùng nhãn điểm công khai Ai2 và ảnh Sentinel-1 RTC từ Microsoft Planetary Computer. Nguồn, phiên bản, mã băm và phạm vi đánh giá nằm trong báo cáo và tài liệu tái lập.
 
 Chủ dự án bổ sung các công cụ hoặc nguồn đã sử dụng trong các giai đoạn trước nếu có. Các ca ảnh thật đang chờ người có chuyên môn xác nhận. Tên người rà soát trong demo là thông tin tự khai.

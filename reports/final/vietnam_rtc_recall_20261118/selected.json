@@ -1,0 +1,454 @@
+{
+  "locked_utc": "2026-11-18T15:52:29.082162+00:00",
+  "selected": "fill_with_coastal_map",
+  "development": {
+    "region": "da_nang_nearshore",
+    "n_source_labels": 34,
+    "n_evaluated_labels": 34,
+    "area_km2": 514.6517622321701,
+    "budget": 25,
+    "windows": 8,
+    "results": {
+      "map_default": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 16,
+            "unmatched": 16
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 16,
+            "unmatched": 16
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 16,
+            "unmatched": 15
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 16,
+            "unmatched": 16
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 16,
+            "unmatched": 16
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 16,
+            "unmatched": 15
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 0,
+        "nearshore_label_count": 11
+      },
+      "map_lower_threshold": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 41,
+            "unmatched": 41
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 41,
+            "unmatched": 41
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 41,
+            "unmatched": 40
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 0,
+        "nearshore_label_count": 11
+      },
+      "map_land_only": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 31,
+            "unmatched": 31
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 31,
+            "unmatched": 30
+          },
+          "150": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 31,
+            "unmatched": 29
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          },
+          "150": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 23
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 1,
+        "nearshore_label_count": 11
+      },
+      "map_land_only_sensitive": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 107,
+            "unmatched": 107
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 107,
+            "unmatched": 106
+          },
+          "150": {
+            "matched": 3,
+            "labels": 34,
+            "predictions": 107,
+            "unmatched": 104
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          },
+          "150": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 23
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 1,
+        "nearshore_label_count": 11
+      },
+      "slc_512": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 63,
+            "unmatched": 63
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 63,
+            "unmatched": 62
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 63,
+            "unmatched": 62
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "150": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 1,
+        "nearshore_label_count": 11
+      },
+      "slc_multiscale": {
+        "all": {
+          "50": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 220,
+            "unmatched": 219
+          },
+          "100": {
+            "matched": 5,
+            "labels": 34,
+            "predictions": 220,
+            "unmatched": 215
+          },
+          "150": {
+            "matched": 9,
+            "labels": 34,
+            "predictions": 220,
+            "unmatched": 211
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 2,
+        "nearshore_label_count": 11
+      },
+      "slc_multiscale_log_stretch": {
+        "all": {
+          "50": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 248,
+            "unmatched": 246
+          },
+          "100": {
+            "matched": 4,
+            "labels": 34,
+            "predictions": 248,
+            "unmatched": 244
+          },
+          "150": {
+            "matched": 6,
+            "labels": 34,
+            "predictions": 248,
+            "unmatched": 242
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 3,
+        "nearshore_label_count": 11
+      },
+      "fill_with_coastal_map": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          },
+          "150": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 23
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          },
+          "150": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 23
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 1,
+        "nearshore_label_count": 11
+      },
+      "fill_with_slc": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "150": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 0,
+        "nearshore_label_count": 11
+      },
+      "fill_with_agreement": {
+        "all": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          },
+          "150": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 23
+          }
+        },
+        "fixed_budget": {
+          "50": {
+            "matched": 0,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 25
+          },
+          "100": {
+            "matched": 1,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 24
+          },
+          "150": {
+            "matched": 2,
+            "labels": 34,
+            "predictions": 25,
+            "unmatched": 23
+          }
+        },
+        "nearshore_label_matches_using_full_candidates": 1,
+        "nearshore_label_count": 11
+      }
+    }
+  }
+}

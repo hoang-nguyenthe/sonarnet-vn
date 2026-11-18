@@ -73,6 +73,19 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertIn('36/147 → 38/147', [item.value for item in app.metric])
         self.assertIn('20/146 → 22/146', [item.value for item in app.metric])
 
+    def test_vietnam_point_reference_counts_are_separate(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
+        app.query_params['trang'] = 'minh-chung'
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertIn('Kiểm tra trên ảnh ven biển Việt Nam', [item.value for item in app.subheader])
+        metrics = {item.label: item.value for item in app.metric}
+        self.assertEqual(metrics['Nhãn điểm trong vùng chấm'], '224')
+        self.assertEqual(metrics['Nhãn điểm khớp · cùng giới hạn rà'], '98 → 101')
+        self.assertTrue(any('128/224' in item.value for item in app.caption))
+        app.select_slider(key='vn_rtc_distance').set_value(50).run()
+        self.assertFalse(app.exception)
+
     def test_repeatability_failure_is_visible_not_silently_aggregated(self):
         app=AppTest.from_file(str(ROOT/'scripts/demo_app.py'),default_timeout=60).run()
         app.radio[0].set_value('Minh chứng cải tiến').run()

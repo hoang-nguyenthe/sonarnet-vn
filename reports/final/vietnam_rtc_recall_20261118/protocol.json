@@ -1,0 +1,33 @@
+{
+  "frozen_utc": "2026-11-18T15:52:14.112496+00:00",
+  "script_sha256": "bb49c44aa34d3bd916e1529465f38ea8eacb4c42c89c3a04bb60f8b1ea4972d8",
+  "inputs_sha256": "d29f2bc9c82ccbd561a0b952980de5d0aee48351a71df062c2d9d821bbb324b6",
+  "map_weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "slc_weights_sha256": "b610df7fb3b732646540257194e075b52012e434755e77595227a9dde9a31a1b",
+  "methods": [
+    "map_default",
+    "map_lower_threshold",
+    "map_land_only",
+    "map_land_only_sensitive",
+    "slc_512",
+    "slc_multiscale",
+    "slc_multiscale_log_stretch",
+    "fill_with_coastal_map",
+    "fill_with_slc",
+    "fill_with_agreement"
+  ],
+  "match_distance_m": [
+    50,
+    100,
+    150
+  ],
+  "hybrid_duplicate_m": 35,
+  "hybrid_agreement_m": 65,
+  "hybrid_scope": "Follow-up on the previously scored scenes. Rules selected on development. Hybrid predictions are limited by the declared review budget.",
+  "main_distance_m": 100,
+  "budget_per_km2": 0.05,
+  "development_acquisition_day": "20220406",
+  "method_selection": "Maximize development matches at fixed budget, break ties by fewer unmatched within budget, then fewer total unmatched and original model.",
+  "support": "Same valid image pixels and ocean support. Original map masks land and additional 500 m shore band. Largest bipartite matching by distance on source points. Source labels need not be complete.",
+  "scope": "Historical Sentinel-1 GRD/RTC comparisons on previously unused external Vietnamese coastal image annotations, not verified identity ground truth."
+}

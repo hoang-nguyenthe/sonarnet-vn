@@ -11,7 +11,7 @@ Phạm vi: công việc được thực hiện trong cuộc trò chuyện Codex 
 | Đánh giá | Viết/chạy công cụ, lưu dự đoán và lỗi; tạo mô phỏng AIS riêng | results.json; summary.csv; kiểm thử |
 | Tài liệu | Soạn báo cáo, vẽ biểu đồ Python, dựng slide và lời thoại | Mã dựng, PDF, PPTX và kịch bản |
 
-Các con số công bố lấy từ kết quả chương trình đã chạy, không phải con số do mô hình ngôn ngữ tự ước lượng. Nhãn SAR do tác giả bộ LS-SSDD cung cấp; chưa có bộ nhãn được chuyên gia SonarNet đánh lại. Các ca AIS là dữ liệu tổng hợp và luôn phải ghi là mô phỏng.
+Các con số công bố lấy từ đầu ra thực nghiệm. Codex hỗ trợ chuẩn bị và chạy đối chứng đa tỷ lệ, đối chiếu nhãn điểm Ai2 với lịch chụp Sentinel-1 RTC ở ven biển Việt Nam và trình bày bảng kết quả. Các nguồn nhãn SAR gồm LS-SSDD, OSSDD, OpenSAR Insight và Ai2. Nhãn thuộc các bộ nguồn đã công bố. AIS gồm các ca mô phỏng, phát lại bản tin NOAA thật và một cảnh SAR–AIS cùng thời điểm. Từng phép thử có ghi nguồn và phạm vi trong báo cáo.
 
 Tác giả cần tự kiểm tra tính đúng của mã, nguồn dữ liệu, nội dung hồ sơ, quyền sử dụng và các cam kết trước khi nộp. AI không thay tác giả ký hoặc xác nhận, không xác nhận thay chuyên gia và không đưa ra kết luận vi phạm.
 

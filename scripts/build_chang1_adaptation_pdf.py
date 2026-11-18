@@ -63,7 +63,9 @@ def build(args):
     retest_path = multiscale/'results.json'
     retest = json.loads(retest_path.read_text())['evaluation'] if retest_path.is_file() else None
     extra_controls = json.loads((multiscale/'threshold-and-coast.json').read_text())['evaluation'] if retest else None
-    total_update_pages = 8 if retest else 7
+    local_path = ROOT/'reports/final/vietnam_rtc_recall_20261118/results.json'
+    local = json.loads(local_path.read_text()) if local_path.is_file() else None
+    total_update_pages = 7 + bool(retest) + bool(local)
     b = BytesIO()
     c = Canvas(b, pagesize=A4)
 
@@ -140,7 +142,12 @@ def build(args):
     for heading, description in items:
         y = text(heading, y, sub)-5
         y = text(description, y)-17
-    y = text('Kết quả trên nhãn ảnh nguồn phục vụ rà soát. Bản đồ còn cần xác minh trên ảnh Việt Nam và dữ liệu cùng thời điểm trước khi sử dụng checkpoint mới. Mọi kết luận nghiệp vụ cần người có chuyên môn xác nhận.', y, muted)
+    if local:
+        y = text('Đã đối chiếu điểm trên ảnh ven biển Việt Nam. Kết quả cho biết độ phủ trên ô có nhãn, '
+                 'chưa xác nhận danh tính hay hỗ trợ suy rộng ra toàn bản đồ. Xem số liệu tại trang 9.', y, muted)
+    else:
+        y = text('Kết quả trên nhãn ảnh nguồn phục vụ rà soát. Cần đối chứng tại Việt Nam và xác nhận '
+                 'của người có chuyên môn trước khi dùng mô hình mới cho nghiệp vụ.', y, muted)
     y = text('Các phép đo trước nằm ở phụ lục và giữ số trang ban đầu. Trang Minh chứng cải tiến có bản so sánh, ca lỗi và tệp tải xuống.', y-12, muted)
     assert y > 77
     c.setFillColor(TEAL)
@@ -302,12 +309,60 @@ def build(args):
                  'ở ba cảnh và tăng từ 2/14 lên 3/14 ở Biển Bắc. Phép phát lại này dùng dự đoán đã lưu.', y)-14
         y = text('Thời gian và phạm vi sử dụng', y, sub)-5
         y = text('Trung vị CPU 4 luồng tăng từ 52–57 lên 218–243 ms mỗi ô, chưa tính thời gian đọc ảnh. '
-                 'Điểm không khớp nhãn cần được rà trên ảnh. Kết quả này chưa được kiểm chứng ở vùng biển Việt Nam '
-                 'và cấu hình đa tỷ lệ chưa được dùng để chạy bản đồ.', y)-10
+                 'Điểm không khớp nhãn cần được rà trên ảnh. Phép thử này dùng ảnh SLC ngoài Việt Nam. '
+                 'Cấu hình đa tỷ lệ được đối chứng riêng với ảnh GRD/RTC và chưa chạy bản đồ.', y)-10
         y = text('Số liệu gốc, giao thức chọn cấu hình, dự đoán và tệp phục vụ tái lập nằm tại '
                  'reports/final/sar_multiscale_20261118/. Có thể xem trực tiếp ở mục Minh chứng cải tiến.', y, muted)
         assert y > 65, y
         footer(8)
+
+    if local:
+        y = header('ĐỐI CHỨNG VEN BIỂN VIỆT NAM', 'Mô hình cần bao nhiêu lượt rà để tìm thêm mục tiêu?')
+        dev_day = local['development_day']
+        hold = [row for key, row in local['per_acquisition'].items() if dev_day not in key]
+        selected = local['selected']
+        labels = sum(row['n_evaluated_labels'] for row in hold)
+        n_windows = sum(row['windows'] for row in hold)
+        y = text(f'Trên {n_windows} ô từ {len(hold)} lượt chụp Sentinel-1 GRD/RTC ở Đà Nẵng và Vũng Tàu, '
+                 f'{labels} điểm nhãn Ai2 có ảnh hợp lệ và nằm trên vùng nước chấm. Điểm khớp một–một '
+                 'nếu cách nhau không quá 100 m. Một lượt Đà Nẵng khác được dùng để chọn cấu hình.', y)-13
+        y = text('Kết quả trên các lượt chụp ngoài tập chọn cấu hình', y, sub)-5
+        names = {
+            'map_default': 'Bản đồ hiện tại', 'map_land_only': 'Bản đồ, giữ nước sát bờ',
+            'map_lower_threshold': 'Bản đồ, hạ ngưỡng',
+            'slc_multiscale': 'YOLO SLC VV đa tỷ lệ',
+            'fill_with_coastal_map': 'Giữ bản đồ + bổ sung vùng bờ',
+            'fill_with_slc': 'Giữ bản đồ + bổ sung đa tỷ lệ',
+            'fill_with_agreement': 'Giữ bản đồ + điểm hai mô hình cùng gợi ý',
+        }
+        rows = [['Phương án', 'Phạm vi rà', 'Nhãn khớp', 'Ứng viên rà', 'Không khớp nhãn']]
+        for scope, scope_name, methods in (
+                ('all', 'Mọi điểm', ['map_default', 'slc_multiscale']),
+                ('fixed_budget', 'Cùng giới hạn', list(dict.fromkeys(['map_default','map_lower_threshold',
+                                                                   'slc_multiscale',selected])))):
+            for method in methods:
+                counts = [row['results'][method][scope]['100'] for row in hold]
+                match, points, unmatched = [sum(c[key] for c in counts) for key in ('matched','predictions','unmatched')]
+                rows.append([names[method],scope_name,f'{match}/{labels}',fmt(points),fmt(unmatched)])
+        y = table(rows,[174,78,69,81,99],y)-13
+        y = text(f'Phương án chọn trước khi chấm lại là <b>{names[selected]}</b>. Giới hạn áp dụng theo từng '
+                 'lượt chụp, tối đa một điểm trên 20 km² nước hợp lệ. Cấu hình bản đồ có thể dùng ít lượt hơn giới hạn. '
+                 'Các phương án phối hợp được kiểm tra lại trên cùng bốn lượt chụp.', y)-13
+        y = text('Ý nghĩa với vùng sát bờ',y,sub)-5
+        coastal = [row['results']['slc_multiscale'] for row in hold]
+        coastal_hit = sum(r['nearshore_label_matches_using_full_candidates'] for r in coastal)
+        coastal_n = sum(r['nearshore_label_count'] for r in coastal)
+        y = text(f'Ở dải 500 m từ bờ có {coastal_n} nhãn điểm. Khi rà toàn bộ, YOLO đa tỷ lệ tìm được '
+                 f'{coastal_hit}/{coastal_n} điểm trong phép đo riêng cho dải này. Bản đồ hiện hành loại trừ '
+                 'dải này trước khi suy luận. Các phương án mở dải cần kiểm thêm nhiễu ở cảng và công trình cố định.', y)-13
+        y = text('Phạm vi kết luận',y,sub)-5
+        y = text('Nhãn đối chiếu do Ai2 công bố. Kết quả lệ thuộc độ phủ nhãn, nơi chụp và số lượt chụp. '
+                 'Chỉ đo khớp theo điểm, chưa xác nhận kích thước, danh tính tàu hay bao quát được mọi vùng biển Việt Nam. '
+                 'Hiện trạng bản đồ và các mô hình thử tiếp tục được hiển thị riêng.', y)-13
+        y = text('Mở Minh chứng cải tiến để thử các bán kính 50, 100 và 150 m. Đối chiếu nguồn theo vệ tinh, '
+                 'quỹ đạo tuyệt đối và giây bắt đầu chụp trong reports/final/vietnam_rtc_recall_20261118/.',y,muted)
+        assert y > 70, y
+        footer(total_update_pages)
     c.save()
     b.seek(0)
     writer = PdfWriter()

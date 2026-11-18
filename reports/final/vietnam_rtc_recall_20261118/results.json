@@ -1,0 +1,2256 @@
+{
+  "selected": "fill_with_coastal_map",
+  "development_day": "20220406",
+  "per_acquisition": {
+    "S1A_IW_GRDH_1SDV_20220406T105643_20220406T105708_042652_0516BC_A84A.SAFE": {
+      "region": "da_nang_nearshore",
+      "n_source_labels": 34,
+      "n_evaluated_labels": 34,
+      "area_km2": 514.6517622321701,
+      "budget": 25,
+      "windows": 8,
+      "results": {
+        "map_default": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 16,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 16,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 16,
+              "unmatched": 15
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 16,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 16,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 16,
+              "unmatched": 15
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 11
+        },
+        "map_lower_threshold": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 41,
+              "unmatched": 41
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 41,
+              "unmatched": 41
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 41,
+              "unmatched": 40
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 11
+        },
+        "map_land_only": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 31,
+              "unmatched": 31
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 31,
+              "unmatched": 30
+            },
+            "150": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 31,
+              "unmatched": 29
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 23
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 1,
+          "nearshore_label_count": 11
+        },
+        "map_land_only_sensitive": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 107,
+              "unmatched": 107
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 107,
+              "unmatched": 106
+            },
+            "150": {
+              "matched": 3,
+              "labels": 34,
+              "predictions": 107,
+              "unmatched": 104
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 23
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 1,
+          "nearshore_label_count": 11
+        },
+        "slc_512": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 63,
+              "unmatched": 63
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 63,
+              "unmatched": 62
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 63,
+              "unmatched": 62
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "150": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 1,
+          "nearshore_label_count": 11
+        },
+        "slc_multiscale": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 220,
+              "unmatched": 219
+            },
+            "100": {
+              "matched": 5,
+              "labels": 34,
+              "predictions": 220,
+              "unmatched": 215
+            },
+            "150": {
+              "matched": 9,
+              "labels": 34,
+              "predictions": 220,
+              "unmatched": 211
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 2,
+          "nearshore_label_count": 11
+        },
+        "slc_multiscale_log_stretch": {
+          "all": {
+            "50": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 248,
+              "unmatched": 246
+            },
+            "100": {
+              "matched": 4,
+              "labels": 34,
+              "predictions": 248,
+              "unmatched": 244
+            },
+            "150": {
+              "matched": 6,
+              "labels": 34,
+              "predictions": 248,
+              "unmatched": 242
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 3,
+          "nearshore_label_count": 11
+        },
+        "fill_with_coastal_map": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 23
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 23
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 1,
+          "nearshore_label_count": 11
+        },
+        "fill_with_slc": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "150": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 11
+        },
+        "fill_with_agreement": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 23
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 1,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 2,
+              "labels": 34,
+              "predictions": 25,
+              "unmatched": 23
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 1,
+          "nearshore_label_count": 11
+        }
+      }
+    },
+    "S1A_IW_GRDH_1SDV_20220629T105648_20220629T105713_043877_053CEB_7C61.SAFE": {
+      "region": "da_nang_nearshore",
+      "n_source_labels": 38,
+      "n_evaluated_labels": 37,
+      "area_km2": 902.9037115696499,
+      "budget": 45,
+      "windows": 12,
+      "results": {
+        "map_default": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 3,
+              "labels": 37,
+              "predictions": 25,
+              "unmatched": 22
+            },
+            "150": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 25,
+              "unmatched": 20
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 25,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 3,
+              "labels": 37,
+              "predictions": 25,
+              "unmatched": 22
+            },
+            "150": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 25,
+              "unmatched": 20
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_lower_threshold": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 47,
+              "unmatched": 46
+            },
+            "100": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 47,
+              "unmatched": 42
+            },
+            "150": {
+              "matched": 9,
+              "labels": 37,
+              "predictions": 47,
+              "unmatched": 38
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 40
+            },
+            "150": {
+              "matched": 9,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 36
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_land_only": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 40,
+              "unmatched": 39
+            },
+            "100": {
+              "matched": 3,
+              "labels": 37,
+              "predictions": 40,
+              "unmatched": 37
+            },
+            "150": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 40,
+              "unmatched": 35
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 40,
+              "unmatched": 39
+            },
+            "100": {
+              "matched": 3,
+              "labels": 37,
+              "predictions": 40,
+              "unmatched": 37
+            },
+            "150": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 40,
+              "unmatched": 35
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_land_only_sensitive": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 130,
+              "unmatched": 129
+            },
+            "100": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 130,
+              "unmatched": 125
+            },
+            "150": {
+              "matched": 9,
+              "labels": 37,
+              "predictions": 130,
+              "unmatched": 121
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 4,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 41
+            },
+            "150": {
+              "matched": 6,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 39
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_512": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 76,
+              "unmatched": 75
+            },
+            "100": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 76,
+              "unmatched": 74
+            },
+            "150": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 76,
+              "unmatched": 74
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "150": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 43
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_multiscale": {
+          "all": {
+            "50": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 233,
+              "unmatched": 231
+            },
+            "100": {
+              "matched": 10,
+              "labels": 37,
+              "predictions": 233,
+              "unmatched": 223
+            },
+            "150": {
+              "matched": 14,
+              "labels": 37,
+              "predictions": 233,
+              "unmatched": 219
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 43
+            },
+            "150": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 43
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_multiscale_log_stretch": {
+          "all": {
+            "50": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 417,
+              "unmatched": 415
+            },
+            "100": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 417,
+              "unmatched": 412
+            },
+            "150": {
+              "matched": 10,
+              "labels": 37,
+              "predictions": 417,
+              "unmatched": 407
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 2,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 43
+            },
+            "150": {
+              "matched": 3,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 42
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_coastal_map": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 4,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 41
+            },
+            "150": {
+              "matched": 6,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 39
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 4,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 41
+            },
+            "150": {
+              "matched": 6,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 39
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_slc": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 3,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 42
+            },
+            "150": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 40
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 3,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 42
+            },
+            "150": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 40
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_agreement": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 40
+            },
+            "150": {
+              "matched": 8,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 37
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 5,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 40
+            },
+            "150": {
+              "matched": 8,
+              "labels": 37,
+              "predictions": 45,
+              "unmatched": 37
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        }
+      }
+    },
+    "S1A_IW_GRDH_1SDV_20220723T105650_20220723T105715_044227_054754_82F5.SAFE": {
+      "region": "da_nang_nearshore",
+      "n_source_labels": 20,
+      "n_evaluated_labels": 20,
+      "area_km2": 1094.2105165778755,
+      "budget": 54,
+      "windows": 13,
+      "results": {
+        "map_default": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 21,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 21,
+              "unmatched": 10
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 21,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 21,
+              "unmatched": 10
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_lower_threshold": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 32
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 25
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 32
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 25
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_land_only": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 32
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 25
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 32
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 36,
+              "unmatched": 25
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_land_only_sensitive": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 98,
+              "unmatched": 98
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 98,
+              "unmatched": 94
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 98,
+              "unmatched": 87
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 54
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 50
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 43
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_512": {
+          "all": {
+            "50": {
+              "matched": 3,
+              "labels": 20,
+              "predictions": 63,
+              "unmatched": 60
+            },
+            "100": {
+              "matched": 7,
+              "labels": 20,
+              "predictions": 63,
+              "unmatched": 56
+            },
+            "150": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 63,
+              "unmatched": 51
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 2,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 52
+            },
+            "100": {
+              "matched": 7,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 47
+            },
+            "150": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 42
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_multiscale": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 20,
+              "predictions": 136,
+              "unmatched": 135
+            },
+            "100": {
+              "matched": 8,
+              "labels": 20,
+              "predictions": 136,
+              "unmatched": 128
+            },
+            "150": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 136,
+              "unmatched": 124
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 53
+            },
+            "100": {
+              "matched": 8,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 46
+            },
+            "150": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 42
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_multiscale_log_stretch": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 20,
+              "predictions": 297,
+              "unmatched": 296
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 297,
+              "unmatched": 293
+            },
+            "150": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 297,
+              "unmatched": 285
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 53
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 50
+            },
+            "150": {
+              "matched": 9,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 45
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_coastal_map": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 54
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 50
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 43
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 54
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 50
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 43
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_slc": {
+          "all": {
+            "50": {
+              "matched": 1,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 53
+            },
+            "100": {
+              "matched": 6,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 48
+            },
+            "150": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 42
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 1,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 53
+            },
+            "100": {
+              "matched": 6,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 48
+            },
+            "150": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 54,
+              "unmatched": 42
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_agreement": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 44,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 44,
+              "unmatched": 40
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 44,
+              "unmatched": 33
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 20,
+              "predictions": 44,
+              "unmatched": 44
+            },
+            "100": {
+              "matched": 4,
+              "labels": 20,
+              "predictions": 44,
+              "unmatched": 40
+            },
+            "150": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 44,
+              "unmatched": 33
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        }
+      }
+    },
+    "S1A_IW_GRDH_1SDV_20220816T105651_20220816T105716_044577_055208_38DB.SAFE": {
+      "region": "da_nang_nearshore",
+      "n_source_labels": 19,
+      "n_evaluated_labels": 19,
+      "area_km2": 424.99961788910235,
+      "budget": 21,
+      "windows": 7,
+      "results": {
+        "map_default": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 18,
+              "unmatched": 18
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 18,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 18,
+              "unmatched": 13
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 18,
+              "unmatched": 18
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 18,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 18,
+              "unmatched": 13
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_lower_threshold": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 40,
+              "unmatched": 40
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 40,
+              "unmatched": 39
+            },
+            "150": {
+              "matched": 6,
+              "labels": 19,
+              "predictions": 40,
+              "unmatched": 34
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 6,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 15
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_land_only": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 32,
+              "unmatched": 32
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 32,
+              "unmatched": 31
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 32,
+              "unmatched": 27
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "map_land_only_sensitive": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 94,
+              "unmatched": 94
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 94,
+              "unmatched": 93
+            },
+            "150": {
+              "matched": 6,
+              "labels": 19,
+              "predictions": 94,
+              "unmatched": 88
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_512": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 54,
+              "unmatched": 54
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 54,
+              "unmatched": 53
+            },
+            "150": {
+              "matched": 6,
+              "labels": 19,
+              "predictions": 54,
+              "unmatched": 48
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "150": {
+              "matched": 3,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 18
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_multiscale": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 185,
+              "unmatched": 185
+            },
+            "100": {
+              "matched": 4,
+              "labels": 19,
+              "predictions": 185,
+              "unmatched": 181
+            },
+            "150": {
+              "matched": 8,
+              "labels": 19,
+              "predictions": 185,
+              "unmatched": 177
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 2,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 19
+            },
+            "150": {
+              "matched": 6,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 15
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "slc_multiscale_log_stretch": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 328,
+              "unmatched": 328
+            },
+            "100": {
+              "matched": 3,
+              "labels": 19,
+              "predictions": 328,
+              "unmatched": 325
+            },
+            "150": {
+              "matched": 7,
+              "labels": 19,
+              "predictions": 328,
+              "unmatched": 321
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "150": {
+              "matched": 2,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 19
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_coastal_map": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_slc": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        },
+        "fill_with_agreement": {
+          "all": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 0,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 1,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 5,
+              "labels": 19,
+              "predictions": 21,
+              "unmatched": 16
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 0
+        }
+      }
+    },
+    "S1A_IW_GRDH_1SDV_20220410T223726_20220410T223754_042717_0518FF_9192.SAFE": {
+      "region": "vung_tau_nearshore",
+      "n_source_labels": 185,
+      "n_evaluated_labels": 148,
+      "area_km2": 3047.3226784018752,
+      "budget": 152,
+      "windows": 41,
+      "results": {
+        "map_default": {
+          "all": {
+            "50": {
+              "matched": 36,
+              "labels": 148,
+              "predictions": 126,
+              "unmatched": 90
+            },
+            "100": {
+              "matched": 90,
+              "labels": 148,
+              "predictions": 126,
+              "unmatched": 36
+            },
+            "150": {
+              "matched": 96,
+              "labels": 148,
+              "predictions": 126,
+              "unmatched": 30
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 36,
+              "labels": 148,
+              "predictions": 126,
+              "unmatched": 90
+            },
+            "100": {
+              "matched": 90,
+              "labels": 148,
+              "predictions": 126,
+              "unmatched": 36
+            },
+            "150": {
+              "matched": 96,
+              "labels": 148,
+              "predictions": 126,
+              "unmatched": 30
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 16
+        },
+        "map_lower_threshold": {
+          "all": {
+            "50": {
+              "matched": 42,
+              "labels": 148,
+              "predictions": 220,
+              "unmatched": 178
+            },
+            "100": {
+              "matched": 95,
+              "labels": 148,
+              "predictions": 220,
+              "unmatched": 125
+            },
+            "150": {
+              "matched": 101,
+              "labels": 148,
+              "predictions": 220,
+              "unmatched": 119
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 37,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 115
+            },
+            "100": {
+              "matched": 91,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 61
+            },
+            "150": {
+              "matched": 98,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 54
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 0,
+          "nearshore_label_count": 16
+        },
+        "map_land_only": {
+          "all": {
+            "50": {
+              "matched": 38,
+              "labels": 148,
+              "predictions": 172,
+              "unmatched": 134
+            },
+            "100": {
+              "matched": 94,
+              "labels": 148,
+              "predictions": 172,
+              "unmatched": 78
+            },
+            "150": {
+              "matched": 99,
+              "labels": 148,
+              "predictions": 172,
+              "unmatched": 73
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 37,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 115
+            },
+            "100": {
+              "matched": 91,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 61
+            },
+            "150": {
+              "matched": 96,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 56
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 5,
+          "nearshore_label_count": 16
+        },
+        "map_land_only_sensitive": {
+          "all": {
+            "50": {
+              "matched": 45,
+              "labels": 148,
+              "predictions": 420,
+              "unmatched": 375
+            },
+            "100": {
+              "matched": 103,
+              "labels": 148,
+              "predictions": 420,
+              "unmatched": 317
+            },
+            "150": {
+              "matched": 112,
+              "labels": 148,
+              "predictions": 420,
+              "unmatched": 308
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 37,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 115
+            },
+            "100": {
+              "matched": 91,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 61
+            },
+            "150": {
+              "matched": 96,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 56
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 8,
+          "nearshore_label_count": 16
+        },
+        "slc_512": {
+          "all": {
+            "50": {
+              "matched": 44,
+              "labels": 148,
+              "predictions": 422,
+              "unmatched": 378
+            },
+            "100": {
+              "matched": 84,
+              "labels": 148,
+              "predictions": 422,
+              "unmatched": 338
+            },
+            "150": {
+              "matched": 89,
+              "labels": 148,
+              "predictions": 422,
+              "unmatched": 333
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 29,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 123
+            },
+            "100": {
+              "matched": 64,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 88
+            },
+            "150": {
+              "matched": 68,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 84
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 3,
+          "nearshore_label_count": 16
+        },
+        "slc_multiscale": {
+          "all": {
+            "50": {
+              "matched": 50,
+              "labels": 148,
+              "predictions": 800,
+              "unmatched": 750
+            },
+            "100": {
+              "matched": 106,
+              "labels": 148,
+              "predictions": 800,
+              "unmatched": 694
+            },
+            "150": {
+              "matched": 117,
+              "labels": 148,
+              "predictions": 800,
+              "unmatched": 683
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 34,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 118
+            },
+            "100": {
+              "matched": 77,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 75
+            },
+            "150": {
+              "matched": 85,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 67
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 8,
+          "nearshore_label_count": 16
+        },
+        "slc_multiscale_log_stretch": {
+          "all": {
+            "50": {
+              "matched": 39,
+              "labels": 148,
+              "predictions": 1258,
+              "unmatched": 1219
+            },
+            "100": {
+              "matched": 105,
+              "labels": 148,
+              "predictions": 1258,
+              "unmatched": 1153
+            },
+            "150": {
+              "matched": 117,
+              "labels": 148,
+              "predictions": 1258,
+              "unmatched": 1141
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 23,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 129
+            },
+            "100": {
+              "matched": 69,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 83
+            },
+            "150": {
+              "matched": 75,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 77
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 7,
+          "nearshore_label_count": 16
+        },
+        "fill_with_coastal_map": {
+          "all": {
+            "50": {
+              "matched": 36,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 116
+            },
+            "100": {
+              "matched": 92,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 60
+            },
+            "150": {
+              "matched": 98,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 54
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 36,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 116
+            },
+            "100": {
+              "matched": 92,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 60
+            },
+            "150": {
+              "matched": 98,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 54
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 2,
+          "nearshore_label_count": 16
+        },
+        "fill_with_slc": {
+          "all": {
+            "50": {
+              "matched": 38,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 114
+            },
+            "100": {
+              "matched": 93,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 59
+            },
+            "150": {
+              "matched": 98,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 54
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 38,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 114
+            },
+            "100": {
+              "matched": 93,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 59
+            },
+            "150": {
+              "matched": 98,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 54
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 1,
+          "nearshore_label_count": 16
+        },
+        "fill_with_agreement": {
+          "all": {
+            "50": {
+              "matched": 36,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 116
+            },
+            "100": {
+              "matched": 93,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 59
+            },
+            "150": {
+              "matched": 99,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 53
+            }
+          },
+          "fixed_budget": {
+            "50": {
+              "matched": 36,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 116
+            },
+            "100": {
+              "matched": 93,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 59
+            },
+            "150": {
+              "matched": 99,
+              "labels": 148,
+              "predictions": 152,
+              "unmatched": 53
+            }
+          },
+          "nearshore_label_matches_using_full_candidates": 3,
+          "nearshore_label_count": 16
+        }
+      }
+    }
+  }
+}
