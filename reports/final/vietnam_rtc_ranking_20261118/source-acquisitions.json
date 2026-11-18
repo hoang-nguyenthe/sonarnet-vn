@@ -1,0 +1,418 @@
+[
+  {
+    "region": "quang_ninh_gulf",
+    "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+    "labels": 8,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/6/24/IW/DV/S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-06-24T10:50:05.334078Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-06-24T10:50:05.334078Z",
+      "s1:shape": [
+        27940,
+        21207
+      ],
+      "end_datetime": "2022-06-24 10:50:17.833555+00:00",
+      "start_datetime": "2022-06-24 10:49:52.834600+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 43804,
+      "sat:relative_orbit": 157,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "quang_ninh_gulf",
+    "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+    "labels": 89,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/8/23/IW/DV/S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-08-23T10:50:08.730927Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-08-23T10:50:08.730927Z",
+      "s1:shape": [
+        27856,
+        21192
+      ],
+      "end_datetime": "2022-08-23 10:50:21.230528+00:00",
+      "start_datetime": "2022-08-23 10:49:56.231326+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 44679,
+      "sat:relative_orbit": 157,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "khanh_hoa_binh_thuan",
+    "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+    "labels": 3,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/3/13/IW/DV/S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-03-13T10:55:38.907611Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-03-13T10:55:38.907611Z",
+      "s1:shape": [
+        28769,
+        24281
+      ],
+      "end_datetime": "2022-03-13 10:55:53.415936+00:00",
+      "start_datetime": "2022-03-13 10:55:24.399286+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 42302,
+      "sat:relative_orbit": 55,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "khanh_hoa_binh_thuan",
+    "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+    "labels": 3,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/1/24/IW/DV/S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-01-24T10:55:39.567315Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-01-24T10:55:39.567315Z",
+      "s1:shape": [
+        28770,
+        24276
+      ],
+      "end_datetime": "2022-01-24 10:55:54.071918+00:00",
+      "start_datetime": "2022-01-24 10:55:25.062713+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 41602,
+      "sat:relative_orbit": 55,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "khanh_hoa_binh_thuan",
+    "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+    "labels": 9,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/5/24/IW/DV/S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-05-24T10:55:41.722196Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-05-24T10:55:41.722196Z",
+      "s1:shape": [
+        28644,
+        24268
+      ],
+      "end_datetime": "2022-05-24 10:55:56.239215+00:00",
+      "start_datetime": "2022-05-24 10:55:27.205178+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 43352,
+      "sat:relative_orbit": 55,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "khanh_hoa_binh_thuan",
+    "scene": "S1A_IW_GRDH_1SDV_20220406T105524_20220406T105553_042652_0516BC_74D8.SAFE",
+    "labels": 3,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220406T105524_20220406T105553_042652_0516BC_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/4/6/IW/DV/S1A_IW_GRDH_1SDV_20220406T105524_20220406T105553_042652_0516BC_74D8/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-04-06T10:55:39.333741Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-04-06T10:55:39.333741Z",
+      "s1:shape": [
+        28901,
+        24308
+      ],
+      "end_datetime": "2022-04-06 10:55:53.843332+00:00",
+      "start_datetime": "2022-04-06 10:55:24.824151+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 42652,
+      "sat:relative_orbit": 55,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "south_mekong_coast",
+    "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+    "labels": 5,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/5/10/IW/DV/S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-05-10T11:11:26.714089Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-05-10T11:11:26.714089Z",
+      "s1:shape": [
+        29006,
+        24496
+      ],
+      "end_datetime": "2022-05-10 11:11:41.223188+00:00",
+      "start_datetime": "2022-05-10 11:11:12.204990+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 43148,
+      "sat:relative_orbit": 26,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "south_mekong_coast",
+    "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+    "labels": 6,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/1/22/IW/DV/S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-01-22T11:11:25.369355Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-01-22T11:11:25.369355Z",
+      "s1:shape": [
+        29010,
+        24495
+      ],
+      "end_datetime": "2022-01-22 11:11:39.877119+00:00",
+      "start_datetime": "2022-01-22 11:11:10.861591+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 41573,
+      "sat:relative_orbit": 26,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "south_mekong_coast",
+    "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+    "labels": 5,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/3/23/IW/DV/S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-03-23T11:11:25.052245Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-03-23T11:11:25.052245Z",
+      "s1:shape": [
+        29010,
+        24500
+      ],
+      "end_datetime": "2022-03-23 11:11:39.563736+00:00",
+      "start_datetime": "2022-03-23 11:11:10.540755+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 42448,
+      "sat:relative_orbit": 26,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "south_mekong_coast",
+    "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+    "labels": 20,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/4/16/IW/DV/S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-04-16T11:11:25.460879Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-04-16T11:11:25.460879Z",
+      "s1:shape": [
+        29006,
+        24496
+      ],
+      "end_datetime": "2022-04-16 11:11:39.969972+00:00",
+      "start_datetime": "2022-04-16 11:11:10.951785+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 42798,
+      "sat:relative_orbit": 26,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "kien_giang_west",
+    "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+    "labels": 1,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/7/1/IW/DV/S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-07-01T22:54:16.966885Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-07-01T22:54:16.966885Z",
+      "s1:shape": [
+        27990,
+        21329
+      ],
+      "end_datetime": "2022-07-01 22:54:29.159792+00:00",
+      "start_datetime": "2022-07-01 22:54:04.773977+00:00",
+      "sat:orbit_state": "descending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 43913,
+      "sat:relative_orbit": 91,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "kien_giang_west",
+    "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+    "labels": 1,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/6/19/IW/DV/S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-06-19T22:54:16.269826Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-06-19T22:54:16.269826Z",
+      "s1:shape": [
+        27993,
+        21339
+      ],
+      "end_datetime": "2022-06-19 22:54:28.469509+00:00",
+      "start_datetime": "2022-06-19 22:54:04.070142+00:00",
+      "sat:orbit_state": "descending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 43738,
+      "sat:relative_orbit": 91,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  },
+  {
+    "region": "kien_giang_west",
+    "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+    "labels": 2,
+    "rtc": {
+      "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+      "band": "VV",
+      "source_collection": "sentinel-1-rtc",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_rtc",
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/4/9/IW/DV/S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9/measurement/iw-vv.rtc.tiff",
+      "source_acquired_at": "2022-04-09T11:19:49.143390Z",
+      "source_native_pixel_spacing_m": 10.0,
+      "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+      "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+      "license": "CC-BY-4.0",
+      "source_provider": "planetary"
+    },
+    "stac_identifiers": {
+      "datetime": "2022-04-09T11:19:49.143390Z",
+      "s1:shape": [
+        28440,
+        21676
+      ],
+      "end_datetime": "2022-04-09 11:20:01.642281+00:00",
+      "start_datetime": "2022-04-09 11:19:36.644499+00:00",
+      "sat:orbit_state": "ascending",
+      "sar:product_type": "GRD",
+      "sat:absolute_orbit": 42696,
+      "sat:relative_orbit": 99,
+      "sat:platform_international_designator": "2014-016A"
+    }
+  }
+]

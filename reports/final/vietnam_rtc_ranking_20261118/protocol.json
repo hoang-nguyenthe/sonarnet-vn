@@ -1,0 +1,26 @@
+{
+  "created_utc": "2026-11-18T16:03:11.657627+00:00",
+  "code_sha256": "8a9514f685804100533324722f6a4d421332c35d6c264f4083ba3f57cd0687ac",
+  "features": [
+    "map_score",
+    "slc_score",
+    "radar_peak_db",
+    "radar_contrast_db",
+    "ring_noise_db",
+    "coastal",
+    "rtc_valid_fraction"
+  ],
+  "models": [
+    "linear",
+    "boosting"
+  ],
+  "map_weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "slc_weights_sha256": "b610df7fb3b732646540257194e075b52012e434755e77595227a9dde9a31a1b",
+  "development_manifest_sha256": "d29f2bc9c82ccbd561a0b952980de5d0aee48351a71df062c2d9d821bbb324b6",
+  "fresh_manifest_sha256": "bdcc58e32153530bea2cb24b02bdd8f109995065316422145bb87cb6f634fe06",
+  "rule": "Hold out one full acquisition at a time during development. Pick maximum summed hits at same cap; ties prefer fewer unmatched.",
+  "review_budget_per_km2": 0.05,
+  "matching_distance_m": 100,
+  "label_scope": "Matches to Ai2 labels, not a truth claim about identities or unknown contacts.",
+  "independence": "No test candidates scored until the policy is locked; acquisitions on the same UTC day as development are excluded."
+}

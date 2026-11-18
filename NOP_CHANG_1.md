@@ -14,6 +14,8 @@ Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng
 
 ## Hướng dẫn dùng thử
 
+> Trong **Recall trên 12 lượt chụp mới**, chuyển giữa cùng mức trần theo diện tích và đúng số lượt rà của bản đồ để so sánh ngưỡng 0,35 với 0,05 và các bộ xếp hạng thử nghiệm. Dữ liệu là nhãn điểm lịch sử, khớp trong 100 m.
+
 > Ở mục **Kiểm tra trên ảnh ven biển Việt Nam**, xem mẫu Sentinel-1 có nhãn điểm Ai2 ở Đà Nẵng và Vũng Tàu. Có thể đổi bán kính 50, 100, 150 m và xem số ứng viên cần rà. Đây là phép so sánh với nhãn điểm, khác với IoU 0,50 dùng để chấm hộp trên SLC.
 
 > Ở đầu trang Minh chứng, chuyển **Phạm vi so sánh** giữa mọi ứng viên qua ngưỡng và cùng giới hạn rà soát để xem recall SAR trước–sau. Mở **Xem tác động của ngưỡng điểm và ưu tiên ven bờ** để xem kết quả riêng khi chỉ hạ ngưỡng. Bảng giữ cả số điểm không khớp nhãn và độ trễ.

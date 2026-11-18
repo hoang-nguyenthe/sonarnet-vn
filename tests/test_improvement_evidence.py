@@ -87,6 +87,13 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertTrue(any('128/224' in item.value for item in app.caption))
         app.select_slider(key='vn_rtc_distance').set_value(50).run()
         self.assertFalse(app.exception)
+        self.assertIn('Recall trên 12 lượt chụp mới', [item.value for item in app.subheader])
+        app.radio(key='fresh_rtc_review_mode').set_value('matched_review_count').run()
+        self.assertFalse(app.exception)
+        table = next(item.value for item in app.dataframe if 'Ứng viên phải rà' in item.value
+                     and 'Bản đồ · ngưỡng 0,35' in item.value.get('Phương án', []).values)
+        self.assertEqual(table.iloc[0]['Nhãn khớp'], '80/152')
+        self.assertEqual(table.iloc[1]['Nhãn khớp'], '80/152')
 
     def test_repeatability_failure_is_visible_not_silently_aggregated(self):
         app=AppTest.from_file(str(ROOT/'scripts/demo_app.py'),default_timeout=60).run()

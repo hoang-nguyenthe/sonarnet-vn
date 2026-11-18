@@ -5,6 +5,7 @@ import json
 import streamlit as st
 
 RESULTS = 'reports/final/vietnam_rtc_recall_20261118/results.json'
+RANKING_RESULTS = 'reports/final/vietnam_rtc_ranking_20261118/results.json'
 NAMES = {
     'map_default': 'Cấu hình bản đồ hiện tại',
     'map_lower_threshold': 'Bản đồ, hạ ngưỡng điểm',
@@ -82,3 +83,37 @@ def render_vn_recall(root: Path) -> None:
                    'Kết quả giúp đánh giá độ phủ theo điểm, chưa xác nhận kích thước hoặc danh tính tàu.')
         st.download_button('Tải đối chứng SAR ven biển Việt Nam', path.read_bytes(),
                            'sonarnet-recall-viet-nam.json', 'application/json')
+
+
+
+def render_fresh_recall(root: Path) -> None:
+    path = root / RANKING_RESULTS
+    if not path.is_file():
+        return
+    result = json.loads(path.read_text())
+    cases = result['test']
+    st.subheader('Recall trên 12 lượt chụp mới')
+    st.caption('86 ô ảnh có nhãn điểm Ai2 từ các lượt chụp không cùng ngày với tập phát triển. '
+               'Khớp một–một trong 100 m. So sánh hạ ngưỡng bản đồ và bộ xếp hạng học máy.')
+    modes = {'methods':'Cùng mức trần 1 ứng viên / 20 km²',
+             'matched_review_count':'Đúng số lượt rà của bản đồ'}
+    mode = st.radio('Giới hạn rà soát trên tập mới', list(modes), format_func=modes.__getitem__,
+                    horizontal=True, key='fresh_rtc_review_mode')
+    names = {'map_default':'Bản đồ · ngưỡng 0,35', 'map_lower_threshold':'Bản đồ · ngưỡng 0,05',
+             'linear_preserve_map':'Giữ bản đồ, bổ sung theo hồi quy logistic',
+             'linear_rank_only':'Chỉ xếp hạng hồi quy logistic',
+             'boosting_preserve_map':'Giữ bản đồ, bổ sung theo boosting',
+             'boosting_rank_only':'Chỉ xếp hạng boosting'}
+    rows = []
+    for key in names:
+        counts = [row[mode][key] for row in cases]
+        n, matched, reviewed, unmatched = (
+            sum(c[k] for c in counts) for k in ('labels','matched','predictions','unmatched')
+        )
+        rows.append({'Phương án':names[key], 'Nhãn khớp':f'{matched}/{n}',
+                     'Ứng viên phải rà':reviewed,'Không khớp nhãn':unmatched})
+    st.dataframe(rows, hide_index=True, width='stretch')
+    st.caption('Ở mức trần theo diện tích, hạ ngưỡng tăng từ 80 lên 96 nhãn khớp. '
+               'Khi cố định ở 116 lượt rà, vẫn khớp 80 nhãn. Cấu hình hạ ngưỡng đang được đánh giá bằng phép phát lại.')
+    st.download_button('Tải kết quả 12 lượt chụp mới', path.read_bytes(),
+                       'sonarnet-recall-tap-viet-nam-moi.json', 'application/json')

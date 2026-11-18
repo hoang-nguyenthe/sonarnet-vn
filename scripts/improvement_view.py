@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from demo_snapshot import render_snapshot
 from evaluation_summary import render_evaluation_summary
-from vn_recall_view import render_vn_recall
+from vn_recall_view import render_fresh_recall, render_vn_recall
 from sonarnet.config import RunConfig
 from sonarnet.fusion.kalman import KalmanEstimate
 from sonarnet.fusion.matching import Detection, SARAISFusion
@@ -123,6 +123,7 @@ def render_improvements(root: Path):
     <div class="sonar-copy">Tự kiểm tra cách SonarNet xử lý thiếu dữ liệu, thông tin mâu thuẫn và những cặp ghép không chắc chắn.</div></div>''', unsafe_allow_html=True)
     render_evaluation_summary(root, detailed=True)
     render_vn_recall(root)
+    render_fresh_recall(root)
     final_report = root/'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
     if final_report.is_file():
         st.download_button('Tải báo cáo cải tiến Chặng 1', final_report.read_bytes(),

@@ -1,0 +1,213 @@
+{
+  "locked_at": "2026-11-18T16:05:15.195856+00:00",
+  "development_features_sha256": "dcd6219e879c15627b0db09cda3e51ad6937a20b7de766b41bdb16b6de4397fd",
+  "selected": "map_default",
+  "rule": "Maximum summed acquisition-LOO hits with exact incumbent review-count cap",
+  "development_folds": [
+    {
+      "scene": "S1A_IW_GRDH_1SDV_20220629T105648_20220629T105713_043877_053CEB_7C61.SAFE",
+      "methods": {
+        "map_default": {
+          "matched": 3,
+          "labels": 37,
+          "predictions": 25,
+          "unmatched": 22
+        },
+        "map_lower_threshold": {
+          "matched": 3,
+          "labels": 37,
+          "predictions": 25,
+          "unmatched": 22
+        },
+        "linear_rank_only": {
+          "matched": 2,
+          "labels": 37,
+          "predictions": 25,
+          "unmatched": 23
+        },
+        "linear_preserve_map": {
+          "matched": 3,
+          "labels": 37,
+          "predictions": 25,
+          "unmatched": 22
+        },
+        "boosting_rank_only": {
+          "matched": 2,
+          "labels": 37,
+          "predictions": 25,
+          "unmatched": 23
+        },
+        "boosting_preserve_map": {
+          "matched": 3,
+          "labels": 37,
+          "predictions": 25,
+          "unmatched": 22
+        }
+      }
+    },
+    {
+      "scene": "S1A_IW_GRDH_1SDV_20220723T105650_20220723T105715_044227_054754_82F5.SAFE",
+      "methods": {
+        "map_default": {
+          "matched": 4,
+          "labels": 20,
+          "predictions": 21,
+          "unmatched": 17
+        },
+        "map_lower_threshold": {
+          "matched": 4,
+          "labels": 20,
+          "predictions": 21,
+          "unmatched": 17
+        },
+        "linear_rank_only": {
+          "matched": 5,
+          "labels": 20,
+          "predictions": 21,
+          "unmatched": 16
+        },
+        "linear_preserve_map": {
+          "matched": 4,
+          "labels": 20,
+          "predictions": 21,
+          "unmatched": 17
+        },
+        "boosting_rank_only": {
+          "matched": 4,
+          "labels": 20,
+          "predictions": 21,
+          "unmatched": 17
+        },
+        "boosting_preserve_map": {
+          "matched": 4,
+          "labels": 20,
+          "predictions": 21,
+          "unmatched": 17
+        }
+      }
+    },
+    {
+      "scene": "S1A_IW_GRDH_1SDV_20220816T105651_20220816T105716_044577_055208_38DB.SAFE",
+      "methods": {
+        "map_default": {
+          "matched": 1,
+          "labels": 19,
+          "predictions": 18,
+          "unmatched": 17
+        },
+        "map_lower_threshold": {
+          "matched": 1,
+          "labels": 19,
+          "predictions": 18,
+          "unmatched": 17
+        },
+        "linear_rank_only": {
+          "matched": 1,
+          "labels": 19,
+          "predictions": 18,
+          "unmatched": 17
+        },
+        "linear_preserve_map": {
+          "matched": 1,
+          "labels": 19,
+          "predictions": 18,
+          "unmatched": 17
+        },
+        "boosting_rank_only": {
+          "matched": 0,
+          "labels": 19,
+          "predictions": 18,
+          "unmatched": 18
+        },
+        "boosting_preserve_map": {
+          "matched": 1,
+          "labels": 19,
+          "predictions": 18,
+          "unmatched": 17
+        }
+      }
+    },
+    {
+      "scene": "S1A_IW_GRDH_1SDV_20220406T105643_20220406T105708_042652_0516BC_A84A.SAFE",
+      "methods": {
+        "map_default": {
+          "matched": 0,
+          "labels": 34,
+          "predictions": 16,
+          "unmatched": 16
+        },
+        "map_lower_threshold": {
+          "matched": 0,
+          "labels": 34,
+          "predictions": 16,
+          "unmatched": 16
+        },
+        "linear_rank_only": {
+          "matched": 0,
+          "labels": 34,
+          "predictions": 16,
+          "unmatched": 16
+        },
+        "linear_preserve_map": {
+          "matched": 0,
+          "labels": 34,
+          "predictions": 16,
+          "unmatched": 16
+        },
+        "boosting_rank_only": {
+          "matched": 0,
+          "labels": 34,
+          "predictions": 16,
+          "unmatched": 16
+        },
+        "boosting_preserve_map": {
+          "matched": 0,
+          "labels": 34,
+          "predictions": 16,
+          "unmatched": 16
+        }
+      }
+    },
+    {
+      "scene": "S1A_IW_GRDH_1SDV_20220410T223726_20220410T223754_042717_0518FF_9192.SAFE",
+      "methods": {
+        "map_default": {
+          "matched": 90,
+          "labels": 148,
+          "predictions": 126,
+          "unmatched": 36
+        },
+        "map_lower_threshold": {
+          "matched": 90,
+          "labels": 148,
+          "predictions": 126,
+          "unmatched": 36
+        },
+        "linear_rank_only": {
+          "matched": 69,
+          "labels": 148,
+          "predictions": 126,
+          "unmatched": 57
+        },
+        "linear_preserve_map": {
+          "matched": 90,
+          "labels": 148,
+          "predictions": 126,
+          "unmatched": 36
+        },
+        "boosting_rank_only": {
+          "matched": 49,
+          "labels": 148,
+          "predictions": 126,
+          "unmatched": 77
+        },
+        "boosting_preserve_map": {
+          "matched": 90,
+          "labels": 148,
+          "predictions": 126,
+          "unmatched": 36
+        }
+      }
+    }
+  ]
+}

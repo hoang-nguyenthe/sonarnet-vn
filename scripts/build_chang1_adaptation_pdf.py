@@ -65,7 +65,9 @@ def build(args):
     extra_controls = json.loads((multiscale/'threshold-and-coast.json').read_text())['evaluation'] if retest else None
     local_path = ROOT/'reports/final/vietnam_rtc_recall_20261118/results.json'
     local = json.loads(local_path.read_text()) if local_path.is_file() else None
-    total_update_pages = 7 + bool(retest) + bool(local)
+    fresh_path = ROOT/'reports/final/vietnam_rtc_ranking_20261118/results.json'
+    fresh = json.loads(fresh_path.read_text()) if fresh_path.is_file() else None
+    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh)
     b = BytesIO()
     c = Canvas(b, pagesize=A4)
 
@@ -373,6 +375,41 @@ def build(args):
         y = text('Mở Minh chứng cải tiến để thử các bán kính 50, 100 và 150 m. Đối chiếu nguồn theo vệ tinh, '
                  'quỹ đạo tuyệt đối và giây bắt đầu chụp trong reports/final/vietnam_rtc_recall_20261118/.',y,muted)
         assert y > 70, y
+        footer(7 + bool(retest) + bool(local))
+
+    if fresh:
+        y = header('TẬP KIỂM TRA MỚI TẠI VIỆT NAM', 'Hạ ngưỡng tìm thêm mục tiêu khi có lượt rà')
+        cases = fresh['test']
+        sample = [case['methods']['map_default']['labels'] for case in cases]
+        y = text(f'Tập kiểm tra mới gồm {len(cases)} lượt chụp không cùng ngày với tập phát triển, '
+                 f'{sum(c["windows"] for c in cases)} ô và {sum(sample)} nhãn điểm. Giữ nguyên cách khớp một–một '
+                 'trong 100 m. Trên năm lượt chụp phát triển, mỗi vòng bỏ riêng một cảnh để chọn bộ xếp hạng.', y)-13
+        rows = [['Phương án', 'Nhãn khớp', 'Ứng viên rà', 'Không khớp nhãn']]
+        for method, name in (
+                ('map_default','Bản đồ, ngưỡng 0,35'), ('map_lower_threshold','Bản đồ, ngưỡng 0,05'),
+                ('linear_preserve_map','Giữ bản đồ, bổ sung theo hồi quy logistic'),
+                ('linear_rank_only','Chỉ xếp hạng hồi quy logistic'),
+                ('boosting_preserve_map','Giữ bản đồ, bổ sung theo boosting'),
+                ('boosting_rank_only','Chỉ xếp hạng boosting')):
+            totals = [sum(c['methods'][method][k] for c in cases)
+                      for k in ('matched','predictions','unmatched')]
+            rows.append([name, f'{totals[0]}/{sum(sample)}', fmt(totals[1]), fmt(totals[2])])
+        y = text('Cùng mức trần một ứng viên trên 20 km²',y,sub)-5
+        y = table(rows,[224,82,88,107],y)-13
+        y = text('Hạ ngưỡng cho thêm 16 nhãn khớp, đổi lại phải rà thêm 75 điểm. Bộ hồi quy giữ điểm '
+                 'bản đồ và bổ sung 15 nhãn khớp, với thêm 171 điểm cần rà. Kết quả này giúp chọn cách '
+                 'mở rộng danh sách khi có thêm thời gian rà.', y)-15
+        y = text('Cố định đúng số lượt rà của bản đồ',y,sub)-5
+        y = text('Khi cố định đúng 116 lượt rà, ngưỡng gốc và ngưỡng thấp đều khớp 80/152. Chỉ xếp hạng '
+                 'lại theo hồi quy khớp 66/152. Chỉ xếp hạng theo boosting khớp 64/152. '
+                 'Kết quả chưa xác nhận cách nào tăng recall với đúng số lượt rà của bản đồ.', y)-15
+        y = text('Phạm vi kiểm chứng',y,sub)-5
+        y = text('Đây là phép kiểm theo nhãn điểm lịch sử của Ai2. Mỗi cảnh dùng vùng nước và mức trần '
+                 'riêng theo diện tích. Các điểm không khớp cần rà nguồn và bối cảnh. '
+                 'Mục Minh chứng công bố số liệu và phương pháp để chấm lại.', y)-11
+        y = text('Tệp kết quả, lựa chọn khóa và phép kiểm theo từng cảnh nằm tại '
+                 'reports/final/vietnam_rtc_ranking_20261118/.',y,muted)
+        assert y > 66,y
         footer(total_update_pages)
     c.save()
     b.seek(0)
