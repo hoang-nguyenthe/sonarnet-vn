@@ -390,7 +390,8 @@ def render(root):
       @media(prefers-reduced-motion:reduce){.observation-cluster>div{transition:none}}
       @media(max-width:600px){.leaflet-control-layers{font-size:11px;max-width:165px;padding:5px!important}}
     </style>"""))
-    embed(chart.get_root().render(), height=820)
+    with st.container(key='national_map'):
+        embed(chart.get_root().render(), height=820)
     if visible_candidates:
         options = {item['id']: item for item in visible_candidates}
         point_numbers = {key: index+1 for index, key in enumerate(options)}

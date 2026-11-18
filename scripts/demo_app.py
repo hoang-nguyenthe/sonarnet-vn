@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """Public observation workspace; historical research code remains in git."""
+from importlib import import_module
 from pathlib import Path
 import sys
 import streamlit as st
@@ -13,8 +14,18 @@ st.markdown('''<style>
 html,body,.stApp{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased}
 .stApp{background:#f5f6f8;color:#172b3d}
 [data-testid="stMainBlockContainer"]{max-width:none;padding:4rem clamp(12px,2vw,32px) 2rem}
-iframe[height="820"]{height:82vh!important;min-height:580px;max-height:1100px}
-@media(max-width:720px){iframe[height="820"]{height:72svh!important;min-height:420px;max-height:760px}}
+/* Both the Streamlit wrapper and iframe have an explicit component size. */
+.st-key-national_map{--national-map-height:clamp(520px,78vh,960px)}
+.st-key-national_map [data-testid="stElementContainer"]{
+  flex:0 0 var(--national-map-height)!important;
+  height:var(--national-map-height)!important;
+  min-height:0!important;
+  max-height:var(--national-map-height)!important;
+}
+.st-key-national_map iframe[data-testid="stIFrame"]{height:var(--national-map-height)!important}
+@media(max-width:720px), (max-height:650px){
+  .st-key-national_map{--national-map-height:clamp(320px,68svh,760px)}
+}
 .sonar-hero{position:relative;overflow:hidden;border-radius:24px;padding:30px 34px;margin:0 0 8px;color:#fff;background:linear-gradient(125deg,#07192d,#103c5b 62%,#146466);box-shadow:0 16px 50px #132f4220}
 .sonar-hero:after{content:"";position:absolute;width:450px;height:450px;border-radius:50%;background:radial-gradient(circle,#50c4d025,transparent 65%);right:-100px;top:-180px;animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
 .sonar-eyebrow{color:#9fd5d9;font-size:11px;letter-spacing:.17em;font-weight:650;margin-bottom:12px}
@@ -75,6 +86,16 @@ def open_evidence():
     update_section_url()
 
 
+def load_view(module_name):
+    try:
+        return import_module(module_name)
+    except KeyError as error:
+        if error.args != (module_name,):
+            raise
+        # A hot reload may remove this page from sys.modules during import.
+        return import_module(module_name)
+
+
 if 'main_section' not in st.session_state:
     st.session_state.main_section = SECTIONS.get(st.query_params.get('trang'), SECTIONS['gioi-thieu'])
 section = st.radio('Điều hướng', list(SECTIONS.values()), horizontal=True, index=None,
@@ -82,14 +103,11 @@ section = st.radio('Điều hướng', list(SECTIONS.values()), horizontal=True,
 # st.tabs evaluates every tab on every rerun.  Do not construct the national
 # raster workspace while a visitor is reading the lightweight introduction.
 if section == 'Nghiên cứu':
-    from introduction import render_introduction
-    render_introduction(ROOT, open_evidence=open_evidence)
+    load_view('introduction').render_introduction(ROOT, open_evidence=open_evidence)
 elif section == 'Quan sát':
-    from observation_view import render
-    render(ROOT)
+    load_view('observation_view').render(ROOT)
 elif section == 'Minh chứng cải tiến':
-    from improvement_view import render_improvements
-    render_improvements(ROOT)
+    load_view('improvement_view').render_improvements(ROOT)
 else:
     st.subheader('Từ xem ảnh đến kiểm tra bằng chứng.')
     st.markdown('''1. **Chọn khu vực:** xem ảnh vệ tinh và thời gian quan sát. Ảnh màu bên dưới chỉ là nền tham chiếu.

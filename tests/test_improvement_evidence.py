@@ -1,3 +1,5 @@
+import importlib
+from unittest.mock import patch
 import sys
 from pathlib import Path
 import unittest
@@ -110,6 +112,26 @@ class ImprovementEvidenceTests(unittest.TestCase):
         app.radio(key='main_section').set_value('Minh chứng cải tiến').run()
         self.assertFalse(app.exception)
         self.assertNotIn('che-do', app.query_params)
+
+    def test_view_import_recovers_if_hot_reload_removes_module_once(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
+        app.query_params['trang'] = 'minh-chung'
+        attempts = []
+        load = importlib.import_module
+
+        def fail_once(name, package=None):
+            if name == 'improvement_view':
+                attempts.append(name)
+                if len(attempts) == 1:
+                    raise KeyError(name)
+            return load(name, package)
+
+        with patch('importlib.import_module', side_effect=fail_once):
+            app.run()
+
+        self.assertEqual(attempts, ['improvement_view', 'improvement_view'])
+        self.assertFalse(app.exception)
+        self.assertIn('Recall trên 12 lượt chụp mới', [item.value for item in app.subheader])
 
     def test_repeatability_failure_is_visible_not_silently_aggregated(self):
         app=AppTest.from_file(str(ROOT/'scripts/demo_app.py'),default_timeout=60).run()
