@@ -1,0 +1,689 @@
+{
+  "val_chips": 70,
+  "test_chips": 503,
+  "test_scene_count": 2,
+  "frozen_sha256": "cfb1f6a4dc37e53dd4b4b1574ae06a957906b2cbf73e0d1de7f188bfa78eee5f",
+  "models": {
+    "yolo": {
+      "param": 0.1,
+      "metrics": {
+        "mAP@0.5": 0.0878,
+        "mAP@0.5:0.95": 0.0152,
+        "precision": 0.1287,
+        "recall": 0.3221,
+        "f1": 0.1839,
+        "n_ground_truth": 298,
+        "n_predictions": 2925,
+        "true_positive": 96,
+        "false_positive": 650,
+        "false_negative": 202,
+        "false_alarms_per_km2": null,
+        "nearshore_recall": null,
+        "nearshore_ground_truth": null,
+        "center_error_m_median": null,
+        "box_width_error_m_median": null,
+        "box_height_error_m_median": null,
+        "georeferenced_matches": 0,
+        "false_alarms_per_megapixel": 4.929529269694334,
+        "evaluated_image_pixels": 131858432,
+        "center_error_px_median": 2.9437484231539424,
+        "center_error_px_p95": 8.589294270822633,
+        "box_width_error_px_median": 9.833831787109375,
+        "box_height_error_px_median": 2.3432159423828125,
+        "localized_matches": 96,
+        "evaluated_water_scene_km2": 6742.759820667846,
+        "valid_ocean_area_by_scene_km2": {
+          "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": 3272.427469361222,
+          "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": 3470.332351306624
+        },
+        "benchmark_unmatched_per_km2": 0.09639969645776585,
+        "by_distance_to_mapped_shore_m": {
+          "500": {
+            "labels": 14,
+            "matched": 4,
+            "recall": 0.2857142857142857
+          },
+          "1000": {
+            "labels": 29,
+            "matched": 5,
+            "recall": 0.1724137931034483
+          },
+          "2000": {
+            "labels": 53,
+            "matched": 18,
+            "recall": 0.33962264150943394
+          }
+        },
+        "projected_box_center_error_m": {
+          "n": 96,
+          "median": 17.95074448583405,
+          "p95": 39.48549501772771
+        },
+        "projected_box_width_error_m": {
+          "n": 96,
+          "median": 37.69144413866141,
+          "p95": 108.60023552046097
+        },
+        "projected_box_height_error_m": {
+          "n": 96,
+          "median": 32.80611039503887,
+          "p95": 89.20359144885666
+        },
+        "error_to_source_wgs84_centroid_m": {
+          "n": 96,
+          "median": 45.915252855234684,
+          "p95": 80.86220542546387
+        },
+        "transform_residual_at_source_centroid_m": {
+          "n": 298,
+          "median": 49.28508849169174,
+          "p95": 70.46806417477637
+        },
+        "latency_ms_p50": 58.3085420075804,
+        "latency_ms_p95": 63.994533006916754
+      },
+      "per_scene": {
+        "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": {
+          "mAP@0.5": 0.1482,
+          "mAP@0.5:0.95": 0.0252,
+          "precision": 0.1461,
+          "recall": 0.4268,
+          "f1": 0.2177,
+          "n_ground_truth": 164,
+          "n_predictions": 1835,
+          "true_positive": 70,
+          "false_positive": 409,
+          "false_negative": 94,
+          "false_alarms_per_km2": null,
+          "nearshore_recall": null,
+          "nearshore_ground_truth": null,
+          "center_error_m_median": null,
+          "box_width_error_m_median": null,
+          "box_height_error_m_median": null,
+          "georeferenced_matches": 0,
+          "false_alarms_per_megapixel": 6.316644460083502,
+          "evaluated_image_pixels": 64749568,
+          "center_error_px_median": 2.801838708074699,
+          "center_error_px_p95": 8.65757569158785,
+          "box_width_error_px_median": 12.72723388671875,
+          "box_height_error_px_median": 2.2664260864257812,
+          "localized_matches": 70,
+          "evaluated_water_scene_km2": 3272.427469361222,
+          "valid_ocean_area_by_scene_km2": {
+            "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": 3272.427469361222
+          },
+          "benchmark_unmatched_per_km2": 0.12498367154943753,
+          "by_distance_to_mapped_shore_m": {
+            "500": {
+              "labels": 11,
+              "matched": 4,
+              "recall": 0.36363636363636365
+            },
+            "1000": {
+              "labels": 16,
+              "matched": 4,
+              "recall": 0.25
+            },
+            "2000": {
+              "labels": 37,
+              "matched": 17,
+              "recall": 0.4594594594594595
+            }
+          },
+          "projected_box_center_error_m": {
+            "n": 70,
+            "median": 18.08492409028227,
+            "p95": 33.73227099682728
+          },
+          "projected_box_width_error_m": {
+            "n": 70,
+            "median": 45.64715204678469,
+            "p95": 111.45502280462973
+          },
+          "projected_box_height_error_m": {
+            "n": 70,
+            "median": 31.73057687833854,
+            "p95": 90.43673622973904
+          },
+          "error_to_source_wgs84_centroid_m": {
+            "n": 70,
+            "median": 49.64448773221682,
+            "p95": 81.96701395697997
+          },
+          "transform_residual_at_source_centroid_m": {
+            "n": 164,
+            "median": 55.62370648113276,
+            "p95": 71.03850655551254
+          }
+        },
+        "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": {
+          "mAP@0.5": 0.0405,
+          "mAP@0.5:0.95": 0.007,
+          "precision": 0.0974,
+          "recall": 0.194,
+          "f1": 0.1297,
+          "n_ground_truth": 134,
+          "n_predictions": 1090,
+          "true_positive": 26,
+          "false_positive": 241,
+          "false_negative": 108,
+          "false_alarms_per_km2": null,
+          "nearshore_recall": null,
+          "nearshore_ground_truth": null,
+          "center_error_m_median": null,
+          "box_width_error_m_median": null,
+          "box_height_error_m_median": null,
+          "georeferenced_matches": 0,
+          "false_alarms_per_megapixel": 3.591179847717285,
+          "evaluated_image_pixels": 67108864,
+          "center_error_px_median": 3.121472182292751,
+          "center_error_px_p95": 7.065851325392918,
+          "box_width_error_px_median": 7.546758651733398,
+          "box_height_error_px_median": 3.184234619140625,
+          "localized_matches": 26,
+          "evaluated_water_scene_km2": 3470.332351306624,
+          "valid_ocean_area_by_scene_km2": {
+            "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": 3470.332351306624
+          },
+          "benchmark_unmatched_per_km2": 0.06944579815511344,
+          "by_distance_to_mapped_shore_m": {
+            "500": {
+              "labels": 3,
+              "matched": 0,
+              "recall": 0.0
+            },
+            "1000": {
+              "labels": 13,
+              "matched": 1,
+              "recall": 0.07692307692307693
+            },
+            "2000": {
+              "labels": 16,
+              "matched": 1,
+              "recall": 0.0625
+            }
+          },
+          "projected_box_center_error_m": {
+            "n": 26,
+            "median": 17.652022451935693,
+            "p95": 48.36551781155937
+          },
+          "projected_box_width_error_m": {
+            "n": 26,
+            "median": 26.041774167698534,
+            "p95": 48.10402142382492
+          },
+          "projected_box_height_error_m": {
+            "n": 26,
+            "median": 44.65683522575979,
+            "p95": 87.25595231237014
+          },
+          "error_to_source_wgs84_centroid_m": {
+            "n": 26,
+            "median": 19.063981343292724,
+            "p95": 52.006724697489226
+          },
+          "transform_residual_at_source_centroid_m": {
+            "n": 134,
+            "median": 31.389477236564407,
+            "p95": 51.89800908602093
+          }
+        }
+      }
+    },
+    "global_threshold": {
+      "param": 0.7,
+      "metrics": {
+        "mAP@0.5": 0.0018,
+        "mAP@0.5:0.95": 0.0005,
+        "precision": 0.0002,
+        "recall": 0.2282,
+        "f1": 0.0004,
+        "n_ground_truth": 298,
+        "n_predictions": 354782,
+        "true_positive": 68,
+        "false_positive": 354714,
+        "false_negative": 230,
+        "false_alarms_per_km2": null,
+        "nearshore_recall": null,
+        "nearshore_ground_truth": null,
+        "center_error_m_median": null,
+        "box_width_error_m_median": null,
+        "box_height_error_m_median": null,
+        "georeferenced_matches": 0,
+        "false_alarms_per_megapixel": 2690.1123774928556,
+        "evaluated_image_pixels": 131858432,
+        "center_error_px_median": 2.5495097567963922,
+        "center_error_px_p95": 8.671398473395364,
+        "box_width_error_px_median": 9.5,
+        "box_height_error_px_median": 3.0,
+        "localized_matches": 68,
+        "evaluated_water_scene_km2": 6742.759820667846,
+        "valid_ocean_area_by_scene_km2": {
+          "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": 3272.427469361222,
+          "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": 3470.332351306624
+        },
+        "benchmark_unmatched_per_km2": 52.606649122030696,
+        "by_distance_to_mapped_shore_m": {
+          "500": {
+            "labels": 14,
+            "matched": 4,
+            "recall": 0.2857142857142857
+          },
+          "1000": {
+            "labels": 29,
+            "matched": 5,
+            "recall": 0.1724137931034483
+          },
+          "2000": {
+            "labels": 53,
+            "matched": 11,
+            "recall": 0.20754716981132076
+          }
+        },
+        "projected_box_center_error_m": {
+          "n": 68,
+          "median": 20.556195046778267,
+          "p95": 45.34840293405416
+        },
+        "projected_box_width_error_m": {
+          "n": 68,
+          "median": 35.35820300344358,
+          "p95": 84.3098706335801
+        },
+        "projected_box_height_error_m": {
+          "n": 68,
+          "median": 41.998975708091024,
+          "p95": 167.7225319117239
+        },
+        "error_to_source_wgs84_centroid_m": {
+          "n": 68,
+          "median": 51.93168970135781,
+          "p95": 82.89655565044335
+        },
+        "transform_residual_at_source_centroid_m": {
+          "n": 298,
+          "median": 49.28508849169174,
+          "p95": 70.46806417477637
+        },
+        "latency_ms_p50": 20.405208982992917,
+        "latency_ms_p95": 82.60269169113597
+      },
+      "per_scene": {
+        "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": {
+          "mAP@0.5": 0.0055,
+          "mAP@0.5:0.95": 0.0013,
+          "precision": 0.0003,
+          "recall": 0.311,
+          "f1": 0.0007,
+          "n_ground_truth": 164,
+          "n_predictions": 154513,
+          "true_positive": 51,
+          "false_positive": 154462,
+          "false_negative": 113,
+          "false_alarms_per_km2": null,
+          "nearshore_recall": null,
+          "nearshore_ground_truth": null,
+          "center_error_m_median": null,
+          "box_width_error_m_median": null,
+          "box_height_error_m_median": null,
+          "georeferenced_matches": 0,
+          "false_alarms_per_megapixel": 2385.5294293237603,
+          "evaluated_image_pixels": 64749568,
+          "center_error_px_median": 2.5,
+          "center_error_px_p95": 7.320691957305032,
+          "box_width_error_px_median": 11.0,
+          "box_height_error_px_median": 3.0,
+          "localized_matches": 51,
+          "evaluated_water_scene_km2": 3272.427469361222,
+          "valid_ocean_area_by_scene_km2": {
+            "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": 3272.427469361222
+          },
+          "benchmark_unmatched_per_km2": 47.201046148824496,
+          "by_distance_to_mapped_shore_m": {
+            "500": {
+              "labels": 11,
+              "matched": 4,
+              "recall": 0.36363636363636365
+            },
+            "1000": {
+              "labels": 16,
+              "matched": 5,
+              "recall": 0.3125
+            },
+            "2000": {
+              "labels": 37,
+              "matched": 11,
+              "recall": 0.2972972972972973
+            }
+          },
+          "projected_box_center_error_m": {
+            "n": 51,
+            "median": 17.267441984085686,
+            "p95": 35.8711152263017
+          },
+          "projected_box_width_error_m": {
+            "n": 51,
+            "median": 37.17435631120036,
+            "p95": 83.83988794261946
+          },
+          "projected_box_height_error_m": {
+            "n": 51,
+            "median": 41.99574089013652,
+            "p95": 133.13981426207266
+          },
+          "error_to_source_wgs84_centroid_m": {
+            "n": 51,
+            "median": 52.43038552807104,
+            "p95": 82.43393999093263
+          },
+          "transform_residual_at_source_centroid_m": {
+            "n": 164,
+            "median": 55.62370648113276,
+            "p95": 71.03850655551254
+          }
+        },
+        "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": {
+          "mAP@0.5": 0.0003,
+          "mAP@0.5:0.95": 0.0001,
+          "precision": 0.0001,
+          "recall": 0.1269,
+          "f1": 0.0002,
+          "n_ground_truth": 134,
+          "n_predictions": 200269,
+          "true_positive": 17,
+          "false_positive": 200252,
+          "false_negative": 117,
+          "false_alarms_per_km2": null,
+          "nearshore_recall": null,
+          "nearshore_ground_truth": null,
+          "center_error_m_median": null,
+          "box_width_error_m_median": null,
+          "box_height_error_m_median": null,
+          "georeferenced_matches": 0,
+          "false_alarms_per_megapixel": 2983.987331390381,
+          "evaluated_image_pixels": 67108864,
+          "center_error_px_median": 3.5355339059327378,
+          "center_error_px_p95": 9.14440299312148,
+          "box_width_error_px_median": 7.0,
+          "box_height_error_px_median": 3.0,
+          "localized_matches": 17,
+          "evaluated_water_scene_km2": 3470.332351306624,
+          "valid_ocean_area_by_scene_km2": {
+            "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": 3470.332351306624
+          },
+          "benchmark_unmatched_per_km2": 57.70398328696172,
+          "by_distance_to_mapped_shore_m": {
+            "500": {
+              "labels": 3,
+              "matched": 0,
+              "recall": 0.0
+            },
+            "1000": {
+              "labels": 13,
+              "matched": 0,
+              "recall": 0.0
+            },
+            "2000": {
+              "labels": 16,
+              "matched": 0,
+              "recall": 0.0
+            }
+          },
+          "projected_box_center_error_m": {
+            "n": 17,
+            "median": 27.30876679775744,
+            "p95": 52.863167897503104
+          },
+          "projected_box_width_error_m": {
+            "n": 17,
+            "median": 27.671947063922914,
+            "p95": 82.02621974493441
+          },
+          "projected_box_height_error_m": {
+            "n": 17,
+            "median": 42.022395805515515,
+            "p95": 246.78709766604348
+          },
+          "error_to_source_wgs84_centroid_m": {
+            "n": 17,
+            "median": 35.9696864389792,
+            "p95": 71.81122263905883
+          },
+          "transform_residual_at_source_centroid_m": {
+            "n": 134,
+            "median": 31.389477236564407,
+            "p95": 51.89800908602093
+          }
+        }
+      }
+    },
+    "local_contrast": {
+      "param": 5.0,
+      "metrics": {
+        "mAP@0.5": 0.0,
+        "mAP@0.5:0.95": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "n_ground_truth": 298,
+        "n_predictions": 0,
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 298,
+        "false_alarms_per_km2": null,
+        "nearshore_recall": null,
+        "nearshore_ground_truth": null,
+        "center_error_m_median": null,
+        "box_width_error_m_median": null,
+        "box_height_error_m_median": null,
+        "georeferenced_matches": 0,
+        "false_alarms_per_megapixel": 0.0,
+        "evaluated_image_pixels": 131858432,
+        "center_error_px_median": null,
+        "center_error_px_p95": null,
+        "box_width_error_px_median": null,
+        "box_height_error_px_median": null,
+        "localized_matches": 0,
+        "evaluated_water_scene_km2": 6742.759820667846,
+        "valid_ocean_area_by_scene_km2": {
+          "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": 3272.427469361222,
+          "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": 3470.332351306624
+        },
+        "benchmark_unmatched_per_km2": 0.0,
+        "by_distance_to_mapped_shore_m": {
+          "500": {
+            "labels": 14,
+            "matched": 0,
+            "recall": 0.0
+          },
+          "1000": {
+            "labels": 29,
+            "matched": 0,
+            "recall": 0.0
+          },
+          "2000": {
+            "labels": 53,
+            "matched": 0,
+            "recall": 0.0
+          }
+        },
+        "projected_box_center_error_m": {
+          "n": 0,
+          "median": null,
+          "p95": null
+        },
+        "projected_box_width_error_m": {
+          "n": 0,
+          "median": null,
+          "p95": null
+        },
+        "projected_box_height_error_m": {
+          "n": 0,
+          "median": null,
+          "p95": null
+        },
+        "error_to_source_wgs84_centroid_m": {
+          "n": 0,
+          "median": null,
+          "p95": null
+        },
+        "transform_residual_at_source_centroid_m": {
+          "n": 298,
+          "median": 49.28508849169174,
+          "p95": 70.46806417477637
+        },
+        "latency_ms_p50": 13.394708978012204,
+        "latency_ms_p95": 14.992978598456828
+      },
+      "per_scene": {
+        "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": {
+          "mAP@0.5": 0.0,
+          "mAP@0.5:0.95": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_ground_truth": 164,
+          "n_predictions": 0,
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 164,
+          "false_alarms_per_km2": null,
+          "nearshore_recall": null,
+          "nearshore_ground_truth": null,
+          "center_error_m_median": null,
+          "box_width_error_m_median": null,
+          "box_height_error_m_median": null,
+          "georeferenced_matches": 0,
+          "false_alarms_per_megapixel": 0.0,
+          "evaluated_image_pixels": 64749568,
+          "center_error_px_median": null,
+          "center_error_px_p95": null,
+          "box_width_error_px_median": null,
+          "box_height_error_px_median": null,
+          "localized_matches": 0,
+          "evaluated_water_scene_km2": 3272.427469361222,
+          "valid_ocean_area_by_scene_km2": {
+            "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": 3272.427469361222
+          },
+          "benchmark_unmatched_per_km2": 0.0,
+          "by_distance_to_mapped_shore_m": {
+            "500": {
+              "labels": 11,
+              "matched": 0,
+              "recall": 0.0
+            },
+            "1000": {
+              "labels": 16,
+              "matched": 0,
+              "recall": 0.0
+            },
+            "2000": {
+              "labels": 37,
+              "matched": 0,
+              "recall": 0.0
+            }
+          },
+          "projected_box_center_error_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "projected_box_width_error_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "projected_box_height_error_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "error_to_source_wgs84_centroid_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "transform_residual_at_source_centroid_m": {
+            "n": 164,
+            "median": 55.62370648113276,
+            "p95": 71.03850655551254
+          }
+        },
+        "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": {
+          "mAP@0.5": 0.0,
+          "mAP@0.5:0.95": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "n_ground_truth": 134,
+          "n_predictions": 0,
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 134,
+          "false_alarms_per_km2": null,
+          "nearshore_recall": null,
+          "nearshore_ground_truth": null,
+          "center_error_m_median": null,
+          "box_width_error_m_median": null,
+          "box_height_error_m_median": null,
+          "georeferenced_matches": 0,
+          "false_alarms_per_megapixel": 0.0,
+          "evaluated_image_pixels": 67108864,
+          "center_error_px_median": null,
+          "center_error_px_p95": null,
+          "box_width_error_px_median": null,
+          "box_height_error_px_median": null,
+          "localized_matches": 0,
+          "evaluated_water_scene_km2": 3470.332351306624,
+          "valid_ocean_area_by_scene_km2": {
+            "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": 3470.332351306624
+          },
+          "benchmark_unmatched_per_km2": 0.0,
+          "by_distance_to_mapped_shore_m": {
+            "500": {
+              "labels": 3,
+              "matched": 0,
+              "recall": 0.0
+            },
+            "1000": {
+              "labels": 13,
+              "matched": 0,
+              "recall": 0.0
+            },
+            "2000": {
+              "labels": 16,
+              "matched": 0,
+              "recall": 0.0
+            }
+          },
+          "projected_box_center_error_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "projected_box_width_error_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "projected_box_height_error_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "error_to_source_wgs84_centroid_m": {
+            "n": 0,
+            "median": null,
+            "p95": null
+          },
+          "transform_residual_at_source_centroid_m": {
+            "n": 134,
+            "median": 31.389477236564407,
+            "p95": 51.89800908602093
+          }
+        }
+      }
+    }
+  }
+}

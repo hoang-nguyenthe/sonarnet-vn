@@ -1,0 +1,49 @@
+{
+  "locked_utc": "2026-11-18T12:46:31.646143+00:00",
+  "source_revision": "e90a0c0465cfb8484b4f356ef968d976054f453a",
+  "source_screen_sha256": "4b974b5046d509221cb54c6fc73e1a1f1a013f2233e63238b7ad42220dee089d",
+  "diagnostic_manifest_sha256": "490d9d9891551c5928e00b2f8ebb87fc2849a3723c7e8d9e693b47c11c6b2cf2",
+  "code_sha256": "2c6834262d113299ff375fced81de9a3dc61ddc3d52d6614f3ca4e6664674484",
+  "archives": {
+    "val_labels.tar.zst": "5abe968a54ad6fc863ab39ef7e7acfa1e2a11cfb9563e9f02d616a15ec64b3fe",
+    "test_labels.tar.zst": "649af181e149733f6ddbdea457a50c6ea7fbce6a979797e2557276a68045e4dc",
+    "train_labels.tar.zst": "eacce986c1c63e5ee508bae84c7d8c743f49a8bab32f8ef9046c802d685ec91b",
+    "val_patches.tar.zst": "6eddea1165c7daffb17d14e62b006ea6f479fc406ae62b7c8ede467dc62b0379",
+    "test_patches.tar.zst": "86bb88b93599c57190ef8baea231df5a0c07af919c42f063bf3e6c502c562ac7",
+    "gshhg-shp-2.3.7.zip": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "train_patches.tar.zst": "f0b7e9d5bdde8078b94446240bdd2bff699d0f697d794f1fbe50f72b0fab9245"
+  },
+  "dates": {
+    "fit": [
+      "2020-04-07",
+      "2020-05-14",
+      "2020-06-30",
+      "2020-07-19",
+      "2020-07-24",
+      "2020-08-24",
+      "2020-09-10"
+    ],
+    "tune": [
+      "2020-05-03"
+    ],
+    "diagnostic": [
+      "2020-04-21",
+      "2020-05-11",
+      "2020-07-06"
+    ],
+    "fresh": [
+      "2020-09-28"
+    ]
+  },
+  "partitions": {
+    "fit": "train",
+    "tune": "val",
+    "diagnostic": "train",
+    "fresh": "test"
+  },
+  "minimum_geographic_buffer_m": 20000,
+  "minimum_valid_fraction": 0.95,
+  "training_targets": "HIGH/MEDIUM vessel only. Exclude chips with uncertain vessel labels or invalid boxes, retain eligible background chips.",
+  "pixel_audit": "Complex pixels SHA-256 or normalized amplitude dHash <= 3. Remove fit conflicts; remove tune conflicts with either evaluation set.",
+  "evaluation": "Three previously measured diagnostic scenes and a previously unevaluated North Sea scene. Western Africa test scenes from the prior study are near new training footprints and are excluded."
+}

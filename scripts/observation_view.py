@@ -22,6 +22,7 @@ from coverage_status import coverage_rows, waiting_cells
 from popup_evidence import evidence_url
 from observation_labels import candidate_label, coordinates, observation_time
 from illustrative_vessels import profile, popup as illustrative_popup, FILTERS, filter_vessels
+from run_satellite_refresh import cooldown_decision
 
 VN_VIEW = [[6, 102], [24, 115]]
 
@@ -167,7 +168,11 @@ def render(root):
     # Start with the nationwide context so a first-time visitor immediately
     # sees the published Sentinel‑1 coverage.  The focused YOLO review remains
     # one deliberate step away and is clearly labelled as a test workspace.
-    workflow = st.radio('Bạn muốn làm gì?', ['Xem toàn cảnh', 'Kiểm tra chi tiết'], horizontal=True, key='observation_workflow')
+    workflow = st.radio('Bạn muốn làm gì?', ['Xem toàn cảnh', 'Kiểm tra chi tiết', 'Hồ sơ mẫu'], horizontal=True, key='observation_workflow')
+    if workflow == 'Hồ sơ mẫu':
+        from demo_snapshot import render_snapshot
+        render_snapshot(root)
+        return
     if workflow == 'Kiểm tra chi tiết':
         render_scan(root)
         return
@@ -175,6 +180,7 @@ def render(root):
     detection = read_json(root / "assets/gfw_global_ship_detections_latest.json")
     if not records:
         st.info("Chưa có ảnh được xuất bản. Dữ liệu sẽ xuất hiện sau lần đồng bộ thành công.")
+        st.caption('Chọn Hồ sơ mẫu để mở bản sao ảnh thật đã kiểm tra mà không cần tải bản đồ.')
         return
     choices = {record["label"]: record for record in records}
     selected = st.selectbox("Khu vực có ảnh sẵn", list(choices), key="observation_region")
@@ -215,12 +221,21 @@ def render(root):
             days = sorted({tile['observation_day_utc'] for tile in yolo_result['tiles']})
             st.caption(f"{len(yolo_result['detections'])} điểm cần kiểm tra · {len(yolo_result['tiles'])} ô ảnh đã xử lý · "
                        f"ngày ảnh {', '.join(date_label(day) for day in days)} (UTC). Chạm điểm sáng để xem ảnh bằng chứng.")
+            st.info('Lớp điểm đánh dấu hiện bỏ qua đất và vùng trong 500 m từ đường bờ đã lập bản đồ, gồm cả cảng và vùng sát bờ. Không có điểm đánh dấu không có nghĩa là không có tàu. Chỉ dùng các điểm này để rà ảnh nguồn.')
         else:
             st.info("Khu vực này chưa được kiểm tra tự động trên ảnh chi tiết. Bạn vẫn có thể xem ảnh; chưa có kết quả không có nghĩa là không có tàu.")
     coverage = read_json(root/'assets/real_scan/coverage.json')
     refresh = read_json(root/'assets/real_scan/refresh_status.json')
     if refresh.get('state') in {'blocked','error'}:
-        st.warning('Lượt cập nhật mới đã dừng do nguồn ảnh hoặc xử lý gặp lỗi. Ảnh và kết quả đã lưu vẫn xem được.')
+        when = refresh.get('checked_at')
+        st.warning(f"Lần thử cập nhật gần nhất ghi nhận lỗi ({local_time(when)}). Ảnh và kết quả đã lưu vẫn xem được; các mốc quan sát không thay đổi.")
+        retry = refresh.get('retry_after')
+        if cooldown_decision(refresh, datetime.now(timezone.utc)):
+            st.caption(f"Đang chờ thử lại nguồn sau {local_time(retry)}. Tác vụ bỏ qua trong khoảng này không tạo ảnh mới.")
+        else:
+            st.caption('Chưa có lần cập nhật thành công mới hơn được công bố ở phiên bản này.')
+    elif refresh.get('state') == 'checked_no_updates':
+        st.caption(f"Lần chạy cập nhật {local_time(refresh.get('finished_at'))} không xuất bản ảnh mới. Đang hiển thị dữ liệu đã lưu.")
     elif refresh.get('source') == 'planetary' and refresh.get('state') == 'ready':
         st.caption('Ảnh chi tiết được cập nhật từ kho Sentinel-1 dự phòng. Mỗi điểm giữ nguyên nguồn và ngày chụp của ảnh.')
     area_plan = next((area for area in coverage.get('regions', []) if area['key'] == record['key']), None)

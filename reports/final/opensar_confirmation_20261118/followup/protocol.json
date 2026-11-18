@@ -1,0 +1,71 @@
+{
+  "phase": "post-initial-test follow-up; candidates chosen on validation only",
+  "created_utc": "2026-11-18T08:23:47.013401+00:00",
+  "selection": "Candidate budget <= frozen original YOLO .10 validation FP ×1.15 (round down). Max matches within 1km, then overall TP/F1, fewer FP, higher confidence, deterministic order. Never tune after observing follow-up test.",
+  "yolo_conf": [
+    0.025,
+    0.05,
+    0.075,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.35
+  ],
+  "cfar": [
+    [
+      7,
+      29,
+      3.2
+    ],
+    [
+      7,
+      29,
+      3.8
+    ],
+    [
+      7,
+      29,
+      4.4
+    ],
+    [
+      11,
+      41,
+      3.2
+    ],
+    [
+      11,
+      41,
+      3.8
+    ],
+    [
+      11,
+      41,
+      4.4
+    ]
+  ],
+  "cfar_selection": "Highest overall validation F1 with at least one TP preferred; ties fewer FP then harder threshold.",
+  "data": {
+    "val": "c70847d5809ba1a2a67df2862e055adba967f5c29b0013ab6d29d13e461171e4",
+    "test": "85b22845dd8c574949831450826fd52532419ba41d51a449d96483bf5fbb7e6a",
+    "pixel_audit": "4a809a1fd4ab991099d3f5a4facbdf356a0ff2726d8828863890963b82073844"
+  },
+  "methods": [
+    "reference",
+    "contrast",
+    "tiles",
+    "full_plus_tiles"
+  ],
+  "weights": "5b1eef4e8e45b17ea3f071285af5693dcb5ecc2c98d272264a570f58a1eb2bb1",
+  "source": "72e42a4fff4ff6d52a053c724e01936fe7ae9c239a38b5cd5ee5bbb723ef0de4",
+  "dependencies_sha256": {
+    "evaluate_opensar_geo.py": "ed5e11e4acfc2d16adbb7e8899454aff06b418248f9530e7c2177649ccf91e37",
+    "evaluate_ossdd_followup.py": "359cf5e1c63b71e33084e6f44c747727358738169e20c0bbd10101500ffd9e1a",
+    "prepare_opensar_geo.py": "a33fb04a1a5f18e8c0b42b8dc6409a48344239978a11077e9d7cbc28a8af8dde",
+    "independent_sar.py": "73d2d355de0c51fa8d275f3136056302c7b0816afcc2e53bd7d189d4a80eb47a",
+    "detection_metrics.py": "a442ccfc37fcd4a7b708f738ff0b53f69874fc8cb137a91b40a4772cc663c643"
+  },
+  "device": "CPU, torch 4/OpenCV 1 threads",
+  "hardware": "macOS-26.6.2-arm64-arm-64bit",
+  "support": "Identical OpenSAR valid-water scoring and HIGH/MEDIUM rules; input mapping held fixed for reference and tiling; contrast variant clips with CLAHE 2.0 tiles 8x8."
+}

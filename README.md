@@ -9,66 +9,47 @@ app_port: 7860
 
 # SonarNet-VN
 
-**Hệ thống giám sát tuân thủ quy định chống khai thác thuỷ sản bất hợp pháp,
-không khai báo và không theo quy định, trên cơ sở hợp nhất ảnh vệ tinh radar
-khẩu độ tổng hợp với tín hiệu giám sát hành trình tàu cá.**
+**Ứng dụng hỗ trợ rà soát ảnh Sentinel-1 và thử nghiệm đối chiếu vị trí với AIS.**
 
-Dự án nghiên cứu và bản trình diễn: kiến trúc phát hiện phương tiện, hợp nhất dữ liệu đa nguồn và phân loại hành vi phục vụ giám sát tuân thủ.
+SonarNet lưu ảnh nguồn, thời gian, vị trí và lý do hệ thống đề xuất hoặc giữ lại
+một cặp ghép. Người xem có thể tải hồ sơ để chuyên viên đối chiếu thêm nguồn.
+
+**Chặng 1 Vòng Chung kết Bảng C.** Mở **Minh chứng cải tiến** để thử ba trường hợp
+thiếu AIS, thông tin mâu thuẫn và quỹ đạo giao nhau. Bản báo cáo, lệnh tái lập và
+hướng dẫn nộp nằm trong [hồ sơ Chặng 1](NOP_CHANG_1.md).
 ---
 
 ## 1. Bài toán
 
-Tháng 10 năm 2017, Uỷ ban châu Âu áp dụng cảnh báo thẻ vàng đối với thuỷ sản
-Việt Nam vì chưa kiểm soát được hoạt động khai thác bất hợp pháp, không khai báo
-và không theo quy định. Gần một thập kỷ sau, cảnh báo này vẫn còn hiệu lực. Chính
-phủ đặt mục tiêu gỡ thẻ vàng trong năm 2026, với hạn chót ngày 31 tháng 8 năm
-2026 để tạo chuyển biến thực chất và ngày 01 tháng 10 năm 2026 để gửi báo cáo
-phản hồi các khuyến nghị của Uỷ ban châu Âu.
-
-Đây trước hết là một bài toán kinh tế. Thuỷ sản là ngành xuất khẩu chủ lực, và
-thị trường châu Âu là một trong những thị trường có giá trị cao nhất. Cảnh báo
-thẻ vàng làm tăng chi phí kiểm tra, kéo dài thời gian thông quan và làm giảm sức
-cạnh tranh của toàn ngành. Người chịu ảnh hưởng cuối cùng là hàng trăm nghìn ngư
-dân và các doanh nghiệp chế biến.
-
-Bốn nhóm khuyến nghị mà Uỷ ban châu Âu đưa ra tập trung vào quản lý đội tàu, thực
-thi pháp luật, truy xuất nguồn gốc và **giám sát**. Đề tài này nhắm vào nhóm cuối.
+Giám sát, kiểm soát và theo dõi hoạt động trên biển là một phần của công tác
+chống khai thác bất hợp pháp, không khai báo và không theo quy định (IUU).
+Tháng 7/2026, FAO công bố hỗ trợ Việt Nam xây dựng chiến lược và kế hoạch thực
+hiện Hiệp định về các biện pháp quốc gia có cảng. SonarNet nghiên cứu một bài
+toán cụ thể trong khâu rà soát bằng chứng ảnh.
+[FAO về hỗ trợ Việt Nam triển khai PSMA](https://www.fao.org/port-state-measures/news-events/detail/en/c/1759884/)
 
 ### Vì sao giám sát vẫn là điểm nghẽn
 
-Việt Nam hiện có khoảng 80.300 tàu cá đăng ký trên cơ sở dữ liệu nghề cá quốc
-gia. Trong đó **99,6 phần trăm tàu từ 15 mét trở lên đã lắp thiết bị giám sát
-hành trình**. Nói cách khác, giai đoạn trang bị thiết bị về cơ bản đã hoàn tất.
-
-Điểm nghẽn còn lại nằm ở chỗ khác: **thiết bị được lắp nhưng không phải lúc nào
-cũng phát tín hiệu**. Mất kết nối có thể do sự cố kỹ thuật, nhưng cũng có thể do
-chủ động ngắt. Khi tín hiệu biến mất, cơ quan quản lý không còn cách nào biết
-phương tiện đang ở đâu và làm gì — đúng vào những tình huống cần biết nhất.
-
-Đây là giới hạn cố hữu của mọi phương thức giám sát chỉ dựa trên tín hiệu do
-chính phương tiện phát ra.
+Bản tin hành trình có thể vắng trong nguồn đối chiếu vì phạm vi thu nhận, thời
+điểm, chất lượng dữ liệu hoặc vì hệ thống dùng một nguồn khác. AIS và hệ thống
+giám sát tàu cá (VMS) là hai nguồn cần phân biệt. Chặng 1 đánh giá ghép trên AIS
+nghiên cứu và hồ sơ mẫu. Bản đồ công khai chưa có nguồn AIS hoặc VMS đồng bộ cho
+các ảnh Việt Nam đang rà soát.
 
 ### Hướng giải quyết
 
-Ảnh vệ tinh radar khẩu độ tổng hợp không phụ thuộc vào việc phương tiện có phát
-tín hiệu hay không. Nó ghi nhận mọi vật thể phản xạ sóng radar trên mặt biển, kể
-cả khi trời nhiều mây và vào ban đêm — điều kiện quyết định với vùng biển nhiệt
-đới như Biển Đông.
-
-Khi đối chiếu tập phương tiện *nhìn thấy trên ảnh* với tập phương tiện *đang phát
-tín hiệu giám sát hành trình*, phần chênh lệch chính là các phương tiện mất kết
-nối. Hệ thống không kết luận nguyên nhân, mà cung cấp cho cơ quan quản lý một
-danh sách trường hợp cần rà soát, kèm bằng chứng ảnh và toạ độ cụ thể.
-
-SonarNet-VN hiện thực hoá ý tưởng đó thành hệ thống bốn tầng hoàn chỉnh, sử dụng
-hoàn toàn dữ liệu mở.
+Radar vệ tinh cung cấp quan sát độc lập với bản tin hành trình, kể cả qua mây
+và vào ban đêm. Một điểm phản xạ có thể là phương tiện, nhiễu hoặc vật thể khác.
+SonarNet gắn ứng viên với ảnh, thời gian và phạm vi chụp. Khi có AIS đủ chất lượng,
+hệ thống đề xuất một cặp về vị trí. Các ca thiếu dữ liệu, mâu thuẫn hoặc không
+ghép được được giữ lại để người có chuyên môn kiểm tra.
 
 ---
 
 ## 2. Kiến trúc hệ thống
 
 ```
-   Sentinel-1 SAR          Global Fishing Watch (AIS)
+   Sentinel-1 SAR          AIS phù hợp theo thời điểm
          │                            │
          ▼                            │
 ┌────────────────────┐                │
@@ -89,25 +70,26 @@ hoàn toàn dữ liệu mở.
       │  • nội suy Kalman về thời điểm    │
       │    chụp ảnh                       │
       │  • ghép cặp tối ưu Hungarian      │
-      │  • phân loại ba trạng thái        │
+      │  • giữ hoặc từ chối cặp đề xuất    │
       └─────────────────┬─────────────────┘
                         ▼
       ┌───────────────────────────────────┐
-      │ Tầng 4 — Phân tích hành vi        │
-      │ và sinh cảnh báo trên bản đồ      │
+      │ Tầng 4 — Hồ sơ để người xem rà    │
+      │ Ghi chú, ảnh nguồn, xuất bằng chứng│
       └───────────────────────────────────┘
 ```
 
-**Ba trạng thái định danh** mà hệ thống phân biệt:
+**Trạng thái đối chiếu** trên bản cải tiến:
 
 | Trạng thái | Ý nghĩa |
 |---|---|
-| `AIS_OK` | Phương tiện phát tín hiệu đầy đủ và trung thực |
-| `AIS_MISMATCH` | Có phát tín hiệu nhưng kích thước khai báo sai lệch lớn so với quan sát trên ảnh radar |
-| `DARK` | Không phát tín hiệu tại thời điểm chụp — dấu hiệu chủ động ngắt định danh |
+| `AIS_OK` | Ghép được vị trí và có dữ liệu kích thước để đối chiếu. Chờ xác minh. |
+| `AIS_MISMATCH` | Kích thước khai báo lệch so với hộp quan sát. Cần kiểm tra thêm. |
+| `DARK` | Mã kỹ thuật cũ cho trạng thái **Không ghép được**. |
+| `MISSING_DATA` | Dữ liệu sẵn có thiếu hoặc chưa qua kiểm tra chất lượng. |
 
-**Bốn nhóm hành vi** mà tầng bốn nhận diện: di chuyển quá cảnh, câu, kéo lưới,
-neo đậu hoặc tụ tập.
+Nhánh nghiên cứu hành vi mô phỏng các nhóm di chuyển quá cảnh, câu, kéo lưới,
+neo đậu hoặc tụ tập. Đầu ra này dành cho nghiên cứu trên dữ liệu có nhãn.
 
 ---
 
@@ -128,12 +110,18 @@ liệu. Toàn bộ quy trình chạy thông từ đầu đến cuối không c�
 ## 4. Chạy trên máy cá nhân
 
 ```bash
-git clone <địa-chỉ-kho-mã> sonarnet-vn
+git clone https://github.com/hoang-nguyenthe/sonarnet-vn.git
 cd sonarnet-vn
 
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+python -m streamlit run scripts/demo_app.py
+```
 
+Mở `http://localhost:8501/?trang=minh-chung` để vào thẳng phần kiểm tra.
+Để chạy pipeline nghiên cứu, cài thêm `requirements-full.txt`.
+
+```bash
 # Kiểm thử nhanh toàn bộ thành phần, chạy được trên CPU trong khoảng một phút
 python tests/test_smoke.py
 
@@ -254,7 +242,7 @@ chứng riêng, không được gắn nhãn là mô hình nghiệp vụ toàn qu
 | SARDet-100K | 116.598 ảnh, 245.653 đối tượng | <https://github.com/zcablii/SARDet_100K> |
 | HRSID | 5.604 ảnh, có mặt nạ phân vùng | <https://github.com/chaozhong2010/HRSID> |
 | SSDD | 1.160 ảnh | <https://github.com/TianwenZhang0825/Official-SSDD> |
-| xView3-SAR | chuyên biệt cho phương tiện ngắt định danh | <https://iuu.xview.us> |
+| xView3-SAR | ảnh Sentinel-1 và nhãn mục tiêu phục vụ nghiên cứu | <https://iuu.xview.us> |
 
 **Ranh giới vùng biển**: <https://www.marineregions.org>
 
@@ -279,41 +267,29 @@ với đầu ra mô hình.
 
 Quy trình đánh giá đúng là:
 
-1. Huấn luyện SonarNet trên SARDet-100K, HRSID, SSDD và xView3-SAR.
-2. Chạy SonarNet trên cảnh Sentinel-1 GRD thật lấy trực tiếp từ Copernicus.
-3. Ghép đầu ra với AIS bằng Kalman + Hungarian.
-4. So sánh theo không gian-thời gian với GFW SAR Vessel Detections, rồi báo cáo
-   mức độ đồng thuận, các ca chỉ SonarNet/GFW phát hiện được và các giới hạn.
+1. Cố định mắt xích huấn luyện và tách cảnh đánh giá theo vùng, ngày chụp.
+2. Chạy detector trên nguồn đã xác định geometry và ngày chụp.
+3. Ghép bằng Kalman và Hungarian với ngưỡng chất lượng khi có AIS cùng giờ.
+4. Ghi số ca đồng thuận, khác nhau và chưa đủ mốc xác minh nếu đối chiếu GFW.
 
-Điều này bổ sung kiểm chứng độc lập mà không làm mô hình học lại đầu ra của một
-hệ thống khác. SonarNet‑VN là công cụ hỗ trợ giám sát theo lượt bay, không phải
-theo dõi liên tục thời gian thực: AIS có thể cập nhật thường xuyên khi có nguồn
-phù hợp, còn SAR chỉ tạo quan sát khi vệ tinh đi qua.
+Các phép đo đã thực hiện trong Chặng 1 dùng LS-SSDD, OSSDD, OpenSAR Insight và AIS
+lịch sử NOAA theo phương pháp ghi trong [báo cáo cải tiến](output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf).
+Phép thử ghép trực tiếp SAR–AIS có bốn mốc vị trí tham chiếu. Chưa có đánh giá
+độ chính xác bằng mốc độc lập cho bản đồ ảnh Việt Nam.
 
 ### 6.4. Dashboard public và cập nhật dữ liệu
 
-Dashboard public có ba khu vực, được cố ý rút gọn để người dùng phổ thông không
-bị lạc trong các tab kỹ thuật:
+1. **Quan sát → Xem toàn cảnh** hiển thị ảnh ghép Sentinel‑1, phạm vi và trạng thái
+   cập nhật. Lớp điểm ứng viên lấy từ ô ảnh chi tiết có bằng chứng.
+2. **Quan sát → Kiểm tra chi tiết** mở ảnh, lưu đánh giá và xuất hồ sơ ZIP kèm
+   SHA‑256. Khi chưa có kho ảnh chi tiết, ứng dụng mở một hồ sơ ảnh thật đã lưu.
+3. **Minh chứng cải tiến** có ca tương tác AIS mô phỏng, đối chứng AIS lịch sử
+   NOAA, một cảnh SAR–AIS cùng giờ và kết quả SAR độc lập. **Nghiên cứu** và
+   **Hướng dẫn** giải thích phạm vi, cách đọc và cách kiểm chứng.
 
-1. **Khám phá** mở mặc định ở **Xem ảnh toàn cảnh**, bắt đầu từ khung Việt Nam.
-   Chọn một vùng có asset sẵn để xem mosaic Sentinel‑1, mốc catalog mới nhất,
-   thời gian tạo và lớp địa danh. Chạm ảnh radar để mở nguồn; lớp GFW là lớp
-   tham khảo, không phải kết quả YOLO. Lớp YOLO đưa ứng viên từ ô ảnh chi tiết
-   lên ảnh toàn cảnh; bấm điểm sáng để xem ảnh cắt và ngày quan sát đúng ô đó.
-   AIS minh hoạ cung cấp kịch bản đối chiếu và định danh DEMO; không có tín
-   hiệu thì không hiển thị danh tính. Không chạy YOLO trên mosaic thu nhỏ.
-2. **Kiểm tra ảnh thật** trong cùng khu vực cho phép chọn ô, xem ảnh cắt ứng
-   viên YOLO, đánh giá thủ công, ghi chú và xuất gói bằng chứng ZIP kèm SHA‑256.
-   Bộ công khai hiện là lưới 12 ô Bình Thuận; ngày quan sát được giữ theo từng
-   ô. Đây là vùng thử nghiệm, không đại diện độ chính xác toàn quốc.
-3. **Cách dùng** giải thích bài toán bằng ngôn ngữ trình bày; **Nghiên cứu**
-   chứa mô phỏng, ghép radar–AIS, Kalman/Hungarian và chỉ số. Không dùng các
-   chỉ số mô phỏng để quảng bá độ chính xác ảnh Sentinel‑1 thật.
-
-Asset được GitHub Actions kiểm tra mỗi 6 giờ (cron `17 */6 * * *`). Job chỉ
-publish khi Copernicus trả về cảnh và ảnh PNG hợp lệ; nếu dịch vụ lỗi hoặc cửa
-sổ không có cảnh, asset cũ được giữ nguyên. Credentials chỉ nằm trong secrets
-của GitHub Actions/Streamlit, không commit vào repository.
+Job GitHub Actions kiểm tra nguồn định kỳ. Ảnh cũ tiếp tục hiển thị khi không
+có lần xuất bản mới đạt kiểm tra chất lượng. Khi lỗi nguồn kéo dài, giao diện
+cho biết giờ thử lại cùng thời gian thực tế của ảnh đang xem.
 
 Job còn kiểm tra catalog cho từng ô ảnh chi tiết đã khai báo. Nếu có sản phẩm
 mới, tải ảnh ~11 m/pixel, chạy YOLO và kiểm tra checksum trước khi công bố.

@@ -1,0 +1,25 @@
+[
+  {
+    "id": "187",
+    "file": "error_slc_187.png",
+    "scene": "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681",
+    "reasons": [
+      "most_unmatched_predictions",
+      "most_missed_vessel_labels"
+    ],
+    "fp": 50,
+    "fn": 9,
+    "nearshore_missed": 0
+  },
+  {
+    "id": "192",
+    "file": "error_slc_192.png",
+    "scene": "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681",
+    "reasons": [
+      "most_misses_within_500m_of_mapped_shore"
+    ],
+    "fp": 1,
+    "fn": 2,
+    "nearshore_missed": 2
+  }
+]

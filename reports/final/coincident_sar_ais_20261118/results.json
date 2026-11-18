@@ -1,0 +1,127 @@
+{
+  "protocol_sha256": "4f69d0cdd0dd28addf8ad0462841415a4030ba784a6b4964f763e14c16e8ae0c",
+  "code_sha256": "1748a8a31b5625ff9cc2ab5f89e42075d078e7999302fc1cbcdaa811e499bdca",
+  "fusion_code_sha256": "c04c86482faa7ac372ece23bd22581a7fc3bd9d133499e566186c8182a6c67b9",
+  "raster_source": {
+    "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+    "band": "VV",
+    "source_collection": "sentinel-1-rtc",
+    "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241213T225129_20241213T225154_056980_07001E_rtc",
+    "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/12/13/IW/DV/S1A_IW_GRDH_1SDV_20241213T225129_20241213T225154_056980_07001E_F748/measurement/iw-vv.rtc.tiff",
+    "source_acquired_at": "2024-12-13T22:51:42.132332Z",
+    "source_native_pixel_spacing_m": 10.0,
+    "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+    "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+    "license": "CC-BY-4.0",
+    "source_provider": "planetary",
+    "images": [
+      {
+        "tile": 0,
+        "sha256": "4e02cdd238e3d7c5f249bfa10146f21afff1c3eafe8246348900e5d2e34dc0d1"
+      },
+      {
+        "tile": 1,
+        "sha256": "fdab6884d8a54f74681e07fc916c11727d31117ffb6dee5abd19a8e2ed13812b"
+      },
+      {
+        "tile": 2,
+        "sha256": "8acbfd39a971ddf669c53cf6063856853eab4c398fbf9866d05df3a15a0a715f"
+      },
+      {
+        "tile": 3,
+        "sha256": "7ceb79a0c0aa7eb405e9055ac1d07ce821ed6207b91c54806589fd92986e6b4b"
+      }
+    ]
+  },
+  "ais_source": {
+    "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_12_13.zip",
+    "sha256": "6cf1cafb19de582537add9e4bb7305d447767618baf2c7e698d1dc9e4b4aa5e7",
+    "compressed_bytes": 299754629,
+    "csv_crc32": "efb33aee"
+  },
+  "coast_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+  "model_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "radar_candidates": 77,
+  "held_ais_positions": 11,
+  "history_records": 3712,
+  "estimated_ais_tracks": 567,
+  "spatial_references": 4,
+  "tiles": [
+    {
+      "tile": 0,
+      "sha256": "4e02cdd238e3d7c5f249bfa10146f21afff1c3eafe8246348900e5d2e34dc0d1",
+      "valid_fraction": 1.0,
+      "usable": true,
+      "detected_candidates": 10,
+      "marked": "tile_0_marked.png",
+      "marked_sha256": "b1eea3f85f1a81818eed057557f274da8409979e8f5b600e149a10afdf5b538a",
+      "spatial_references": 1
+    },
+    {
+      "tile": 1,
+      "sha256": "fdab6884d8a54f74681e07fc916c11727d31117ffb6dee5abd19a8e2ed13812b",
+      "valid_fraction": 1.0,
+      "usable": true,
+      "detected_candidates": 15,
+      "marked": "tile_1_marked.png",
+      "marked_sha256": "75a561ef01895f5d0ae490fbc1c45051500065ed6a87ae6e8bf3754b2edd2545",
+      "spatial_references": 0
+    },
+    {
+      "tile": 2,
+      "sha256": "8acbfd39a971ddf669c53cf6063856853eab4c398fbf9866d05df3a15a0a715f",
+      "valid_fraction": 1.0,
+      "usable": true,
+      "detected_candidates": 41,
+      "marked": "tile_2_marked.png",
+      "marked_sha256": "f01feb02bd64d3a615d93d4f6e13fb2fcba03d2cd17cae3b47ed893c8b4df2b0",
+      "spatial_references": 3
+    },
+    {
+      "tile": 3,
+      "sha256": "7ceb79a0c0aa7eb405e9055ac1d07ce821ed6207b91c54806589fd92986e6b4b",
+      "valid_fraction": 1.0,
+      "usable": true,
+      "detected_candidates": 11,
+      "marked": "tile_3_marked.png",
+      "marked_sha256": "bcf0b4a42779b7b47b19054502a7573a7512692f2a3baa932bae55f0de54a3f9",
+      "spatial_references": 0
+    }
+  ],
+  "matching": {
+    "distance_only": {
+      "proposed": 36,
+      "withheld": 41,
+      "agree": 4,
+      "disagree": 0,
+      "labelled_but_withheld": 0,
+      "proposed_without_reference": 32
+    },
+    "previous_gates": {
+      "proposed": 12,
+      "withheld": 65,
+      "agree": 3,
+      "disagree": 0,
+      "labelled_but_withheld": 1,
+      "proposed_without_reference": 9
+    },
+    "100m_guard": {
+      "proposed": 9,
+      "withheld": 68,
+      "agree": 1,
+      "disagree": 0,
+      "labelled_but_withheld": 3,
+      "proposed_without_reference": 8
+    },
+    "propose_then_veto": {
+      "proposed": 7,
+      "withheld": 70,
+      "agree": 1,
+      "disagree": 0,
+      "labelled_but_withheld": 3,
+      "proposed_without_reference": 6
+    }
+  },
+  "spatial_reference_distance_m_median": 50.222691291862205,
+  "notes": "Timestamp is scene center, not azimuth time per vessel. Geo alignment uncertainty and moving-target displacement are unresolved. Weak references reuse the same AIS source. The proposed-pair policy was added later as a replay on the same fixed scene."
+}

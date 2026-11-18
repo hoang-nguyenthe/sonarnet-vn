@@ -1,0 +1,35 @@
+{
+  "issued_utc": "2026-11-18T08:28:27.678584+00:00",
+  "selected_before_confirmation": "edf52a56e04670a9f7808f61bb00dabaa183ce694f107f786410ee8d64b4d7d4",
+  "exact_fixed_choice": {
+    "yolo_conf": 0.1,
+    "cfar": [
+      7,
+      29,
+      4.4
+    ]
+  },
+  "confirmation_manifest_sha256": "490d9d9891551c5928e00b2f8ebb87fc2849a3723c7e8d9e693b47c11c6b2cf2",
+  "confirmation_selection_sha256": "2e8d541ccb5f6c3aceae1019e4bfa64a9be10343d994d95444f91a9550347f29",
+  "old_val_sha256": "c70847d5809ba1a2a67df2862e055adba967f5c29b0013ab6d29d13e461171e4",
+  "old_test_sha256": "85b22845dd8c574949831450826fd52532419ba41d51a449d96483bf5fbb7e6a",
+  "weights_sha256": "5b1eef4e8e45b17ea3f071285af5693dcb5ecc2c98d272264a570f58a1eb2bb1",
+  "code_sha256": {
+    "confirm_opensar_operating_point.py": "211df12c0a319a6cb45cfe46552e8ae3c00fafc4be1910949440283439db79f8",
+    "evaluate_opensar_geo.py": "ed5e11e4acfc2d16adbb7e8899454aff06b418248f9530e7c2177649ccf91e37",
+    "evaluate_sar_recall_candidates.py": "72e42a4fff4ff6d52a053c724e01936fe7ae9c239a38b5cd5ee5bbb723ef0de4",
+    "prepare_opensar_confirmation.py": "ded80405c05d3973b60cba18e76daa6885406a8ce6a24d107186323e61da983e",
+    "prepare_opensar_geo.py": "a33fb04a1a5f18e8c0b42b8dc6409a48344239978a11077e9d7cbc28a8af8dde",
+    "evaluate_ossdd_followup.py": "359cf5e1c63b71e33084e6f44c747727358738169e20c0bbd10101500ffd9e1a",
+    "independent_sar.py": "73d2d355de0c51fa8d275f3136056302c7b0816afcc2e53bd7d189d4a80eb47a",
+    "detection_metrics.py": "a442ccfc37fcd4a7b708f738ff0b53f69874fc8cb137a91b40a4772cc663c643"
+  },
+  "claim": "Publisher train designation is unrelated to this checkpoint. No fit or model/threshold selection on these tiles. Check against all previously used val/test chips for exact decoded SLC and dHash <=3.",
+  "limits": "Only SLC VV archive and supplied weak/incomplete labels; no independent GPS; no national or multi-sensor generalizability claim. No training on OpenSAR.",
+  "environment": {
+    "cpu_threads": 4,
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "torch": "2.8.0",
+    "ultralytics": "8.3.253"
+  }
+}

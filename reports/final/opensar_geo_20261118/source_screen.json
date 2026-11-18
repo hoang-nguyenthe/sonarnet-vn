@@ -1,0 +1,1367 @@
+{
+  "dataset_revision": "e90a0c0465cfb8484b4f356ef968d976054f453a",
+  "archive_sha256": {
+    "val_labels.tar.zst": "5abe968a54ad6fc863ab39ef7e7acfa1e2a11cfb9563e9f02d616a15ec64b3fe",
+    "test_labels.tar.zst": "649af181e149733f6ddbdea457a50c6ea7fbce6a979797e2557276a68045e4dc",
+    "train_labels.tar.zst": "eacce986c1c63e5ee508bae84c7d8c743f49a8bab32f8ef9046c802d685ec91b",
+    "val_patches.tar.zst": "6eddea1165c7daffb17d14e62b006ea6f479fc406ae62b7c8ede467dc62b0379",
+    "test_patches.tar.zst": "86bb88b93599c57190ef8baea231df5a0c07af919c42f063bf3e6c502c562ac7",
+    "gshhg-shp-2.3.7.zip": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41"
+  },
+  "code_sha256": "a33fb04a1a5f18e8c0b42b8dc6409a48344239978a11077e9d7cbc28a8af8dde",
+  "asf_response_sha256": "8c5d66a1702fd0631e017d9e52f49761a43ec97c7bd952c59062159137344bc2",
+  "ls_ssdd_policy_sha256": "1a74b93e0196ff7f6e8a082409cefac6b14581b2458ba20f8c1da33a4b6e712c",
+  "geography": "Reject complete OpenSAR scenes within 20 km of the full LS-SSDD train/val product footprints or with a shared UTC date. Retain eligible test scenes, then quarantine all OpenSAR validation chips within 20 km of the retained test hulls or on the same date. This external partition was revised on source metadata only, before any inference.",
+  "validation_chip_quarantine": {
+    "2049": "validation_chip_within_20km_of_test_hull",
+    "2051": "validation_chip_within_20km_of_test_hull",
+    "2052": "validation_chip_within_20km_of_test_hull",
+    "2079": "validation_chip_within_20km_of_test_hull",
+    "2081": "validation_chip_within_20km_of_test_hull",
+    "2082": "validation_chip_within_20km_of_test_hull",
+    "3641": "validation_chip_within_20km_of_test_hull",
+    "3646": "validation_chip_within_20km_of_test_hull",
+    "3648": "validation_chip_within_20km_of_test_hull",
+    "3649": "validation_chip_within_20km_of_test_hull",
+    "3650": "validation_chip_within_20km_of_test_hull",
+    "3652": "validation_chip_within_20km_of_test_hull",
+    "3653": "validation_chip_within_20km_of_test_hull",
+    "3656": "validation_chip_within_20km_of_test_hull",
+    "3657": "validation_chip_within_20km_of_test_hull",
+    "3658": "validation_chip_within_20km_of_test_hull",
+    "3659": "validation_chip_within_20km_of_test_hull",
+    "3661": "validation_chip_within_20km_of_test_hull",
+    "3662": "validation_chip_within_20km_of_test_hull",
+    "3664": "validation_chip_within_20km_of_test_hull",
+    "3666": "validation_chip_within_20km_of_test_hull",
+    "3668": "validation_chip_within_20km_of_test_hull",
+    "3669": "validation_chip_within_20km_of_test_hull",
+    "3671": "validation_chip_within_20km_of_test_hull",
+    "3672": "validation_chip_within_20km_of_test_hull",
+    "3673": "validation_chip_within_20km_of_test_hull",
+    "3674": "validation_chip_within_20km_of_test_hull",
+    "3675": "validation_chip_within_20km_of_test_hull",
+    "3679": "validation_chip_within_20km_of_test_hull",
+    "3680": "validation_chip_within_20km_of_test_hull",
+    "3682": "validation_chip_within_20km_of_test_hull",
+    "3683": "validation_chip_within_20km_of_test_hull",
+    "3684": "validation_chip_within_20km_of_test_hull",
+    "3685": "validation_chip_within_20km_of_test_hull",
+    "3688": "validation_chip_within_20km_of_test_hull",
+    "3689": "validation_chip_within_20km_of_test_hull",
+    "3691": "validation_chip_within_20km_of_test_hull",
+    "3692": "validation_chip_within_20km_of_test_hull",
+    "3694": "validation_chip_within_20km_of_test_hull",
+    "3696": "validation_chip_within_20km_of_test_hull",
+    "3697": "validation_chip_within_20km_of_test_hull",
+    "3698": "validation_chip_within_20km_of_test_hull",
+    "3700": "validation_chip_within_20km_of_test_hull",
+    "3701": "validation_chip_within_20km_of_test_hull",
+    "3704": "validation_chip_within_20km_of_test_hull",
+    "3705": "validation_chip_within_20km_of_test_hull",
+    "3706": "validation_chip_within_20km_of_test_hull",
+    "3708": "validation_chip_within_20km_of_test_hull",
+    "3709": "validation_chip_within_20km_of_test_hull",
+    "3711": "validation_chip_within_20km_of_test_hull",
+    "3713": "validation_chip_within_20km_of_test_hull",
+    "3715": "validation_chip_within_20km_of_test_hull",
+    "3717": "validation_chip_within_20km_of_test_hull",
+    "3718": "validation_chip_within_20km_of_test_hull",
+    "3719": "validation_chip_within_20km_of_test_hull",
+    "3721": "validation_chip_within_20km_of_test_hull",
+    "3722": "validation_chip_within_20km_of_test_hull",
+    "3726": "validation_chip_within_20km_of_test_hull",
+    "3727": "validation_chip_within_20km_of_test_hull",
+    "3734": "validation_chip_within_20km_of_test_hull",
+    "3735": "validation_chip_within_20km_of_test_hull",
+    "3737": "validation_chip_within_20km_of_test_hull",
+    "3741": "validation_chip_within_20km_of_test_hull",
+    "3742": "validation_chip_within_20km_of_test_hull",
+    "3744": "validation_chip_within_20km_of_test_hull",
+    "3747": "validation_chip_within_20km_of_test_hull",
+    "3752": "validation_chip_within_20km_of_test_hull",
+    "3753": "validation_chip_within_20km_of_test_hull",
+    "3756": "validation_chip_within_20km_of_test_hull",
+    "3796": "validation_chip_within_20km_of_test_hull",
+    "3797": "validation_chip_within_20km_of_test_hull",
+    "3799": "validation_chip_within_20km_of_test_hull",
+    "3800": "validation_chip_within_20km_of_test_hull",
+    "3802": "validation_chip_within_20km_of_test_hull",
+    "3803": "validation_chip_within_20km_of_test_hull",
+    "3804": "validation_chip_within_20km_of_test_hull",
+    "3806": "validation_chip_within_20km_of_test_hull",
+    "3807": "validation_chip_within_20km_of_test_hull",
+    "3819": "validation_chip_within_20km_of_test_hull",
+    "3820": "validation_chip_within_20km_of_test_hull",
+    "3822": "validation_chip_within_20km_of_test_hull",
+    "3823": "validation_chip_within_20km_of_test_hull",
+    "3825": "validation_chip_within_20km_of_test_hull",
+    "3826": "validation_chip_within_20km_of_test_hull",
+    "3827": "validation_chip_within_20km_of_test_hull",
+    "3828": "validation_chip_within_20km_of_test_hull",
+    "3830": "validation_chip_within_20km_of_test_hull",
+    "3852": "validation_chip_within_20km_of_test_hull",
+    "3853": "validation_chip_within_20km_of_test_hull",
+    "3855": "validation_chip_within_20km_of_test_hull",
+    "3856": "validation_chip_within_20km_of_test_hull",
+    "3858": "validation_chip_within_20km_of_test_hull",
+    "3879": "validation_chip_within_20km_of_test_hull",
+    "3881": "validation_chip_within_20km_of_test_hull",
+    "3882": "validation_chip_within_20km_of_test_hull",
+    "503": "validation_chip_within_20km_of_test_hull",
+    "504": "validation_chip_within_20km_of_test_hull",
+    "506": "validation_chip_within_20km_of_test_hull",
+    "507": "validation_chip_within_20km_of_test_hull",
+    "508": "validation_chip_within_20km_of_test_hull",
+    "509": "validation_chip_within_20km_of_test_hull",
+    "511": "validation_chip_within_20km_of_test_hull",
+    "514": "validation_chip_within_20km_of_test_hull",
+    "516": "validation_chip_within_20km_of_test_hull",
+    "522": "validation_chip_within_20km_of_test_hull",
+    "523": "validation_chip_within_20km_of_test_hull",
+    "528": "validation_chip_within_20km_of_test_hull",
+    "529": "validation_chip_within_20km_of_test_hull",
+    "530": "validation_chip_within_20km_of_test_hull",
+    "532": "validation_chip_within_20km_of_test_hull",
+    "534": "validation_chip_within_20km_of_test_hull",
+    "536": "validation_chip_within_20km_of_test_hull",
+    "537": "validation_chip_within_20km_of_test_hull",
+    "539": "validation_chip_within_20km_of_test_hull",
+    "541": "validation_chip_within_20km_of_test_hull",
+    "542": "validation_chip_within_20km_of_test_hull",
+    "543": "validation_chip_within_20km_of_test_hull",
+    "545": "validation_chip_within_20km_of_test_hull",
+    "547": "validation_chip_within_20km_of_test_hull",
+    "550": "validation_chip_within_20km_of_test_hull",
+    "552": "validation_chip_within_20km_of_test_hull",
+    "562": "validation_chip_within_20km_of_test_hull",
+    "564": "validation_chip_within_20km_of_test_hull",
+    "565": "validation_chip_within_20km_of_test_hull",
+    "566": "validation_chip_within_20km_of_test_hull",
+    "569": "validation_chip_within_20km_of_test_hull",
+    "570": "validation_chip_within_20km_of_test_hull",
+    "573": "validation_chip_within_20km_of_test_hull"
+  },
+  "note": "OpenSAR train is never used. Audit scope is data actually used to train/tune this checkpoint, not the original source authors’ model.",
+  "scenes": {
+    "S1A_IW_SLC__1SDV_20200724T053002_20200724T053032_033592_03E4A8_F5D5": {
+      "split": "train",
+      "day": "2020-07-24",
+      "chips": 379,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              5.0453,
+              5.0877
+            ],
+            [
+              4.2931,
+              5.1849
+            ],
+            [
+              3.5025,
+              5.2888
+            ],
+            [
+              3.4867,
+              5.292
+            ],
+            [
+              3.4551,
+              5.2985
+            ],
+            [
+              2.9461,
+              6.1625
+            ],
+            [
+              2.9589,
+              6.2259
+            ],
+            [
+              3.3782,
+              6.6613
+            ],
+            [
+              3.7703,
+              6.9279
+            ],
+            [
+              5.2984,
+              6.7341
+            ],
+            [
+              5.339,
+              6.7257
+            ],
+            [
+              5.38,
+              6.7172
+            ],
+            [
+              5.3124,
+              6.3835
+            ],
+            [
+              5.2993,
+              6.3198
+            ],
+            [
+              5.2437,
+              6.0495
+            ],
+            [
+              5.2306,
+              5.9859
+            ],
+            [
+              5.1831,
+              5.7554
+            ],
+            [
+              5.0798,
+              5.2546
+            ],
+            [
+              5.0716,
+              5.2149
+            ],
+            [
+              5.0453,
+              5.0877
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200824T052155_20200824T052225_034044_03F3B6_EA99": {
+      "split": "train",
+      "day": "2020-08-24",
+      "chips": 187,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              7.042,
+              4.7974
+            ],
+            [
+              6.2903,
+              4.8948
+            ],
+            [
+              5.4999,
+              4.9986
+            ],
+            [
+              4.9183,
+              5.1187
+            ],
+            [
+              4.9122,
+              5.4668
+            ],
+            [
+              4.9095,
+              5.7068
+            ],
+            [
+              4.9433,
+              5.8734
+            ],
+            [
+              5.7982,
+              6.6315
+            ],
+            [
+              7.3336,
+              6.4355
+            ],
+            [
+              7.3534,
+              6.4314
+            ],
+            [
+              7.3731,
+              6.4273
+            ],
+            [
+              7.308,
+              6.093
+            ],
+            [
+              7.1026,
+              5.0914
+            ],
+            [
+              7.0895,
+              5.0277
+            ],
+            [
+              7.0551,
+              4.8609
+            ],
+            [
+              7.042,
+              4.7974
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200910T053004_20200910T053034_034292_03FC65_1F7A": {
+      "split": "train",
+      "day": "2020-09-10",
+      "chips": 301,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              5.0448,
+              5.0864
+            ],
+            [
+              4.2925,
+              5.1836
+            ],
+            [
+              3.5019,
+              5.2871
+            ],
+            [
+              3.4703,
+              5.2937
+            ],
+            [
+              2.9664,
+              6.2643
+            ],
+            [
+              2.9791,
+              6.3277
+            ],
+            [
+              3.0616,
+              6.4852
+            ],
+            [
+              3.1041,
+              6.5427
+            ],
+            [
+              3.7855,
+              6.9232
+            ],
+            [
+              5.3182,
+              6.7285
+            ],
+            [
+              5.3385,
+              6.7243
+            ],
+            [
+              5.3795,
+              6.7158
+            ],
+            [
+              5.3118,
+              6.3819
+            ],
+            [
+              5.2988,
+              6.3184
+            ],
+            [
+              5.2433,
+              6.0483
+            ],
+            [
+              5.0711,
+              5.2136
+            ],
+            [
+              5.0448,
+              5.0864
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200407T052956_20200407T053026_032017_03B2E2_18FA": {
+      "split": "train",
+      "day": "2020-04-07",
+      "chips": 334,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              5.0442,
+              5.087
+            ],
+            [
+              4.2921,
+              5.1843
+            ],
+            [
+              3.5016,
+              5.2878
+            ],
+            [
+              3.4858,
+              5.2911
+            ],
+            [
+              3.47,
+              5.2944
+            ],
+            [
+              3.1883,
+              5.4186
+            ],
+            [
+              3.1031,
+              5.5432
+            ],
+            [
+              3.0631,
+              6.419
+            ],
+            [
+              3.076,
+              6.4824
+            ],
+            [
+              3.1186,
+              6.5399
+            ],
+            [
+              3.7852,
+              6.9237
+            ],
+            [
+              5.2973,
+              6.7332
+            ],
+            [
+              5.3788,
+              6.7164
+            ],
+            [
+              5.3112,
+              6.3825
+            ],
+            [
+              5.2427,
+              6.049
+            ],
+            [
+              5.1821,
+              5.7551
+            ],
+            [
+              5.0787,
+              5.2539
+            ],
+            [
+              5.0705,
+              5.2142
+            ],
+            [
+              5.0442,
+              5.087
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200630T053000_20200630T053030_033242_03D9F7_9D63": {
+      "split": "train",
+      "day": "2020-06-30",
+      "chips": 327,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              5.0457,
+              5.0878
+            ],
+            [
+              4.2936,
+              5.1851
+            ],
+            [
+              3.503,
+              5.2886
+            ],
+            [
+              3.4714,
+              5.2952
+            ],
+            [
+              2.9762,
+              5.9832
+            ],
+            [
+              2.9891,
+              6.0466
+            ],
+            [
+              3.105,
+              6.5428
+            ],
+            [
+              3.7866,
+              6.9246
+            ],
+            [
+              5.2988,
+              6.7341
+            ],
+            [
+              5.3599,
+              6.7215
+            ],
+            [
+              5.3804,
+              6.7172
+            ],
+            [
+              5.3128,
+              6.3835
+            ],
+            [
+              5.2442,
+              6.0496
+            ],
+            [
+              5.0589,
+              5.1514
+            ],
+            [
+              5.0457,
+              5.0878
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200706T074222_20200706T074242_033331_03DC92_2526": {
+      "split": "train",
+      "day": "2020-07-06",
+      "chips": 68,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -16.7976,
+              62.4918
+            ],
+            [
+              -19.818,
+              62.7249
+            ],
+            [
+              -19.9236,
+              62.7338
+            ],
+            [
+              -21.0298,
+              63.2704
+            ],
+            [
+              -21.0068,
+              63.333
+            ],
+            [
+              -20.7548,
+              63.8209
+            ],
+            [
+              -19.7222,
+              63.8059
+            ],
+            [
+              -17.9421,
+              63.709
+            ],
+            [
+              -17.9032,
+              63.7053
+            ],
+            [
+              -16.3039,
+              63.4318
+            ],
+            [
+              -16.7976,
+              62.4918
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1B_IW_SLC__1SDV_20200511T062006_20200511T062033_021530_028E04_7727": {
+      "split": "train",
+      "day": "2020-05-11",
+      "chips": 204,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              2.4419,
+              59.2943
+            ],
+            [
+              0.94226,
+              59.3976
+            ],
+            [
+              0.90704,
+              59.4012
+            ],
+            [
+              -1.5408,
+              59.7999
+            ],
+            [
+              -1.644,
+              60.2493
+            ],
+            [
+              -1.6866,
+              60.9905
+            ],
+            [
+              -1.6665,
+              61.0532
+            ],
+            [
+              -0.11925,
+              61.0978
+            ],
+            [
+              -0.053095,
+              61.0921
+            ],
+            [
+              3.0969,
+              60.7269
+            ],
+            [
+              2.4419,
+              59.2943
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1B_IW_SLC__1SDV_20200514T051033_20200514T051100_021573_028F48_FFD5": {
+      "split": "train",
+      "day": "2020-05-14",
+      "chips": 355,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              15.5077,
+              43.0755
+            ],
+            [
+              15.4793,
+              43.0795
+            ],
+            [
+              15.451,
+              43.0835
+            ],
+            [
+              15.4229,
+              43.0875
+            ],
+            [
+              13.3479,
+              43.4128
+            ],
+            [
+              12.5725,
+              44.0132
+            ],
+            [
+              12.5661,
+              44.0786
+            ],
+            [
+              12.6184,
+              44.4118
+            ],
+            [
+              12.6323,
+              44.4748
+            ],
+            [
+              12.8462,
+              44.9604
+            ],
+            [
+              13.809,
+              44.908
+            ],
+            [
+              13.8315,
+              44.9053
+            ],
+            [
+              14.7766,
+              44.7882
+            ],
+            [
+              14.801,
+              44.7851
+            ],
+            [
+              14.8253,
+              44.782
+            ],
+            [
+              14.8739,
+              44.7757
+            ],
+            [
+              15.8772,
+              44.5279
+            ],
+            [
+              15.8448,
+              44.3609
+            ],
+            [
+              15.8039,
+              44.1949
+            ],
+            [
+              15.6761,
+              43.6981
+            ],
+            [
+              15.5077,
+              43.0755
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {
+        "S1B_IW_GRDH_1SDV_20200620T165738_20200620T165803_022120_029FAC_17D8": 0.0
+      },
+      "excluded": true,
+      "reasons": [
+        "footprint_distance_at_most_20km:S1B_IW_GRDH_1SDV_20200620T165738_20200620T165803_022120_029FAC_17D8"
+      ]
+    },
+    "S1B_IW_SLC__1SDV_20200719T055553_20200719T055620_022536_02AC5E_ABAE": {
+      "split": "train",
+      "day": "2020-07-19",
+      "chips": 364,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8.0038,
+              57.8487
+            ],
+            [
+              6.5629,
+              57.9476
+            ],
+            [
+              5.5854,
+              58.0454
+            ],
+            [
+              3.8176,
+              58.3121
+            ],
+            [
+              3.9878,
+              59.3739
+            ],
+            [
+              4.0068,
+              59.4367
+            ],
+            [
+              5.0782,
+              59.6225
+            ],
+            [
+              5.4717,
+              59.6531
+            ],
+            [
+              5.5342,
+              59.6476
+            ],
+            [
+              5.5655,
+              59.6448
+            ],
+            [
+              5.5967,
+              59.642
+            ],
+            [
+              8.6036,
+              59.2845
+            ],
+            [
+              8.0038,
+              57.8487
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {
+        "S1B_IW_GRDH_1SDV_20200620T170123_20200620T170148_022120_029FAC_EB9E": 0.0
+      },
+      "excluded": true,
+      "reasons": [
+        "footprint_distance_at_most_20km:S1B_IW_GRDH_1SDV_20200620T170123_20200620T170148_022120_029FAC_EB9E"
+      ]
+    },
+    "S1A_IW_SLC__1SDV_20200421T050338_20200421T050406_032221_03BA14_7DD2": {
+      "split": "train",
+      "day": "2020-04-21",
+      "chips": 152,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16.958,
+              40.8652
+            ],
+            [
+              14.9103,
+              41.0275
+            ],
+            [
+              14.8886,
+              41.0303
+            ],
+            [
+              14.3864,
+              42.2824
+            ],
+            [
+              14.4007,
+              42.3454
+            ],
+            [
+              14.4151,
+              42.4086
+            ],
+            [
+              14.5801,
+              42.4943
+            ],
+            [
+              14.9913,
+              42.615
+            ],
+            [
+              15.2406,
+              42.6493
+            ],
+            [
+              15.2622,
+              42.6467
+            ],
+            [
+              15.2838,
+              42.644
+            ],
+            [
+              17.3431,
+              42.3151
+            ],
+            [
+              17.0495,
+              41.1949
+            ],
+            [
+              17.0391,
+              41.156
+            ],
+            [
+              16.9756,
+              40.9282
+            ],
+            [
+              16.958,
+              40.8652
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {
+        "S1B_IW_GRDH_1SDV_20200620T165738_20200620T165803_022120_029FAC_17D8": 145842.85
+      },
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200503T051344_20200503T051413_032396_03C03F_CD9E": {
+      "split": "val",
+      "day": "2020-05-03",
+      "chips": 109,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8.9837,
+              4.2382
+            ],
+            [
+              8.2326,
+              4.336
+            ],
+            [
+              7.4428,
+              4.4399
+            ],
+            [
+              6.9959,
+              4.5327
+            ],
+            [
+              7.0089,
+              4.5961
+            ],
+            [
+              7.073,
+              4.7564
+            ],
+            [
+              7.7589,
+              6.0691
+            ],
+            [
+              8.5307,
+              5.9705
+            ],
+            [
+              9.2988,
+              5.8708
+            ],
+            [
+              9.3194,
+              5.8665
+            ],
+            [
+              9.0786,
+              4.6985
+            ],
+            [
+              8.9837,
+              4.2382
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20201121T175319_20201121T175346_035350_04214D_710B": {
+      "split": "val",
+      "day": "2020-11-21",
+      "chips": 202,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.7144,
+              4.1549
+            ],
+            [
+              4.7012,
+              4.2184
+            ],
+            [
+              4.688,
+              4.282
+            ],
+            [
+              4.6667,
+              4.385
+            ],
+            [
+              4.5977,
+              4.7188
+            ],
+            [
+              4.5632,
+              4.8857
+            ],
+            [
+              4.5418,
+              4.9893
+            ],
+            [
+              4.4942,
+              5.2198
+            ],
+            [
+              4.4122,
+              5.617
+            ],
+            [
+              4.4532,
+              5.6256
+            ],
+            [
+              4.8254,
+              5.703
+            ],
+            [
+              5.0106,
+              5.7414
+            ],
+            [
+              5.0469,
+              5.7489
+            ],
+            [
+              5.9608,
+              5.8837
+            ],
+            [
+              6.8662,
+              4.7895
+            ],
+            [
+              6.8792,
+              4.7261
+            ],
+            [
+              6.8246,
+              4.5414
+            ],
+            [
+              5.5124,
+              4.208
+            ],
+            [
+              5.4949,
+              4.2043
+            ],
+            [
+              5.4772,
+              4.2006
+            ],
+            [
+              4.7144,
+              4.1549
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200126T052956_20200126T053026_030967_038E50_4681": {
+      "split": "test",
+      "day": "2020-01-26",
+      "chips": 343,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              5.0211,
+              4.9749
+            ],
+            [
+              4.2675,
+              5.0646
+            ],
+            [
+              3.4764,
+              5.1648
+            ],
+            [
+              3.4448,
+              5.1713
+            ],
+            [
+              3.0427,
+              5.5567
+            ],
+            [
+              3.0407,
+              5.6232
+            ],
+            [
+              3.1055,
+              6.4767
+            ],
+            [
+              3.1183,
+              6.5401
+            ],
+            [
+              3.7852,
+              6.924
+            ],
+            [
+              5.2979,
+              6.7335
+            ],
+            [
+              5.359,
+              6.7209
+            ],
+            [
+              5.3795,
+              6.7166
+            ],
+            [
+              5.3665,
+              6.6531
+            ],
+            [
+              5.0211,
+              4.9749
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    },
+    "S1A_IW_SLC__1SDV_20200928T171759_20200928T171831_034562_0405EA_2228": {
+      "split": "test",
+      "day": "2020-09-28",
+      "chips": 405,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              4.8564,
+              54.754
+            ],
+            [
+              4.1853,
+              56.5223
+            ],
+            [
+              5.5283,
+              56.7313
+            ],
+            [
+              6.9479,
+              56.9323
+            ],
+            [
+              7.0064,
+              56.9378
+            ],
+            [
+              7.0356,
+              56.9405
+            ],
+            [
+              7.2386,
+              56.9592
+            ],
+            [
+              7.2673,
+              56.9618
+            ],
+            [
+              8.155,
+              56.9749
+            ],
+            [
+              8.2579,
+              56.7105
+            ],
+            [
+              8.2756,
+              56.6477
+            ],
+            [
+              8.2932,
+              56.5848
+            ],
+            [
+              8.6133,
+              55.3267
+            ],
+            [
+              7.2699,
+              55.0781
+            ],
+            [
+              4.9997,
+              54.7712
+            ],
+            [
+              4.8925,
+              54.7583
+            ],
+            [
+              4.8564,
+              54.754
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {
+        "S1B_IW_GRDH_1SDV_20200620T170123_20200620T170148_022120_029FAC_EB9E": 9938.35
+      },
+      "excluded": true,
+      "reasons": [
+        "footprint_distance_at_most_20km:S1B_IW_GRDH_1SDV_20200620T170123_20200620T170148_022120_029FAC_EB9E"
+      ]
+    },
+    "S1A_IW_SLC__1SDV_20200214T174430_20200214T174457_031252_03982E_1D44": {
+      "split": "test",
+      "day": "2020-02-14",
+      "chips": 317,
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              7.0922,
+              2.6087
+            ],
+            [
+              7.079,
+              2.6722
+            ],
+            [
+              7.0311,
+              2.9027
+            ],
+            [
+              7.0229,
+              2.9422
+            ],
+            [
+              6.9619,
+              3.2361
+            ],
+            [
+              6.9405,
+              3.3393
+            ],
+            [
+              6.8367,
+              3.8401
+            ],
+            [
+              6.789,
+              4.0706
+            ],
+            [
+              6.8299,
+              4.0792
+            ],
+            [
+              7.1064,
+              4.1372
+            ],
+            [
+              7.1255,
+              4.1412
+            ],
+            [
+              8.7949,
+              4.4355
+            ],
+            [
+              8.9785,
+              4.2337
+            ],
+            [
+              9.1095,
+              3.9802
+            ],
+            [
+              9.202,
+              3.5865
+            ],
+            [
+              9.2155,
+              3.5232
+            ],
+            [
+              9.1615,
+              3.3384
+            ],
+            [
+              8.6823,
+              2.89
+            ],
+            [
+              7.9072,
+              2.666
+            ],
+            [
+              7.8897,
+              2.6623
+            ],
+            [
+              7.8544,
+              2.6549
+            ],
+            [
+              7.0922,
+              2.6087
+            ]
+          ]
+        ]
+      },
+      "nearest_checked_reference_distance_m": {},
+      "excluded": false,
+      "reasons": []
+    }
+  }
+}

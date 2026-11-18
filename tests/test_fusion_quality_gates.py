@@ -57,6 +57,24 @@ class QualityGates(unittest.TestCase):
         result = self.fusion.match_with_reasons([detection(), detection(300, 1)], {1: estimate(10), 2: estimate(310)})
         self.assertEqual(result[0], {0: 1, 1: 2})
 
+    def test_bias_guard_withholds_swapped_tracks_beyond_the_matching_gate(self):
+        detections = [detection(-70), detection(70, 1)]
+        ais = {1: estimate(90), 2: estimate(-90)}
+        self.assertEqual(self.fusion.match_with_reasons(detections, ais), ({}, {}, ['ambiguous', 'ambiguous']))
+        cfg = RunConfig()
+        cfg.fusion.systematic_bias_guard_m = 0.
+        self.assertEqual(SARAISFusion(cfg).match(detections, ais)[0], {0: 2, 1: 1})
+
+    def test_bias_guard_does_not_expand_match_radius(self):
+        self.assertEqual(self.fusion.match_with_reasons([detection(160)], {1: estimate()})[2], ['out_of_range'])
+
+    def test_stale_closest_proposal_cannot_be_replaced_by_fresh_neighbor(self):
+        tracks = {11: estimate(0,gap=181), 22: estimate(80)}
+        self.assertEqual(self.fusion.match_with_reasons([detection()], tracks), ({},{},['stale_ais']))
+        previous = RunConfig()
+        previous.fusion.preserve_proposed_pair = False
+        self.assertEqual(SARAISFusion(previous).match([detection()],tracks)[0], {0:22})
+
     def test_greedy_fallback_honors_gate(self):
         with patch('sonarnet.fusion.matching._HAS_SCIPY', False):
             self.assertEqual(self.fusion.match([detection()], {1: estimate(gap=1000)})[0], {})

@@ -156,12 +156,17 @@ def printable_review(tile, review, day):
     assessment = operational_assessment(tile, review)
     decision = ('Đang xác minh; chưa có kết luận nghiệp vụ' if assessment['status'] == 'pending' else
                 f"{assessment['conclusion']} — chuyên viên: {assessment['reviewer']}; căn cứ: {assessment['basis']}; UTC: {assessment['confirmed_at']}")
+    masking = 'Phiên bản mặt nạ đất và dải ven bờ chưa có trong hồ sơ ảnh này. Mở ảnh nguồn và bản dự đoán gốc để đối chiếu.'
+    if tile.get('land_mask_version'):
+        masking = (f"Bộ lọc đất {tile['land_mask_version']}. Đã loại "
+                   f"{len(tile.get('excluded_detections', []))} ứng viên chạm đất hoặc vùng 500 m từ bờ. "
+                   'Kết quả gốc được giữ riêng trong gói bằng chứng.')
     rows = ''.join(f'<tr><td>{d["id"]}</td><td>{d["confidence"]:.3f}</td><td>{d["latitude"]:.5f}</td><td>{d["longitude"]:.5f}</td></tr>' for d in tile['detections'])
     return f'''<!doctype html><html lang="vi"><meta charset="utf-8"><title>SonarNet — hồ sơ kiểm tra</title>
 <style>body{{font:16px system-ui;max-width:850px;margin:40px auto;padding:20px;color:#193249}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;padding:10px;border-bottom:1px solid #ddd}}.note{{white-space:pre-wrap}}small{{overflow-wrap:anywhere}}@media print{{body{{margin:0}}}}</style>
 <h1>Hồ sơ kiểm tra ảnh SAR</h1><p>{esc(tile['key'])} · Ngày ảnh UTC: {esc(day)}</p>
 <p>Nguồn: {esc(tile['source'])}<br>Phạm vi WGS84: {esc(tile['bbox'])}</p>
-<p>Bộ lọc đất: {esc(tile.get('land_mask_version', 'Chưa áp dụng'))} · Loại {len(tile.get('excluded_detections', []))} ứng viên chạm đất hoặc vùng 500 m từ bờ ra biển. Tàu trong cảng/sát bờ cũng bị bỏ qua. Kết quả gốc được giữ riêng trong gói bằng chứng.</p>
+<p>{esc(masking)}</p>
 <p><b>Đánh dấu của người xem:</b> {esc(review['status'])}</p><p class="note">{esc(review['note'])}</p>
 <p><b>Đối chiếu AIS:</b> Thiếu dữ liệu. Chưa có nguồn AIS cùng thời điểm để ghép.</p>
 <p><b>Xác nhận nghiệp vụ:</b> {esc(decision)}</p>
@@ -171,17 +176,22 @@ def printable_review(tile, review, day):
 <small>Mã ảnh: {esc(tile['image_sha256'])}<br>Mã mô hình: {esc(tile['weights_sha256'])}</small></html>'''
 
 
-def evidence_bundle(root, tile, review, day):
+def evidence_bundle(root, tile, review, day, *, fixed_images=None):
     """An offline packet with exact image files, notes and integrity hashes."""
-    from scan_assets import resolve_scan_directory
-    directory = resolve_scan_directory(root, tile)
-    from land_mask import annotated_image
-    marked = BytesIO()
-    annotated_image(root, tile).save(marked, format='JPEG', quality=95)
+    if fixed_images is None:
+        from scan_assets import resolve_scan_directory
+        from land_mask import annotated_image
+        directory = resolve_scan_directory(root, tile)
+        marked = BytesIO()
+        annotated_image(root, tile).save(marked, format='JPEG', quality=95)
+        images = {'source.png':(directory/'sar.png').read_bytes(), 'candidates.jpg':marked.getvalue(),
+                  'raw-model-candidates.jpg':(directory/'detections.jpg').read_bytes()}
+    else:
+        images = {name:fixed_images[name] for name in ('source.png','candidates.jpg','raw-model-candidates.jpg')}
+        if hashlib.sha256(images['source.png']).hexdigest() != tile['image_sha256']:
+            raise ValueError('Ảnh nguồn trong hồ sơ mẫu không khớp.')
     payloads = {
-        'source.png': (directory / 'sar.png').read_bytes(),
-        'candidates.jpg': marked.getvalue(),
-        'raw-model-candidates.jpg': (directory / 'detections.jpg').read_bytes(),
+        **images,
         'review.html': printable_review(tile, review, day).encode('utf-8'),
         'evidence.json': json.dumps(dict(tile, review=review, data_status='MISSING_DATA',
             operational_assessment=operational_assessment(tile, review)), ensure_ascii=False, indent=2).encode('utf-8'),

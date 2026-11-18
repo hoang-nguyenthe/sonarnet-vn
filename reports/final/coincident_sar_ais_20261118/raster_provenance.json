@@ -1,0 +1,31 @@
+{
+  "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+  "band": "VV",
+  "source_collection": "sentinel-1-rtc",
+  "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241213T225129_20241213T225154_056980_07001E_rtc",
+  "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/12/13/IW/DV/S1A_IW_GRDH_1SDV_20241213T225129_20241213T225154_056980_07001E_F748/measurement/iw-vv.rtc.tiff",
+  "source_acquired_at": "2024-12-13T22:51:42.132332Z",
+  "source_native_pixel_spacing_m": 10.0,
+  "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+  "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+  "license": "CC-BY-4.0",
+  "source_provider": "planetary",
+  "images": [
+    {
+      "tile": 0,
+      "sha256": "4e02cdd238e3d7c5f249bfa10146f21afff1c3eafe8246348900e5d2e34dc0d1"
+    },
+    {
+      "tile": 1,
+      "sha256": "fdab6884d8a54f74681e07fc916c11727d31117ffb6dee5abd19a8e2ed13812b"
+    },
+    {
+      "tile": 2,
+      "sha256": "8acbfd39a971ddf669c53cf6063856853eab4c398fbf9866d05df3a15a0a715f"
+    },
+    {
+      "tile": 3,
+      "sha256": "7ceb79a0c0aa7eb405e9055ac1d07ce821ed6207b91c54806589fd92986e6b4b"
+    }
+  ]
+}

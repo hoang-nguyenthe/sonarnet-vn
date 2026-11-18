@@ -30,6 +30,7 @@ def legacy(dets, estimates):
 
 def run(out):
     cfg = RunConfig()
+    cfg.fusion.preserve_proposed_pair = False
     fusion = SARAISFusion(cfg)
     rng = np.random.default_rng(20261116)
     cases, totals = [], []

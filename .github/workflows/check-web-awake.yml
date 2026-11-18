@@ -2,6 +2,11 @@ name: Check SonarNet web availability
 
 on:
   workflow_dispatch:
+    inputs:
+      evidence:
+        description: Verify the Chặng 1 evidence page and report control
+        type: boolean
+        default: false
   schedule:
     # UTC; avoid the busiest start of the hour. Vietnam: 01:17, 07:17, 13:17, 19:17.
     - cron: '17 */6 * * *'
@@ -36,7 +41,12 @@ jobs:
           python -m pip install playwright==1.63.0
           python -m playwright install --with-deps chromium
       - name: Open app, wake if needed, and verify rendered UI
-        run: python scripts/check_web_awake.py
+        env:
+          CHECK_EVIDENCE: ${{ inputs.evidence || 'false' }}
+        run: |
+          args=()
+          if [ "$CHECK_EVIDENCE" = true ]; then args+=(--evidence); fi
+          python scripts/check_web_awake.py "${args[@]}"
       - name: Save browser evidence
         if: ${{ always() }}
         uses: actions/upload-artifact@v4

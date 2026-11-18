@@ -1,0 +1,90 @@
+{
+  "disclosure": "Post-hoc; no candidate chosen or promoted. Nearest centers allow one detection to count for several labels, are not a matching metric, and use the same corner transform as the labels.",
+  "inputs_sha256": {
+    "confirmation_manifest.json": "490d9d9891551c5928e00b2f8ebb87fc2849a3723c7e8d9e693b47c11c6b2cf2",
+    "pixel_audit.json": "05f8ef15a742b6701292d2d82da700e181bfdc6d0b460035d69e172a38a2e076",
+    "yolo_predictions.json.gz": "3596848335c6b4ea17850fdb02f03e378b710a85a5d82ca5988ebeeedbc2e764"
+  },
+  "labels": 147,
+  "box_iou_sensitivity": {
+    "conf_0.01_iou_0.25": {
+      "true_positive": 34,
+      "false_positive": 141,
+      "false_negative": 113,
+      "precision": 0.1943,
+      "recall": 0.2313
+    },
+    "conf_0.01_iou_0.50": {
+      "true_positive": 15,
+      "false_positive": 160,
+      "false_negative": 132,
+      "precision": 0.0857,
+      "recall": 0.102
+    },
+    "conf_0.05_iou_0.25": {
+      "true_positive": 20,
+      "false_positive": 51,
+      "false_negative": 127,
+      "precision": 0.2817,
+      "recall": 0.1361
+    },
+    "conf_0.05_iou_0.50": {
+      "true_positive": 11,
+      "false_positive": 60,
+      "false_negative": 136,
+      "precision": 0.1549,
+      "recall": 0.0748
+    },
+    "conf_0.10_iou_0.25": {
+      "true_positive": 14,
+      "false_positive": 25,
+      "false_negative": 133,
+      "precision": 0.359,
+      "recall": 0.0952
+    },
+    "conf_0.10_iou_0.50": {
+      "true_positive": 3,
+      "false_positive": 36,
+      "false_negative": 144,
+      "precision": 0.0769,
+      "recall": 0.0204
+    }
+  },
+  "nearest_centers_any_overlap": {
+    "within_25m_after_conf_0.01": 23,
+    "within_50m_after_conf_0.01": 34,
+    "within_100m_after_conf_0.01": 44,
+    "within_25m_after_conf_0.10": 7,
+    "within_50m_after_conf_0.10": 13,
+    "within_100m_after_conf_0.10": 18
+  },
+  "by_scene": {
+    "S1A_IW_SLC__1SDV_20200706T074222_20200706T074242_033331_03DC92_2526": {
+      "all_labels": 24,
+      "within_25m_after_conf_0.01": 3,
+      "within_50m_after_conf_0.01": 5,
+      "within_100m_after_conf_0.01": 7,
+      "within_25m_after_conf_0.10": 0,
+      "within_50m_after_conf_0.10": 0,
+      "within_100m_after_conf_0.10": 3
+    },
+    "S1B_IW_SLC__1SDV_20200511T062006_20200511T062033_021530_028E04_7727": {
+      "all_labels": 67,
+      "within_25m_after_conf_0.01": 17,
+      "within_50m_after_conf_0.01": 22,
+      "within_100m_after_conf_0.01": 25,
+      "within_25m_after_conf_0.10": 5,
+      "within_50m_after_conf_0.10": 9,
+      "within_100m_after_conf_0.10": 9
+    },
+    "S1A_IW_SLC__1SDV_20200421T050338_20200421T050406_032221_03BA14_7DD2": {
+      "all_labels": 56,
+      "within_25m_after_conf_0.01": 3,
+      "within_50m_after_conf_0.01": 7,
+      "within_100m_after_conf_0.01": 12,
+      "within_25m_after_conf_0.10": 2,
+      "within_50m_after_conf_0.10": 4,
+      "within_100m_after_conf_0.10": 6
+    }
+  }
+}

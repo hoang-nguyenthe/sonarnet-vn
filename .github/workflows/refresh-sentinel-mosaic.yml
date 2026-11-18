@@ -30,11 +30,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Check whether the source retry is due
+        id: due
+        env:
+          FORCE_PROBE: ${{ inputs.force_probe || 'false' }}
+        run: |
+          args=(--check-cooldown)
+          if [ "$FORCE_PROBE" = true ]; then args+=(--force-probe); fi
+          state=$(python scripts/run_satellite_refresh.py "${args[@]}")
+          case "$state" in
+            due|deferred) echo "state=$state" >> "$GITHUB_OUTPUT" ;;
+            *) echo "Unexpected preflight state" >&2; exit 1 ;;
+          esac
       - name: Install the data client and CPU inference runtime
+        if: ${{ steps.due.outputs.state == 'due' }}
         run: |
           pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt 'ultralytics>=8.3,<9' 'rasterio>=1.4,<2'
       - name: Refresh Vietnam with bounded source fallback
+        if: ${{ steps.due.outputs.state == 'due' }}
         env:
           COPERNICUS_CLIENT_ID: ${{ secrets.COPERNICUS_CLIENT_ID }}
           COPERNICUS_CLIENT_SECRET: ${{ secrets.COPERNICUS_CLIENT_SECRET }}
@@ -46,7 +60,7 @@ jobs:
           python scripts/run_satellite_refresh.py "${args[@]}"
       - name: Stage changed assets and checkpoint only
         id: assets
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.due.outputs.state == 'due' }}
         run: |
           git add assets/sentinel1_vietnam_latest.png assets/sentinel1_vietnam_latest.json assets/sentinel1_global assets/real_scan assets/gfw_global_ship_detections_latest.json
           if git diff --cached --quiet; then

@@ -164,6 +164,7 @@ def main(argv=None):
                           date_scope='Each image retains its own observation day.')
         report['worker_progress'] = {'checked_at': datetime.now(timezone.utc).isoformat(),
                                     'region': args.region, 'remaining_at_start': len(plan['next_cells']),
+                                    'catalog_checks_this_run': checked,
                                     'updated_this_run': updated, 'failed_this_run': failed}
         pending = report_path.with_suffix('.pending.json')
         pending.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')

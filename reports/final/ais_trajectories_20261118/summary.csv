@@ -1,0 +1,13 @@
+scenario,method,points,links_correct,links_wrong,links_to_clutter,abstained_on_target,clutter_unmatched
+mixed_quality,distance_only,480,356,4,0,120,0
+mixed_quality,quality_gated,480,136,0,0,344,0
+near_crossing,distance_only,480,350,10,0,120,0
+near_crossing,quality_gated,480,129,0,0,351,0
+keep_two_crossing_tracks_when_separated,distance_only,480,360,0,0,120,0
+keep_two_crossing_tracks_when_separated,quality_gated,480,250,0,0,230,0
+unlabeled_clutter_near_track,distance_only,600,358,0,2,122,118
+unlabeled_clutter_near_track,quality_gated,600,249,0,0,231,120
+sparse_one_sided,distance_only,480,360,0,0,120,0
+sparse_one_sided,quality_gated,480,360,0,0,120,0
+position_bias,distance_only,480,120,240,0,120,0
+position_bias,quality_gated,480,120,240,0,120,0

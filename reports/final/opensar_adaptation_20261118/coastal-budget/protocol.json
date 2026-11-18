@@ -1,0 +1,8 @@
+{
+  "created_utc": "2026-11-18T13:08:13.873200+00:00",
+  "scored_reference_sha256": "eb7dd4d9798872475dfcb4c5413e250666922d831726f36880b868dcfea01562",
+  "code_sha256": "0e08381dc2cc1bfb7a85829b2ea996596ad2b6f6dc3a318dd9013db0e2a08d71",
+  "max_candidates_per_water_km2": 0.05,
+  "design": "Retrospective sensitivity after the first scored comparison. Reuse exact frozen predictions and confidence. Top confidence per acquisition, integer limit=floor(assigned water area x .05). Assign a reserved share to candidates <=500 m from GSHHG shoreline when requested. Do not use shortlist results to refit or promote the detector.",
+  "nearshore_reserved_fraction": 0.2
+}

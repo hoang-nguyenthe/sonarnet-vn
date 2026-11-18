@@ -1,0 +1,54 @@
+{
+  "created_at": "2026-11-18T07:08:00.446217+00:00",
+  "dataset_revision": "46cee3d9e4ff8b4716e2ea5bbe2934e13cb36460",
+  "cohort_sha256": "505a1279b734ee95b243a2269613b27390b6e4825832ae936df328d524bb290c",
+  "download_manifest_sha256": "85d59232f8856b7a0ad12a6caeb776a095649a06307b86b51d1468fb84b41d6a",
+  "weights_sha256": "5b1eef4e8e45b17ea3f071285af5693dcb5ecc2c98d272264a570f58a1eb2bb1",
+  "code_sha256": {
+    "scripts/evaluate_ossdd_followup.py": "359cf5e1c63b71e33084e6f44c747727358738169e20c0bbd10101500ffd9e1a",
+    "scripts/benchmark_sar_archive.py": "191271e968089f0a3cf44da4d4508628fffb3d50d70cbc0dc8af7589ed3b3ca6",
+    "src/sonarnet/evaluation/independent_sar.py": "73d2d355de0c51fa8d275f3136056302c7b0816afcc2e53bd7d189d4a80eb47a",
+    "src/sonarnet/evaluation/detection_metrics.py": "a442ccfc37fcd4a7b708f738ff0b53f69874fc8cb137a91b40a4772cc663c643"
+  },
+  "grid": {
+    "yolo": [
+      0.1,
+      0.25,
+      0.4,
+      0.6
+    ],
+    "global_threshold": [
+      0.55,
+      0.7,
+      0.85
+    ],
+    "local_contrast": [
+      2.0,
+      3.0,
+      4.0
+    ]
+  },
+  "yolo_transforms": [
+    "log1p",
+    "linear"
+  ],
+  "baseline_transform": "log1p",
+  "transform": "Nonnegative VV, optional log1p, clip to per-chip P1–P99.9, round to uint8.",
+  "selection": "Best validation F1 at IoU=.5; ties prefer log1p then higher threshold.",
+  "device": "cpu",
+  "threads": 4,
+  "hardware": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "torch": "2.8.0",
+  "ultralytics": "8.3.253",
+  "inference": {
+    "imgsz": 640,
+    "conf": 0.001,
+    "nms_iou": 0.7,
+    "max_det": 1000
+  },
+  "latency": "Batch=1, three warmups, normalization+inference+NMS (or threshold+components), file I/O excluded.",
+  "duplicate_rule": "Reject any exact cross-split duplicate; report dHash Hamming<=3 for visual triage.",
+  "aabb_rule": "Use source XYXY corners as given. Count but exclude zero-area source annotations.",
+  "nominal_rule": "10m/pixel from published GRD spacing; raster-only area and image-plane errors, not confirmed GSD."
+}

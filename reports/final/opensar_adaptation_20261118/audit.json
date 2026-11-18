@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "counts": {
+    "fit": {
+      "chips": 1669,
+      "scenes": 7,
+      "boxes": 1020,
+      "backgrounds": 1086
+    },
+    "tune": {
+      "chips": 48,
+      "scenes": 1,
+      "boxes": 30,
+      "backgrounds": 25
+    }
+  },
+  "fresh_chips": 196,
+  "diagnostic_chips": 218,
+  "image_quality_exclusions": {
+    "train": {
+      "uncertain_vessel_label": 259,
+      "valid_pixels_below_95_percent": 293,
+      "invalid_xml_box": 20
+    },
+    "tune": {
+      "valid_ocean_le_1_sqkm": 61
+    },
+    "fresh": {
+      "valid_pixels_below_95_percent": 199,
+      "invalid_xml_box": 1,
+      "valid_ocean_le_1_sqkm": 9
+    }
+  },
+  "training_geographic_quarantine": {
+    "2708": {
+      "2020-05-03": 17504.28
+    },
+    "2709": {
+      "2020-05-03": 15521.48
+    },
+    "2711": {
+      "2020-05-03": 12294.75
+    },
+    "2712": {
+      "2020-05-03": 10317.07
+    },
+    "2714": {
+      "2020-05-03": 7126.04
+    },
+    "2715": {
+      "2020-05-03": 5148.76
+    }
+  },
+  "min_fit_to_protected_scene_m": {
+    "2020-05-03": 20741.52181207645,
+    "2020-04-21": 50544.33905976651,
+    "2020-09-28": 97479.20635891113,
+    "2020-05-11": 82958.31696100379
+  },
+  "training_pixel_quarantine": [],
+  "tuning_pixel_quarantine": [],
+  "data_policy_sha256": "d9c9055d5a8b86d74363a88c6903de8c7b665c32ef37fbe732a44c24c460ac79",
+  "manifest_sha256": "325725cbf157237f6ef4018481b046abfc0fbe3a1691894fe7ed8f802edee75a",
+  "fresh_manifest_sha256": "cbfa0d4ffba54323e0e3b0ad7fad682df1a37d4cd548937a534cffd5f15f7c3b"
+}

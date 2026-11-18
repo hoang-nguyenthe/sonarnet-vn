@@ -1,0 +1,187 @@
+{
+  "shortlist_max_per_km2": 0.05,
+  "evaluation": {
+    "diagnostic": {
+      "metrics": {
+        "mAP@0.5": 0.1332,
+        "mAP@0.5:0.95": 0.0493,
+        "precision": 0.2791,
+        "recall": 0.2449,
+        "f1": 0.2609,
+        "n_ground_truth": 147,
+        "n_predictions": 129,
+        "true_positive": 36,
+        "false_positive": 93,
+        "false_negative": 111,
+        "false_alarms_per_km2": null,
+        "nearshore_recall": null,
+        "nearshore_ground_truth": null,
+        "center_error_m_median": null,
+        "box_width_error_m_median": null,
+        "box_height_error_m_median": null,
+        "georeferenced_matches": 0,
+        "false_alarms_per_megapixel": 1.6273708518491972,
+        "evaluated_image_pixels": 57147392,
+        "center_error_px_median": 2.4280690572265557,
+        "center_error_px_p95": 5.129151864269117,
+        "box_width_error_px_median": 5.4616851806640625,
+        "box_height_error_px_median": 1.9038782119750977,
+        "localized_matches": 36,
+        "evaluated_water_scene_km2": 2606.8461795324774,
+        "valid_ocean_area_by_scene_km2": {
+          "S1A_IW_SLC__1SDV_20200421T050338_20200421T050406_032221_03BA14_7DD2": 965.2137071471577,
+          "S1A_IW_SLC__1SDV_20200706T074222_20200706T074242_033331_03DC92_2526": 644.7095576846983,
+          "S1B_IW_SLC__1SDV_20200511T062006_20200511T062033_021530_028E04_7727": 996.9229147006214
+        },
+        "benchmark_unmatched_per_km2": 0.03567529251636896,
+        "by_distance_to_mapped_shore_m": {
+          "500": {
+            "labels": 35,
+            "matched": 6,
+            "recall": 0.17142857142857143
+          },
+          "1000": {
+            "labels": 42,
+            "matched": 7,
+            "recall": 0.16666666666666666
+          },
+          "2000": {
+            "labels": 46,
+            "matched": 8,
+            "recall": 0.17391304347826086
+          }
+        },
+        "projected_box_center_error_m": {
+          "n": 36,
+          "median": 17.939603372124626,
+          "p95": 39.5601347781151
+        },
+        "projected_box_width_error_m": {
+          "n": 36,
+          "median": 19.46642293037334,
+          "p95": 60.286874683252904
+        },
+        "projected_box_height_error_m": {
+          "n": 36,
+          "median": 26.42236654522135,
+          "p95": 84.34882181317082
+        },
+        "error_to_source_wgs84_centroid_m": {
+          "n": 36,
+          "median": 68.45290007792082,
+          "p95": 99.28660743876596
+        },
+        "transform_residual_at_source_centroid_m": {
+          "n": 147,
+          "median": 55.8535730573949,
+          "p95": 86.85273722167754
+        }
+      },
+      "per_acquisition": {
+        "S1A_IW_SLC__1SDV_20200706T074222_20200706T074242_033331_03DC92_2526": {
+          "area_km2": 644.7095576846984,
+          "candidate_limit": 32,
+          "available": 50,
+          "shortlisted": 32
+        },
+        "S1B_IW_SLC__1SDV_20200511T062006_20200511T062033_021530_028E04_7727": {
+          "area_km2": 996.9229147006209,
+          "candidate_limit": 49,
+          "available": 147,
+          "shortlisted": 49
+        },
+        "S1A_IW_SLC__1SDV_20200421T050338_20200421T050406_032221_03BA14_7DD2": {
+          "area_km2": 965.2137071471574,
+          "candidate_limit": 48,
+          "available": 65,
+          "shortlisted": 48
+        }
+      },
+      "predictions_sha256": "1351f99bc0fef99939aa20906a8e78af9c2ae9c9b6df77df625fc33d80486eff"
+    },
+    "north_sea": {
+      "metrics": {
+        "mAP@0.5": 0.0516,
+        "mAP@0.5:0.95": 0.0191,
+        "precision": 0.1562,
+        "recall": 0.137,
+        "f1": 0.146,
+        "n_ground_truth": 146,
+        "n_predictions": 128,
+        "true_positive": 20,
+        "false_positive": 108,
+        "false_negative": 126,
+        "false_alarms_per_km2": null,
+        "nearshore_recall": null,
+        "nearshore_ground_truth": null,
+        "center_error_m_median": null,
+        "box_width_error_m_median": null,
+        "box_height_error_m_median": null,
+        "georeferenced_matches": 0,
+        "false_alarms_per_megapixel": 2.1019760443239797,
+        "evaluated_image_pixels": 51380224,
+        "center_error_px_median": 3.3516630742306956,
+        "center_error_px_p95": 5.334606632630521,
+        "box_width_error_px_median": 7.342529296875,
+        "box_height_error_px_median": 2.82330322265625,
+        "localized_matches": 20,
+        "evaluated_water_scene_km2": 2566.668676724427,
+        "valid_ocean_area_by_scene_km2": {
+          "S1A_IW_SLC__1SDV_20200928T171759_20200928T171831_034562_0405EA_2228": 2566.668676724427
+        },
+        "benchmark_unmatched_per_km2": 0.04207788912506978,
+        "by_distance_to_mapped_shore_m": {
+          "500": {
+            "labels": 14,
+            "matched": 0,
+            "recall": 0.0
+          },
+          "1000": {
+            "labels": 15,
+            "matched": 1,
+            "recall": 0.06666666666666667
+          },
+          "2000": {
+            "labels": 18,
+            "matched": 1,
+            "recall": 0.05555555555555555
+          }
+        },
+        "projected_box_center_error_m": {
+          "n": 20,
+          "median": 20.589081606342177,
+          "p95": 35.05373545282586
+        },
+        "projected_box_width_error_m": {
+          "n": 20,
+          "median": 27.92426593563154,
+          "p95": 82.09795841776946
+        },
+        "projected_box_height_error_m": {
+          "n": 20,
+          "median": 39.25083290597365,
+          "p95": 95.0214817167361
+        },
+        "error_to_source_wgs84_centroid_m": {
+          "n": 20,
+          "median": 49.44331510702557,
+          "p95": 64.29860982594083
+        },
+        "transform_residual_at_source_centroid_m": {
+          "n": 146,
+          "median": 55.00109362034699,
+          "p95": 69.45510535858254
+        }
+      },
+      "per_acquisition": {
+        "S1A_IW_SLC__1SDV_20200928T171759_20200928T171831_034562_0405EA_2228": {
+          "area_km2": 2566.6686767244278,
+          "candidate_limit": 128,
+          "available": 1012,
+          "shortlisted": 128
+        }
+      },
+      "predictions_sha256": "192a93cab26466fa4c3858a64662fe11e5595aa7826e4d92d63cd5c3b913cac1"
+    }
+  }
+}

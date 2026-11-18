@@ -1,0 +1,7 @@
+{
+  "created_utc": "2026-11-18T13:05:41.220321+00:00",
+  "scored_reference_sha256": "eb7dd4d9798872475dfcb4c5413e250666922d831726f36880b868dcfea01562",
+  "code_sha256": "608eb51237e71a89a43fd1032e3642c2ac8020ea2d7a866e80ffb05342cf4fb6",
+  "max_candidates_per_water_km2": 0.05,
+  "design": "Retrospective sensitivity after the first scored comparison. Reuse exact frozen predictions and confidence. Top confidence per acquisition, integer limit=floor(assigned water area x .05). Do not use shortlist results to refit or promote the detector."
+}

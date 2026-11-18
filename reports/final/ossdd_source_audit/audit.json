@@ -1,0 +1,45 @@
+{
+  "repository": "sylviaHoch/OpenSARShip-Ship-Detection-Dataset",
+  "revision": "46cee3d9e4ff8b4716e2ea5bbe2934e13cb36460",
+  "metadata_sha256": "450244f4e2f04631a20f83e866670b6632242344ab1cbccc3355878b73dde03a",
+  "metadata_rows": 15161,
+  "counts": {
+    "train": {
+      "water": 9115,
+      "land": 1551
+    },
+    "val": {
+      "water": 1243,
+      "land": 216
+    },
+    "test": {
+      "water": 2825,
+      "land": 211
+    }
+  },
+  "scene_prefix_overlap_train_test": [
+    "a7b3",
+    "c7e0",
+    "e9f8",
+    "ef1c"
+  ],
+  "inspected_validation_tiffs": [
+    "35e5_1030_219",
+    "35e5_1050_227"
+  ],
+  "georeferencing_tags_in_inspected_tiffs": false,
+  "physical_calibration": "Source paper states native GRD pixels 10 x 10 m and centre crop; no affine/CRS/geolocation supplied in inspected chips. No absolute geolocation or unique ocean area verified.",
+  "coastal_definition": "Author land_fraction >= 0.05; not distance-to-shore.",
+  "source_paper": "https://arxiv.org/html/2608.01963v1",
+  "source_dataset": "https://huggingface.co/datasets/sylviaHoch/OpenSARShip-Ship-Detection-Dataset",
+  "xview3_access_check": {
+    "date": "2026-11-17",
+    "paths_http404": [
+      "https://iuu.xview.us/dataset",
+      "https://iuu.xview.us/download-links",
+      "https://iuu.xview.us/register",
+      "https://iuu.xview.us/login"
+    ]
+  },
+  "status": "Source inspection only; not a new model accuracy result"
+}

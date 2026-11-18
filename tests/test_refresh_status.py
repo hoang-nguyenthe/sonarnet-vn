@@ -3,6 +3,8 @@ from pathlib import Path
 import sys
 import unittest
 from tempfile import TemporaryDirectory
+from contextlib import redirect_stdout
+from io import StringIO
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
@@ -27,6 +29,30 @@ class RefreshStateTests(unittest.TestCase):
             write_state(path,{'state':'blocked','reason':'CopernicusQuotaError'})
             self.assertEqual(read_state(path)['reason'],'CopernicusQuotaError')
             self.assertEqual(list(Path(d).iterdir()),[path])
+
+    def test_preflight_reports_cooldown_without_modifying_last_attempt(self):
+        with TemporaryDirectory() as d:
+            root=Path(d)
+            path=root/'assets/real_scan/refresh_status.json'
+            write_state(path,{'state':'blocked','retry_after':'2099-01-01T00:00:00Z'})
+            before=path.read_bytes()
+            with patch.object(runner,'ROOT',root),patch.dict('os.environ',{'GITHUB_STEP_SUMMARY':str(root/'summary.md')}):
+                with redirect_stdout(StringIO()) as out: runner.main(['--check-cooldown'])
+                self.assertEqual(out.getvalue().strip(),'deferred')
+                self.assertIn('no catalog check', (root/'summary.md').read_text())
+                with redirect_stdout(StringIO()) as out: runner.main(['--check-cooldown','--force-probe'])
+                self.assertEqual(out.getvalue().strip(),'due')
+            self.assertEqual(path.read_bytes(),before)
+
+    def test_zero_updates_are_not_ready(self):
+        with TemporaryDirectory() as d:
+            root=Path(d)
+            modules={'refresh_sentinel_mosaic':SimpleNamespace(main=Mock()),
+                     'refresh_detailed_scan':SimpleNamespace(main=Mock())}
+            with patch.object(runner,'ROOT',root),patch.dict(sys.modules,modules): runner.main([])
+            state=read_state(root/'assets/real_scan/refresh_status.json')
+            self.assertEqual(state['state'],'checked_no_updates')
+            self.assertIs(state['overview_updated'],False)
 
     def test_quota_switches_once_without_repeating_copernicus(self):
         with TemporaryDirectory() as d:

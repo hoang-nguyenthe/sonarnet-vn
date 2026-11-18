@@ -2,6 +2,7 @@
 
 Writes diagnostic artifacts only. Does not publish or replace observations.
 """
+import argparse
 import hashlib
 import json
 from datetime import datetime, timedelta, timezone
@@ -19,7 +20,10 @@ from refresh_detailed_scan import infer_tile, resolution_m
 from land_mask import get_mask
 
 
-def main():
+def main(argv=None):
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--output', type=Path, default=ROOT/'artifacts/rtc-probe')
+    args = p.parse_args(argv)
     from ultralytics import YOLO
     bbox = [109.2, 13.2, 109.3, 13.3]
     today = datetime.now(timezone.utc).date()
@@ -37,7 +41,7 @@ def main():
     audit = {}
     weights = ROOT/'assets/models/sonarnet_baseline.pt'
     rows, annotated = infer_tile(YOLO(str(weights)), image, bbox, mask=mask, audit=audit)
-    output = ROOT/'artifacts/rtc-probe'
+    output = args.output
     output.mkdir(parents=True, exist_ok=True)
     (output/'sar.png').write_bytes(raw)
     annotated.save(output/'detections.jpg')

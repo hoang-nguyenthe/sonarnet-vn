@@ -7,7 +7,6 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 sys.path.insert(0, str(ROOT / 'src'))
-from observation_view import render
 
 st.set_page_config(page_title='SonarNet · Quan sát biển', page_icon='◉', layout='wide', initial_sidebar_state='collapsed')
 st.markdown('''<style>
@@ -55,14 +54,26 @@ with st.sidebar:
     st.caption('Ngày chụp ảnh khác với giờ hiện tại. Ảnh nền toàn cảnh không đồng nghĩa đã kiểm tra toàn bộ; xem tiến độ xử lý của khu vực.')
     st.info('Chưa có dữ liệu định danh tàu. Kết quả cần người có chuyên môn xác minh.')
 
-section = st.radio('Điều hướng', ['Nghiên cứu', 'Quan sát', 'Minh chứng cải tiến', 'Hướng dẫn'], horizontal=True,
-                   label_visibility='collapsed', key='main_section')
+SECTIONS = {'gioi-thieu': 'Nghiên cứu', 'quan-sat': 'Quan sát',
+            'minh-chung': 'Minh chứng cải tiến', 'huong-dan': 'Hướng dẫn'}
+
+
+def update_section_url():
+    slug = next(slug for slug, label in SECTIONS.items() if label == st.session_state.main_section)
+    st.query_params['trang'] = slug
+
+
+if 'main_section' not in st.session_state:
+    st.session_state.main_section = SECTIONS.get(st.query_params.get('trang'), SECTIONS['gioi-thieu'])
+section = st.radio('Điều hướng', list(SECTIONS.values()), horizontal=True, index=None,
+                   label_visibility='collapsed', key='main_section', on_change=update_section_url)
 # st.tabs evaluates every tab on every rerun.  Do not construct the national
 # raster workspace while a visitor is reading the lightweight introduction.
 if section == 'Nghiên cứu':
     from introduction import render_introduction
     render_introduction(ROOT)
 elif section == 'Quan sát':
+    from observation_view import render
     render(ROOT)
 elif section == 'Minh chứng cải tiến':
     from improvement_view import render_improvements

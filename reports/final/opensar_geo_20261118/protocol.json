@@ -1,0 +1,45 @@
+{
+  "created_utc": "2026-11-18T07:52:51.506327+00:00",
+  "val_sha256": "c70847d5809ba1a2a67df2862e055adba967f5c29b0013ab6d29d13e461171e4",
+  "test_sha256": "85b22845dd8c574949831450826fd52532419ba41d51a449d96483bf5fbb7e6a",
+  "code_sha256": {
+    "evaluate_opensar_geo.py": "ed5e11e4acfc2d16adbb7e8899454aff06b418248f9530e7c2177649ccf91e37",
+    "benchmark_sar_archive.py": "191271e968089f0a3cf44da4d4508628fffb3d50d70cbc0dc8af7589ed3b3ca6",
+    "evaluate_ossdd_followup.py": "359cf5e1c63b71e33084e6f44c747727358738169e20c0bbd10101500ffd9e1a",
+    "prepare_opensar_geo.py": "a33fb04a1a5f18e8c0b42b8dc6409a48344239978a11077e9d7cbc28a8af8dde",
+    "independent_sar.py": "73d2d355de0c51fa8d275f3136056302c7b0816afcc2e53bd7d189d4a80eb47a",
+    "detection_metrics.py": "a442ccfc37fcd4a7b708f738ff0b53f69874fc8cb137a91b40a4772cc663c643"
+  },
+  "weights_sha256": "5b1eef4e8e45b17ea3f071285af5693dcb5ecc2c98d272264a570f58a1eb2bb1",
+  "grid": {
+    "yolo": [
+      0.05,
+      0.1,
+      0.25,
+      0.4,
+      0.6
+    ],
+    "global_threshold": [
+      0.7,
+      0.85,
+      0.93
+    ],
+    "local_contrast": [
+      3.0,
+      4.0,
+      5.0
+    ]
+  },
+  "torch": "2.8.0",
+  "ultralytics": "8.3.253",
+  "hardware": "macOS-26.6.2-arm64-arm-64bit",
+  "cpu_threads": 4,
+  "imgsz": 640,
+  "nms_iou": 0.7,
+  "min_yolo_conf": 0.001,
+  "selection": "Maximum validation IoU50 F1. Tie: larger threshold. Same log1p/P1–P99.9 SLC amplitude conversion for all methods.",
+  "leakage_rule": "Pixel SHA-256 and 64-bit dHash distance <=3 cross-split. Quarantine flagged validation chips before inference; never tune with test.",
+  "denominator": "Union of valid mapped ocean footprint per acquisition, summed across acquisitions. Overlap assigned to lowest numeric tile ID for both scoring and denominator. Land, zeros and nonfinite pixels outside support; estimates inherit map and corner interpolation error.",
+  "labels": "Evaluate HIGH/MEDIUM publisher vessels with centers within valid water; ignore overlap >=0.5 with LOW/unknown vessel unless also overlaps a target. Other predictions unmatched against supplied labels; dataset is not proven exhaustive.",
+  "latency": "4 CPU threads, batch 1, 3 warmups; process and mask but no file I/O."
+}

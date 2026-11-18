@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "scope": "Proof of coincident processing on commercial harbor data. Count matches as proposed position associations. No verified vessel identity or detector accuracy.",
+  "selection": "Query Planetary Computer RTC IW VV catalogue for the three NOAA replay harbor rectangles, 03–27 December 2024 UTC. Choose the scene nearest in UTC calendar days to 15 December, breaking ties by earliest acquisition and then product ID. Freeze tile geometry before reading pixels or AIS.",
+  "product": "S1A_IW_GRDH_1SDV_20241213T225129_20241213T225154_056980_07001E_rtc",
+  "acquisition_center_utc": "2024-12-13T22:51:42.132332Z",
+  "area": "New York Harbor",
+  "tiles_wsen": [
+    [-74.11, 40.48, -74.035, 40.57],
+    [-74.035, 40.48, -73.96, 40.57],
+    [-74.11, 40.57, -74.035, 40.66],
+    [-74.035, 40.57, -73.96, 40.66]
+  ],
+  "render": {
+    "width": 1024,
+    "minimum_valid_fraction": 0.9,
+    "normalization": "production RTC gamma0 fixed [-25,+5] dB"
+  },
+  "reference": "Use withheld NOAA fixes +/-20 s from RTC scene center to derive candidate position agreement. Require exactly one radar candidate and one held AIS position within 100 m and require nearest alternate position or candidate beyond 250 m. Classify other candidates as reference unlabelled. Reference is same-source AIS plus spatial isolation, not independent expert verification.",
+  "history": "AIS UTC scene center +/-600 s and 0.03 degree bounds margin. Hold out all fixes +/-20 s. Drop duplicate or conflicting reported seconds for a vessel.",
+  "detector": {
+    "weights": "assets/models/sonarnet_baseline.pt",
+    "sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+    "confidence": 0.35,
+    "imgsz": 1024,
+    "nms_iou": 0.7,
+    "notes": "Frozen legacy detector with the same input range as public RTC refresh. This harbor cohort uses GSHHG land-only screening, with no 500 m exclusion so that nearshore proposals can be inspected."
+  },
+  "matching": "Compare distance-only, previous gates, and 100 m competitor guard. Report counts over all radar proposals and agreement only where conservative weak reference exists. Do not recalibrate on this scene."
+}

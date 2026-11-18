@@ -54,7 +54,7 @@ def classify_error(text):
     return None
 
 
-def inspect_page(page):
+def inspect_page(page, *, evidence=False):
     """Inspect both Community Cloud's wrapper and the actual Streamlit frame."""
     ready = False
     wake = None
@@ -72,7 +72,13 @@ def inspect_page(page):
             button = frame.get_by_role("button", name=WAKE_BUTTON, exact=True)
             if button.is_visible():
                 wake = button
-            if (frame.get_by_role("heading", name=READY_HEADING).is_visible()
+            if evidence:
+                ready = ready or all(frame.get_by_text(marker, exact=True).first.is_visible() for marker in (
+                    "Tải báo cáo cải tiến Chặng 1", "Mở hồ sơ ảnh SAR thật thiếu AIS",
+                    "Kiểm tra lỗi đổi đối tác sau khi lọc AIS",
+                    "Xem cảnh Sentinel-1 và AIS cùng lượt chụp",
+                ))
+            elif (frame.get_by_role("heading", name=READY_HEADING).is_visible()
                     and frame.get_by_text("Quan sát", exact=True).first.is_visible()):
                 ready = True
         except HealthCheckError:
@@ -123,10 +129,12 @@ def write_report(output, report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=Path("artifacts/web-health"))
+    parser.add_argument("--evidence", action="store_true", help="Require the Chặng 1 evidence page and report control.")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     report = {
-        "url": APP_URL,
+        "url": APP_URL + ("?trang=minh-chung" if args.evidence else ""),
+        "mode": "chang1_evidence" if args.evidence else "homepage",
         "checked_at": datetime.now(timezone.utc).isoformat(),
         "run_id": os.environ.get("GITHUB_RUN_ID"),
         "event": os.environ.get("GITHUB_EVENT_NAME"),
@@ -143,9 +151,11 @@ def main():
             page = context.new_page()
             page.on("websocket", connection.opened)
             try:
-                page.goto(APP_URL, wait_until="domcontentloaded", timeout=60000)
+                page.goto(report["url"], wait_until="domcontentloaded", timeout=60000)
                 # Playwright's wait pumps websocket events; time.sleep would not.
-                wait_for_app(page, connection, report, sleep=lambda seconds: page.wait_for_timeout(seconds * 1000))
+                wait_for_app(page, connection, report,
+                             inspect=lambda active: inspect_page(active, evidence=args.evidence),
+                             sleep=lambda seconds: page.wait_for_timeout(seconds * 1000))
                 report["status"] = "healthy"
             finally:
                 try:

@@ -59,6 +59,52 @@ def solve_assignment(cost: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     return _greedy_assignment(cost)
 
 
+def _stable_associations(detections, estimates, rejected, cfg):
+    """Propose once using distance, then veto without reassigning either endpoint."""
+    keys = list(estimates)
+    det_lat, det_lon = (np.array([getattr(d,k) for d in detections]) for k in ('lat','lon'))
+    ais_lat, ais_lon = (np.array([getattr(estimates[key],k) for key in keys]) for k in ('lat','lon'))
+    valid_points = (np.abs(det_lat) <= 90) & (np.abs(det_lon) <= 180)
+    valid_tracks = (np.abs(ais_lat) <= 90) & (np.abs(ais_lon) <= 180)
+    # Infinite costs keep invalid coordinates out of the nominal assignment
+    # and out of the two-sided search for competitors.
+    distance = haversine_m(det_lat[:,None],det_lon[:,None],ais_lat[None,:],ais_lon[None,:])
+    distance = np.where(valid_points[:,None] & valid_tracks[None,:],distance,np.inf)
+    rows, cols = solve_assignment(np.where(distance <= cfg.max_match_distance_m,distance,np.inf))
+    reasons = ['invalid_detection' if not valid else 'out_of_range' for valid in valid_points]
+    for i, row in enumerate(distance):
+        nearby = np.argmin(row)
+        if row[nearby] <= cfg.max_match_distance_m:
+            reasons[i] = rejected.get(keys[nearby], 'assigned_elsewhere')
+    matches, residuals, competing_points = {}, {}, set()
+    for i,j in zip(rows,cols):
+        d = float(distance[i,j])
+        if d > cfg.max_match_distance_m:
+            continue
+        key = keys[j]
+        if key in rejected:
+            reasons[i] = rejected[key]
+            continue
+        sigma = np.hypot(cfg.sar_position_sigma_m, estimates[key].position_sigma_m)
+        if d > cfg.match_sigma_multiplier*sigma:
+            reasons[i] = 'out_of_range'
+            continue
+        row, column = distance[i,:].copy(), distance[:,j].copy()
+        row[j] = column[i] = np.inf
+        margin = max(cfg.min_assignment_margin_m, sigma) + 2 * max(0.,cfg.systematic_bias_guard_m)
+        if min(row.min(),column.min()) <= d+margin:
+            reasons[i] = 'ambiguous'
+            competing_points.update(np.flatnonzero(column <= d+margin))
+            continue
+        matches[int(i)] = int(key)
+        residuals[int(i)] = d
+        reasons[i] = 'matched'
+    for i in competing_points:
+        if reasons[i] == 'assigned_elsewhere':
+            reasons[i] = 'ambiguous'
+    return matches, residuals, reasons
+
+
 @dataclass
 class Detection:
     """Một phát hiện trên ảnh radar, đã quy về toạ độ địa lý."""
@@ -153,12 +199,16 @@ class SARAISFusion:
         return matches, distances
 
     def match_with_reasons(self, detections, ais_estimates):
-        """Gate age/uncertainty before assignment and abstain at ambiguous crossings.
+        """Abstain when proximity, age, uncertainty or separation is inadequate.
 
         A narrow spatial residual cannot rescue stale or uncertain AIS. Candidate
         edges must satisfy both the absolute cap and a combined SAR/AIS 3-sigma
-        gate. Near-ties sharing either endpoint are withheld for human review.
-        Reasons are aligned to the input detection order, including rejected rows.
+        gate. Competing positions are also screened under bounded displacement:
+        an alternative may gain up to the guard distance while the original
+        edge loses the same amount. Only the original gate can accept an edge.
+        The default proposes once and then applies restrictions. The archival
+        path is retained to reproduce the filter-first comparison. Reasons are
+        aligned to the input detection order.
         """
         if not detections:
             return {}, {}, []
@@ -176,6 +226,8 @@ class SARAISFusion:
                 rejected[m] = "stale_ais"
             elif est.position_sigma_m > cfg.max_position_sigma_m:
                 rejected[m] = "uncertain_position"
+        if cfg.preserve_proposed_pair:
+            return _stable_associations(detections,ais_estimates,rejected,cfg)
         mmsis = [m for m in ais_estimates if m not in rejected]
         if not mmsis:
             reason = next(iter(rejected.values())) if len(set(rejected.values())) == 1 else "uncertain_position"
@@ -207,20 +259,25 @@ class SARAISFusion:
                     if float(haversine_m(det.lat, det.lon, est.lat, est.lon)) <= cfg.max_match_distance_m:
                         reasons[i] = reason
                         break
+        bias_guard = max(0., cfg.systematic_bias_guard_m)
+        shadow_gate = np.minimum(cfg.max_match_distance_m, gate + bias_guard)
+        plausible_cost = np.where(np.isfinite(cost) & (cost <= shadow_gate[None, :]), cost, np.inf)
+        for i in invalid_detections:
+            plausible_cost[i, :] = np.inf
         ambiguous = set()
         for i in range(len(detections)):
-            candidates = np.flatnonzero(np.isfinite(cost_masked[i]))
-            if len(candidates) >= 2:
-                nearest = candidates[np.argsort(cost_masked[i, candidates])[:2]]
-                margin = max(cfg.min_assignment_margin_m, float(max(sigma[nearest])))
-                if abs(cost_masked[i, nearest[1]] - cost_masked[i, nearest[0]]) <= margin:
+            candidates = np.flatnonzero(np.isfinite(plausible_cost[i]))
+            if len(candidates) >= 2 and np.any(np.isfinite(cost_masked[i])):
+                nearest = candidates[np.argsort(plausible_cost[i, candidates])[:2]]
+                margin = max(cfg.min_assignment_margin_m, float(max(sigma[nearest]))) + 2 * bias_guard
+                if plausible_cost[i, nearest[1]] - plausible_cost[i, nearest[0]] <= margin:
                     ambiguous.add(i)
         for j in range(len(mmsis)):
-            candidates = np.flatnonzero(np.isfinite(cost_masked[:, j]))
-            if len(candidates) >= 2:
-                nearest = candidates[np.argsort(cost_masked[candidates, j])[:2]]
-                margin = max(cfg.min_assignment_margin_m, float(sigma[j]))
-                if abs(cost_masked[nearest[1], j] - cost_masked[nearest[0], j]) <= margin:
+            candidates = np.flatnonzero(np.isfinite(plausible_cost[:, j]))
+            if len(candidates) >= 2 and np.any(np.isfinite(cost_masked[:, j])):
+                nearest = candidates[np.argsort(plausible_cost[candidates, j])[:2]]
+                margin = max(cfg.min_assignment_margin_m, float(sigma[j])) + 2 * bias_guard
+                if plausible_cost[nearest[1], j] - plausible_cost[nearest[0], j] <= margin:
                     ambiguous.update(int(i) for i in nearest)
         for i in range(len(detections)):
             if np.any(np.isfinite(cost_masked[i])):

@@ -1,0 +1,48 @@
+{
+  "created_utc": "2026-11-18T13:02:27.626626+00:00",
+  "candidate_hashes": {
+    "best_ap": "94c748e14b8eb2ed13dc1c5b8517df8b1543d3e8a45b66875c058856fac9637a",
+    "last_epoch": "b610df7fb3b732646540257194e075b52012e434755e77595227a9dde9a31a1b"
+  },
+  "old_ls_ssdd_sha256": "5b1eef4e8e45b17ea3f071285af5693dcb5ecc2c98d272264a570f58a1eb2bb1",
+  "training_provenance_sha256": "15b41b1d99d25755ad15a73f32d348d870a6d77ce5dd2d3c9f0f9cac5d62a0a2",
+  "train_audit_sha256": "829d0cf86148ef23a258e0c576dce2dfacb88f9540dd8b537f30f7add71f5338",
+  "tune_sha256": "57e91e30a2aceda3d9101d0c0147c41fb5462f081567de091d93b1d365643e6e",
+  "fresh_sha256": "cbfa0d4ffba54323e0e3b0ad7fad682df1a37d4cd548937a534cffd5f15f7c3b",
+  "diagnostic_sha256": "490d9d9891551c5928e00b2f8ebb87fc2849a3723c7e8d9e693b47c11c6b2cf2",
+  "code_sha256": {
+    "evaluate_opensar_adaptation.py": "839503c8a575ba3790e876f0a9dd4c53107aaa5d72a4998e0b9e7875b938791a",
+    "evaluate_opensar_geo.py": "ed5e11e4acfc2d16adbb7e8899454aff06b418248f9530e7c2177649ccf91e37",
+    "evaluate_sar_recall_candidates.py": "72e42a4fff4ff6d52a053c724e01936fe7ae9c239a38b5cd5ee5bbb723ef0de4",
+    "evaluate_ossdd_followup.py": "359cf5e1c63b71e33084e6f44c747727358738169e20c0bbd10101500ffd9e1a",
+    "independent_sar.py": "73d2d355de0c51fa8d275f3136056302c7b0816afcc2e53bd7d189d4a80eb47a",
+    "detection_metrics.py": "a442ccfc37fcd4a7b708f738ff0b53f69874fc8cb137a91b40a4772cc663c643"
+  },
+  "note": "Three already reported diagnostic scenes remain outside fitting and tuning. North Sea is a fresh acquisition. The old LS-SSDD lineage overlaps its geographic buffer; use CFAR as the clean comparator there.",
+  "candidate_grid": [
+    0.025,
+    0.05,
+    0.075,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "selection": "Best training AP checkpoint and final checkpoint are compared on the one separated validation scene. Highest IoU 0.50 F1, then higher confidence, then best AP checkpoint.",
+  "cpu_threads": 4,
+  "batch": 1,
+  "warmups": 3,
+  "latency_scope": "after reading pixels, normalize through geographical filtering",
+  "candidate_imgsz": 512,
+  "reference_imgsz": 640,
+  "cfar_ring": [
+    7,
+    29,
+    4.4
+  ],
+  "hardware": "macOS-26.6.2-arm64-arm-64bit",
+  "torch": "2.8.0",
+  "ultralytics": "8.3.253"
+}

@@ -1,0 +1,954 @@
+{
+  "code_sha256": "91f1a8ab6429830ec4bae67821d41077b851de1eefa196715fdd2319cb076a68",
+  "input_filter_sha256": "50ca30cec8f09bb2e486e76647328fca8fecccb779d2f221342028bf51f9127a",
+  "fusion_code_sha256": "c04c86482faa7ac372ece23bd22581a7fc3bd9d133499e566186c8182a6c67b9",
+  "development_report_sha256": null,
+  "selected_method": "assign_then_veto_200m",
+  "selection": "Pair-first policy with 200 m added separation margin. Among tested pair-first policies, only this variant preserved zero wrong links on both previous systematic-offset synthetic scenarios. Retain this choice before checking the separate historical AIS day.",
+  "scope": "Withheld NOAA positions as location proxies; no SAR or verified vessel identity in these hourly windows.",
+  "policy": "Distance Hungarian first, then veto pairs failing age, uncertainty, radius or reciprocal nearest with a distance margin. Never change the proposed partner after a veto.",
+  "days": {
+    "2024-07-14": {
+      "source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_07_14.zip",
+        "sha256": "f288193c2bb3151c669c38c16d683d1b11391e2f69a1933dfbb6735dc5f10c71",
+        "compressed_bytes": 402142501,
+        "csv_crc32": "75df63d0"
+      },
+      "windows": 69,
+      "results": {
+        "distance": {
+          "overall": {
+            "targets": 3504,
+            "correct": 3474,
+            "wrong": 30,
+            "unassigned": 0
+          },
+          "neighbor_250m": {
+            "targets": 1865,
+            "correct": 1843,
+            "wrong": 22,
+            "unassigned": 0
+          },
+          "separated": {
+            "targets": 1639,
+            "correct": 1631,
+            "wrong": 8,
+            "unassigned": 0
+          },
+          "has_history": {
+            "targets": 3504,
+            "correct": 3474,
+            "wrong": 30,
+            "unassigned": 0
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "gate_first": {
+          "overall": {
+            "targets": 3504,
+            "correct": 1635,
+            "wrong": 39,
+            "unassigned": 1830
+          },
+          "neighbor_250m": {
+            "targets": 1865,
+            "correct": 515,
+            "wrong": 21,
+            "unassigned": 1329
+          },
+          "separated": {
+            "targets": 1639,
+            "correct": 1120,
+            "wrong": 18,
+            "unassigned": 501
+          },
+          "has_history": {
+            "targets": 3504,
+            "correct": 1635,
+            "wrong": 39,
+            "unassigned": 1830
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "gate_first_100m": {
+          "overall": {
+            "targets": 3504,
+            "correct": 920,
+            "wrong": 13,
+            "unassigned": 2571
+          },
+          "neighbor_250m": {
+            "targets": 1865,
+            "correct": 1,
+            "wrong": 2,
+            "unassigned": 1862
+          },
+          "separated": {
+            "targets": 1639,
+            "correct": 919,
+            "wrong": 11,
+            "unassigned": 709
+          },
+          "has_history": {
+            "targets": 3504,
+            "correct": 920,
+            "wrong": 13,
+            "unassigned": 2571
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto": {
+          "overall": {
+            "targets": 3504,
+            "correct": 1747,
+            "wrong": 1,
+            "unassigned": 1756
+          },
+          "neighbor_250m": {
+            "targets": 1865,
+            "correct": 607,
+            "wrong": 0,
+            "unassigned": 1258
+          },
+          "separated": {
+            "targets": 1639,
+            "correct": 1140,
+            "wrong": 1,
+            "unassigned": 498
+          },
+          "has_history": {
+            "targets": 3504,
+            "correct": 1747,
+            "wrong": 1,
+            "unassigned": 1756
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto_25m": {
+          "overall": {
+            "targets": 3504,
+            "correct": 1481,
+            "wrong": 1,
+            "unassigned": 2022
+          },
+          "neighbor_250m": {
+            "targets": 1865,
+            "correct": 387,
+            "wrong": 0,
+            "unassigned": 1478
+          },
+          "separated": {
+            "targets": 1639,
+            "correct": 1094,
+            "wrong": 1,
+            "unassigned": 544
+          },
+          "has_history": {
+            "targets": 3504,
+            "correct": 1481,
+            "wrong": 1,
+            "unassigned": 2022
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto_100m": {
+          "overall": {
+            "targets": 3504,
+            "correct": 1170,
+            "wrong": 0,
+            "unassigned": 2334
+          },
+          "neighbor_250m": {
+            "targets": 1865,
+            "correct": 144,
+            "wrong": 0,
+            "unassigned": 1721
+          },
+          "separated": {
+            "targets": 1639,
+            "correct": 1026,
+            "wrong": 0,
+            "unassigned": 613
+          },
+          "has_history": {
+            "targets": 3504,
+            "correct": 1170,
+            "wrong": 0,
+            "unassigned": 2334
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto_200m": {
+          "overall": {
+            "targets": 3504,
+            "correct": 899,
+            "wrong": 0,
+            "unassigned": 2605
+          },
+          "neighbor_250m": {
+            "targets": 1865,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 1865
+          },
+          "separated": {
+            "targets": 1639,
+            "correct": 899,
+            "wrong": 0,
+            "unassigned": 740
+          },
+          "has_history": {
+            "targets": 3504,
+            "correct": 899,
+            "wrong": 0,
+            "unassigned": 2605
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        }
+      },
+      "reroutes": {
+        "distance": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "gate_first": {
+          "altered": 38,
+          "wrong": 37
+        },
+        "gate_first_100m": {
+          "altered": 13,
+          "wrong": 12
+        },
+        "assign_then_veto": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "assign_then_veto_25m": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "assign_then_veto_100m": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "assign_then_veto_200m": {
+          "altered": 0,
+          "wrong": 0
+        }
+      }
+    },
+    "2024-10-01": {
+      "source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_10_01.zip",
+        "sha256": "09b11e6754d0587a4809cf134d444c7f20758dc64e49ef3b8b8aa658ced57f86",
+        "compressed_bytes": 344696478,
+        "csv_crc32": "f0671274"
+      },
+      "windows": 69,
+      "results": {
+        "distance": {
+          "overall": {
+            "targets": 3617,
+            "correct": 3592,
+            "wrong": 24,
+            "unassigned": 1
+          },
+          "neighbor_250m": {
+            "targets": 2055,
+            "correct": 2035,
+            "wrong": 20,
+            "unassigned": 0
+          },
+          "separated": {
+            "targets": 1562,
+            "correct": 1557,
+            "wrong": 4,
+            "unassigned": 1
+          },
+          "has_history": {
+            "targets": 3617,
+            "correct": 3592,
+            "wrong": 24,
+            "unassigned": 1
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "gate_first": {
+          "overall": {
+            "targets": 3617,
+            "correct": 1681,
+            "wrong": 36,
+            "unassigned": 1900
+          },
+          "neighbor_250m": {
+            "targets": 2055,
+            "correct": 574,
+            "wrong": 13,
+            "unassigned": 1468
+          },
+          "separated": {
+            "targets": 1562,
+            "correct": 1107,
+            "wrong": 23,
+            "unassigned": 432
+          },
+          "has_history": {
+            "targets": 3617,
+            "correct": 1681,
+            "wrong": 36,
+            "unassigned": 1900
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "gate_first_100m": {
+          "overall": {
+            "targets": 3617,
+            "correct": 899,
+            "wrong": 18,
+            "unassigned": 2700
+          },
+          "neighbor_250m": {
+            "targets": 2055,
+            "correct": 4,
+            "wrong": 3,
+            "unassigned": 2048
+          },
+          "separated": {
+            "targets": 1562,
+            "correct": 895,
+            "wrong": 15,
+            "unassigned": 652
+          },
+          "has_history": {
+            "targets": 3617,
+            "correct": 899,
+            "wrong": 18,
+            "unassigned": 2700
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto": {
+          "overall": {
+            "targets": 3617,
+            "correct": 1856,
+            "wrong": 1,
+            "unassigned": 1760
+          },
+          "neighbor_250m": {
+            "targets": 2055,
+            "correct": 737,
+            "wrong": 0,
+            "unassigned": 1318
+          },
+          "separated": {
+            "targets": 1562,
+            "correct": 1119,
+            "wrong": 1,
+            "unassigned": 442
+          },
+          "has_history": {
+            "targets": 3617,
+            "correct": 1856,
+            "wrong": 1,
+            "unassigned": 1760
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto_25m": {
+          "overall": {
+            "targets": 3617,
+            "correct": 1507,
+            "wrong": 1,
+            "unassigned": 2109
+          },
+          "neighbor_250m": {
+            "targets": 2055,
+            "correct": 455,
+            "wrong": 0,
+            "unassigned": 1600
+          },
+          "separated": {
+            "targets": 1562,
+            "correct": 1052,
+            "wrong": 1,
+            "unassigned": 509
+          },
+          "has_history": {
+            "targets": 3617,
+            "correct": 1507,
+            "wrong": 1,
+            "unassigned": 2109
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto_100m": {
+          "overall": {
+            "targets": 3617,
+            "correct": 1141,
+            "wrong": 1,
+            "unassigned": 2475
+          },
+          "neighbor_250m": {
+            "targets": 2055,
+            "correct": 129,
+            "wrong": 0,
+            "unassigned": 1926
+          },
+          "separated": {
+            "targets": 1562,
+            "correct": 1012,
+            "wrong": 1,
+            "unassigned": 549
+          },
+          "has_history": {
+            "targets": 3617,
+            "correct": 1141,
+            "wrong": 1,
+            "unassigned": 2475
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        },
+        "assign_then_veto_200m": {
+          "overall": {
+            "targets": 3617,
+            "correct": 907,
+            "wrong": 0,
+            "unassigned": 2710
+          },
+          "neighbor_250m": {
+            "targets": 2055,
+            "correct": 3,
+            "wrong": 0,
+            "unassigned": 2052
+          },
+          "separated": {
+            "targets": 1562,
+            "correct": 904,
+            "wrong": 0,
+            "unassigned": 658
+          },
+          "has_history": {
+            "targets": 3617,
+            "correct": 907,
+            "wrong": 0,
+            "unassigned": 2710
+          },
+          "no_history": {
+            "targets": 0,
+            "correct": 0,
+            "wrong": 0,
+            "unassigned": 0
+          }
+        }
+      },
+      "reroutes": {
+        "distance": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "gate_first": {
+          "altered": 34,
+          "wrong": 34
+        },
+        "gate_first_100m": {
+          "altered": 16,
+          "wrong": 16
+        },
+        "assign_then_veto": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "assign_then_veto_25m": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "assign_then_veto_100m": {
+          "altered": 0,
+          "wrong": 0
+        },
+        "assign_then_veto_200m": {
+          "altered": 0,
+          "wrong": 0
+        }
+      }
+    }
+  },
+  "synthetic": {
+    "seed": 20261121,
+    "repeats": 120,
+    "results": {
+      "mixed_quality": {
+        "distance": {
+          "points": 480,
+          "links_correct": 359,
+          "links_wrong": 1,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first": {
+          "points": 480,
+          "links_correct": 127,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 353,
+          "clutter_unmatched": 0
+        },
+        "gate_first_100m": {
+          "points": 480,
+          "links_correct": 125,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 355,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto": {
+          "points": 480,
+          "links_correct": 127,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 353,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_25m": {
+          "points": 480,
+          "links_correct": 127,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 353,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_100m": {
+          "points": 480,
+          "links_correct": 126,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 354,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_200m": {
+          "points": 480,
+          "links_correct": 125,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 355,
+          "clutter_unmatched": 0
+        }
+      },
+      "near_crossing": {
+        "distance": {
+          "points": 480,
+          "links_correct": 360,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first": {
+          "points": 480,
+          "links_correct": 133,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 347,
+          "clutter_unmatched": 0
+        },
+        "gate_first_100m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 360,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto": {
+          "points": 480,
+          "links_correct": 138,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 342,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_25m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 360,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_100m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 360,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_200m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 360,
+          "clutter_unmatched": 0
+        }
+      },
+      "keep_two_crossing_tracks_when_separated": {
+        "distance": {
+          "points": 480,
+          "links_correct": 360,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first": {
+          "points": 480,
+          "links_correct": 251,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 229,
+          "clutter_unmatched": 0
+        },
+        "gate_first_100m": {
+          "points": 480,
+          "links_correct": 245,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 235,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto": {
+          "points": 480,
+          "links_correct": 252,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 228,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_25m": {
+          "points": 480,
+          "links_correct": 252,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 228,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_100m": {
+          "points": 480,
+          "links_correct": 249,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 231,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_200m": {
+          "points": 480,
+          "links_correct": 248,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 232,
+          "clutter_unmatched": 0
+        }
+      },
+      "unlabeled_clutter_near_track": {
+        "distance": {
+          "points": 600,
+          "links_correct": 349,
+          "links_wrong": 0,
+          "links_to_clutter": 11,
+          "abstained_on_target": 131,
+          "clutter_unmatched": 109
+        },
+        "gate_first": {
+          "points": 600,
+          "links_correct": 246,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 234,
+          "clutter_unmatched": 120
+        },
+        "gate_first_100m": {
+          "points": 600,
+          "links_correct": 240,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 240,
+          "clutter_unmatched": 120
+        },
+        "assign_then_veto": {
+          "points": 600,
+          "links_correct": 246,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 234,
+          "clutter_unmatched": 120
+        },
+        "assign_then_veto_25m": {
+          "points": 600,
+          "links_correct": 240,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 240,
+          "clutter_unmatched": 120
+        },
+        "assign_then_veto_100m": {
+          "points": 600,
+          "links_correct": 240,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 240,
+          "clutter_unmatched": 120
+        },
+        "assign_then_veto_200m": {
+          "points": 600,
+          "links_correct": 240,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 240,
+          "clutter_unmatched": 120
+        }
+      },
+      "sparse_one_sided": {
+        "distance": {
+          "points": 480,
+          "links_correct": 360,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first": {
+          "points": 480,
+          "links_correct": 360,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first_100m": {
+          "points": 480,
+          "links_correct": 336,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 144,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto": {
+          "points": 480,
+          "links_correct": 360,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_25m": {
+          "points": 480,
+          "links_correct": 360,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_100m": {
+          "points": 480,
+          "links_correct": 360,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_200m": {
+          "points": 480,
+          "links_correct": 347,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 133,
+          "clutter_unmatched": 0
+        }
+      },
+      "position_bias": {
+        "distance": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 240,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 240,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first_100m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 360,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 240,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_25m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 237,
+          "links_to_clutter": 0,
+          "abstained_on_target": 123,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_100m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 21,
+          "links_to_clutter": 0,
+          "abstained_on_target": 339,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_200m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 360,
+          "clutter_unmatched": 0
+        }
+      },
+      "position_bias_beyond_guard": {
+        "distance": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 240,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 240,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "gate_first_100m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 130,
+          "links_to_clutter": 0,
+          "abstained_on_target": 230,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 240,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_25m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 240,
+          "links_to_clutter": 0,
+          "abstained_on_target": 120,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_100m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 239,
+          "links_to_clutter": 0,
+          "abstained_on_target": 121,
+          "clutter_unmatched": 0
+        },
+        "assign_then_veto_200m": {
+          "points": 480,
+          "links_correct": 120,
+          "links_wrong": 0,
+          "links_to_clutter": 0,
+          "abstained_on_target": 360,
+          "clutter_unmatched": 0
+        }
+      }
+    }
+  }
+}

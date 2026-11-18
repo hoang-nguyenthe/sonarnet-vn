@@ -1,0 +1,110 @@
+{
+  "started_at": "2026-11-18T12:48:45.712762+00:00",
+  "hardware": "macOS-26.6.2-arm64-arm-64bit",
+  "torch": "2.8.0",
+  "ultralytics": "8.3.253",
+  "python": "3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "initialization": "/Volumes/SonarNetWork/models/yolo11n.pt",
+  "initial_sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+  "dataset_manifest_sha256": "325725cbf157237f6ef4018481b046abfc0fbe3a1691894fe7ed8f802edee75a",
+  "audit": {
+    "passed": true,
+    "counts": {
+      "fit": {
+        "chips": 1669,
+        "scenes": 7,
+        "boxes": 1020,
+        "backgrounds": 1086
+      },
+      "tune": {
+        "chips": 48,
+        "scenes": 1,
+        "boxes": 30,
+        "backgrounds": 25
+      }
+    },
+    "fresh_chips": 196,
+    "diagnostic_chips": 218,
+    "image_quality_exclusions": {
+      "train": {
+        "uncertain_vessel_label": 259,
+        "valid_pixels_below_95_percent": 293,
+        "invalid_xml_box": 20
+      },
+      "tune": {
+        "valid_ocean_le_1_sqkm": 61
+      },
+      "fresh": {
+        "valid_pixels_below_95_percent": 199,
+        "invalid_xml_box": 1,
+        "valid_ocean_le_1_sqkm": 9
+      }
+    },
+    "training_geographic_quarantine": {
+      "2708": {
+        "2020-05-03": 17504.28
+      },
+      "2709": {
+        "2020-05-03": 15521.48
+      },
+      "2711": {
+        "2020-05-03": 12294.75
+      },
+      "2712": {
+        "2020-05-03": 10317.07
+      },
+      "2714": {
+        "2020-05-03": 7126.04
+      },
+      "2715": {
+        "2020-05-03": 5148.76
+      }
+    },
+    "min_fit_to_protected_scene_m": {
+      "2020-05-03": 20741.52181207645,
+      "2020-04-21": 50544.33905976651,
+      "2020-09-28": 97479.20635891113,
+      "2020-05-11": 82958.31696100379
+    },
+    "training_pixel_quarantine": [],
+    "tuning_pixel_quarantine": [],
+    "data_policy_sha256": "d9c9055d5a8b86d74363a88c6903de8c7b665c32ef37fbe732a44c24c460ac79",
+    "manifest_sha256": "325725cbf157237f6ef4018481b046abfc0fbe3a1691894fe7ed8f802edee75a",
+    "fresh_manifest_sha256": "cbfa0d4ffba54323e0e3b0ad7fad682df1a37d4cd548937a534cffd5f15f7c3b"
+  },
+  "training": {
+    "data": "/Volumes/T7/SonarNet-20261116/adaptation-slc-v1/data.yaml",
+    "epochs": 12,
+    "patience": 8,
+    "imgsz": 512,
+    "batch": 16,
+    "device": "mps",
+    "workers": 2,
+    "cache": false,
+    "seed": 20261116,
+    "deterministic": true,
+    "amp": false,
+    "optimizer": "AdamW",
+    "lr0": 0.001,
+    "cos_lr": true,
+    "hsv_h": 0.0,
+    "hsv_s": 0.0,
+    "hsv_v": 0.2,
+    "degrees": 10.0,
+    "translate": 0.1,
+    "scale": 0.3,
+    "fliplr": 0.5,
+    "flipud": 0.5,
+    "mosaic": 0.5,
+    "close_mosaic": 5,
+    "save": true,
+    "plots": true,
+    "project": "/Volumes/T7/SonarNet-20261116",
+    "name": "adaptation-slc-run-v1",
+    "exist_ok": true
+  },
+  "heldout_policy": "Test is not used for model selection. Best checkpoint selected on validation.",
+  "promotion": "Research candidate. Do not replace published detector before comparison.",
+  "completed_at": "2026-11-18T13:00:39.574287+00:00",
+  "best_sha256": "94c748e14b8eb2ed13dc1c5b8517df8b1543d3e8a45b66875c058856fac9637a"
+}
