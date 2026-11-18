@@ -313,6 +313,17 @@ def build(args):
                  'Cấu hình đa tỷ lệ được đối chứng riêng với ảnh GRD/RTC và chưa chạy bản đồ.', y)-10
         y = text('Số liệu gốc, giao thức chọn cấu hình, dự đoán và tệp phục vụ tái lập nằm tại '
                  'reports/final/sar_multiscale_20261118/. Có thể xem trực tiếp ở mục Minh chứng cải tiến.', y, muted)
+        fine_path = ROOT/'reports/final/sar_finetune_640_20261118/results.json'
+        if fine_path.is_file():
+            tuned = json.loads(fine_path.read_text())['evaluation']
+            y = text('Huấn luyện tiếp ở 640 px',y-14,sub)-5
+            a, z = tuned['diagnostic'], tuned['north_sea']
+            y = text(f"Từ bản đa tỷ lệ đã khóa, sau sáu epoch, số nhãn khớp khi rà toàn bộ tăng "
+                     f"{a['baseline']['full']['matched']} → {a['fine_tuned']['full']['matched']} ở ba cảnh và "
+                     f"{z['baseline']['full']['matched']} → {z['fine_tuned']['full']['matched']} ở Biển Bắc. "
+                     'Với cùng giới hạn rà, ba cảnh vẫn khớp 38/147 và Biển Bắc tăng 22/146 → 28/146. '
+                     'Điểm không khớp khi rà toàn bộ tăng 837 → 1.307 và 1.453 → 1.866. '
+                     'Checkpoint mới được chọn trên 48 ô phát triển và chấm lại cùng bốn cảnh.', y)-5
         assert y > 65, y
         footer(8)
 

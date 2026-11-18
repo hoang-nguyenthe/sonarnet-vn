@@ -1,0 +1,113 @@
+{
+  "selected": {
+    "checkpoint": "best",
+    "policy": "dual_scale_flip",
+    "threshold": 0.005
+  },
+  "evaluation": {
+    "diagnostic": {
+      "baseline": {
+        "full": {
+          "labels": 147,
+          "matched": 60,
+          "unmatched": 837,
+          "recall": 0.4082,
+          "nearshore": {
+            "labels": 35,
+            "matched": 15,
+            "recall": 0.42857142857142855
+          }
+        },
+        "fixed_budget": {
+          "labels": 147,
+          "matched": 38,
+          "unmatched": 91,
+          "recall": 0.2585,
+          "nearshore": {
+            "labels": 35,
+            "matched": 7,
+            "recall": 0.2
+          }
+        }
+      },
+      "fine_tuned": {
+        "full": {
+          "labels": 147,
+          "matched": 67,
+          "unmatched": 1307,
+          "recall": 0.4558,
+          "nearshore": {
+            "labels": 35,
+            "matched": 16,
+            "recall": 0.45714285714285713
+          }
+        },
+        "fixed_budget": {
+          "labels": 147,
+          "matched": 38,
+          "unmatched": 91,
+          "recall": 0.2585,
+          "nearshore": {
+            "labels": 35,
+            "matched": 6,
+            "recall": 0.17142857142857143
+          }
+        }
+      },
+      "latency_p50_ms": 222.72562551370356,
+      "predictions_sha256": "2a26ff59dd077a6f176632b32ff5a76850384a72e0de2a66282250a3c1e4df8d"
+    },
+    "north_sea": {
+      "baseline": {
+        "full": {
+          "labels": 146,
+          "matched": 87,
+          "unmatched": 1453,
+          "recall": 0.5959,
+          "nearshore": {
+            "labels": 14,
+            "matched": 3,
+            "recall": 0.21428571428571427
+          }
+        },
+        "fixed_budget": {
+          "labels": 146,
+          "matched": 22,
+          "unmatched": 106,
+          "recall": 0.1507,
+          "nearshore": {
+            "labels": 14,
+            "matched": 0,
+            "recall": 0.0
+          }
+        }
+      },
+      "fine_tuned": {
+        "full": {
+          "labels": 146,
+          "matched": 93,
+          "unmatched": 1866,
+          "recall": 0.637,
+          "nearshore": {
+            "labels": 14,
+            "matched": 5,
+            "recall": 0.35714285714285715
+          }
+        },
+        "fixed_budget": {
+          "labels": 146,
+          "matched": 28,
+          "unmatched": 100,
+          "recall": 0.1918,
+          "nearshore": {
+            "labels": 14,
+            "matched": 1,
+            "recall": 0.07142857142857142
+          }
+        }
+      },
+      "latency_p50_ms": 234.99916697619483,
+      "predictions_sha256": "076f2f64439c6b6a1f2b211a19e96f8f55f60a756d1d377527aab8504d14cc29"
+    }
+  }
+}

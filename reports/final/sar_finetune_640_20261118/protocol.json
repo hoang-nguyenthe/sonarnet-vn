@@ -1,0 +1,24 @@
+{
+  "frozen_utc": "2026-11-18T15:57:30.741525+00:00",
+  "training_sha256": "71993c5f2335d23af256aec048519f8cde7760b0641ba091a85b9b920e6fbc9d",
+  "control_sha256": "0daff505a424d8d0d47b065cf87a9ace3284097f7b72caf8435dc13049613a33",
+  "code_sha256": "2400182f13e3f7fe80ea116aaf183773cd37762c740ec658782b1ce36adf0d5d",
+  "checkpoints_sha256": {
+    "best": "c4dafc55ade7e21f89716532488d7a44d87e4684c48f4fee301d59dded556516",
+    "last": "8c0adcdada48528f6073bbb6809a7ab3e289231161649defeb14fdbd2a68555e"
+  },
+  "tune_sha256": "57e91e30a2aceda3d9101d0c0147c41fb5462f081567de091d93b1d365643e6e",
+  "candidates": [
+    "native_512",
+    "whole_768",
+    "dual_scale_flip"
+  ],
+  "thresholds": [
+    0.005,
+    0.01,
+    0.025,
+    0.05,
+    0.1
+  ],
+  "rule": "Pick the fine-tuned checkpoint and inference settings using validation matches within the same 1/20 km² budget. Retest frozen samples even if fine-tuning does not improve on validation."
+}

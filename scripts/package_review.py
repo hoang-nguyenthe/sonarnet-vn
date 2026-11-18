@@ -59,6 +59,8 @@ CHANG1_FILES = {
     'scripts/evaluate_opensar_adaptation.py',
     'scripts/evaluate_sar_review_budget.py',
     'scripts/evaluate_sar_multiscale.py',
+    'scripts/evaluate_sar_finetune.py',
+    'assets/models/sonarnet_slc_vv_640_20261118.pt',
     'scripts/replay_sar_multiscale.py',
     'scripts/evaluation_summary.py',
     'scripts/vn_recall_view.py',

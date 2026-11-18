@@ -72,6 +72,8 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertIn('36/147 → 38/147', [item.value for item in app.metric])
         self.assertIn('20/146 → 22/146', [item.value for item in app.metric])
+        tables = [item.value for item in app.dataframe if 'Nhãn khớp' in item.value.columns]
+        self.assertTrue(any('22/146 → 28/146' in table['Nhãn khớp'].values for table in tables))
 
     def test_vietnam_point_reference_counts_are_separate(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)

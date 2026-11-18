@@ -15,7 +15,7 @@ from rasterio.enums import Resampling
 from rasterio.transform import from_bounds
 from rasterio.vrt import WarpedVRT
 
-from sonarnet.data.planetary import SIGN, get_json, validate_asset_url
+from sonarnet.data.planetary import PlanetaryAccessError, SIGN, get_json, validate_asset_url
 
 SIZE = 512
 
@@ -37,10 +37,7 @@ def download(row, all_regions, output):
         raise ValueError('RTC orbit or start time mismatch')
     href = row['rtc']['source_asset_url']
     validate_asset_url(href)
-    signed = get_json(SIGN+'?'+urlencode({'href':href}))['href']
-    validate_asset_url(signed)
-    if urlsplit(signed)._replace(query='').geturl() != href:
-        raise ValueError('Signed source does not match RTC product')
+    signed = None
     out, failed = [], []
     for w in sorted(scene['windows'],key=lambda window:window['window_id']):
         bbox = w['bbox']
@@ -51,6 +48,12 @@ def download(row, all_regions, output):
         if not p.is_file():
             for attempt in range(3):
                 try:
+                    if signed is None:
+                        signed_url = get_json(SIGN+'?'+urlencode({'href':href}))['href']
+                        validate_asset_url(signed_url)
+                        if urlsplit(signed_url)._replace(query='').geturl() != href:
+                            raise ValueError('Signed source does not match RTC product')
+                        signed = signed_url
                     with rasterio.Env(GDAL_DISABLE_READDIR_ON_OPEN='EMPTY_DIR',
                                       CPL_VSIL_CURL_ALLOWED_EXTENSIONS='.tiff', GDAL_HTTP_TIMEOUT='18',
                                       GDAL_HTTP_MAX_RETRY='0', GDAL_CACHEMAX=64*1024*1024,
@@ -68,6 +71,14 @@ def download(row, all_regions, output):
                     np.savez_compressed(temp,gamma0=values)
                     temp.replace(p)
                     break
+                except PlanetaryAccessError as e:
+                    if '429' not in str(e):
+                        raise
+                    if attempt == 2:
+                        failed.append(dict(window_id=w['window_id'],kind='rate_limit',category='429'))
+                        print(region, orbit, 'rate-limited window', w['window_id'],flush=True)
+                    else:
+                        time.sleep(25 * (attempt+1))
                 except (rasterio.errors.RasterioError, OSError) as e:
                     # Do not emit exception text since GDAL can include signed URLs.
                     kind=type(e).__name__

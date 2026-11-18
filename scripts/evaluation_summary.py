@@ -9,6 +9,7 @@ import streamlit as st
 SAR_RESULTS = 'reports/final/opensar_adaptation_20261118/results.json'
 AIS_RESULTS = 'reports/final/ais_preserve_proposal_20261118/held_out.json'
 MULTISCALE_RESULTS = 'reports/final/sar_multiscale_20261118/results.json'
+FINE_TUNED_RESULTS = 'reports/final/sar_finetune_640_20261118/results.json'
 
 
 def format_number(value: int) -> str:
@@ -84,7 +85,10 @@ Nhãn khớp trong 500 m từ bờ tăng từ {old_coast['matched']}/{old_coast[
 
     multiscale_path = root / MULTISCALE_RESULTS
     if multiscale_path.is_file():
-        render_recall_retest(multiscale_path, detailed=detailed)
+        mode = render_recall_retest(multiscale_path, detailed=detailed)
+        fine_tuned_path = root / FINE_TUNED_RESULTS
+        if fine_tuned_path.is_file():
+            render_fine_tuned(fine_tuned_path, mode, detailed=detailed)
     elif detailed:
         north = scenes['north_sea']['models']['adapted_slc_vv']['metrics']
         st.caption(
@@ -96,7 +100,7 @@ Nhãn khớp trong 500 m từ bờ tăng từ {old_coast['matched']}/{old_coast[
 
 
 
-def render_recall_retest(path: Path, *, detailed: bool) -> None:
+def render_recall_retest(path: Path, *, detailed: bool) -> str:
     report = json.loads(path.read_text())
     cohorts = report['evaluation']
     cases = (
@@ -141,6 +145,7 @@ def render_recall_retest(path: Path, *, detailed: bool) -> None:
                  for group in cohorts.values()]
         st.caption(f'Cùng giới hạn rà soát, số nhãn khớp thay đổi {gains[0]:+d} ở ba cảnh '
                    f'và {gains[1]:+d} ở Biển Bắc. Đây là phép thử lại trên bốn cảnh đã báo cáo.')
+    return mode
 
 
 def explain_recall_tradeoff(path: Path, cohorts: dict) -> None:
@@ -190,3 +195,23 @@ def render_recall_controls(path: Path) -> None:
                    'của bản gốc ở cả hai nhóm.')
         st.download_button('Tải phép phát lại theo ngưỡng và ven bờ', path.read_bytes(),
                            'sonarnet-sar-nguong-va-ven-bo.json', 'application/json')
+
+
+
+def render_fine_tuned(path: Path, mode: str, *, detailed: bool) -> None:
+    data = json.loads(path.read_text())['evaluation']
+    st.markdown('#### Huấn luyện ở 640 px giữ thêm mục tiêu')
+    cases = {'diagnostic': 'Ba cảnh đối chiếu', 'north_sea': 'Cảnh Biển Bắc'}
+    rows = []
+    for key, label in cases.items():
+        sample = data[key]
+        old, new = (sample[m][mode] for m in ('baseline','fine_tuned'))
+        rows.append({'Nhóm cảnh': label,
+                     'Nhãn khớp': f"{old['matched']}/{old['labels']} → {new['matched']}/{new['labels']}",
+                     'Điểm không khớp nhãn': f"{format_number(old['unmatched'])} → {format_number(new['unmatched'])}"})
+    st.dataframe(rows, hide_index=True, width='stretch')
+    st.caption('Cùng bốn cảnh đã báo cáo và cùng ngưỡng IoU. Checkpoint được chọn trên 48 ô phát triển. '
+               'Các số trên dùng lựa chọn phạm vi rà của phần đa tỷ lệ.')
+    if detailed:
+        st.download_button('Tải đối chứng huấn luyện 640 px', path.read_bytes(),
+                           'sonarnet-sar-huan-luyen-640.json', 'application/json')
