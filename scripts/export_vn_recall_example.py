@@ -123,8 +123,11 @@ def main():
         draw.ellipse((x,624,x+9,633),fill=COLORS[k])
         draw.text((x+18,619),caption,font=small,fill='#c1dae9')
     image.save(args.output/'example.png',optimize=True)
+    for i, side in enumerate(('before', 'after')):
+        x=left+i*(px+gap)
+        image.crop((x,top,x+px,top+px)).save(args.output/f'example-{side}.png',optimize=True)
     (args.output/'example.json').write_text(json.dumps(dict(
-        source=cohort['source'],window_id=w['window_id'],raster_sha256=w['sha256'],
+        source=cohort['source'],window_id=w['window_id'],raster_sha256=w['sha256'],label_count=len(truth),
         selection='Most newly matched labels within one eligible crop; at least three labels. Low threshold follows scene review cap.',
         measurement='Point matching within this crop; project totals remain calculated over the whole scene.',
         summaries=summary),ensure_ascii=False,indent=2)+'\n')

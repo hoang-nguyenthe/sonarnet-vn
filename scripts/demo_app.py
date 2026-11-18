@@ -41,6 +41,11 @@ h1,h2,h3{letter-spacing:-.025em!important}
 :focus-visible{outline:3px solid #168cff!important;outline-offset:3px}
 @keyframes drift{from{transform:translateX(-15px)}to{transform:translateX(45px)}}
 @media(max-width:720px){[data-testid="stMainBlockContainer"]{padding:3.7rem .9rem 1.5rem}.sonar-hero{padding:20px 21px;border-radius:20px}.sonar-copy{display:none}.sonar-title{font-size:26px}.observation-meta{padding:12px 14px;gap:12px 22px}.observation-meta strong{font-size:13px}[role="tab"]{padding:10px 16px!important}}
+@media(max-width:640px){
+  .st-key-main_section [role="radiogroup"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .st-key-main_section [role="radiogroup"] label{width:100%;padding:0 8px;min-height:44px;margin:0}
+  .st-key-fresh_rtc_review_mode [role="radiogroup"] label{min-height:44px;margin:0}
+}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
 <div style="font:650 20px -apple-system,sans-serif;letter-spacing:-.04em">SonarNet<span style="font-size:11px;letter-spacing:.12em;color:#66798c;margin-left:16px">VIỆT NAM</span></div>''', unsafe_allow_html=True)
@@ -61,6 +66,8 @@ SECTIONS = {'gioi-thieu': 'Nghiên cứu', 'quan-sat': 'Quan sát',
 def update_section_url():
     slug = next(slug for slug, label in SECTIONS.items() if label == st.session_state.main_section)
     st.query_params['trang'] = slug
+    if slug != 'quan-sat' and 'che-do' in st.query_params:
+        del st.query_params['che-do']
 
 
 def open_evidence():

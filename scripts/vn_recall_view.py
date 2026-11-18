@@ -113,9 +113,14 @@ def render_fresh_recall(root: Path) -> None:
         )
         rows.append({'Phương án':names[key], 'Nhãn khớp':f'{matched}/{n}',
                      'Ứng viên phải rà':reviewed,'Không khớp nhãn':unmatched})
-    st.dataframe(rows, hide_index=True, width='stretch')
-    st.caption('Ở mức trần theo diện tích, hạ ngưỡng tăng từ 80 lên 96 nhãn khớp. '
-               'Khi cố định ở 116 lượt rà, vẫn khớp 80 nhãn. Cấu hình hạ ngưỡng đang được đánh giá bằng phép phát lại.')
+    baseline, expanded = rows[:2]
+    for column, result in zip(st.columns(2), (baseline, expanded)):
+        with column.container(border=True):
+            st.markdown(f"**{result['Phương án']}**")
+            st.markdown(f"**{result['Nhãn khớp']}** nhãn khớp · **{result['Ứng viên phải rà']}** điểm cần rà")
+    with st.expander('Bảng đầy đủ và các bộ xếp hạng'):
+        st.dataframe(rows, hide_index=True, width='stretch')
+    st.caption('Thử nghiệm phát lại trên ảnh lịch sử. Điểm không khớp nhãn cần được kiểm tra trên ảnh nguồn.')
     st.download_button('Tải kết quả 12 lượt chụp mới', path.read_bytes(),
                        'sonarnet-recall-tap-viet-nam-moi.json', 'application/json')
     image_path = path.with_name('example.png')
@@ -124,10 +129,21 @@ def render_fresh_recall(root: Path) -> None:
         with st.expander('Xem ảnh radar thật và các điểm được tìm thêm'):
             example = json.loads(example_path.read_text())
             acquired = example['source']['source_acquired_at'][:10]
-            st.image(str(image_path), width='stretch',
-                     caption=f"Sentinel-1 RTC VV · {acquired} · ô {example['window_id']}. "
-                             "Chọn ô tìm thêm nhiều nhãn nhất để minh họa. "
-                             "Chỉ đánh dấu điểm thuộc vùng nước dùng chấm.")
+            panels = [path.with_name(f'example-{side}.png') for side in ('before','after')]
+            if all(panel.is_file() for panel in panels):
+                for column, panel, summary in zip(st.columns(2), panels, example['summaries']):
+                    column.markdown(
+                        f"**{summary['threshold']}** · **{summary['matched']}/{example['label_count']}** "
+                        f"nhãn khớp · {summary['proposal_count']} điểm cần rà"
+                    )
+                    column.image(str(panel), width='stretch')
+                st.caption('Hình thoi lam là nhãn Ai2. Vòng vàng là điểm khớp trong 100 m. '
+                           'Vòng hồng là điểm chưa khớp nhãn.')
+            else:
+                st.image(str(image_path), width='stretch')
+            st.caption(f"Sentinel-1 RTC VV · {acquired} · ô {example['window_id']}. "
+                       "Chọn ô tìm thêm nhiều nhãn nhất để minh họa. "
+                       "Chỉ đánh dấu điểm thuộc vùng nước dùng chấm.")
             st.download_button('Tải nguồn và số đếm của ảnh minh họa',example_path.read_bytes(),
                                'sonarnet-nguon-anh-minh-hoa.json','application/json')
     render_polarimetric_recall(root)

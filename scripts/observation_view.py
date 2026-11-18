@@ -163,12 +163,30 @@ def provenance(record):
     )
 
 
+WORKFLOWS = {
+    'xem-toan-canh': 'Xem toàn cảnh',
+    'kiem-tra-chi-tiet': 'Kiểm tra chi tiết',
+    'ho-so-mau': 'Hồ sơ mẫu',
+}
+
+
+def update_workflow_url():
+    st.query_params['che-do'] = next(
+        slug for slug, label in WORKFLOWS.items() if label == st.session_state.observation_workflow
+    )
+
+
 def render(root):
     from scan_view import render_scan
     # Start with the nationwide context so a first-time visitor immediately
     # sees the published Sentinel‑1 coverage.  The focused YOLO review remains
     # one deliberate step away and is clearly labelled as a test workspace.
-    workflow = st.radio('Bạn muốn làm gì?', ['Xem toàn cảnh', 'Kiểm tra chi tiết', 'Hồ sơ mẫu'], horizontal=True, key='observation_workflow')
+    if 'observation_workflow' not in st.session_state:
+        st.session_state.observation_workflow = WORKFLOWS.get(
+            st.query_params.get('che-do'), WORKFLOWS['xem-toan-canh']
+        )
+    workflow = st.radio('Bạn muốn làm gì?', list(WORKFLOWS.values()), horizontal=True, index=None,
+                        key='observation_workflow', on_change=update_workflow_url)
     if workflow == 'Hồ sơ mẫu':
         from demo_snapshot import render_snapshot
         render_snapshot(root)

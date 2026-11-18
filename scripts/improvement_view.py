@@ -121,15 +121,15 @@ def render_improvements(root: Path):
     st.markdown('''<div class="sonar-hero"><div class="sonar-eyebrow">KIỂM TRA BẰNG CHỨNG</div>
     <div class="sonar-title">Biết khi nào chưa thể kết luận.</div>
     <div class="sonar-copy">Tự kiểm tra cách SonarNet xử lý thiếu dữ liệu, thông tin mâu thuẫn và những cặp ghép không chắc chắn.</div></div>''', unsafe_allow_html=True)
-    render_evaluation_summary(root, detailed=True)
-    render_vn_recall(root)
-    render_fresh_recall(root)
     final_report = root/'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
     if final_report.is_file():
         st.download_button('Tải báo cáo cải tiến Chặng 1', final_report.read_bytes(),
                            final_report.name, 'application/pdf', key='download_chang1_report')
     if st.toggle('Mở hồ sơ ảnh SAR thật thiếu AIS', key='evidence_open_snapshot'):
         render_snapshot(root)
+    render_evaluation_summary(root, detailed=True)
+    render_vn_recall(root)
+    render_fresh_recall(root)
     st.subheader('1. Thử các tình huống khó')
     st.info('DỮ LIỆU MÔ PHỎNG: các điểm, mã AIS và kích thước dưới đây do kịch bản tạo ra. Thuật toán ghép và phân loại là mã đang dùng trong dự án.')
     label = st.selectbox('Tình huống kiểm tra', list(SCENARIOS), key='evidence_case')

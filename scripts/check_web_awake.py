@@ -77,6 +77,7 @@ def inspect_page(page, *, evidence=False):
                     "Kết quả trước và sau cải tiến", "Kiểm tra thêm cách đọc SAR ở hai tỷ lệ",
                     "Kiểm tra trên ảnh ven biển Việt Nam", "Huấn luyện ở 640 px giữ thêm mục tiêu",
                     "Recall trên 12 lượt chụp mới", "Tải báo cáo cải tiến Chặng 1",
+                    "Bảng đầy đủ và các bộ xếp hạng",
                     "Xem ảnh radar thật và các điểm được tìm thêm",
                     "Thử xếp hạng bằng hai kênh radar VV và VH", "Mở hồ sơ ảnh SAR thật thiếu AIS",
                     "Kiểm tra lỗi đổi đối tác sau khi lọc AIS",

@@ -98,6 +98,19 @@ class ImprovementEvidenceTests(unittest.TestCase):
                     'Thử xếp hạng bằng hai kênh radar VV và VH'}
         self.assertTrue(expected <= {item.label for item in app.expander})
 
+    def test_direct_link_opens_observation_sample(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
+        app.query_params['trang'] = 'quan-sat'
+        app.query_params['che-do'] = 'ho-so-mau'
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.radio(key='observation_workflow').value, 'Hồ sơ mẫu')
+        self.assertTrue(any(item.proto.label == 'Tải ZIP ảnh và hồ sơ mẫu'
+                            for item in app.get('download_button')))
+        app.radio(key='main_section').set_value('Minh chứng cải tiến').run()
+        self.assertFalse(app.exception)
+        self.assertNotIn('che-do', app.query_params)
+
     def test_repeatability_failure_is_visible_not_silently_aggregated(self):
         app=AppTest.from_file(str(ROOT/'scripts/demo_app.py'),default_timeout=60).run()
         app.radio[0].set_value('Minh chứng cải tiến').run()

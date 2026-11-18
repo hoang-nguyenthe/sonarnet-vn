@@ -26,6 +26,8 @@ Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng
 
 ## Hướng dẫn dùng thử
 
+Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Trên điện thoại, mỗi ngưỡng có số nhãn khớp và số điểm cần rà hiển thị riêng. Mở [link hồ sơ mẫu](https://sonarnet.streamlit.app/?trang=quan-sat&che-do=ho-so-mau) để xem ảnh và tải ZIP ngay.
+
 > Trong **Recall trên 12 lượt chụp mới**, chuyển giữa cùng mức trần theo diện tích và đúng số lượt rà của bản đồ để so sánh ngưỡng 0,35 với 0,05 và các bộ xếp hạng thử nghiệm. Dữ liệu là nhãn điểm lịch sử, khớp trong 100 m. Mở **Xem ảnh radar thật và các điểm được tìm thêm** để đối chiếu bằng mắt các điểm khớp và chưa khớp trên cùng một ô ảnh.
 
 > Ở mục **Kiểm tra trên ảnh ven biển Việt Nam**, xem mẫu Sentinel-1 có nhãn điểm Ai2 ở Đà Nẵng và Vũng Tàu. Có thể đổi bán kính 50, 100, 150 m và xem số ứng viên cần rà. Đây là phép so sánh với nhãn điểm, khác với IoU 0,50 dùng để chấm hộp trên SLC.

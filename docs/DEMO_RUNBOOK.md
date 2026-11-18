@@ -1,12 +1,12 @@
 # Mở minh chứng SonarNet trong khoảng 2 phút
 
-Mở [demo công khai](https://sonarnet.streamlit.app/?trang=minh-chung). Dùng [hướng dẫn nộp và chạy ngoại tuyến](../NOP_CHANG_1.md) để kiểm tra bản ZIP hoặc tải báo cáo.
+Mở [demo công khai](https://sonarnet.streamlit.app/?trang=minh-chung). Nút tải PDF và hồ sơ mẫu nằm ngay dưới phần giới thiệu. Có thể [mở trực tiếp hồ sơ mẫu](https://sonarnet.streamlit.app/?trang=quan-sat&che-do=ho-so-mau) để bỏ qua bước mở bản đồ. Dùng [hướng dẫn nộp và chạy ngoại tuyến](../NOP_CHANG_1.md) để kiểm tra bản ZIP hoặc tải báo cáo.
 
 | Thời gian dự kiến | Thao tác | Điểm cần quan sát |
 | --- | --- | --- |
 | 0:00–0:25 | Bật **Mở hồ sơ ảnh SAR thật thiếu AIS** | Ảnh, ngày chụp và trạng thái thiếu AIS. Hồ sơ ảnh ở trạng thái chờ xác minh. |
 | 0:25–0:50 | Thử **Kích thước mâu thuẫn** và **AIS gần nhất đã cũ, có tín hiệu khác gần đó** | Đây là vị trí mô phỏng chạy qua bộ ghép thật. Khi đề xuất thiếu chất lượng, hệ thống giữ ca để rà và tránh chuyển sang mã kế cận. |
-| 0:50–1:20 | Xem **Recall trên 12 lượt chụp mới**, bật **Đúng số lượt rà của bản đồ** | Hạ ngưỡng có lợi khi có thêm lượt rà. Với đúng số lượt rà của bản đồ, hai ngưỡng cho cùng 80/152. |
+| 0:50–1:20 | Xem **Recall trên 12 lượt chụp mới**, bật **Đúng số lượt rà của bản đồ** | Hai thẻ cho biết số nhãn khớp và số điểm cần rà. Với đúng số lượt rà của bản đồ, hai ngưỡng cho cùng 80/152. Mở bảng đầy đủ để xem các phương án còn lại. |
 | 1:20–1:45 | Mở **Xem ảnh radar thật và các điểm được tìm thêm** | Hình cho thấy điểm khớp và chưa khớp trên cùng một ô Sentinel-1. |
 | 1:45–2:00 | Mở **Tải báo cáo cải tiến Chặng 1** | Báo cáo có phương pháp, phép đối chứng và giới hạn của từng chỉ số. |
 
