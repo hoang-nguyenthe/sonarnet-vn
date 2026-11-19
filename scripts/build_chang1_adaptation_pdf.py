@@ -70,7 +70,11 @@ def build(args):
     polar_path = ROOT/'reports/final/vietnam_rtc_vv_vh_20261118/results.json'
     polar = json.loads(polar_path.read_text()) if polar_path.is_file() else None
     example_path = fresh_path.with_name('example.png')
-    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh) + bool(polar)
+    contrast_path = ROOT/'reports/final/vietnam_rtc_contrast_20261119/results.json'
+    tta_path = ROOT/'reports/final/vietnam_rtc_tta_20261119/results.json'
+    equal_review_plot = tta_path.with_name('equal-review.png')
+    equal_review = contrast_path.is_file() and tta_path.is_file() and equal_review_plot.is_file()
+    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh) + bool(polar) + equal_review
     b = BytesIO()
     c = Canvas(b, pagesize=A4)
 
@@ -101,7 +105,7 @@ def build(args):
         c.line(47, 48, 548, 48)
         c.setFillColor(DIM)
         c.setFont('Body', 8)
-        c.drawString(47, 32, 'SONARNET VIỆT NAM  /  CHẶNG 1  /  18.11.2026')
+        c.drawString(47, 32, 'SONARNET VIỆT NAM  /  CHẶNG 1  /  19.11.2026')
         c.drawRightString(548, 32, f'Bản cập nhật {number}/{total_update_pages}')
         c.showPage()
 
@@ -149,7 +153,8 @@ def build(args):
         y = text(description, y)-17
     if local:
         y = text('Đã đối chiếu điểm trên ảnh ven biển Việt Nam. Kết quả cho biết độ phủ trên ô có nhãn, '
-                 'chưa xác nhận danh tính hay hỗ trợ suy rộng ra toàn bản đồ. Xem số liệu tại trang 9.', y, muted)
+                 'chưa xác nhận danh tính hay hỗ trợ suy rộng ra toàn bản đồ. '
+                 'Xem số liệu tại trang 9' + (' và đối chứng cùng số lượt rà tại trang 12.' if equal_review else '.'), y, muted)
     else:
         y = text('Kết quả trên nhãn ảnh nguồn phục vụ rà soát. Cần đối chứng tại Việt Nam và xác nhận '
                  'của người có chuyên môn trước khi dùng mô hình mới cho nghiệp vụ.', y, muted)
@@ -447,6 +452,44 @@ def build(args):
             y = text('Ví dụ được chọn theo số nhãn tìm thêm trong một ô. '
                      'Ảnh Sentinel-1 RTC VV ngày 23/08/2022, ô 44544. '
                      'Nguồn ảnh Copernicus/Catalyst qua Microsoft Planetary Computer, nhãn điểm Ai2.',y,muted)
+        assert y > 66,y
+        footer(total_update_pages - equal_review)
+    if equal_review:
+        contrast = json.loads(contrast_path.read_text())
+        tta = json.loads(tta_path.read_text())
+        y = header('SENTINEL-1 RTC VEN BIỂN VIỆT NAM', 'Phát hiện thêm với cùng số lượt rà')
+        n = len(contrast['cases'])
+        windows = sum(case['windows'] for case in contrast['cases'])
+        y = text(f'Đối chiếu {windows} ô có ảnh trên {n} lượt chụp giữ riêng. '
+                 'Chọn phương án trên năm lượt phát triển, giữ nguyên số ứng viên ở từng lượt chụp '
+                 'khi chấm lại. Một ứng viên khớp tối đa một nhãn Ai2 trong 100 m.', y)-18
+        fig_height = 180
+        c.drawImage(str(equal_review_plot), 47, y-fig_height, 501, fig_height, mask='auto')
+        y -= fig_height+17
+        rows = [['Số lượt rà', 'Phương án', 'Nhãn khớp', 'Điểm không khớp']]
+        for mode, baseline, name in (('equal_incumbent','map_default','Xoay và lật ảnh'),
+                                     ('equal_relaxed','map_lower_threshold','Chia ô ảnh chồng lấn')):
+            for source, method, label in ((contrast,baseline,'Bản đồ'),
+                    (contrast,contrast['selected'][mode],'Lọc điểm trong 35 m'),
+                    (tta,tta['selected'][mode],name)):
+                counts = [case[mode][method]['100'] for case in source['cases']]
+                total = {k:sum(row[k] for row in counts) for k in ('predictions','matched','labels','unmatched')}
+                rows.append([total['predictions'],label,f"{total['matched']}/{total['labels']}",total['unmatched']])
+        y = table(rows,[78,202,91,130],y)-14
+        y = text('Lọc điểm gần nhau ưu tiên ứng viên có điểm YOLO cao hơn. Phần tăng thêm ở 116 lượt rà '
+                 'tập trung ở hai lượt chụp tại vùng khảo sát Quảng Ninh. Sáu nhãn tăng thêm khi chia ô '
+                 'ở 191 lượt rà đến từ một lượt chụp trong vùng này.', y)-10
+        confirmation_path = tta_path.parent/'confirmation/results.json'
+        if confirmation_path.is_file():
+            extra = json.loads(confirmation_path.read_text())['cases']
+            y = text(f'Phép xác nhận bổ sung trên {len(extra)} ngày chụp và '
+                     f'{sum(row["windows"] for row in extra)} ô ở Bắc Trung Bộ. Cùng 6 lượt rà, '
+                     'bản đồ và lọc 35 m đều khớp 5/8. Cùng 10 lượt rà, bản đồ '
+                     'và chia ô đều khớp 6/8.',y)-10
+        y = text('Các cảnh giữ riêng trong bảng đã được dùng trong những phép thử trước. Kết quả phản ánh '
+                 'nhãn điểm trên các ô đã lấy. Dữ liệu theo cảnh, kết quả ở 50/100/150 m '
+                 'và mã tái lập có trong mục Minh chứng. Nguồn nhãn Ai2 Vessel Detection with '
+                 'Sentinels, ảnh Sentinel-1 RTC từ Microsoft Planetary Computer.',y,muted)
         assert y > 66,y
         footer(total_update_pages)
     c.save()

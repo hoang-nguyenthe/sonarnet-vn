@@ -7,6 +7,24 @@ import streamlit as st
 RESULTS = 'reports/final/vietnam_rtc_recall_20261118/results.json'
 RANKING_RESULTS = 'reports/final/vietnam_rtc_ranking_20261118/results.json'
 POLARIMETRIC_RESULTS = 'reports/final/vietnam_rtc_vv_vh_20261118/results.json'
+CONTRAST_RESULTS = 'reports/final/vietnam_rtc_contrast_20261119/results.json'
+TTA_RESULTS = 'reports/final/vietnam_rtc_tta_20261119/results.json'
+RECALL_NAMES = {
+    'map_default': 'Bản đồ · ngưỡng 0,35',
+    'map_lower_threshold': 'Bản đồ · ngưỡng 0,05',
+    'distinct_35m': 'Lọc điểm nằm trong 35 m',
+    'distinct_65m': 'Lọc điểm nằm trong 65 m',
+    'contrast_only': 'Đỉnh tương phản radar',
+    'learned_union': 'Xếp hạng theo điểm radar và YOLO',
+    'map_prior_union': 'Ưu tiên điểm YOLO, bổ sung tương phản',
+    'map_prior_distinct_65m': 'Ưu tiên điểm YOLO, lọc trong 65 m',
+    'flip_rotation_max': 'Xoay và lật ảnh · lấy điểm cao nhất',
+    'overlap_only_max': 'Các ô chồng lấn · lấy điểm cao nhất',
+}
+REVIEW_MODES = {
+    'equal_incumbent': 'Cùng số lượt rà với ngưỡng 0,35',
+    'equal_relaxed': 'Cùng số lượt rà với ngưỡng 0,05',
+}
 NAMES = {
     'map_default': 'Cấu hình bản đồ hiện tại',
     'map_lower_threshold': 'Bản đồ, hạ ngưỡng điểm',
@@ -148,6 +166,83 @@ def render_fresh_recall(root: Path) -> None:
                                'sonarnet-nguon-anh-minh-hoa.json','application/json')
     render_polarimetric_recall(root)
 
+
+def review_totals(cases, mode, method, radius=100):
+    cells = [c[mode][method][str(radius)] for c in cases]
+    return {k: sum(c[k] for c in cells) for k in ('matched', 'labels', 'predictions', 'unmatched')}
+
+
+def render_contrast_recall(root: Path) -> None:
+    path = root / CONTRAST_RESULTS
+    if not path.is_file():
+        return
+    result = json.loads(path.read_text())
+    cases = result['cases']
+    st.subheader('Phát hiện thêm với cùng số lượt rà', anchor='recall-cung-luot-ra')
+    st.caption('Cùng 12 lượt chụp lịch sử, 86 ô có ảnh. Chọn bán kính lọc trên năm lượt phát triển '
+               'rồi chấm lại trên các lượt giữ riêng. Một ứng viên khớp tối đa một nhãn trong 100 m.')
+    mode = st.radio('Số lượt rà trong phép lọc điểm gần nhau', list(REVIEW_MODES),
+                    format_func=REVIEW_MODES.__getitem__, horizontal=True, key='close_point_review_mode')
+    baseline = 'map_default' if mode == 'equal_incumbent' else 'map_lower_threshold'
+    selected = result['selected'][mode]
+    for column, method in zip(st.columns(2), (baseline, selected)):
+        scores = review_totals(cases, mode, method)
+        with column.container(border=True):
+            column.markdown(f"**{RECALL_NAMES[method]}**")
+            column.markdown(f"**{scores['matched']}/{scores['labels']}** nhãn khớp · "
+                            f"**{scores['predictions']}** điểm cần rà")
+    st.caption('Ưu tiên ứng viên có điểm YOLO cao hơn khi các tâm cách nhau trong 35 m. '
+               'Hai nhãn tăng thêm ở mức rà 0,35 đến từ hai lượt chụp tại vùng khảo sát Quảng Ninh.')
+    with st.expander('Xem kết quả theo bán kính khớp và cách xếp hạng'):
+        radius = st.select_slider('Bán kính khớp nhãn (m)', options=[50, 100, 150], value=100,
+                                  key='close_point_match_radius')
+        data = []
+        for method in cases[0][mode]:
+            scores = review_totals(cases, mode, method, radius)
+            data.append({'Phương án': RECALL_NAMES[method],
+                         'Nhãn khớp': f"{scores['matched']}/{scores['labels']}",
+                         'Điểm cần rà': scores['predictions'], 'Không khớp nhãn': scores['unmatched']})
+        st.dataframe(data, hide_index=True, width='stretch')
+        st.caption('Phép phát lại dùng nhãn điểm có sẵn. Điểm không khớp cần xem trên ảnh nguồn. '
+                   'Kết quả đã đo trên các ô có nhãn; bản đồ công khai vẫn dùng cấu hình đã công bố.')
+        st.download_button('Tải số liệu lọc điểm gần nhau', path.read_bytes(),
+                           'sonarnet-recall-loc-diem-gan.json', 'application/json')
+    render_map_tta_recall(root)
+    confirmation = (root / TTA_RESULTS).parent / 'confirmation/results.json'
+    if confirmation.is_file():
+        new_cases = json.loads(confirmation.read_text())['cases']
+        base_tight = review_totals(new_cases,'equal_incumbent','baseline')
+        base_wide = review_totals(new_cases,'equal_relaxed','baseline')
+        tight = review_totals(new_cases,'equal_incumbent','distinct_35m')
+        wide = review_totals(new_cases,'equal_relaxed','overlap_only_max')
+        st.caption(f"Hai lượt chụp bổ sung ở Bắc Trung Bộ. Ở {base_tight['predictions']} lượt rà, "
+                   f"bản đồ và lọc 35 m lần lượt khớp {base_tight['matched']}/{base_tight['labels']} và "
+                   f"{tight['matched']}/{tight['labels']}. Ở {base_wide['predictions']} lượt rà, "
+                   f"bản đồ và chia ô lần lượt khớp {base_wide['matched']}/{base_wide['labels']} và "
+                   f"{wide['matched']}/{wide['labels']}.")
+
+
+def render_map_tta_recall(root: Path) -> None:
+    path = root / TTA_RESULTS
+    if not path.is_file():
+        return
+    result = json.loads(path.read_text())
+    with st.expander('Thử xoay, lật và chia ô ảnh cho mô hình bản đồ'):
+        chart = path.with_name('equal-review.png')
+        if chart.is_file():
+            st.image(str(chart), width='stretch')
+        rows = []
+        for mode, baseline in (('equal_incumbent', 'map_default'), ('equal_relaxed', 'map_lower_threshold')):
+            method = result['selected'][mode]
+            before = review_totals(result['cases'], mode, baseline)
+            after = review_totals(result['cases'], mode, method)
+            rows.append({'Số lượt rà': after['predictions'], 'Cấu hình gốc': f"{before['matched']}/{before['labels']}",
+                         'Phương án thử': RECALL_NAMES[method], 'Nhãn khớp': f"{after['matched']}/{after['labels']}"})
+        st.dataframe(rows, hide_index=True, width='stretch')
+        st.caption('Dùng trọng số YOLO đang phục vụ bản đồ. Chọn cách kết hợp trên năm lượt phát triển, '
+                   'sau đó chấm riêng trên 12 lượt chụp đã có nhãn Ai2.')
+        st.download_button('Tải kết quả biến đổi ảnh trước suy luận', path.read_bytes(),
+                           'sonarnet-recall-bien-doi-anh.json', 'application/json')
 
 
 def render_polarimetric_recall(root: Path) -> None:

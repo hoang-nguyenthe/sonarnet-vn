@@ -1,0 +1,38 @@
+{
+  "locked_utc": "2026-11-19T01:04:39.426022+00:00",
+  "input_manifest_sha256": "9698a5252b8690b55ca021fd4f0d74186c174be4f9ed231e42adfcf28a1dc7c7",
+  "weights_sha256": {
+    "sonarnet_baseline.pt": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+    "sonarnet_slc_vv_20261118.pt": "b610df7fb3b732646540257194e075b52012e434755e77595227a9dde9a31a1b"
+  },
+  "selection_sha256": {
+    "vietnam_rtc_contrast_20261119": "33da81c4c7d2252b95b61abe4c9267b47d09f72030317be6a3da4929e48f9bb5",
+    "vietnam_rtc_tta_20261119": "08e52f3c2d37d15f2f400fe88fab486ebbf417cc81f05961a7e31b05a4e4dbc9"
+  },
+  "excluded_utc_days": [
+    "20220122",
+    "20220124",
+    "20220313",
+    "20220323",
+    "20220406",
+    "20220409",
+    "20220410",
+    "20220416",
+    "20220510",
+    "20220524",
+    "20220619",
+    "20220624",
+    "20220629",
+    "20220701",
+    "20220723",
+    "20220730",
+    "20220816",
+    "20220823"
+  ],
+  "match_metres": [
+    50,
+    100,
+    150
+  ],
+  "policy": "Only the 35 m suppression and overlapping chip policies are compared. Preserve exact per-acquisition review counts. All covered source labels are scored. No fitting."
+}

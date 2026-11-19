@@ -6,7 +6,7 @@ Mở [demo công khai](https://sonarnet.streamlit.app/?trang=minh-chung). Nút t
 | --- | --- | --- |
 | 0:00–0:25 | Bật **Mở hồ sơ ảnh SAR thật thiếu AIS** | Ảnh, ngày chụp và trạng thái thiếu AIS. Hồ sơ ảnh ở trạng thái chờ xác minh. |
 | 0:25–0:50 | Thử **Kích thước mâu thuẫn** và **AIS gần nhất đã cũ, có tín hiệu khác gần đó** | Đây là vị trí mô phỏng chạy qua bộ ghép thật. Khi đề xuất thiếu chất lượng, hệ thống giữ ca để rà và tránh chuyển sang mã kế cận. |
-| 0:50–1:20 | Xem **Recall trên 12 lượt chụp mới**, bật **Đúng số lượt rà của bản đồ** | Hai thẻ cho biết số nhãn khớp và số điểm cần rà. Với đúng số lượt rà của bản đồ, hai ngưỡng cho cùng 80/152. Mở bảng đầy đủ để xem các phương án còn lại. |
+| 0:50–1:20 | Xem **Recall trên 12 lượt chụp mới**, bật **Đúng số lượt rà của bản đồ** | Hai thẻ cho biết số nhãn khớp và số điểm cần rà. Cả hai ngưỡng khớp 80/152 ở 116 lượt rà. Mục **Phát hiện thêm với cùng số lượt rà** cho thấy lọc 35 m đạt 82/152. Trong thử nghiệm 191 lượt rà, chia ô ảnh chồng lấn đạt 102/152 so với 96/152. |
 | 1:20–1:45 | Mở **Xem ảnh radar thật và các điểm được tìm thêm** | Hình cho thấy điểm khớp và chưa khớp trên cùng một ô Sentinel-1. |
 | 1:45–2:00 | Mở **Tải báo cáo cải tiến Chặng 1** | Báo cáo có phương pháp, phép đối chứng và giới hạn của từng chỉ số. |
 

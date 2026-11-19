@@ -275,7 +275,10 @@ Quy trình đánh giá đúng là:
 Chặng 1 có đối chứng ảnh LS-SSDD, OSSDD, OpenSAR Insight, ảnh Sentinel-1 RTC
 ven biển Việt Nam với nhãn điểm Ai2 và phép phát lại AIS lịch sử NOAA.
 Phép thử trực tiếp SAR–AIS có bốn mốc vị trí tham chiếu. Phép thử ở Việt Nam
-đo khớp với nhãn điểm trong 100 m và ghi riêng số ứng viên cần rà.
+đo khớp với nhãn điểm trong 100 m và ghi riêng số ứng viên cần rà. Trên 12
+lượt chụp giữ riêng, lọc điểm gần nhau tăng từ 80/152 lên 82/152 ở 116 lượt
+rà. Chia ô chồng lấn tăng từ 96/152 lên 102/152 ở 191 lượt rà. Hai lượt chụp
+Bắc Trung Bộ bổ sung giữ nguyên số nhãn khớp.
 Phương pháp và giới hạn đo có trong [báo cáo cải tiến](output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf).
 Mở [bảng đối chiếu minh chứng Chặng 1](NOP_CHANG_1.md) để kiểm tra từng phần.
 

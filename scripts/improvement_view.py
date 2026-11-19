@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from demo_snapshot import render_snapshot
 from evaluation_summary import render_evaluation_summary
-from vn_recall_view import render_fresh_recall, render_vn_recall
+from vn_recall_view import render_contrast_recall, render_fresh_recall, render_vn_recall
 from sonarnet.config import RunConfig
 from sonarnet.fusion.kalman import KalmanEstimate
 from sonarnet.fusion.matching import Detection, SARAISFusion
@@ -127,6 +127,7 @@ def render_improvements(root: Path):
                            final_report.name, 'application/pdf', key='download_chang1_report')
     if st.toggle('Mở hồ sơ ảnh SAR thật thiếu AIS', key='evidence_open_snapshot'):
         render_snapshot(root)
+    render_contrast_recall(root)
     render_evaluation_summary(root, detailed=True)
     render_vn_recall(root)
     render_fresh_recall(root)

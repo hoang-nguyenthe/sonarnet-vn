@@ -1,0 +1,48 @@
+{
+  "started": "2026-11-19T00:57:01.982761+00:00",
+  "evaluator_sha256": "4a647f734447c53925c50413811259144712606c25fa0b78cf0d6b427fa768a7",
+  "source_hashes": {
+    "scripts/score_vn_reference_rtc.py": "bb49c44aa34d3bd916e1529465f38ea8eacb4c42c89c3a04bb60f8b1ea4972d8",
+    "scripts/evaluate_review_ranking.py": "8a9514f685804100533324722f6a4d421332c35d6c264f4083ba3f57cd0687ac",
+    "scripts/evaluate_sar_recall_candidates.py": "72e42a4fff4ff6d52a053c724e01936fe7ae9c239a38b5cd5ee5bbb723ef0de4",
+    "assets/land_mask/vietnam.json.gz": "d60230d20336609872f09794ab008a75d6afbccba9126be58a41d7d6860a7f31",
+    "assets/models/sonarnet_baseline.pt": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+    "assets/models/sonarnet_slc_vv_20261118.pt": "b610df7fb3b732646540257194e075b52012e434755e77595227a9dde9a31a1b",
+    "development_cache": "dcd6219e879c15627b0db09cda3e51ad6937a20b7de766b41bdb16b6de4397fd",
+    "holdout_cache": "e01baea0964edbdb5ee7dd837541a7eeb734696d58b9f53d8fd239f1f067b1b1",
+    "development_vv_manifest": "d29f2bc9c82ccbd561a0b952980de5d0aee48351a71df062c2d9d821bbb324b6",
+    "held_out_vv_manifest": "bdcc58e32153530bea2cb24b02bdd8f109995065316422145bb87cb6f634fe06"
+  },
+  "features": [
+    "map_score",
+    "slc_score",
+    "contrast_z",
+    "contrast_db",
+    "target_db",
+    "nearshore"
+  ],
+  "profiles": [
+    [
+      0.8,
+      7,
+      25
+    ],
+    [
+      1.6,
+      11,
+      39
+    ],
+    [
+      2.4,
+      17,
+      55
+    ]
+  ],
+  "match_metres": [
+    50,
+    100,
+    150
+  ],
+  "selection": "Leave one development acquisition out. Maximize total matches at 100 m at the same review count. Ties prefer the original order at that review count, then method order.",
+  "scope": "Retrospective follow-up on scenes already scored by other methods. Evaluation scenes are excluded from all fitting and method selection."
+}

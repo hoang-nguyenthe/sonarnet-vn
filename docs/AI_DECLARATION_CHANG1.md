@@ -1,6 +1,6 @@
 # Khai báo hỗ trợ AI trong lượt cải tiến SonarNet
 
-Phạm vi: công việc được thực hiện trong cuộc trò chuyện Codex này cho chặng cải tiến, ngày 16-17/11/2026. Đây là phụ lục để tác giả đối chiếu và điền vào mẫu BTC, không phải một biểu mẫu BTC tự thiết kế lại.
+Phạm vi: công việc được thực hiện trong cuộc trò chuyện Codex này cho chặng cải tiến, ngày 16–19/11/2026. Đây là phụ lục để tác giả đối chiếu và điền vào mẫu BTC, không phải một biểu mẫu BTC tự thiết kế lại.
 
 | Công đoạn | Vai trò của AI | Căn cứ kiểm tra |
 |---|---|---|
@@ -25,6 +25,7 @@ Tác giả cần tự kiểm tra tính đúng của mã, nguồn dữ liệu, n�
 6. Sửa giao diện, bản xuất, trạng thái và cơ chế xác nhận; kiểm tra trang Minh chứng bằng Chrome.
 7. Khôi phục 22.064 tệp ảnh công bố theo mã Git; chuyển vùng làm việc sang SSD khi ổ trong hết chỗ.
 8. Chuẩn bị báo cáo, slide, kịch bản và gói bằng chứng để tác giả rà soát.
+9. Đối chứng lọc điểm gần nhau và chia ô chồng lấn ở cùng số lượt rà trên ảnh Sentinel-1 RTC. Xác nhận bổ sung trên hai ngày chụp khác và cập nhật biểu đồ Python, báo cáo, web.
 
 Danh sách này là bản tóm tắt thao tác, **không phải prompt log nguyên văn**. Không dùng lịch sử commit để giả thành lịch sử prompt. Nếu BTC yêu cầu hội thoại gốc, tác giả xuất đúng cuộc trò chuyện đang có hoặc dùng liên kết chia sẻ do mình kiểm tra quyền truy cập.
 

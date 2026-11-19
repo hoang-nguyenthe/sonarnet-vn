@@ -1,0 +1,151 @@
+{
+  "catalogue_sha256": "9574c6cca41db3c1da7a932ddfce795a0b8abcd3fc2987842d0d8b4e1ec9cc1b",
+  "screen_sha256": "ec103778294fec52c87f384e96aafef0617870752beeae8e32e4b1166f3b5926",
+  "shape": [
+    512,
+    512
+  ],
+  "cohorts": [
+    {
+      "region": "north_central",
+      "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+      "windows": [
+        {
+          "window_id": 37172,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            107.9296875,
+            17.811456088564476,
+            108.017578125,
+            17.89511430374914
+          ],
+          "file": "window-37172.npz",
+          "sha256": "050c781b63c54b83ad9d8b361716d5d84d3c98479afa7f37fa38733f223adf2c",
+          "valid_fraction": 1.0
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          107.93166160583496,
+          17.881146773083497
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/7/8/IW/DV/S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2022-07-08T22:44:03.939940Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    },
+    {
+      "region": "north_central",
+      "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+      "windows": [
+        {
+          "window_id": 38283,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            107.05078125,
+            17.56024650329489,
+            107.138671875,
+            17.644022027872726
+          ],
+          "file": "window-38283.npz",
+          "sha256": "879a86cb32fc78a790bc5c6dc1b32f6993f400aafb7ce12b4bb827ac9741dd94",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38284,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.017578125,
+            18.062312304546726,
+            108.10546875,
+            18.145851771694467
+          ],
+          "file": "window-38284.npz",
+          "sha256": "f1aab58996f4ec21205249deda499d56a5d71725b97100e09caa0cee35346412",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38286,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            107.05078125,
+            17.644022027872726,
+            107.138671875,
+            17.727758609852273
+          ],
+          "file": "window-38286.npz",
+          "sha256": "1f7b36b2e4f20ab7cad566693c65cbd90b23979cb0bb50b3f345c406d3261ecb",
+          "valid_fraction": 1.0
+        },
+        {
+          "window_id": 38287,
+          "split": "jun-july-aug-2022-point-train",
+          "bbox": [
+            108.369140625,
+            17.56024650329489,
+            108.45703125,
+            17.644022027872726
+          ],
+          "file": "window-38287.npz",
+          "sha256": "4a5c5ce76e3bbaba742707bb8be14d4c666fa96ff90384ebb5fa46fa75518ec4",
+          "valid_fraction": 0.5473976135253906
+        }
+      ],
+      "failed_windows": [],
+      "points": [
+        [
+          107.08013534545898,
+          17.61547399378549
+        ],
+        [
+          107.08974838256836,
+          17.66978499434777
+        ],
+        [
+          107.09386825561523,
+          17.573584464576054
+        ],
+        [
+          107.09652900695801,
+          17.56556544004419
+        ],
+        [
+          107.1262264251709,
+          17.711488638877686
+        ],
+        [
+          108.02075386047363,
+          18.13247508321867
+        ],
+        [
+          108.41025352478027,
+          17.613183411270505
+        ]
+      ],
+      "source": {
+        "source": "Copernicus Sentinel-1 GRD \u00b7 RTC by Catalyst \u00b7 hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2022/6/26/IW/DV/S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2022-06-26T22:44:03.343730Z",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary"
+      }
+    }
+  ]
+}

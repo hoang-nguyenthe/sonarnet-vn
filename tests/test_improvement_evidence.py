@@ -100,6 +100,23 @@ class ImprovementEvidenceTests(unittest.TestCase):
                     'Thử xếp hạng bằng hai kênh radar VV và VH'}
         self.assertTrue(expected <= {item.label for item in app.expander})
 
+    def test_rtc_recall_compares_at_exact_review_counts(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
+        app.query_params['trang'] = 'minh-chung'
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertIn('Phát hiện thêm với cùng số lượt rà', [item.value for item in app.subheader])
+        self.assertTrue(any('**82/152** nhãn khớp' in item.value and '**116** điểm' in item.value
+                            for item in app.markdown))
+        app.radio(key='close_point_review_mode').set_value('equal_relaxed').run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('**97/152** nhãn khớp' in item.value and '**191** điểm' in item.value
+                            for item in app.markdown))
+        tta = next(item.value for item in app.dataframe if 'Phương án thử' in item.value.columns)
+        self.assertIn((191, '96/152', '102/152'),
+                      list(tta[['Số lượt rà', 'Cấu hình gốc', 'Nhãn khớp']].itertuples(index=False,name=None)))
+        self.assertTrue(any('Bắc Trung Bộ' in item.value and '6/8 và 6/8' in item.value for item in app.caption))
+
     def test_direct_link_opens_observation_sample(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
         app.query_params['trang'] = 'quan-sat'
