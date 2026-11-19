@@ -188,8 +188,11 @@ def render(root):
     workflow = st.radio('Bạn muốn làm gì?', list(WORKFLOWS.values()), horizontal=True, index=None,
                         key='observation_workflow', on_change=update_workflow_url)
     if workflow == 'Hồ sơ mẫu':
-        from demo_snapshot import render_snapshot
-        render_snapshot(root)
+        if st.toggle('Rà soát và lưu ghi chú trên hồ sơ mẫu', key='review_fixed_sample'):
+            render_scan(root, fixed_sample=True)
+        else:
+            from demo_snapshot import render_snapshot
+            render_snapshot(root)
         return
     if workflow == 'Kiểm tra chi tiết':
         render_scan(root)

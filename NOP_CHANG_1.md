@@ -26,7 +26,7 @@ Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng
 
 ## Hướng dẫn dùng thử
 
-Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Trên điện thoại, mỗi ngưỡng có số nhãn khớp và số điểm cần rà hiển thị riêng. Mở [link hồ sơ mẫu](https://sonarnet.streamlit.app/?trang=quan-sat&che-do=ho-so-mau) để xem ảnh và tải ZIP ngay.
+Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Trên điện thoại, mỗi ngưỡng có số nhãn khớp và số điểm cần rà hiển thị riêng. Mở [link hồ sơ mẫu](https://sonarnet.streamlit.app/?trang=quan-sat&che-do=ho-so-mau) để xem ảnh và tải ZIP ngay. Bật **Rà soát và lưu ghi chú trên hồ sơ mẫu** để thử thao tác với chính ảnh này.
 
 > Trong **Recall trên 12 lượt chụp mới**, chuyển giữa cùng mức trần theo diện tích và đúng số lượt rà của bản đồ để so sánh ngưỡng 0,35 với 0,05 và các bộ xếp hạng thử nghiệm. Dữ liệu là nhãn điểm lịch sử, khớp trong 100 m. Mở **Xem ảnh radar thật và các điểm được tìm thêm** để đối chiếu bằng mắt các điểm khớp và chưa khớp trên cùng một ô ảnh.
 
@@ -49,7 +49,7 @@ python -m streamlit run scripts/demo_app.py
 
 Mở `http://localhost:8501/?trang=minh-chung` sau khi chạy. Ảnh bản đồ công bố được phục hồi theo README. Hồ sơ mẫu và trang minh chứng dùng các tệp gọn trong ZIP. SHA-256 từng tệp nằm trong `PACKAGE_MANIFEST.json`. Bản ZIP phát hành ghi commit nguồn đã ghim, mã Git blob của các tệp thuộc commit và SHA-256 của các tệp dữ liệu nghiên cứu kèm theo.
 
-Trong bản chạy từ ZIP, **Quan sát → Kiểm tra chi tiết** mở hồ sơ ảnh thật đã xác minh khi kho ảnh chưa sẵn sàng. Có thể giữ ghi chú của phiên và xuất ZIP kèm ảnh, mã băm và trạng thái thiếu AIS. Chạy `python scripts/verify_chang1_runtime.py` để kiểm tra luồng này trong thư mục vừa giải nén.
+Trong bản chạy từ ZIP, **Quan sát → Kiểm tra chi tiết** mở hồ sơ ảnh thật đã xác minh khi kho ảnh chưa sẵn sàng. Có thể lưu và mở lại ghi chú khớp đúng ảnh và kết quả. Bản ZIP của từng ô gồm ảnh, mã băm, trạng thái thiếu AIS và từng đánh giá đã lưu. Chạy `python scripts/verify_chang1_runtime.py` để kiểm tra luồng này trong thư mục vừa giải nén.
 
 ## Nội dung khai báo AI và nguồn để đối chiếu trước khi điền
 

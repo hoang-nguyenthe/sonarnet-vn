@@ -43,6 +43,7 @@ def verify():
     step('interactive_review_without_archive', app.radio(key='observation_workflow').set_value('Kiểm tra chi tiết'))
     assert any('hồ sơ mẫu từ ảnh thật' in item.value for item in app.info)
     key = app.selectbox(key='review_tile').value
+    assert app.session_state['review_active_notes'] == {}
     step('switch_to_raw_radar', app.radio(key='review_image_view').set_value('Ảnh radar nguồn'))
     point = next(item.value for item in app.selectbox if item.label=='Mở điểm cần kiểm tra')
     app.radio(key=f"candidate_status_{key}_{point['id']}").set_value('Có khả năng là tàu')
@@ -69,6 +70,8 @@ def verify():
         assert metadata['data_status'] == 'MISSING_DATA'
         assert metadata['operational_assessment']['conclusion'] is None
         assert metadata['image_sha256'] == hashes['source.png']
+        printable = z.read('review.html').decode()
+        assert 'Đánh giá của người rà' in printable and 'Có khả năng là tàu' in printable
         assert all(sha256(z.read(name)).hexdigest()==expected for name,expected in hashes.items())
     step('research_page', app.radio(key='main_section').set_value('Nghiên cứu'))
     step('help_page', app.radio(key='main_section').set_value('Hướng dẫn'))

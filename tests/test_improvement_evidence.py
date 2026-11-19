@@ -130,6 +130,11 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertEqual(app.radio(key='observation_workflow').value, 'Hồ sơ mẫu')
         self.assertTrue(any(item.proto.label == 'Tải ZIP ảnh và hồ sơ mẫu'
                             for item in app.get('download_button')))
+        app.toggle(key='review_fixed_sample').set_value(True).run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.selectbox(key='review_tile').value, 'cell_0_1')
+        self.assertTrue(any(item.proto.label == 'Tải hồ sơ kèm ảnh'
+                            for item in app.get('download_button')))
         app.radio(key='main_section').set_value('Minh chứng cải tiến').run()
         self.assertFalse(app.exception)
         self.assertNotIn('che-do', app.query_params)

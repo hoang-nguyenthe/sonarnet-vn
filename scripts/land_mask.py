@@ -89,10 +89,12 @@ def filter_tile(root, tile):
     tile['detections'], tile['excluded_detections'] = kept, excluded
 
 
-def annotated_image(root, tile):
+def annotated_image(root, tile, *, source=None):
     """Render the same filtered candidates used in the map, lists and export."""
-    with Image.open(root / tile['asset_dir'] / 'sar.png') as source:
-        image = source.convert('RGB')
+    if source is None:
+        source = root / tile['asset_dir'] / 'sar.png'
+    with Image.open(source) as raster:
+        image = raster.convert('RGB')
     draw = ImageDraw.Draw(image)
     for d in tile['detections']:
         color = '#ff9f0a' if d.get('surface') == 'near_coast' else '#64d2ff'
