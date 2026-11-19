@@ -74,7 +74,12 @@ def build(args):
     tta_path = ROOT/'reports/final/vietnam_rtc_tta_20261119/results.json'
     equal_review_plot = tta_path.with_name('equal-review.png')
     equal_review = contrast_path.is_file() and tta_path.is_file() and equal_review_plot.is_file()
-    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh) + bool(polar) + equal_review
+    joint_dir = ROOT/'reports/final/multiscene_sar_ais_20261119'
+    joint_path = joint_dir/'results.json'
+    joint = json.loads(joint_path.read_text()) if joint_path.is_file() else None
+    if joint and not joint['complete']:
+        raise ValueError('Multiscene appendix requires the complete frozen cohort')
+    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh) + bool(polar) + equal_review + bool(joint)
     b = BytesIO()
     c = Canvas(b, pagesize=A4)
 
@@ -286,7 +291,8 @@ def build(args):
         rows.append([label,*[fmt(m[k]) for k in ('correct','wrong','unassigned')]])
     y=table(rows,[266,77,77,81],y)-12
     y = text('Phiên bản kiểm tra sau được khóa dựa trên hai ngày khảo sát và hai ca mô phỏng lệch vị trí đã có. Với 3.722 bản tin giữ lại, cổng mới không ghép sai mã trong mẫu này và giữ ít hơn 19 cặp đúng so với cổng lọc trước có biên 100 m.',y)-13
-    y = text('Trên cảnh Sentinel-1 cùng giờ, cả hai cổng đều đồng thuận 1/4 mốc vị trí. Cổng giữ cặp đề xuất đưa ra 7 cặp, so với 9. Cần nhiều cảnh có bản tin cùng giờ và xác nhận độc lập trước khi suy rộng.',y)-15
+    expanded = ' Phép kiểm ở sáu lượt chụp bổ sung nằm tại trang 13.' if joint else ''
+    y = text('Trên cảnh Sentinel-1 cùng giờ, cả hai cổng đều đồng thuận 1/4 mốc vị trí. Cổng giữ cặp đề xuất đưa ra 7 cặp, so với 9. Đánh giá danh tính cần nguồn xác nhận độc lập.' + expanded,y)-15
     y = text('Tái lập',y,sub)-5
     y = text('Chạy scripts/evaluate_frozen_ais_assignment.py trên tệp NOAA theo ngày. Bản báo cáo theo ngày và theo mật độ, các lệnh và checksum nằm trong reports/final/ais_preserve_proposal_20261118/.',y,muted)
     assert y > 65, y
@@ -453,7 +459,7 @@ def build(args):
                      'Ảnh Sentinel-1 RTC VV ngày 23/08/2022, ô 44544. '
                      'Nguồn ảnh Copernicus/Catalyst qua Microsoft Planetary Computer, nhãn điểm Ai2.',y,muted)
         assert y > 66,y
-        footer(total_update_pages - equal_review)
+        footer(total_update_pages - equal_review - bool(joint))
     if equal_review:
         contrast = json.loads(contrast_path.read_text())
         tta = json.loads(tta_path.read_text())
@@ -491,6 +497,47 @@ def build(args):
                  'và mã tái lập có trong mục Minh chứng. Nguồn nhãn Ai2 Vessel Detection with '
                  'Sentinels, ảnh Sentinel-1 RTC từ Microsoft Planetary Computer.',y,muted)
         assert y > 66,y
+        footer(total_update_pages - bool(joint))
+    if joint:
+        y = header('SENTINEL-1 RTC VÀ AIS NOAA', 'Đối chiếu đồng thời trên sáu lượt chụp')
+        scenes = joint['scenes']
+        stationary = joint['aggregate']['near_stationary']
+        timed = joint['aggregate']['near_time']
+        y = text('Khóa hai lượt chụp tại mỗi cảng theo ngày và độ phủ catalogue trước khi đọc ảnh và bản tin. '
+                 'Cùng một bộ ứng viên radar được ghép bằng bốn phương án. '
+                 'Mốc AIS được giữ ngoài dữ liệu nội suy.',y)-10
+        rows = [['Khu vực và ngày UTC','Ứng viên radar','Mốc gần giờ','Mốc ít dịch chuyển']]
+        for scene in scenes:
+            rows.append([f"{scene['area']} · {scene['utc'][:10]}",scene['radar_candidates'],
+                        scene['near_time']['paired_references'],scene['near_stationary']['paired_references']])
+        y = table(rows,[267,72,68,94],y)-13
+        rows=[['Phương án ghép','Đồng thuận gần giờ','Khác mốc gần giờ',
+               'Đồng thuận ít dịch chuyển','Giữ mốc ít dịch chuyển']]
+        labels=(('distance_only','Theo khoảng cách'),('previous_gates','Cổng ghép gốc'),
+                ('100m_guard','Biên cạnh tranh 100 m'),('propose_then_veto','Giữ cặp đề xuất rồi kiểm tra'))
+        for name,label in labels:
+            near_count, stable_count = timed['counts'][name],stationary['counts'][name]
+            rows.append([label,f"{near_count['agree']}/{timed['paired_references']}",near_count['disagree'],
+                         f"{stable_count['agree']}/{stationary['paired_references']}",stable_count['reference_unpaired']])
+        y = table(rows,[172,77,72,91,89],y)-14
+        y = text('Mốc gần giờ dùng bản tin trong ±20 giây. Mốc ít dịch chuyển dùng chuỗi ở hai phía '
+                 'giờ giữa cảnh, độ lệch tối đa 35 m quanh vị trí trung vị. Hai phép chấm dùng ngưỡng '
+                 'ghép 100 m và loại mốc có cạnh tranh trong 250 m.',y)-10
+        sample_path = joint_dir/'example.json'
+        if sample_path.is_file():
+            sample = json.loads(sample_path.read_text())
+            image_size = 172
+            c.drawImage(str(joint_dir/'example.jpg'),47,y-image_size,image_size,image_size)
+            tile_text = f"<b>{sample['area']}</b><br/>{sample['day_utc']} · Ô radar {sample['tile']+1}. "                         'Lam là khung có mốc ít dịch chuyển. Vàng là mốc gần giờ chụp. Tím là các khung còn lại.'
+            text(tile_text,y-3,muted,238,310)
+            before = timed['counts']['100m_guard']['proposed_without_reference']
+            after = timed['counts']['propose_then_veto']['proposed_without_reference']
+            text(f'Giữ cặp đề xuất giảm số đề xuất thiếu mốc gần giờ từ {before} xuống {after} '
+                 'so với biên 100 m. Hai cách có cùng số mốc đồng thuận trong bảng.',y-61,normal,238,310)
+            text('Mốc AIS được giữ lại từ cùng nguồn NOAA. Giờ giữa cảnh và chuyển động có thể '
+                 'ảnh hưởng vị trí. Số liệu cảnh và mã băm ảnh có trong hồ sơ.',y-125,muted,238,310)
+            y -= image_size
+        assert y > 58,y
         footer(total_update_pages)
     c.save()
     b.seek(0)

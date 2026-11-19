@@ -8,6 +8,7 @@ Xem [đề, hướng dẫn và ba liên kết nộp](../NOP_CHANG_1.md). Mốc �
 | --- | --- |
 | Thiếu AIS, AIS mâu thuẫn, ca cần xác minh | Phần Minh chứng có hồ sơ ảnh SAR thật thiếu AIS và kịch bản thử thuật toán. Luồng Quan sát cho phép ghi chú và xuất hồ sơ ảnh có mã băm. |
 | Ghép với độ bất định | So khoảng cách, tuổi bản tin, bất định và phương tiện cạnh tranh. Trên 3.722 bản tin NOAA giữ riêng, cặp sai 32 → 0 và cặp đúng 898 → 879, so với cổng lọc trước có biên 100 m. Trên cảnh SAR cùng giờ có bốn mốc vị trí để đối chiếu. |
+| Đối chứng SAR–AIS sáu lượt chụp | Có 410 ứng viên, 17 mốc gần giờ và 8 mốc ít dịch chuyển. Cổng giữ cặp đồng thuận 6/17 và 6/8. Số liệu chi tiết và ảnh nguồn ở trang 13. |
 | SAR có nhãn và số đo địa lý | Các bộ kiểm định tách nhau theo câu hỏi. Xem số liệu theo kích thước bộ dữ liệu, độ trễ, mật độ điểm chưa khớp và sai lệch tâm hộp trong báo cáo. |
 | Ảnh ven biển Việt Nam | Trên 12 lượt chụp, ngưỡng 0,05 tăng từ 80/152 lên 96/152 nhãn khớp khi số ứng viên rà tăng từ 116 lên 191. Cùng đúng 116 lượt rà, cả hai ngưỡng đều khớp 80/152. |
 | Recall ở cùng số lượt rà | Trên 12 lượt chụp, lọc điểm trong 35 m tăng từ 80/152 lên 82/152 ở 116 lượt rà. Chia ô chồng lấn tăng từ 96/152 lên 102/152 ở 191 lượt rà. Hai cảnh Bắc Trung Bộ bổ sung giữ nguyên số nhãn khớp. |

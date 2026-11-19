@@ -77,6 +77,20 @@ class ImprovementEvidenceTests(unittest.TestCase):
         tables = [item.value for item in app.dataframe if 'Nhãn khớp' in item.value.columns]
         self.assertTrue(any('22/146 → 28/146' in table['Nhãn khớp'].values for table in tables))
 
+    def test_six_coincident_acquisitions_support_both_reference_rules(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'),default_timeout=60)
+        app.query_params['trang'] = 'minh-chung'
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('410 ứng viên radar' in x.value and '17 mốc' in x.value for x in app.markdown))
+        app.radio(key='multiscene_anchor').set_value('near_stationary').run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('410 ứng viên radar' in x.value and '8 mốc' in x.value for x in app.markdown))
+        table = next(x.value for x in app.dataframe if 'Giữ mốc để rà' in x.value.columns)
+        proposal = table.iloc[-1]
+        self.assertEqual(proposal['Đồng thuận'],6)
+        self.assertEqual(proposal['Giữ mốc để rà'],2)
+
     def test_vietnam_point_reference_counts_are_separate(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
         app.query_params['trang'] = 'minh-chung'

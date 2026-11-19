@@ -186,6 +186,7 @@ def render_improvements(root: Path):
     render_noaa_replay(root)
     render_frozen_assignment(root)
     render_coincident_replay(root)
+    render_multiscene_sar_ais(root)
 
     st.subheader('3. Đánh giá trên ảnh SAR thật')
     render_slc_adaptation(root)
@@ -357,6 +358,54 @@ def render_coincident_replay(root: Path):
         if path_image.is_file():
             st.image(str(path_image),width=680,caption='Lam: có mốc AIS gần và tách biệt. Vàng: ứng viên còn thiếu mốc đối chiếu.')
         st.download_button('Tải kết quả đồng thời SAR–AIS',path.read_bytes(),'sonarnet-sar-ais-cung-canh.json','application/json')
+
+
+def render_multiscene_sar_ais(root: Path):
+    directory = root/'reports/final/multiscene_sar_ais_20261119'
+    path = directory/'results.json'
+    if not path.is_file():
+        return
+    report = json.loads(path.read_text())
+    if not report['complete']:
+        return
+    scenes = report['scenes']
+    kinds = {'near_time':'Vị trí AIS trong ±20 giây',
+             'near_stationary':'Vị trí AIS ít dịch chuyển'}
+    methods = {'distance_only':'Theo khoảng cách', 'previous_gates':'Cổng ghép gốc',
+                '100m_guard':'Biên cạnh tranh 100 m', 'propose_then_veto':'Giữ cặp đề xuất rồi kiểm tra'}
+    with st.expander('Đối chiếu SAR và AIS trên sáu lượt chụp'):
+        kind = st.radio('Cách lấy mốc đối chiếu', list(kinds), format_func=kinds.__getitem__,
+                        horizontal=True, key='multiscene_anchor')
+        result = report['aggregate'][kind]
+        candidates = sum(scene['radar_candidates'] for scene in scenes)
+        st.markdown(f"**{len(scenes)} lượt chụp · {candidates} ứng viên radar · "
+                    f"{result['paired_references']} mốc vị trí đã ghép đối chiếu**")
+        rows = [{'Cách ghép':methods[name], 'Đồng thuận':counts['agree'],
+                 'Khác mốc':counts['disagree'], 'Giữ mốc để rà':counts['reference_unpaired'],
+                 'Đề xuất thiếu mốc':counts['proposed_without_reference']}
+                for name,counts in result['counts'].items()]
+        st.dataframe(rows,hide_index=True,width='stretch')
+        st.caption('Các mốc AIS được giữ ngoài đầu vào ghép. Mốc ít dịch chuyển có bản tin ở hai phía '
+                   'giờ giữa cảnh, cách vị trí trung vị tối đa 35 m và qua cổng loại cạnh tranh 250 m. '
+                   'Đồng thuận là mức khớp với vị trí tham chiếu từ AIS cùng nguồn.')
+        rows = [{'Khu vực':scene['area'], 'Ngày UTC':scene['utc'][:10],
+                 'Ứng viên radar':scene['radar_candidates'],
+                 'Mốc ±20 giây':scene['near_time']['paired_references'],
+                 'Mốc ít dịch chuyển':scene['near_stationary']['paired_references']}
+                for scene in scenes]
+        st.dataframe(rows,hide_index=True,width='stretch')
+        sample_path = directory/'example.json'
+        if sample_path.is_file():
+            sample = json.loads(sample_path.read_text())
+            marked = st.toggle('Hiện khung của phép đối chiếu',value=True,key='multiscene_marks')
+            image = directory/('example.jpg' if marked else 'example-source.png')
+            caption = f"{sample['area']} · {sample['day_utc']} · ô {sample['tile']+1}."
+            if marked:
+                caption += (' Lam là khung có mốc ít dịch chuyển, vàng là mốc gần giờ chụp, '
+                            'tím là các khung còn lại.')
+            st.image(str(image),width=540,caption=caption)
+        st.download_button('Tải số liệu sáu lượt chụp SAR–AIS', path.read_bytes(),
+                           'sonarnet-sar-ais-sau-luot-chup.json','application/json')
 
 
 def render_slc_adaptation(root: Path):

@@ -1,0 +1,1233 @@
+{
+  "protocol_sha256": "9d5d9e4b0c61f22643afcd7f88e5656ae07c7320c8b6b1c2caf2da9c14d08b6d",
+  "evaluator_sha256": "72844d2aa8f246c40d6877ab40d87bf71528a2b1f07419961068c33569296c7c",
+  "fusion_sha256": "c04c86482faa7ac372ece23bd22581a7fc3bd9d133499e566186c8182a6c67b9",
+  "model_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "coast_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+  "scenes": [
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240713T015016_20240713T015045_054736_06AA18_rtc",
+      "area": "Los Angeles / Long Beach",
+      "utc": "2024-07-13T01:50:30.583324+00:00",
+      "radar_candidates": 102,
+      "raster_manifest_sha256": "9c6c18b112955db3a6c5d7d078931e694bbf7a5baf47fa4ab8c96c93e3d84d7e",
+      "raster_provenance": {
+        "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240713T015016_20240713T015045_054736_06AA18_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/13/IW/DV/S1A_IW_GRDH_1SDV_20240713T015016_20240713T015045_054736_06AA18_A9F6/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2024-07-13T01:50:30.583324+00:00",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary",
+        "images": [
+          {
+            "tile": 0,
+            "sha256": "e2fdf63a8234b0b802458209562c2c6b6440ae53ea43a940e08fff5a225d2f3d"
+          },
+          {
+            "tile": 1,
+            "sha256": "3cdc80060923e5402abb138937d92329258be2a46719991b27d9bccbdfc28ffa"
+          },
+          {
+            "tile": 2,
+            "sha256": "4eef8c39df3e7bdb1874f1e893700398ef609745f3c6592dd68e9be6a8bda9b9"
+          },
+          {
+            "tile": 3,
+            "sha256": "1c9ceda08aefc27595e7df67a40e2466d4443f99edeb5b82518f88d51e45d964"
+          },
+          {
+            "tile": 4,
+            "sha256": "b6092571c7f0fe8ec1284b4255d9f91cb51fa4f7e7956d72ab712add2170aa2e"
+          },
+          {
+            "tile": 5,
+            "sha256": "0dffafe66686c85312bd0adad76d84da173d604fafcbd090e63be75ae45918e5"
+          }
+        ]
+      },
+      "ais_source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_07_13.zip",
+        "sha256": "d884090d7aeb5209d27b20253133f19b34262f5464cfa288090c3c915804a47b",
+        "compressed_bytes": 393062567,
+        "csv_crc32": "61cb4cd2"
+      },
+      "tiles": [
+        {
+          "tile": 0,
+          "sha256": "e2fdf63a8234b0b802458209562c2c6b6440ae53ea43a940e08fff5a225d2f3d",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 0,
+          "marked": "tile_0_review.jpg",
+          "marked_sha256": "60fa7675a9b11536460d5482e00aa742622d3aa8a6efff60034226bbe5eeff87",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 1,
+          "sha256": "3cdc80060923e5402abb138937d92329258be2a46719991b27d9bccbdfc28ffa",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 0,
+          "marked": "tile_1_review.jpg",
+          "marked_sha256": "159e3b2d3a3f5977dc105c270fc00a3225c777407cc69bef08f1e2592ccffd93",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 2,
+          "sha256": "4eef8c39df3e7bdb1874f1e893700398ef609745f3c6592dd68e9be6a8bda9b9",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 6,
+          "marked": "tile_2_review.jpg",
+          "marked_sha256": "8173edbbc3d8118a07363d3c0e32e20b2d4524b7a341a25be23efcadabb8fac8",
+          "stationary_pairs": 0,
+          "near_time_pairs": 2
+        },
+        {
+          "tile": 3,
+          "sha256": "1c9ceda08aefc27595e7df67a40e2466d4443f99edeb5b82518f88d51e45d964",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 37,
+          "marked": "tile_3_review.jpg",
+          "marked_sha256": "3ac5350cfb24d403f50b2f04ce67e145c695b86777d188edec6d82757ad9c992",
+          "stationary_pairs": 0,
+          "near_time_pairs": 1
+        },
+        {
+          "tile": 4,
+          "sha256": "b6092571c7f0fe8ec1284b4255d9f91cb51fa4f7e7956d72ab712add2170aa2e",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 40,
+          "marked": "tile_4_review.jpg",
+          "marked_sha256": "5ff8138544fb51040566d110d2957b9c56f77f0f411f466e34ebabe9b978daa8",
+          "stationary_pairs": 1,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 5,
+          "sha256": "0dffafe66686c85312bd0adad76d84da173d604fafcbd090e63be75ae45918e5",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 19,
+          "marked": "tile_5_review.jpg",
+          "marked_sha256": "90aba8a229e8755bc70ebedd1465a90b48c0b628545cb7ab3234fd564951904b",
+          "stationary_pairs": 0,
+          "near_time_pairs": 1
+        }
+      ],
+      "near_time": {
+        "held_positions": 40,
+        "input_records": 1959,
+        "tracks": 258,
+        "paired_references": 4,
+        "counts": {
+          "distance_only": {
+            "proposed": 46,
+            "withheld": 56,
+            "agree": 3,
+            "disagree": 1,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 42
+          },
+          "previous_gates": {
+            "proposed": 19,
+            "withheld": 83,
+            "agree": 4,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 15
+          },
+          "100m_guard": {
+            "proposed": 14,
+            "withheld": 88,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 11
+          },
+          "propose_then_veto": {
+            "proposed": 7,
+            "withheld": 95,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 4
+          }
+        }
+      },
+      "near_stationary": {
+        "held_positions": 240,
+        "input_records": 1619,
+        "tracks": 257,
+        "stable_isolated_positions": 3,
+        "paired_references": 1,
+        "counts": {
+          "distance_only": {
+            "proposed": 45,
+            "withheld": 57,
+            "agree": 1,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 44
+          },
+          "previous_gates": {
+            "proposed": 13,
+            "withheld": 89,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 13
+          },
+          "100m_guard": {
+            "proposed": 8,
+            "withheld": 94,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 8
+          },
+          "propose_then_veto": {
+            "proposed": 4,
+            "withheld": 98,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 4
+          }
+        }
+      }
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240928T015825_20240928T015854_055859_06D3B3_rtc",
+      "area": "Los Angeles / Long Beach",
+      "utc": "2024-09-28T01:58:40.098141+00:00",
+      "radar_candidates": 95,
+      "raster_manifest_sha256": "ca128fa863115f860793022633d9332f1b2f93c08cfa19c4f18270bcec588af8",
+      "raster_provenance": {
+        "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240928T015825_20240928T015854_055859_06D3B3_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/9/28/IW/DV/S1A_IW_GRDH_1SDV_20240928T015825_20240928T015854_055859_06D3B3_1933/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2024-09-28T01:58:40.098141+00:00",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary",
+        "images": [
+          {
+            "tile": 0,
+            "sha256": "d91f9d47ac533e7b310fd8f1547941a76bb138032c15770b3901d9efe004d2df"
+          },
+          {
+            "tile": 1,
+            "sha256": "0461acef7c9828ce0e29caef8248c39205f84eaaeee72cf0d284c40223bc1fb4"
+          },
+          {
+            "tile": 2,
+            "sha256": "e6501865c6b0c01a99c6bb2df055a54020b8cafdd80637abda487bb49000ab7b"
+          },
+          {
+            "tile": 3,
+            "sha256": "7b6aa9ed4ea214ef44fe37ebf5d13a4265bac264e5d26423f3f9cf1359b224e1"
+          },
+          {
+            "tile": 4,
+            "sha256": "89edb6dfc785db26a85aa4c0cf51e4769b66bee7bbfa9a315b0a4fe28ed80ba5"
+          },
+          {
+            "tile": 5,
+            "sha256": "fd8553bae3dab0b2240ca5539268ce7e9ff60e91859e0a5acbf40bcde2b181d1"
+          }
+        ]
+      },
+      "ais_source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_09_28.zip",
+        "sha256": "d923090e57d190e3d4f223f5b9244b4d114416022870b13ac3c8583455157046",
+        "compressed_bytes": 317827381,
+        "csv_crc32": "078389fa"
+      },
+      "tiles": [
+        {
+          "tile": 0,
+          "sha256": "d91f9d47ac533e7b310fd8f1547941a76bb138032c15770b3901d9efe004d2df",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 1,
+          "marked": "tile_0_review.jpg",
+          "marked_sha256": "c6f53fe01eba42b0f2557b5303f38457bfd9c229d73406e7f7cdbb8ca714c949",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 1,
+          "sha256": "0461acef7c9828ce0e29caef8248c39205f84eaaeee72cf0d284c40223bc1fb4",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 4,
+          "marked": "tile_1_review.jpg",
+          "marked_sha256": "0b6a732e0279f316d05f4110718a9cb2c37d4fd8164ffe8b3f4bbbca4a10a717",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 2,
+          "sha256": "e6501865c6b0c01a99c6bb2df055a54020b8cafdd80637abda487bb49000ab7b",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 5,
+          "marked": "tile_2_review.jpg",
+          "marked_sha256": "e38863e30d688c3736a0c46d4d2c2213d080a5914cd7f8aa95378152c56ef734",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 3,
+          "sha256": "7b6aa9ed4ea214ef44fe37ebf5d13a4265bac264e5d26423f3f9cf1359b224e1",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 39,
+          "marked": "tile_3_review.jpg",
+          "marked_sha256": "a053b460271577493b10c0a6aaff0ea9c05cfcf9fb802f529f437d55699c8975",
+          "stationary_pairs": 0,
+          "near_time_pairs": 2
+        },
+        {
+          "tile": 4,
+          "sha256": "89edb6dfc785db26a85aa4c0cf51e4769b66bee7bbfa9a315b0a4fe28ed80ba5",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 32,
+          "marked": "tile_4_review.jpg",
+          "marked_sha256": "55d7abe02506d665b5d8fceb67b6ee024f1e52a027f456d4975f36191d978da9",
+          "stationary_pairs": 0,
+          "near_time_pairs": 2
+        },
+        {
+          "tile": 5,
+          "sha256": "fd8553bae3dab0b2240ca5539268ce7e9ff60e91859e0a5acbf40bcde2b181d1",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 14,
+          "marked": "tile_5_review.jpg",
+          "marked_sha256": "406f5647dd0e39cd75efb8302b18c6e30e6221d1d643d4dd02e89404f2478344",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        }
+      ],
+      "near_time": {
+        "held_positions": 36,
+        "input_records": 1867,
+        "tracks": 270,
+        "paired_references": 4,
+        "counts": {
+          "distance_only": {
+            "proposed": 48,
+            "withheld": 47,
+            "agree": 3,
+            "disagree": 1,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 44
+          },
+          "previous_gates": {
+            "proposed": 19,
+            "withheld": 76,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 4,
+            "proposed_without_reference": 19
+          },
+          "100m_guard": {
+            "proposed": 15,
+            "withheld": 80,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 4,
+            "proposed_without_reference": 15
+          },
+          "propose_then_veto": {
+            "proposed": 9,
+            "withheld": 86,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 4,
+            "proposed_without_reference": 9
+          }
+        }
+      },
+      "near_stationary": {
+        "held_positions": 236,
+        "input_records": 1540,
+        "tracks": 269,
+        "stable_isolated_positions": 1,
+        "paired_references": 0,
+        "counts": {
+          "distance_only": {
+            "proposed": 48,
+            "withheld": 47,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 48
+          },
+          "previous_gates": {
+            "proposed": 14,
+            "withheld": 81,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 14
+          },
+          "100m_guard": {
+            "proposed": 10,
+            "withheld": 85,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 10
+          },
+          "propose_then_veto": {
+            "proposed": 5,
+            "withheld": 90,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 5
+          }
+        }
+      }
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240711T002652_20240711T002717_054706_06A90A_rtc",
+      "area": "Galveston / Houston Ship Channel",
+      "utc": "2024-07-11T00:27:05.468268+00:00",
+      "radar_candidates": 50,
+      "raster_manifest_sha256": "5302e59b7a764f8f9586ca8eda83c37a68ceaba24136bfff94b94b1ce5bc21c9",
+      "raster_provenance": {
+        "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240711T002652_20240711T002717_054706_06A90A_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/11/IW/DV/S1A_IW_GRDH_1SDV_20240711T002652_20240711T002717_054706_06A90A_1B90/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2024-07-11T00:27:05.468268+00:00",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary",
+        "images": [
+          {
+            "tile": 0,
+            "sha256": "102374f7bd059a5ce6ae7f96d48a0640a78e9541c73546b90355b3026ce00371"
+          },
+          {
+            "tile": 1,
+            "sha256": "94e276223316ab1f947ced05d8c3ac06c91bbeaeb8fb4705f1aa29944698a640"
+          },
+          {
+            "tile": 2,
+            "sha256": "812fff5eab5962da790c0399a6ee6e13c88b96ee3adf2aa7f5a9f075f4a66a33"
+          },
+          {
+            "tile": 3,
+            "sha256": "d8f064921f73d7c2c7c23e117c1043fc41fa0fb5da20835b81dfd152f72ccb87"
+          },
+          {
+            "tile": 4,
+            "sha256": "81ffaaaf4dbf168246396674ef5b7b634b66c96dc235433d606ef2c939c7e0c3"
+          },
+          {
+            "tile": 5,
+            "sha256": "d4fa863c643480ebbd101a43c734acda08fb126c26fe860894fa22fd4553db01"
+          }
+        ]
+      },
+      "ais_source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_07_11.zip",
+        "sha256": "48c38533433f79be740b064a93d38e3055baa6a9e642ce5ae4d3ef56d8fd64da",
+        "compressed_bytes": 375210161,
+        "csv_crc32": "29175855"
+      },
+      "tiles": [
+        {
+          "tile": 0,
+          "sha256": "102374f7bd059a5ce6ae7f96d48a0640a78e9541c73546b90355b3026ce00371",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 18,
+          "marked": "tile_0_review.jpg",
+          "marked_sha256": "93bad13e079da89ea793d38af0fb66adb714b93ec3e9186f332b83fbcf7cf680",
+          "stationary_pairs": 1,
+          "near_time_pairs": 1
+        },
+        {
+          "tile": 1,
+          "sha256": "94e276223316ab1f947ced05d8c3ac06c91bbeaeb8fb4705f1aa29944698a640",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 15,
+          "marked": "tile_1_review.jpg",
+          "marked_sha256": "85a4aac38f7a7be900cedaf83b6229244174bb8406c60a123cf25d71b8032795",
+          "stationary_pairs": 2,
+          "near_time_pairs": 2
+        },
+        {
+          "tile": 2,
+          "sha256": "812fff5eab5962da790c0399a6ee6e13c88b96ee3adf2aa7f5a9f075f4a66a33",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 9,
+          "marked": "tile_2_review.jpg",
+          "marked_sha256": "216b364c88fff45364f5c1c5419326f1e400b4cb32c94a587968e77c3cc7913b",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 3,
+          "sha256": "d8f064921f73d7c2c7c23e117c1043fc41fa0fb5da20835b81dfd152f72ccb87",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 5,
+          "marked": "tile_3_review.jpg",
+          "marked_sha256": "9697d880f996538cb12d727ed4346f79324d065c18fbb610975254ce7e713850",
+          "stationary_pairs": 0,
+          "near_time_pairs": 1
+        },
+        {
+          "tile": 4,
+          "sha256": "81ffaaaf4dbf168246396674ef5b7b634b66c96dc235433d606ef2c939c7e0c3",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 2,
+          "marked": "tile_4_review.jpg",
+          "marked_sha256": "72758707f395dad88b088151facbffd081a1f88047a1feac80aa45457562db37",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 5,
+          "sha256": "d4fa863c643480ebbd101a43c734acda08fb126c26fe860894fa22fd4553db01",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 1,
+          "marked": "tile_5_review.jpg",
+          "marked_sha256": "1eefcc4ca77f85b42eecdeda96061f53ccd8c481f80ab7cf3e346d299a5ab6e8",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        }
+      ],
+      "near_time": {
+        "held_positions": 60,
+        "input_records": 1747,
+        "tracks": 162,
+        "paired_references": 4,
+        "counts": {
+          "distance_only": {
+            "proposed": 23,
+            "withheld": 27,
+            "agree": 4,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 19
+          },
+          "previous_gates": {
+            "proposed": 9,
+            "withheld": 41,
+            "agree": 4,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 5
+          },
+          "100m_guard": {
+            "proposed": 5,
+            "withheld": 45,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 2
+          },
+          "propose_then_veto": {
+            "proposed": 5,
+            "withheld": 45,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 2
+          }
+        }
+      },
+      "near_stationary": {
+        "held_positions": 143,
+        "input_records": 1457,
+        "tracks": 161,
+        "stable_isolated_positions": 4,
+        "paired_references": 3,
+        "counts": {
+          "distance_only": {
+            "proposed": 22,
+            "withheld": 28,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 19
+          },
+          "previous_gates": {
+            "proposed": 11,
+            "withheld": 39,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 8
+          },
+          "100m_guard": {
+            "proposed": 7,
+            "withheld": 43,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 4
+          },
+          "propose_then_veto": {
+            "proposed": 6,
+            "withheld": 44,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 3
+          }
+        }
+      }
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20241003T002653_20241003T002718_055931_06D696_rtc",
+      "area": "Galveston / Houston Ship Channel",
+      "utc": "2024-10-03T00:27:06.240777+00:00",
+      "radar_candidates": 41,
+      "raster_manifest_sha256": "41bb2f1b9361ba601041adfe535b790bae98af5be65e91b8c3867bef778d3652",
+      "raster_provenance": {
+        "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241003T002653_20241003T002718_055931_06D696_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/3/IW/DV/S1A_IW_GRDH_1SDV_20241003T002653_20241003T002718_055931_06D696_3F3C/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2024-10-03T00:27:06.240777+00:00",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary",
+        "images": [
+          {
+            "tile": 0,
+            "sha256": "72d9a40f13fc27b1eccb66532b204548b4924f89e7b5a44aab4f561d31020e3a"
+          },
+          {
+            "tile": 1,
+            "sha256": "ebb569248dccd09507bfb2bf04cc18dfd849dd998258e287c186ac56011f41aa"
+          },
+          {
+            "tile": 2,
+            "sha256": "461c5800c25eff34fb5827b8c116dc865f2b58dc2e0e0f16f2a685160d2054f4"
+          },
+          {
+            "tile": 3,
+            "sha256": "3c450638efacb272bf08e3ed1230f783286fe9e78415a9e00416d193ae44cbe5"
+          },
+          {
+            "tile": 4,
+            "sha256": "8e3c82f917ca0ab608a0247d2ca1d735ef57fed317ff8333166342eaf0c62918"
+          },
+          {
+            "tile": 5,
+            "sha256": "4e18abc7669d8b2777df7e775dddfc39798a2f76320e9f1a26d75dce0886bc63"
+          }
+        ]
+      },
+      "ais_source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_10_03.zip",
+        "sha256": "76516afcaf9dc2f0ea66087d923b028e96012a7143b439194709731ddc60582b",
+        "compressed_bytes": 322683205,
+        "csv_crc32": "f07a727c"
+      },
+      "tiles": [
+        {
+          "tile": 0,
+          "sha256": "72d9a40f13fc27b1eccb66532b204548b4924f89e7b5a44aab4f561d31020e3a",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 15,
+          "marked": "tile_0_review.jpg",
+          "marked_sha256": "c6d57f2e752d1cb5f9b7cbb429d53d750791b3e6546dc3bd99fe6400e7e813f2",
+          "stationary_pairs": 1,
+          "near_time_pairs": 3
+        },
+        {
+          "tile": 1,
+          "sha256": "ebb569248dccd09507bfb2bf04cc18dfd849dd998258e287c186ac56011f41aa",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 8,
+          "marked": "tile_1_review.jpg",
+          "marked_sha256": "58f0a3d0dc56a924edf707a3f64cb7e8587bcfb2ef1dda3a7bba0054c5ad30ed",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 2,
+          "sha256": "461c5800c25eff34fb5827b8c116dc865f2b58dc2e0e0f16f2a685160d2054f4",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 9,
+          "marked": "tile_2_review.jpg",
+          "marked_sha256": "555a3d8254a6d34009856c592550d3125d6d9cafb9df58f52b973ef9786debf5",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 3,
+          "sha256": "3c450638efacb272bf08e3ed1230f783286fe9e78415a9e00416d193ae44cbe5",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 4,
+          "marked": "tile_3_review.jpg",
+          "marked_sha256": "a33a7e7e19fc67d3d9b9630d7456d53504d305eaf491d54b154c640b865d7922",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 4,
+          "sha256": "8e3c82f917ca0ab608a0247d2ca1d735ef57fed317ff8333166342eaf0c62918",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 4,
+          "marked": "tile_4_review.jpg",
+          "marked_sha256": "c3de1a8be687609d66dd5b4a3b42abe73a4d67744fa7e4a75936fab148f100ae",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 5,
+          "sha256": "4e18abc7669d8b2777df7e775dddfc39798a2f76320e9f1a26d75dce0886bc63",
+          "valid_fraction": 0.9999923706054688,
+          "usable": true,
+          "detected_candidates": 1,
+          "marked": "tile_5_review.jpg",
+          "marked_sha256": "e4f6105afa5653a19afcf69fd76cf8c60805c125a6fe1c24d1d4d1d2d56cbc02",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        }
+      ],
+      "near_time": {
+        "held_positions": 34,
+        "input_records": 1165,
+        "tracks": 124,
+        "paired_references": 3,
+        "counts": {
+          "distance_only": {
+            "proposed": 16,
+            "withheld": 25,
+            "agree": 2,
+            "disagree": 1,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 13
+          },
+          "previous_gates": {
+            "proposed": 4,
+            "withheld": 37,
+            "agree": 0,
+            "disagree": 1,
+            "reference_unpaired": 2,
+            "proposed_without_reference": 3
+          },
+          "100m_guard": {
+            "proposed": 2,
+            "withheld": 39,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 3,
+            "proposed_without_reference": 2
+          },
+          "propose_then_veto": {
+            "proposed": 2,
+            "withheld": 39,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 3,
+            "proposed_without_reference": 2
+          }
+        }
+      },
+      "near_stationary": {
+        "held_positions": 111,
+        "input_records": 966,
+        "tracks": 124,
+        "stable_isolated_positions": 1,
+        "paired_references": 1,
+        "counts": {
+          "distance_only": {
+            "proposed": 16,
+            "withheld": 25,
+            "agree": 1,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 15
+          },
+          "previous_gates": {
+            "proposed": 2,
+            "withheld": 39,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 2
+          },
+          "100m_guard": {
+            "proposed": 0,
+            "withheld": 41,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 0
+          },
+          "propose_then_veto": {
+            "proposed": 0,
+            "withheld": 41,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 0
+          }
+        }
+      }
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240710T225131_20240710T225156_054705_06A901_rtc",
+      "area": "New York Harbor",
+      "utc": "2024-07-10T22:51:43.544426+00:00",
+      "radar_candidates": 41,
+      "raster_manifest_sha256": "2fa65ff2bddad7cc030ae91438742605f45ffe3aceda6e8bc35d8c0061bccf8e",
+      "raster_provenance": {
+        "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240710T225131_20240710T225156_054705_06A901_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/10/IW/DV/S1A_IW_GRDH_1SDV_20240710T225131_20240710T225156_054705_06A901_3C3A/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2024-07-10T22:51:43.544426+00:00",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary",
+        "images": [
+          {
+            "tile": 0,
+            "sha256": "69dcf702c5846472e317445ae19830ff389863a71b17f5f3c59d0d8744834c98"
+          },
+          {
+            "tile": 1,
+            "sha256": "093927a578cde1bb45986e6ffaf4db37432ab8fe23e02e103cb5c2620cfd6e31"
+          },
+          {
+            "tile": 2,
+            "sha256": "c017ac033d613d231ed3dcd27078da93087a237ad5a5a96f5547c26d89b28600"
+          },
+          {
+            "tile": 3,
+            "sha256": "31d0cdfee24624c3336fd47c4c3973ed7d42af52339d57371e3a2ed24279725a"
+          }
+        ]
+      },
+      "ais_source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_07_10.zip",
+        "sha256": "390ac5bf2c50cc8eb761104eafe52c8ef1a79bac1a4d0a47b96910179fd18a9d",
+        "compressed_bytes": 387971010,
+        "csv_crc32": "c0acd5ce"
+      },
+      "tiles": [
+        {
+          "tile": 0,
+          "sha256": "69dcf702c5846472e317445ae19830ff389863a71b17f5f3c59d0d8744834c98",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 5,
+          "marked": "tile_0_review.jpg",
+          "marked_sha256": "a08916b39208915464b09a94e8b0b2082524f5cd29debaf26c7a406c6b7f45e9",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 1,
+          "sha256": "093927a578cde1bb45986e6ffaf4db37432ab8fe23e02e103cb5c2620cfd6e31",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 6,
+          "marked": "tile_1_review.jpg",
+          "marked_sha256": "082c34ea4f465aca8af0c58354f3d9b97a9629072d7580851e034f89a31731c5",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 2,
+          "sha256": "c017ac033d613d231ed3dcd27078da93087a237ad5a5a96f5547c26d89b28600",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 23,
+          "marked": "tile_2_review.jpg",
+          "marked_sha256": "48e4e97b64e73246cc35925fd9f821d009650fcd9302e0cfc8982d7e986f766b",
+          "stationary_pairs": 2,
+          "near_time_pairs": 1
+        },
+        {
+          "tile": 3,
+          "sha256": "31d0cdfee24624c3336fd47c4c3973ed7d42af52339d57371e3a2ed24279725a",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 7,
+          "marked": "tile_3_review.jpg",
+          "marked_sha256": "9c7e870e69a5caede767a967417eaead349669c5c1ecf0b4f7abc323ed340dfc",
+          "stationary_pairs": 1,
+          "near_time_pairs": 0
+        }
+      ],
+      "near_time": {
+        "held_positions": 9,
+        "input_records": 1579,
+        "tracks": 134,
+        "paired_references": 1,
+        "counts": {
+          "distance_only": {
+            "proposed": 21,
+            "withheld": 20,
+            "agree": 0,
+            "disagree": 1,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 20
+          },
+          "previous_gates": {
+            "proposed": 12,
+            "withheld": 29,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 12
+          },
+          "100m_guard": {
+            "proposed": 11,
+            "withheld": 30,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 11
+          },
+          "propose_then_veto": {
+            "proposed": 10,
+            "withheld": 31,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 10
+          }
+        }
+      },
+      "near_stationary": {
+        "held_positions": 116,
+        "input_records": 1299,
+        "tracks": 134,
+        "stable_isolated_positions": 4,
+        "paired_references": 3,
+        "counts": {
+          "distance_only": {
+            "proposed": 22,
+            "withheld": 19,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 19
+          },
+          "previous_gates": {
+            "proposed": 10,
+            "withheld": 31,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 7
+          },
+          "100m_guard": {
+            "proposed": 10,
+            "withheld": 31,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 7
+          },
+          "propose_then_veto": {
+            "proposed": 7,
+            "withheld": 34,
+            "agree": 3,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 4
+          }
+        }
+      }
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20241002T225131_20241002T225156_055930_06D68B_rtc",
+      "area": "New York Harbor",
+      "utc": "2024-10-02T22:51:44.307015+00:00",
+      "radar_candidates": 81,
+      "raster_manifest_sha256": "20a3a0c7cacf91641bb9084a28f8ed1e4ea8bfff60512ffc3ba27e7b3bb2320a",
+      "raster_provenance": {
+        "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+        "band": "VV",
+        "source_collection": "sentinel-1-rtc",
+        "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241002T225131_20241002T225156_055930_06D68B_rtc",
+        "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/2/IW/DV/S1A_IW_GRDH_1SDV_20241002T225131_20241002T225156_055930_06D68B_72AB/measurement/iw-vv.rtc.tiff",
+        "source_acquired_at": "2024-10-02T22:51:44.307015+00:00",
+        "source_native_pixel_spacing_m": 10.0,
+        "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+        "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+        "license": "CC-BY-4.0",
+        "source_provider": "planetary",
+        "images": [
+          {
+            "tile": 0,
+            "sha256": "9ebc6c57d56e167941ffbe447e2a28a161808f74b0e4c3be9d7e9d730ac72a92"
+          },
+          {
+            "tile": 1,
+            "sha256": "4f4ba91b3113f5c6a6845c08a65db18ac69242f13778a8e03c045bff978afbd4"
+          },
+          {
+            "tile": 2,
+            "sha256": "02c54e1a66db63b99081928988ec4fa68d860457c46a71d4f4a5751ec9bd72cc"
+          },
+          {
+            "tile": 3,
+            "sha256": "d35fa3e21e7a6e51ead94cf2f5acd684cd2f5fc0e8374669e6e491d7bdb6c197"
+          }
+        ]
+      },
+      "ais_source": {
+        "source": "https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/AIS_2024_10_02.zip",
+        "sha256": "c405e18ffbae496f06b8e5627481a2fb1b4bc3c5d746d35ccb59f83cda346f4c",
+        "compressed_bytes": 379654244,
+        "csv_crc32": "ecb8e3e7"
+      },
+      "tiles": [
+        {
+          "tile": 0,
+          "sha256": "9ebc6c57d56e167941ffbe447e2a28a161808f74b0e4c3be9d7e9d730ac72a92",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 16,
+          "marked": "tile_0_review.jpg",
+          "marked_sha256": "a44bddf171133b5b1712947326fbf5b503332ce1f5e3c467e1821f35a3732790",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 1,
+          "sha256": "4f4ba91b3113f5c6a6845c08a65db18ac69242f13778a8e03c045bff978afbd4",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 17,
+          "marked": "tile_1_review.jpg",
+          "marked_sha256": "d2bc0d8708bffa4fa39327867c5e8b6d16a698ea022757e0d7950c73af19d8c1",
+          "stationary_pairs": 0,
+          "near_time_pairs": 1
+        },
+        {
+          "tile": 2,
+          "sha256": "02c54e1a66db63b99081928988ec4fa68d860457c46a71d4f4a5751ec9bd72cc",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 40,
+          "marked": "tile_2_review.jpg",
+          "marked_sha256": "953a5d45e80540175c0c5499a29acebee29a7d244a046ce4830ee05505199760",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        },
+        {
+          "tile": 3,
+          "sha256": "d35fa3e21e7a6e51ead94cf2f5acd684cd2f5fc0e8374669e6e491d7bdb6c197",
+          "valid_fraction": 1.0,
+          "usable": true,
+          "detected_candidates": 8,
+          "marked": "tile_3_review.jpg",
+          "marked_sha256": "fdf00feaae8d2e786b49ea605061beec17fc30b752b91123dc1e4d6c6de2e756",
+          "stationary_pairs": 0,
+          "near_time_pairs": 0
+        }
+      ],
+      "near_time": {
+        "held_positions": 21,
+        "input_records": 1639,
+        "tracks": 139,
+        "paired_references": 1,
+        "counts": {
+          "distance_only": {
+            "proposed": 30,
+            "withheld": 51,
+            "agree": 1,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 29
+          },
+          "previous_gates": {
+            "proposed": 9,
+            "withheld": 72,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 9
+          },
+          "100m_guard": {
+            "proposed": 6,
+            "withheld": 75,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 6
+          },
+          "propose_then_veto": {
+            "proposed": 4,
+            "withheld": 77,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 1,
+            "proposed_without_reference": 4
+          }
+        }
+      },
+      "near_stationary": {
+        "held_positions": 129,
+        "input_records": 1348,
+        "tracks": 137,
+        "stable_isolated_positions": 0,
+        "paired_references": 0,
+        "counts": {
+          "distance_only": {
+            "proposed": 30,
+            "withheld": 51,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 30
+          },
+          "previous_gates": {
+            "proposed": 12,
+            "withheld": 69,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 12
+          },
+          "100m_guard": {
+            "proposed": 4,
+            "withheld": 77,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 4
+          },
+          "propose_then_veto": {
+            "proposed": 3,
+            "withheld": 78,
+            "agree": 0,
+            "disagree": 0,
+            "reference_unpaired": 0,
+            "proposed_without_reference": 3
+          }
+        }
+      }
+    }
+  ],
+  "expected_scenes": 6,
+  "complete": true,
+  "aggregate": {
+    "near_time": {
+      "paired_references": 17,
+      "counts": {
+        "distance_only": {
+          "proposed": 184,
+          "withheld": 226,
+          "agree": 13,
+          "disagree": 4,
+          "reference_unpaired": 0,
+          "proposed_without_reference": 167
+        },
+        "previous_gates": {
+          "proposed": 72,
+          "withheld": 338,
+          "agree": 8,
+          "disagree": 1,
+          "reference_unpaired": 8,
+          "proposed_without_reference": 63
+        },
+        "100m_guard": {
+          "proposed": 53,
+          "withheld": 357,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 11,
+          "proposed_without_reference": 47
+        },
+        "propose_then_veto": {
+          "proposed": 37,
+          "withheld": 373,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 11,
+          "proposed_without_reference": 31
+        }
+      }
+    },
+    "near_stationary": {
+      "paired_references": 8,
+      "counts": {
+        "distance_only": {
+          "proposed": 183,
+          "withheld": 227,
+          "agree": 8,
+          "disagree": 0,
+          "reference_unpaired": 0,
+          "proposed_without_reference": 175
+        },
+        "previous_gates": {
+          "proposed": 62,
+          "withheld": 348,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 2,
+          "proposed_without_reference": 56
+        },
+        "100m_guard": {
+          "proposed": 39,
+          "withheld": 371,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 2,
+          "proposed_without_reference": 33
+        },
+        "propose_then_veto": {
+          "proposed": 25,
+          "withheld": 385,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 2,
+          "proposed_without_reference": 19
+        }
+      }
+    }
+  }
+}
