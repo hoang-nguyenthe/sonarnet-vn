@@ -9,6 +9,7 @@ RANKING_RESULTS = 'reports/final/vietnam_rtc_ranking_20261118/results.json'
 POLARIMETRIC_RESULTS = 'reports/final/vietnam_rtc_vv_vh_20261118/results.json'
 CONTRAST_RESULTS = 'reports/final/vietnam_rtc_contrast_20261119/results.json'
 TTA_RESULTS = 'reports/final/vietnam_rtc_tta_20261119/results.json'
+FOLLOWUP_RESULTS = 'reports/final/vietnam_rtc_followup_20261119/summary.json'
 RECALL_NAMES = {
     'map_default': 'Bản đồ · ngưỡng 0,35',
     'map_lower_threshold': 'Bản đồ · ngưỡng 0,05',
@@ -180,18 +181,26 @@ def render_contrast_recall(root: Path) -> None:
     cases = result['cases']
     st.subheader('Phát hiện thêm với cùng số lượt rà', anchor='recall-cung-luot-ra')
     st.caption('12 lượt chụp Sentinel-1 · 152 nhãn điểm Ai2 · khớp một–một trong 100 m.')
-    mode = st.radio('Số lượt rà trong phép lọc điểm gần nhau', list(REVIEW_MODES),
+    mode = st.radio('Mức rà để so sánh', list(REVIEW_MODES),
                     format_func=REVIEW_MODES.__getitem__, horizontal=True, key='close_point_review_mode')
     baseline = 'map_default' if mode == 'equal_incumbent' else 'map_lower_threshold'
-    selected = result['selected'][mode]
+    winner = result
+    overlap_path = root / TTA_RESULTS
+    if mode == 'equal_relaxed' and overlap_path.is_file():
+        winner = json.loads(overlap_path.read_text())
+    winning_method = winner['selected'][mode]
     with st.container(border=True):
-        for method in (baseline, selected):
-            scores = review_totals(cases, mode, method)
+        for source, method in ((result,baseline),(winner,winning_method)):
+            scores = review_totals(source['cases'], mode, method)
             st.markdown(f"**{RECALL_NAMES[method]}** · **{scores['matched']}/{scores['labels']}** nhãn khớp · "
                         f"**{scores['predictions']}** điểm cần rà")
-    st.caption('Chọn bán kính trên năm lượt phát triển rồi chấm lại trên 86 ô ảnh giữ riêng. '
-               'Khi hai tâm cách nhau trong 35 m, ưu tiên điểm YOLO cao hơn. '
-               'Hai nhãn tăng thêm ở mức rà 0,35 đến từ hai lượt chụp tại vùng khảo sát Quảng Ninh.')
+    if winning_method == 'overlap_only_max':
+        st.caption('Chia ô chồng lấn tìm thêm sáu nhãn trong một lượt chụp tại vùng khảo sát Quảng Ninh. '
+                   'So sánh giữ đúng số lượt rà của mỗi cảnh.')
+    else:
+        st.caption('Chọn bán kính trên năm lượt phát triển rồi chấm lại trên 86 ô ảnh giữ riêng. '
+                   'Khi hai tâm cách nhau trong 35 m, ưu tiên điểm YOLO cao hơn. '
+                   'Hai nhãn tăng thêm ở mức rà 0,35 đến từ hai lượt chụp tại vùng khảo sát Quảng Ninh.')
     with st.expander('Xem kết quả theo bán kính khớp và cách xếp hạng'):
         radius = st.select_slider('Bán kính khớp nhãn (m)', options=[50, 100, 150], value=100,
                                   key='close_point_match_radius')
@@ -207,6 +216,7 @@ def render_contrast_recall(root: Path) -> None:
         st.download_button('Tải số liệu lọc điểm gần nhau', path.read_bytes(),
                            'sonarnet-recall-loc-diem-gan.json', 'application/json')
     render_map_tta_recall(root)
+    render_followup_rtc(root)
     confirmation = (root / TTA_RESULTS).parent / 'confirmation/results.json'
     if confirmation.is_file():
         new_cases = json.loads(confirmation.read_text())['cases']
@@ -219,6 +229,38 @@ def render_contrast_recall(root: Path) -> None:
                    f"{tight['matched']}/{tight['labels']}. Ở {base_wide['predictions']} lượt rà, "
                    f"bản đồ và chia ô lần lượt khớp {base_wide['matched']}/{base_wide['labels']} và "
                    f"{wide['matched']}/{wide['labels']}.")
+
+
+def render_followup_rtc(root: Path) -> None:
+    path = root / FOLLOWUP_RESULTS
+    if not path.is_file():
+        return
+    result = json.loads(path.read_text())
+    with st.expander('Kết quả năm hướng tăng recall đã thử'):
+        modes = result['review_modes']
+        headers = [f"{result['map_baselines'][mode]['predictions']} lượt rà" for mode in modes]
+
+        def as_row(name, values):
+            return {'Hướng đã thử':name,
+                    **{header:f"{row['matched']}/{row['labels']}" for header,row in zip(headers,values)}}
+
+        rows = [
+            as_row('Bản đồ theo ngưỡng đang so sánh', [result['map_baselines'][mode] for mode in modes]),
+            as_row('Lọc 35 m / chia ô chồng lấn', result['prior_best']),
+        ]
+        for trial in result['trials']:
+            rows.append(as_row(trial['name'],[trial['results']['held_out'][mode] for mode in modes]))
+        st.dataframe(rows, hide_index=True, width='stretch')
+        pool = result['point_pool']
+        st.caption(f"{pool['labels']} nhãn Ai2 trên {result['held_out_scenes']} lượt chụp đã dùng để đối chứng. "
+                   'Khớp trong 100 m. Chọn phương án trên các ngày phát triển. Cách phân bổ lại '
+                   'giữ nguyên tổng số lượt rà và có thể chuyển lượt giữa các cảnh.')
+        amount = f"{pool['predictions']:,}".replace(',', '.')
+        st.caption(f"Heatmap khớp {pool['matched']}/{pool['labels']} nhãn nếu rà cả {amount} ứng viên. "
+                   f"Số liệu tải về gồm phép kiểm bổ sung trên {result['confirmation_scenes']} "
+                   'lượt chụp Bắc Trung Bộ.')
+        st.download_button('Tải bảng đối chứng năm hướng thử',path.read_bytes(),
+                           'sonarnet-doi-chung-nam-huong-recall.json','application/json')
 
 
 def render_map_tta_recall(root: Path) -> None:

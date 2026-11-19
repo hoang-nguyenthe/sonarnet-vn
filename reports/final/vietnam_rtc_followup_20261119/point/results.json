@@ -1,0 +1,2683 @@
+{
+  "selection_sha256": "f0fbe8177bfe95a55c983a0230770dd6f16781f9853fa796014bd102f3cb8655",
+  "test": {
+    "held_out": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 5,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 3,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 2
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 6
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 4
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 2,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 2
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 2,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 8,
+                  "predictions": 6,
+                  "unmatched": 2
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 7,
+              "labels": 8,
+              "predictions": 251,
+              "unmatched": 244
+            },
+            "heatmap_p50_ms": 13.529707997804508
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 4,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 5
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 6,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 3
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 9
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 5
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 3,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 4
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 2,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 8,
+                  "predictions": 9,
+                  "unmatched": 5
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 7,
+              "labels": 8,
+              "predictions": 251,
+              "unmatched": 244
+            },
+            "heatmap_p50_ms": 13.609583023935556
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 26,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 39,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 17
+                },
+                "100": {
+                  "matched": 48,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 8
+                },
+                "150": {
+                  "matched": 49,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 7
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 23,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 33
+                },
+                "100": {
+                  "matched": 28,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 28
+                },
+                "150": {
+                  "matched": 29,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 27
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 30,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 26
+                },
+                "100": {
+                  "matched": 35,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 21
+                },
+                "150": {
+                  "matched": 36,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 20
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 24,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 32
+                },
+                "100": {
+                  "matched": 29,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 27
+                },
+                "150": {
+                  "matched": 29,
+                  "labels": 89,
+                  "predictions": 56,
+                  "unmatched": 27
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 71,
+              "labels": 89,
+              "predictions": 1340,
+              "unmatched": 1269
+            },
+            "heatmap_p50_ms": 13.673146502696909
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 48,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 30
+                },
+                "100": {
+                  "matched": 58,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 20
+                },
+                "150": {
+                  "matched": 58,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 20
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 28,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 50
+                },
+                "100": {
+                  "matched": 36,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 42
+                },
+                "150": {
+                  "matched": 37,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 41
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 42,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 36
+                },
+                "100": {
+                  "matched": 50,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 28
+                },
+                "150": {
+                  "matched": 51,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 27
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 35,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 43
+                },
+                "100": {
+                  "matched": 39,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 39
+                },
+                "150": {
+                  "matched": 39,
+                  "labels": 89,
+                  "predictions": 78,
+                  "unmatched": 39
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 71,
+              "labels": 89,
+              "predictions": 1340,
+              "unmatched": 1269
+            },
+            "heatmap_p50_ms": 14.248541498091072
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 1,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 60,
+              "unmatched": 60
+            },
+            "heatmap_p50_ms": 55.251042009331286
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 3,
+                  "unmatched": 3
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 60,
+              "unmatched": 60
+            },
+            "heatmap_p50_ms": 15.730500017525628
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 2,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 1,
+                  "unmatched": 1
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 2,
+              "labels": 3,
+              "predictions": 120,
+              "unmatched": 118
+            },
+            "heatmap_p50_ms": 17.91572898218874
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 2
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 2
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 2
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 2
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 2
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 2
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 3,
+                  "predictions": 2,
+                  "unmatched": 1
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 2,
+              "labels": 3,
+              "predictions": 120,
+              "unmatched": 118
+            },
+            "heatmap_p50_ms": 17.89627100515645
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 8,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 10
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 9
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 8
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 10
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 10
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 8
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 10
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 9
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 8
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 10
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 10
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 9,
+                  "predictions": 10,
+                  "unmatched": 9
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 4,
+              "labels": 9,
+              "predictions": 446,
+              "unmatched": 442
+            },
+            "heatmap_p50_ms": 17.535188017063774
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 17
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 16
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 15
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 17
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 17
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 14
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 17
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 16
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 15
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 17
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 16
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 9,
+                  "predictions": 17,
+                  "unmatched": 15
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 4,
+              "labels": 9,
+              "predictions": 446,
+              "unmatched": 442
+            },
+            "heatmap_p50_ms": 17.076978998375125
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 3,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 4,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 0
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 0
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 180,
+              "unmatched": 175
+            },
+            "heatmap_p50_ms": 17.117208015406504
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 4,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 8
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 5,
+                  "predictions": 12,
+                  "unmatched": 7
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 180,
+              "unmatched": 175
+            },
+            "heatmap_p50_ms": 16.4470839954447
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 12,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 5
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 4
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 1,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 8
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 6
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 3,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 5
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 3,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 9,
+                  "unmatched": 5
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 720,
+              "unmatched": 716
+            },
+            "heatmap_p50_ms": 15.038604498840868
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 13
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 12
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 12
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 2,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 15
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 13
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 12
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 4,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 13
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 12
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 12
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 3,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 14
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 12
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 6,
+                  "predictions": 17,
+                  "unmatched": 12
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 720,
+              "unmatched": 716
+            },
+            "heatmap_p50_ms": 16.285083489492536
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 5,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 1
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 1,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 1,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 3
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 4,
+                  "unmatched": 2
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 234,
+              "unmatched": 229
+            },
+            "heatmap_p50_ms": 14.969624986406416
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 5
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 1,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 8
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 7
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 6
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 2,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 5,
+                  "predictions": 9,
+                  "unmatched": 6
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 234,
+              "unmatched": 229
+            },
+            "heatmap_p50_ms": 13.927666994277388
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 17,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 10,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 8
+                },
+                "100": {
+                  "matched": 15,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 17,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 1
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 8,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 10
+                },
+                "100": {
+                  "matched": 9,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 9
+                },
+                "150": {
+                  "matched": 9,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 9
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 9,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 9
+                },
+                "100": {
+                  "matched": 13,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 14,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 4
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 10,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 8
+                },
+                "100": {
+                  "matched": 13,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 14,
+                  "labels": 20,
+                  "predictions": 18,
+                  "unmatched": 4
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 20,
+              "labels": 20,
+              "predictions": 1020,
+              "unmatched": 1000
+            },
+            "heatmap_p50_ms": 17.478875000961125
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 10,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 24
+                },
+                "100": {
+                  "matched": 17,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 17
+                },
+                "150": {
+                  "matched": 18,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 16
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 10,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 24
+                },
+                "100": {
+                  "matched": 12,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 22
+                },
+                "150": {
+                  "matched": 12,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 22
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 12,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 22
+                },
+                "100": {
+                  "matched": 17,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 17
+                },
+                "150": {
+                  "matched": 18,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 16
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 12,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 22
+                },
+                "100": {
+                  "matched": 15,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 19
+                },
+                "150": {
+                  "matched": 16,
+                  "labels": 20,
+                  "predictions": 34,
+                  "unmatched": 18
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 20,
+              "labels": 20,
+              "predictions": 1020,
+              "unmatched": 1000
+            },
+            "heatmap_p50_ms": 13.680167001439258
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+        "region": "kien_giang_west",
+        "windows": 2,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 4,
+                  "unmatched": 4
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 120,
+              "unmatched": 120
+            },
+            "heatmap_p50_ms": 26.89541649306193
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 7,
+                  "unmatched": 7
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 120,
+              "unmatched": 120
+            },
+            "heatmap_p50_ms": 16.297916503390297
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 4,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 125,
+              "unmatched": 124
+            },
+            "heatmap_p50_ms": 14.032896011485718
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 125,
+              "unmatched": 124
+            },
+            "heatmap_p50_ms": 14.039583504199982
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 1,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 0,
+                  "unmatched": 0
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 60,
+              "unmatched": 59
+            },
+            "heatmap_p50_ms": 19.92224997957237
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 2
+                },
+                "100": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 2
+                },
+                "150": {
+                  "matched": 0,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 2
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 2,
+                  "predictions": 2,
+                  "unmatched": 1
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 60,
+              "unmatched": 59
+            },
+            "heatmap_p50_ms": 13.246333022834733
+          }
+        }
+      }
+    ],
+    "confirmation": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+        "region": "north_central",
+        "windows": 1,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 60,
+              "unmatched": 59
+            },
+            "heatmap_p50_ms": 21.60454198019579
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 1
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                },
+                "150": {
+                  "matched": 1,
+                  "labels": 1,
+                  "predictions": 1,
+                  "unmatched": 0
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 60,
+              "unmatched": 59
+            },
+            "heatmap_p50_ms": 13.610958005301654
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+        "region": "north_central",
+        "windows": 4,
+        "modes": {
+          "equal_incumbent": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 1,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 1
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 0
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 0,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 5
+                },
+                "100": {
+                  "matched": 1,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 2
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 1,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 4
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 2
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 0,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 5
+                },
+                "100": {
+                  "matched": 2,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 3
+                },
+                "150": {
+                  "matched": 3,
+                  "labels": 7,
+                  "predictions": 5,
+                  "unmatched": 2
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 240,
+              "unmatched": 235
+            },
+            "heatmap_p50_ms": 13.647271014633588
+          },
+          "equal_relaxed": {
+            "method": "point_only",
+            "counts": {
+              "baseline": {
+                "50": {
+                  "matched": 2,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 5,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 4
+                },
+                "150": {
+                  "matched": 6,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 3
+                }
+              },
+              "point_only": {
+                "50": {
+                  "matched": 2,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 7
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 5
+                }
+              },
+              "point_fill_quarter": {
+                "50": {
+                  "matched": 1,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 8
+                },
+                "100": {
+                  "matched": 4,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 5
+                },
+                "150": {
+                  "matched": 5,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 4
+                }
+              },
+              "point_fill_half": {
+                "50": {
+                  "matched": 1,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 8
+                },
+                "100": {
+                  "matched": 3,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 6
+                },
+                "150": {
+                  "matched": 4,
+                  "labels": 7,
+                  "predictions": 9,
+                  "unmatched": 5
+                }
+              }
+            },
+            "candidate_pool": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 240,
+              "unmatched": 235
+            },
+            "heatmap_p50_ms": 13.988167003844865
+          }
+        }
+      }
+    ]
+  }
+}

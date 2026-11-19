@@ -110,8 +110,12 @@ class ImprovementEvidenceTests(unittest.TestCase):
                             for item in app.markdown))
         app.radio(key='close_point_review_mode').set_value('equal_relaxed').run()
         self.assertFalse(app.exception)
-        self.assertTrue(any('**97/152** nhãn khớp' in item.value and '**191** điểm' in item.value
+        self.assertTrue(any('**102/152** nhãn khớp' in item.value and '**191** điểm' in item.value
                             for item in app.markdown))
+        trials = next(item.value for item in app.dataframe if 'Hướng đã thử' in item.value.columns)
+        self.assertEqual(trials.iloc[2][['116 lượt rà', '191 lượt rà']].tolist(), ['45/152', '63/152'])
+        self.assertTrue(any(item.proto.label == 'Tải bảng đối chứng năm hướng thử'
+                            for item in app.get('download_button')))
         tta = next(item.value for item in app.dataframe if 'Phương án thử' in item.value.columns)
         self.assertIn((191, '96/152', '102/152'),
                       list(tta[['Số lượt rà', 'Cấu hình gốc', 'Nhãn khớp']].itertuples(index=False,name=None)))

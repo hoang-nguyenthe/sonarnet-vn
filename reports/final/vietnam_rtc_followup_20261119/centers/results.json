@@ -1,0 +1,2939 @@
+{
+  "selected": {
+    "equal_incumbent": "peak_75m",
+    "equal_relaxed": "peak_75m"
+  },
+  "selection_sha256": "04b8bf98dfa0cf47b0108c67eec327b3e48e07f7f6eae379ba6b11ba58d9d8ed",
+  "test": {
+    "held_out": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 5,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 2,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 2,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 2,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 26,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 37,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 19
+            },
+            "100": {
+              "matched": 48,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 8
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 30,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 26
+            },
+            "100": {
+              "matched": 48,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 8
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 45,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 11
+            },
+            "100": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 57,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 53,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 45,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 33
+            },
+            "100": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 59,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 19
+            },
+            "100": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 52,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 26
+            },
+            "100": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 1,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 2,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 8,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 14
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 14
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 3,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 9
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 12,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 3,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 3,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 14
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 5,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 1,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 1,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 1,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 1,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 1,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 17,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 9,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 9
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 8,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 9,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 9
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 9,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 9
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 9,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 7,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 27
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+        "region": "kien_giang_west",
+        "windows": 2,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 4,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 1,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          }
+        }
+      }
+    ],
+    "confirmation": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+        "region": "north_central",
+        "windows": 1,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+        "region": "north_central",
+        "windows": 4,
+        "equal_incumbent": {
+          "baseline": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "baseline": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "halfway_45m": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "peak_45m": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "halfway_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 9
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "peak_75m": {
+            "50": {
+              "matched": 0,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 9
+            },
+            "100": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          }
+        }
+      }
+    ]
+  }
+}

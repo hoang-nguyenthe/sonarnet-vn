@@ -11,6 +11,7 @@ Xem [đề, hướng dẫn và ba liên kết nộp](../NOP_CHANG_1.md). Mốc �
 | SAR có nhãn và số đo địa lý | Các bộ kiểm định tách nhau theo câu hỏi. Xem số liệu theo kích thước bộ dữ liệu, độ trễ, mật độ điểm chưa khớp và sai lệch tâm hộp trong báo cáo. |
 | Ảnh ven biển Việt Nam | Trên 12 lượt chụp, ngưỡng 0,05 tăng từ 80/152 lên 96/152 nhãn khớp khi số ứng viên rà tăng từ 116 lên 191. Cùng đúng 116 lượt rà, cả hai ngưỡng đều khớp 80/152. |
 | Recall ở cùng số lượt rà | Trên 12 lượt chụp, lọc điểm trong 35 m tăng từ 80/152 lên 82/152 ở 116 lượt rà. Chia ô chồng lấn tăng từ 96/152 lên 102/152 ở 191 lượt rà. Hai cảnh Bắc Trung Bộ bổ sung giữ nguyên số nhãn khớp. |
+| Đối chứng thêm về recall | Thử heatmap từ nhãn tâm, tinh chỉnh YOLO, đổi dải dB, dịch tâm ứng viên và phân bổ lượt giữa các cảnh. Phép thử khóa theo tập phát triển đạt cao nhất trong nhóm mới 80/152 ở 116 lượt rà và 100/152 ở 191 lượt rà. |
 | VV và VH | Chấm 12 lượt trên phần ảnh có cả hai kênh. Cùng 114 ứng viên, cách xếp hạng hiện tại khớp 78/150 và hai cấu hình điều chỉnh khớp 77/150. Có hình đối chiếu từ một ô thật. |
 | Khả năng chạy và tải | Streamlit có mục Minh chứng mở trực tiếp. ZIP có hồ sơ mẫu, mã, số liệu và PDF. Lệnh kiểm tra sau giải nén nằm trong hướng dẫn nộp. |
 

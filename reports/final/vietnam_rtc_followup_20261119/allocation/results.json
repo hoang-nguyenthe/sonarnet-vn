@@ -1,0 +1,4781 @@
+{
+  "selected": {
+    "equal_incumbent": "overlap_vote_half_floor",
+    "equal_relaxed": "overlap_max_half_floor"
+  },
+  "selection_sha256": "f39186206b8d5b9edfaa601030ba99b1e233f2ac81dbf00b05c1050ae7ea292c",
+  "test": {
+    "held_out": {
+      "equal_incumbent": {
+        "baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 39,
+                "labels": 89,
+                "predictions": 56,
+                "unmatched": 17
+              },
+              "100": {
+                "matched": 48,
+                "labels": 89,
+                "predictions": 56,
+                "unmatched": 8
+              },
+              "150": {
+                "matched": 49,
+                "labels": 89,
+                "predictions": 56,
+                "unmatched": 7
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 1,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 10
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 9
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 8
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 9,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 18,
+                "unmatched": 8
+              },
+              "100": {
+                "matched": 15,
+                "labels": 20,
+                "predictions": 18,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 17,
+                "labels": 20,
+                "predictions": 18,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          }
+        ],
+        "strong_baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 40,
+                "labels": 89,
+                "predictions": 56,
+                "unmatched": 16
+              },
+              "100": {
+                "matched": 49,
+                "labels": 89,
+                "predictions": 56,
+                "unmatched": 7
+              },
+              "150": {
+                "matched": 50,
+                "labels": 89,
+                "predictions": 56,
+                "unmatched": 6
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 1,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 10
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 9
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 8
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 9,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 18,
+                "unmatched": 8
+              },
+              "100": {
+                "matched": 15,
+                "labels": 20,
+                "predictions": 18,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 17,
+                "labels": 20,
+                "predictions": 18,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          }
+        ],
+        "global_confidence": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 28,
+                "labels": 89,
+                "predictions": 39,
+                "unmatched": 11
+              },
+              "100": {
+                "matched": 33,
+                "labels": 89,
+                "predictions": 39,
+                "unmatched": 6
+              },
+              "150": {
+                "matched": 34,
+                "labels": 89,
+                "predictions": 39,
+                "unmatched": 5
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 12,
+                "unmatched": 12
+              },
+              "100": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 12,
+                "unmatched": 12
+              },
+              "150": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 12,
+                "unmatched": 11
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 12,
+                "unmatched": 9
+              },
+              "100": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 12,
+                "unmatched": 9
+              },
+              "150": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 12,
+                "unmatched": 9
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 9,
+                "labels": 20,
+                "predictions": 32,
+                "unmatched": 23
+              },
+              "100": {
+                "matched": 13,
+                "labels": 20,
+                "predictions": 32,
+                "unmatched": 19
+              },
+              "150": {
+                "matched": 15,
+                "labels": 20,
+                "predictions": 32,
+                "unmatched": 17
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          }
+        ],
+        "global_overlap_max": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 5,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 5,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 5,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 36,
+                "labels": 89,
+                "predictions": 45,
+                "unmatched": 9
+              },
+              "100": {
+                "matched": 40,
+                "labels": 89,
+                "predictions": 45,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 40,
+                "labels": 89,
+                "predictions": 45,
+                "unmatched": 5
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 11,
+                "unmatched": 11
+              },
+              "100": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 11,
+                "unmatched": 11
+              },
+              "150": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 11,
+                "unmatched": 10
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 6,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 9,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 24
+              },
+              "100": {
+                "matched": 13,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 20
+              },
+              "150": {
+                "matched": 15,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 18
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              }
+            }
+          }
+        ],
+        "global_overlap_vote": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 35,
+                "labels": 89,
+                "predictions": 47,
+                "unmatched": 12
+              },
+              "100": {
+                "matched": 42,
+                "labels": 89,
+                "predictions": 47,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 42,
+                "labels": 89,
+                "predictions": 47,
+                "unmatched": 5
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 10
+              },
+              "100": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 10
+              },
+              "150": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 9
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 6,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 3,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 3,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 3,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 23
+              },
+              "100": {
+                "matched": 14,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 19
+              },
+              "150": {
+                "matched": 16,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 17
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          }
+        ],
+        "overlap_max_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 5,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 5,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 5,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 35,
+                "labels": 89,
+                "predictions": 44,
+                "unmatched": 9
+              },
+              "100": {
+                "matched": 39,
+                "labels": 89,
+                "predictions": 44,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 39,
+                "labels": 89,
+                "predictions": 44,
+                "unmatched": 5
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 11,
+                "unmatched": 11
+              },
+              "100": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 11,
+                "unmatched": 11
+              },
+              "150": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 11,
+                "unmatched": 10
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 7,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 7,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 7,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 9,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 24
+              },
+              "100": {
+                "matched": 13,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 20
+              },
+              "150": {
+                "matched": 15,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 18
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              }
+            }
+          }
+        ],
+        "overlap_vote_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 2,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 6,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 34,
+                "labels": 89,
+                "predictions": 46,
+                "unmatched": 12
+              },
+              "100": {
+                "matched": 41,
+                "labels": 89,
+                "predictions": 46,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 41,
+                "labels": 89,
+                "predictions": 46,
+                "unmatched": 5
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 10
+              },
+              "100": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 10
+              },
+              "150": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 10,
+                "unmatched": 9
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 2,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 7,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 7,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 3,
+                "labels": 6,
+                "predictions": 7,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 3,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 3,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 2,
+                "labels": 5,
+                "predictions": 3,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 23
+              },
+              "100": {
+                "matched": 14,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 19
+              },
+              "150": {
+                "matched": 16,
+                "labels": 20,
+                "predictions": 33,
+                "unmatched": 17
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 0,
+                "unmatched": 0
+              }
+            }
+          }
+        ]
+      },
+      "equal_relaxed": {
+        "baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 6,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 48,
+                "labels": 89,
+                "predictions": 78,
+                "unmatched": 30
+              },
+              "100": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 78,
+                "unmatched": 20
+              },
+              "150": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 78,
+                "unmatched": 20
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 17,
+                "unmatched": 17
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 17,
+                "unmatched": 16
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 17,
+                "unmatched": 15
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 5,
+                "labels": 5,
+                "predictions": 12,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 5,
+                "labels": 5,
+                "predictions": 12,
+                "unmatched": 7
+              },
+              "150": {
+                "matched": 5,
+                "labels": 5,
+                "predictions": 12,
+                "unmatched": 7
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 17,
+                "unmatched": 13
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 17,
+                "unmatched": 12
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 17,
+                "unmatched": 12
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 9,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 9,
+                "unmatched": 5
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 34,
+                "unmatched": 24
+              },
+              "100": {
+                "matched": 17,
+                "labels": 20,
+                "predictions": 34,
+                "unmatched": 17
+              },
+              "150": {
+                "matched": 18,
+                "labels": 20,
+                "predictions": 34,
+                "unmatched": 16
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          }
+        ],
+        "strong_baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 6,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 57,
+                "labels": 89,
+                "predictions": 78,
+                "unmatched": 21
+              },
+              "100": {
+                "matched": 64,
+                "labels": 89,
+                "predictions": 78,
+                "unmatched": 14
+              },
+              "150": {
+                "matched": 64,
+                "labels": 89,
+                "predictions": 78,
+                "unmatched": 14
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 17,
+                "unmatched": 17
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 17,
+                "unmatched": 16
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 17,
+                "unmatched": 15
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 5,
+                "labels": 5,
+                "predictions": 12,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 5,
+                "labels": 5,
+                "predictions": 12,
+                "unmatched": 7
+              },
+              "150": {
+                "matched": 5,
+                "labels": 5,
+                "predictions": 12,
+                "unmatched": 7
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 17,
+                "unmatched": 13
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 17,
+                "unmatched": 12
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 17,
+                "unmatched": 12
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 9,
+                "unmatched": 5
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 34,
+                "unmatched": 24
+              },
+              "100": {
+                "matched": 17,
+                "labels": 20,
+                "predictions": 34,
+                "unmatched": 17
+              },
+              "150": {
+                "matched": 19,
+                "labels": 20,
+                "predictions": 34,
+                "unmatched": 15
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          }
+        ],
+        "global_confidence": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 44,
+                "labels": 89,
+                "predictions": 62,
+                "unmatched": 18
+              },
+              "100": {
+                "matched": 52,
+                "labels": 89,
+                "predictions": 62,
+                "unmatched": 10
+              },
+              "150": {
+                "matched": 53,
+                "labels": 89,
+                "predictions": 62,
+                "unmatched": 9
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 4,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 24,
+                "unmatched": 24
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 24,
+                "unmatched": 23
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 24,
+                "unmatched": 22
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 20,
+                "unmatched": 16
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 20,
+                "unmatched": 15
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 20,
+                "unmatched": 15
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 48,
+                "unmatched": 38
+              },
+              "100": {
+                "matched": 17,
+                "labels": 20,
+                "predictions": 48,
+                "unmatched": 31
+              },
+              "150": {
+                "matched": 18,
+                "labels": 20,
+                "predictions": 48,
+                "unmatched": 30
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 4,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          }
+        ],
+        "global_overlap_max": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 10,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 10,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 6,
+                "labels": 8,
+                "predictions": 10,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 52,
+                "labels": 89,
+                "predictions": 69,
+                "unmatched": 17
+              },
+              "100": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 69,
+                "unmatched": 11
+              },
+              "150": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 69,
+                "unmatched": 11
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 23,
+                "unmatched": 23
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 23,
+                "unmatched": 22
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 23,
+                "unmatched": 21
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 4,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 22,
+                "unmatched": 18
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 22,
+                "unmatched": 17
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 22,
+                "unmatched": 17
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 31
+              },
+              "100": {
+                "matched": 16,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 25
+              },
+              "150": {
+                "matched": 18,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 23
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              }
+            }
+          }
+        ],
+        "global_overlap_vote": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 6,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 48,
+                "labels": 89,
+                "predictions": 70,
+                "unmatched": 22
+              },
+              "100": {
+                "matched": 57,
+                "labels": 89,
+                "predictions": 70,
+                "unmatched": 13
+              },
+              "150": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 70,
+                "unmatched": 12
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 25,
+                "unmatched": 25
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 25,
+                "unmatched": 24
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 25,
+                "unmatched": 23
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 19,
+                "unmatched": 15
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 19,
+                "unmatched": 14
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 19,
+                "unmatched": 14
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 31
+              },
+              "100": {
+                "matched": 17,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 24
+              },
+              "150": {
+                "matched": 18,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 23
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          }
+        ],
+        "overlap_max_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 10,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 10,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 6,
+                "labels": 8,
+                "predictions": 10,
+                "unmatched": 4
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 52,
+                "labels": 89,
+                "predictions": 68,
+                "unmatched": 16
+              },
+              "100": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 68,
+                "unmatched": 10
+              },
+              "150": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 68,
+                "unmatched": 10
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 23,
+                "unmatched": 23
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 23,
+                "unmatched": 22
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 23,
+                "unmatched": 21
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 22,
+                "unmatched": 18
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 22,
+                "unmatched": 17
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 22,
+                "unmatched": 17
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 5,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 31
+              },
+              "100": {
+                "matched": 16,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 25
+              },
+              "150": {
+                "matched": 18,
+                "labels": 20,
+                "predictions": 41,
+                "unmatched": 23
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 7,
+                "unmatched": 7
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 1,
+                "unmatched": 1
+              }
+            }
+          }
+        ],
+        "overlap_vote_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 5,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 6,
+                "labels": 8,
+                "predictions": 9,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+            "region": "quang_ninh_gulf",
+            "scores": {
+              "50": {
+                "matched": 48,
+                "labels": 89,
+                "predictions": 70,
+                "unmatched": 22
+              },
+              "100": {
+                "matched": 57,
+                "labels": 89,
+                "predictions": 70,
+                "unmatched": 13
+              },
+              "150": {
+                "matched": 58,
+                "labels": 89,
+                "predictions": 70,
+                "unmatched": 12
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 3,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 3,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+            "region": "khanh_hoa_binh_thuan",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 9,
+                "predictions": 25,
+                "unmatched": 25
+              },
+              "100": {
+                "matched": 1,
+                "labels": 9,
+                "predictions": 25,
+                "unmatched": 24
+              },
+              "150": {
+                "matched": 2,
+                "labels": 9,
+                "predictions": 25,
+                "unmatched": 23
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 6,
+                "unmatched": 2
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 4,
+                "labels": 6,
+                "predictions": 19,
+                "unmatched": 15
+              },
+              "100": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 19,
+                "unmatched": 14
+              },
+              "150": {
+                "matched": 5,
+                "labels": 6,
+                "predictions": 19,
+                "unmatched": 14
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 4,
+                "labels": 5,
+                "predictions": 7,
+                "unmatched": 3
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+            "region": "south_mekong_coast",
+            "scores": {
+              "50": {
+                "matched": 10,
+                "labels": 20,
+                "predictions": 40,
+                "unmatched": 30
+              },
+              "100": {
+                "matched": 17,
+                "labels": 20,
+                "predictions": 40,
+                "unmatched": 23
+              },
+              "150": {
+                "matched": 18,
+                "labels": 20,
+                "predictions": 40,
+                "unmatched": 22
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              },
+              "150": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 6,
+                "unmatched": 6
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+            "region": "kien_giang_west",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "100": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              },
+              "150": {
+                "matched": 0,
+                "labels": 2,
+                "predictions": 2,
+                "unmatched": 2
+              }
+            }
+          }
+        ]
+      }
+    },
+    "confirmation": {
+      "equal_incumbent": {
+        "baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 4,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 5,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 0
+              }
+            }
+          }
+        ],
+        "strong_baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 4,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 5,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 0
+              }
+            }
+          }
+        ],
+        "global_confidence": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 2
+              }
+            }
+          }
+        ],
+        "global_overlap_max": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 3
+              }
+            }
+          }
+        ],
+        "global_overlap_vote": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 2
+              }
+            }
+          }
+        ],
+        "overlap_max_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 5
+              },
+              "100": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 5,
+                "unmatched": 3
+              }
+            }
+          }
+        ],
+        "overlap_vote_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 0,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 4
+              },
+              "100": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 3
+              },
+              "150": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 4,
+                "unmatched": 2
+              }
+            }
+          }
+        ]
+      },
+      "equal_relaxed": {
+        "baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 9,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 5,
+                "labels": 7,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 6,
+                "labels": 7,
+                "predictions": 9,
+                "unmatched": 3
+              }
+            }
+          }
+        ],
+        "strong_baseline": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 1,
+                "unmatched": 0
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 3,
+                "labels": 7,
+                "predictions": 9,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 5,
+                "labels": 7,
+                "predictions": 9,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 6,
+                "labels": 7,
+                "predictions": 9,
+                "unmatched": 3
+              }
+            }
+          }
+        ],
+        "global_confidence": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 3,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 4,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 4
+              }
+            }
+          }
+        ],
+        "global_overlap_max": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 4,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 5,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 3
+              }
+            }
+          }
+        ],
+        "global_overlap_vote": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 3,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 4,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 4
+              }
+            }
+          }
+        ],
+        "overlap_max_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 2,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 6
+              },
+              "100": {
+                "matched": 4,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 4
+              },
+              "150": {
+                "matched": 5,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 3
+              }
+            }
+          }
+        ],
+        "overlap_vote_half_floor": [
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "100": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              },
+              "150": {
+                "matched": 1,
+                "labels": 1,
+                "predictions": 2,
+                "unmatched": 1
+              }
+            }
+          },
+          {
+            "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+            "region": "north_central",
+            "scores": {
+              "50": {
+                "matched": 1,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 7
+              },
+              "100": {
+                "matched": 3,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 5
+              },
+              "150": {
+                "matched": 4,
+                "labels": 7,
+                "predictions": 8,
+                "unmatched": 4
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

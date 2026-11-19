@@ -1,0 +1,37 @@
+{
+  "started": "2026-11-19T02:01:46.640593+00:00",
+  "code_sha256": "b2bab7c6bd93a439dd4b5c833217e5734a015c6d33bdbf9e7456aef4a90f1470",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "ranges": {
+    "subtle_echoes": [
+      -34.0,
+      2.0
+    ],
+    "suppress_background": [
+      -21.0,
+      5.0
+    ],
+    "adaptive": null
+  },
+  "adaptive_percentiles": [
+    5,
+    99.7
+  ],
+  "minimum_db_span": 6,
+  "method": "Union with ordinary detections; same area, same mask, rank by YOLO confidence; suppress nearby centers within 35 m.",
+  "selection": "Choose one challenger per review count on five development days, then apply to separate dates. No model training.",
+  "references": {
+    "development": {
+      "raster_manifest_sha256": "d29f2bc9c82ccbd561a0b952980de5d0aee48351a71df062c2d9d821bbb324b6",
+      "cache_sha256": "dcd6219e879c15627b0db09cda3e51ad6937a20b7de766b41bdb16b6de4397fd"
+    },
+    "held_out": {
+      "raster_manifest_sha256": "bdcc58e32153530bea2cb24b02bdd8f109995065316422145bb87cb6f634fe06",
+      "cache_sha256": "e01baea0964edbdb5ee7dd837541a7eeb734696d58b9f53d8fd239f1f067b1b1"
+    },
+    "confirmation": {
+      "raster_manifest_sha256": "9698a5252b8690b55ca021fd4f0d74186c174be4f9ed231e42adfcf28a1dc7c7",
+      "cache_sha256": "c90f194158501f5db89c0bdbf4a2be840f43184511a070cda3053bb61c38360d"
+    }
+  }
+}

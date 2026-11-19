@@ -1,0 +1,191 @@
+{
+  "review_modes": [
+    "equal_incumbent",
+    "equal_relaxed"
+  ],
+  "prior_best": [
+    {
+      "mode": "equal_incumbent",
+      "matched": 82,
+      "labels": 152,
+      "predictions": 116
+    },
+    {
+      "mode": "equal_relaxed",
+      "matched": 102,
+      "labels": 152,
+      "predictions": 191
+    }
+  ],
+  "map_baselines": {
+    "equal_incumbent": {
+      "matched": 80,
+      "labels": 152,
+      "predictions": 116
+    },
+    "equal_relaxed": {
+      "matched": 96,
+      "labels": 152,
+      "predictions": 191
+    }
+  },
+  "trials": [
+    {
+      "name": "Heatmap học từ nhãn tâm",
+      "results": {
+        "held_out": {
+          "equal_incumbent": {
+            "matched": 45,
+            "labels": 152,
+            "predictions": 116
+          },
+          "equal_relaxed": {
+            "matched": 63,
+            "labels": 152,
+            "predictions": 191
+          }
+        },
+        "confirmation": {
+          "equal_incumbent": {
+            "matched": 2,
+            "labels": 8,
+            "predictions": 6
+          },
+          "equal_relaxed": {
+            "matched": 4,
+            "labels": 8,
+            "predictions": 10
+          }
+        }
+      },
+      "artifact_sha256": "a9eade7f49b51b2d78ac8fd8f5debd869f6611948aab78e47dc46bf6154ab3e8"
+    },
+    {
+      "name": "Tinh chỉnh YOLO với nhãn tâm",
+      "results": {
+        "held_out": {
+          "equal_incumbent": {
+            "matched": 64,
+            "labels": 152,
+            "predictions": 116
+          },
+          "equal_relaxed": {
+            "matched": 90,
+            "labels": 152,
+            "predictions": 191
+          }
+        },
+        "confirmation": {
+          "equal_incumbent": {
+            "matched": 4,
+            "labels": 8,
+            "predictions": 6
+          },
+          "equal_relaxed": {
+            "matched": 6,
+            "labels": 8,
+            "predictions": 10
+          }
+        }
+      },
+      "artifact_sha256": "faa8568989df1a65b731054eb20e210d8cd373f933da9a5655030b47d7d0a996"
+    },
+    {
+      "name": "Đổi dải cường độ radar đầu vào",
+      "results": {
+        "held_out": {
+          "equal_incumbent": {
+            "matched": 78,
+            "labels": 152,
+            "predictions": 116
+          },
+          "equal_relaxed": {
+            "matched": 97,
+            "labels": 152,
+            "predictions": 191
+          }
+        },
+        "confirmation": {
+          "equal_incumbent": {
+            "matched": 5,
+            "labels": 8,
+            "predictions": 6
+          },
+          "equal_relaxed": {
+            "matched": 6,
+            "labels": 8,
+            "predictions": 10
+          }
+        }
+      },
+      "artifact_sha256": "70888a5c8975c32d8156b7d01d090e53c92da00779ebf154003e3a92e3e5c837"
+    },
+    {
+      "name": "Hiệu chỉnh vị trí tâm theo heatmap",
+      "results": {
+        "held_out": {
+          "equal_incumbent": {
+            "matched": 80,
+            "labels": 152,
+            "predictions": 116
+          },
+          "equal_relaxed": {
+            "matched": 100,
+            "labels": 152,
+            "predictions": 191
+          }
+        },
+        "confirmation": {
+          "equal_incumbent": {
+            "matched": 4,
+            "labels": 8,
+            "predictions": 6
+          },
+          "equal_relaxed": {
+            "matched": 4,
+            "labels": 8,
+            "predictions": 10
+          }
+        }
+      },
+      "artifact_sha256": "0a0895b2bc50469c4fc3c076475480b58bc8780b997aad26a11e2672718fc85b"
+    },
+    {
+      "name": "Phân bổ lại lượt rà giữa các cảnh",
+      "results": {
+        "held_out": {
+          "equal_incumbent": {
+            "matched": 65,
+            "labels": 152,
+            "predictions": 116
+          },
+          "equal_relaxed": {
+            "matched": 93,
+            "labels": 152,
+            "predictions": 191
+          }
+        },
+        "confirmation": {
+          "equal_incumbent": {
+            "matched": 2,
+            "labels": 8,
+            "predictions": 6
+          },
+          "equal_relaxed": {
+            "matched": 5,
+            "labels": 8,
+            "predictions": 10
+          }
+        }
+      },
+      "artifact_sha256": "a0f9bf258c52b89f425817a481a6534a819a53ea96e7a0456cddc2d1ac6dccea"
+    }
+  ],
+  "point_pool": {
+    "matched": 120,
+    "labels": 152,
+    "predictions": 4676
+  },
+  "held_out_scenes": 12,
+  "confirmation_scenes": 2
+}
