@@ -179,19 +179,18 @@ def render_contrast_recall(root: Path) -> None:
     result = json.loads(path.read_text())
     cases = result['cases']
     st.subheader('Phát hiện thêm với cùng số lượt rà', anchor='recall-cung-luot-ra')
-    st.caption('Cùng 12 lượt chụp lịch sử, 86 ô có ảnh. Chọn bán kính lọc trên năm lượt phát triển '
-               'rồi chấm lại trên các lượt giữ riêng. Một ứng viên khớp tối đa một nhãn trong 100 m.')
+    st.caption('12 lượt chụp Sentinel-1 · 152 nhãn điểm Ai2 · khớp một–một trong 100 m.')
     mode = st.radio('Số lượt rà trong phép lọc điểm gần nhau', list(REVIEW_MODES),
                     format_func=REVIEW_MODES.__getitem__, horizontal=True, key='close_point_review_mode')
     baseline = 'map_default' if mode == 'equal_incumbent' else 'map_lower_threshold'
     selected = result['selected'][mode]
-    for column, method in zip(st.columns(2), (baseline, selected)):
-        scores = review_totals(cases, mode, method)
-        with column.container(border=True):
-            column.markdown(f"**{RECALL_NAMES[method]}**")
-            column.markdown(f"**{scores['matched']}/{scores['labels']}** nhãn khớp · "
-                            f"**{scores['predictions']}** điểm cần rà")
-    st.caption('Ưu tiên ứng viên có điểm YOLO cao hơn khi các tâm cách nhau trong 35 m. '
+    with st.container(border=True):
+        for method in (baseline, selected):
+            scores = review_totals(cases, mode, method)
+            st.markdown(f"**{RECALL_NAMES[method]}** · **{scores['matched']}/{scores['labels']}** nhãn khớp · "
+                        f"**{scores['predictions']}** điểm cần rà")
+    st.caption('Chọn bán kính trên năm lượt phát triển rồi chấm lại trên 86 ô ảnh giữ riêng. '
+               'Khi hai tâm cách nhau trong 35 m, ưu tiên điểm YOLO cao hơn. '
                'Hai nhãn tăng thêm ở mức rà 0,35 đến từ hai lượt chụp tại vùng khảo sát Quảng Ninh.')
     with st.expander('Xem kết quả theo bán kính khớp và cách xếp hạng'):
         radius = st.select_slider('Bán kính khớp nhãn (m)', options=[50, 100, 150], value=100,
