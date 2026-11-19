@@ -12,7 +12,7 @@ from streamlit.components.v1 import html
 from demo_snapshot import load_snapshot
 from review_workspace import (
     STATUSES, CANDIDATE_STATUSES, OPERATIONAL_DECISIONS, session_reviews, export_workspace,
-    restore_workspace, printable_review, evidence_bundle, read_review_images,
+    read_workspace, printable_review, evidence_bundle, read_review_images,
     confirm_operational_review, operational_assessment, source_time_caption,
 )
 from scan_assets import validated_report
@@ -42,6 +42,7 @@ def render_scan(root: Path, *, fixed_sample=False):
             info += ' Kho ảnh chi tiết chưa sẵn sàng trong bản này.'
         st.info(info)
     reviews = session_reviews(st.session_state, report)
+    current = st.session_state['review_active_identities']
     day = report['observation_day_utc']
     day_label = date.fromisoformat(day).strftime('%d/%m/%Y')
     tiles = report['tiles']
@@ -56,41 +57,51 @@ def render_scan(root: Path, *, fixed_sample=False):
                              for label in review.get('candidate_labels', {}).values())
     st.subheader('Kiểm tra chi tiết')
     st.caption('Chọn ảnh → xem điểm nghi vấn → lưu ghi chú và bằng chứng.')
-    reviewed = sum(1 for value in reviews.values() if value.get('status') != STATUSES[0])
-    follow_up = sum(1 for value in reviews.values() if value.get('status') == STATUSES[1])
     st.markdown(f'<div class="observation-meta"><span>Ngày ảnh (UTC)<strong>{day_label}</strong></span><span>Ảnh có sẵn<strong>{len(ready)} ô</strong></span><span>Điểm cần kiểm tra<strong>{count}</strong></span><span>Đã đánh giá<strong>{candidate_reviewed}/{count} điểm</strong></span></div>', unsafe_allow_html=True)
     st.caption('Điểm nghi vấn chưa được xác minh, không phải số tàu.')
     with st.expander('Lưu / mở lại phiên kiểm tra'):
-        st.write('Tải hồ sơ phiên trước khi đóng trang. Khi mở lại, ứng dụng nạp ghi chú '
-                 'còn khớp với ảnh và kết quả hiện có. Ghi chú được lưu trong phiên và tệp bạn tải.')
+        bank = st.session_state['review_evidence_bank']
+        st.write('Tệp phiên giữ cả ghi chú của ảnh đã thay đổi. Khi mở lại, hệ thống '
+                 'phục hồi ghi chú còn khớp với đúng ảnh và kết quả.')
+        archived_count = sum(key not in reviews or current.get(key) != identity
+                             for key,identity in bank)
+        if archived_count:
+            st.caption(f'{archived_count} ghi chú của ảnh cũ được giữ trong tệp phiên.')
         upload = st.file_uploader('Mở hồ sơ phiên (.json)', type=['json'], key='restore_reviews')
         if st.button('Nạp ghi chú từ hồ sơ', disabled=upload is None):
             try:
-                imported, unavailable = restore_workspace(upload.getvalue(), report)
+                imported, unavailable, archived = read_workspace(upload.getvalue(), report)
             except ValueError as error:
                 st.error(str(error))
             else:
                 conflicts = set(imported) & reviews.keys()
+                for identity, saved_note in archived.items():
+                    bank.setdefault(identity, saved_note)
                 for key, value in imported.items():
                     if key in conflicts:
                         continue
                     reviews[key] = value
-                    st.session_state[f'verdict_{key}'] = value['status']
-                    st.session_state[f'note_{key}'] = value['note']
+                    context = f'{key}_{current[key]}'
+                    st.session_state[f'verdict_{context}'] = value['status']
+                    st.session_state[f'note_{context}'] = value['note']
                     notes = value.get('candidate_labels', {})
                     for widget in list(st.session_state):
-                        if widget.startswith(f'candidate_status_{key}_'):
-                            candidate_id = widget.removeprefix(f'candidate_status_{key}_')
+                        if widget.startswith(f'candidate_status_{context}_'):
+                            candidate_id = widget.removeprefix(f'candidate_status_{context}_')
                             st.session_state[widget] = notes.get(candidate_id, CANDIDATE_STATUSES[0])
-                st.session_state['review_restore_notice'] = (len(imported)-len(conflicts), len(unavailable), len(conflicts))
+                st.session_state['review_restore_notice'] = (len(imported)-len(conflicts),
+                    len(unavailable), len(archived), len(conflicts))
                 st.rerun()
-        st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews),
+        st.download_button('Lưu toàn bộ phiên kiểm tra', export_workspace(report, reviews, archived=bank),
                            'sonarnet-review-session.json', 'application/json')
     notice = st.session_state.pop('review_restore_notice', None)
     if notice is not None:
-        restored, unavailable, conflicts = notice
-        st.info(f'Đã nạp {restored} ghi chú. Có {unavailable} ô đổi ảnh, đổi kết quả hoặc hiện thiếu dữ liệu. '
-                f'{conflicts} ô giữ ghi chú đang có trong phiên. Tệp bạn đã chọn vẫn chứa các ghi chú cũ.')
+        restored, unavailable, saved_old, conflicts = notice
+        st.info(f'Đã nạp {restored} ghi chú. Có {unavailable} ghi chú của ảnh hiện không khớp, '
+                f'trong đó {saved_old} được giữ để phục hồi sau. '
+                f'{conflicts} ô giữ ghi chú đang có trong phiên.')
+        if unavailable > saved_old:
+            st.caption('Các ghi chú chưa có mã kiểm chứng đầy đủ vẫn nằm trong tệp đã chọn.')
     with st.expander('Cần biết trước khi dùng kết quả'):
         st.write('Hệ thống nhận diện chưa được kiểm chứng đủ để dùng cho quyết định nghiệp vụ. Đất liền và vùng 500 m từ bờ ra biển được bỏ qua, bao gồm tàu trong cảng và sát bờ. Đường bờ phiên bản 2017 có thể khác thực địa hiện tại, nhất là khu lấn biển. Không dùng kết quả để kết luận tàu cá hoặc vi phạm.')
         st.caption(land_summary(ready))
@@ -123,6 +134,7 @@ def render_scan(root: Path, *, fixed_sample=False):
     by_key = {t['key']:t for t in sorted(ready, key=lambda t: -len(t['detections']))}
     chosen = st.selectbox('Chọn ảnh', list(by_key), format_func=lambda key: tile_label(by_key[key]), key='review_tile')
     tile = by_key[chosen]
+    context = f'{chosen}_{current[chosen]}'
     st.caption(f"Ngày ảnh đã chọn: {date.fromisoformat(tile['observation_day_utc']).strftime('%d/%m/%Y')} UTC · Copernicus")
     try:
         images = snapshot if snapshot is not None else read_review_images(root,tile)
@@ -142,7 +154,11 @@ def render_scan(root: Path, *, fixed_sample=False):
     if tile['detections']:
         target = st.session_state.pop('review_target_id', None)
         target_index = next((i for i, d in enumerate(tile['detections']) if str(d['id']) == target), 0)
-        detection = st.selectbox('Mở điểm cần kiểm tra', tile['detections'], index=target_index, format_func=lambda d: f"Điểm {d['id']}")
+        candidate_key = f'review_candidate_{context}'
+        if target is not None:
+            st.session_state[candidate_key] = tile['detections'][target_index]
+        detection = st.selectbox('Mở điểm cần kiểm tra', tile['detections'],
+                                 format_func=lambda d: f"Điểm {d['id']}", key=candidate_key)
         original = BytesIO(images['source.png'])
         with Image.open(original) as image:
             x1,y1,x2,y2 = detection['bbox_px']
@@ -151,8 +167,8 @@ def render_scan(root: Path, *, fixed_sample=False):
         st.write(f"Tọa độ xấp xỉ: {detection['latitude']:.5f}, {detection['longitude']:.5f}. Thông tin tàu chưa xác định.")
         candidate_labels = reviews.get(chosen, {}).get('candidate_labels', {})
         selected_label = candidate_labels.get(str(detection['id']), CANDIDATE_STATUSES[0])
-        with st.form(f'candidate_form_{chosen}_{detection["id"]}'):
-            candidate_status = st.radio('Bạn thấy gì trong ảnh?', CANDIDATE_STATUSES, index=CANDIDATE_STATUSES.index(selected_label), key=f'candidate_status_{chosen}_{detection["id"]}')
+        with st.form(f'candidate_form_{context}_{detection["id"]}'):
+            candidate_status = st.radio('Bạn thấy gì trong ảnh?', CANDIDATE_STATUSES, index=CANDIDATE_STATUSES.index(selected_label), key=f'candidate_status_{context}_{detection["id"]}')
             if st.form_submit_button('Lưu đánh giá'):
                 if candidate_status == CANDIDATE_STATUSES[0]:
                     candidate_labels.pop(str(detection['id']), None)
@@ -165,9 +181,9 @@ def render_scan(root: Path, *, fixed_sample=False):
         st.info('Chưa có điểm cần kiểm tra ngoài vùng bỏ qua trên đất và sát bờ. Không được suy ra rằng vùng này không có tàu.')
     st.caption(f"Nguồn {tile['source']}. {source_time_caption(tile)}")
     saved = reviews.get(chosen, {'status': STATUSES[0], 'note': ''})
-    with st.form(f'review_form_{chosen}'):
-        verdict = st.radio('Đánh dấu của người xem', STATUSES, index=STATUSES.index(saved['status']), key=f'verdict_{chosen}')
-        note = st.text_area('Ghi chú kiểm tra', value=saved['note'], max_chars=5000, key=f'note_{chosen}', placeholder='Ví dụ: có điểm sáng cần đối chiếu với ảnh độ phân giải cao hơn…')
+    with st.form(f'review_form_{context}'):
+        verdict = st.radio('Đánh dấu của người xem', STATUSES, index=STATUSES.index(saved['status']), key=f'verdict_{context}')
+        note = st.text_area('Ghi chú kiểm tra', value=saved['note'], max_chars=5000, key=f'note_{context}', placeholder='Ví dụ: có điểm sáng cần đối chiếu với ảnh độ phân giải cao hơn…')
         if st.form_submit_button('Lưu ghi chú ô ảnh'):
             # Preserve candidate-level decisions when the tile-level verdict
             # is saved afterwards.  Without this, a normal workflow of
@@ -187,11 +203,11 @@ def render_scan(root: Path, *, fixed_sample=False):
         current = operational_assessment(tile, saved)
         st.write('Đang xác minh; chưa có kết luận nghiệp vụ' if current['status'] == 'pending' else
                  f"Đã ghi nhận: {current['conclusion']} · {current['reviewer']}")
-        with st.form(f'operational_{chosen}_form'):
-            reviewer = st.text_input('Tên chuyên viên xác nhận', max_chars=200, key=f'operational_{chosen}_name')
-            decision = st.selectbox('Hướng xử lý sau rà soát', OPERATIONAL_DECISIONS, key=f'operational_{chosen}_decision')
-            basis = st.text_area('Căn cứ kiểm tra / tài liệu đối chiếu', max_chars=5000, key=f'operational_{chosen}_basis')
-            checked = st.checkbox('Tôi đã xem bằng chứng và chịu trách nhiệm về đánh giá này', key=f'operational_{chosen}_confirm')
+        with st.form(f'operational_{context}_form'):
+            reviewer = st.text_input('Tên chuyên viên xác nhận', max_chars=200, key=f'operational_{context}_name')
+            decision = st.selectbox('Hướng xử lý sau rà soát', OPERATIONAL_DECISIONS, key=f'operational_{context}_decision')
+            basis = st.text_area('Căn cứ kiểm tra / tài liệu đối chiếu', max_chars=5000, key=f'operational_{context}_basis')
+            checked = st.checkbox('Tôi đã xem bằng chứng và chịu trách nhiệm về đánh giá này', key=f'operational_{context}_confirm')
             if st.form_submit_button('Xác nhận hướng xử lý'):
                 try:
                     assessment = confirm_operational_review(tile, reviewer, decision, basis, checked)

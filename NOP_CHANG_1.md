@@ -49,7 +49,7 @@ python -m streamlit run scripts/demo_app.py
 
 Mở `http://localhost:8501/?trang=minh-chung` sau khi chạy. Ảnh bản đồ công bố được phục hồi theo README. Hồ sơ mẫu và trang minh chứng dùng các tệp gọn trong ZIP. SHA-256 từng tệp nằm trong `PACKAGE_MANIFEST.json`. Bản ZIP phát hành ghi commit nguồn đã ghim, mã Git blob của các tệp thuộc commit và SHA-256 của các tệp dữ liệu nghiên cứu kèm theo.
 
-Trong bản chạy từ ZIP, **Quan sát → Kiểm tra chi tiết** mở hồ sơ ảnh thật đã xác minh khi kho ảnh chưa sẵn sàng. Có thể lưu và mở lại ghi chú khớp đúng ảnh và kết quả. Bản ZIP của từng ô gồm ảnh, mã băm, trạng thái thiếu AIS và từng đánh giá đã lưu. Chạy `python scripts/verify_chang1_runtime.py` để kiểm tra luồng này trong thư mục vừa giải nén.
+Trong bản chạy từ ZIP, **Quan sát → Kiểm tra chi tiết** mở hồ sơ ảnh thật đã xác minh khi kho ảnh chưa sẵn sàng. Tệp lưu phiên giữ cả ghi chú của ảnh cũ. Khi mở lại, từng ghi chú hiện trên đúng ảnh và kết quả tương ứng. Bản ZIP của từng ô gồm ảnh, mã băm, trạng thái thiếu AIS và từng đánh giá đã lưu. Chạy `python scripts/verify_chang1_runtime.py` để kiểm tra luồng này trong thư mục vừa giải nén.
 
 ## Nội dung khai báo AI và nguồn để đối chiếu trước khi điền
 

@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'scripts'))
 from review_workspace import (export_workspace, import_workspace, printable_review, evidence_bundle,
-                              session_reviews, restore_workspace, tile_identity, confirm_operational_review)
+                              session_reviews, restore_workspace, read_workspace, tile_identity, confirm_operational_review)
 
 
 class WorkspaceTests(unittest.TestCase):
@@ -70,6 +70,45 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(restore_workspace(raw,changed),({'cell_0':notes['cell_0']},['cell_1']))
         with self.assertRaises(ValueError):
             import_workspace(raw,changed)
+
+    def test_export_keeps_both_versions_and_reactivates_the_right_one(self):
+        old = dict(self.tile, source_acquired_at='2026-09-12T03:00:00Z', detections=[{'id':1}])
+        new = dict(old, source_acquired_at='2026-09-12T04:00:00Z')
+        original, refreshed = {'tiles':[old]}, {'tiles':[new]}
+        old_note = {'status':'Cần kiểm tra tiếp','note':'Ảnh lúc 03:00',
+                    'candidate_labels':{'1':'Có khả năng là tàu'}}
+        old_note['operational_review'] = confirm_operational_review(
+            old,'Người rà A','Cần bổ sung dữ liệu','Cần AIS cùng giờ chụp',True)
+        new_note = {'status':'Cần kiểm tra tiếp','note':'Ảnh lúc 04:00',
+                    'candidate_labels':{'1':'Nhiễu / không phải tàu'}}
+        state = {}
+        session_reviews(state,original)['cell_0'] = old_note
+        current = session_reviews(state,refreshed)
+        self.assertEqual(current,{})
+        current['cell_0'] = new_note
+        saved = export_workspace(refreshed,current,archived=state['review_evidence_bank'])
+        self.assertEqual(len(json.loads(saved)['records']),2)
+
+        active, unavailable, waiting = read_workspace(saved,refreshed)
+        self.assertEqual(active,{'cell_0':new_note})
+        self.assertEqual(unavailable,['cell_0'])
+        self.assertEqual(waiting,{('cell_0',tile_identity(old)):old_note})
+
+        restored_state = {}
+        session_reviews(restored_state,refreshed).update(active)
+        restored_state['review_evidence_bank'].update(waiting)
+        self.assertEqual(session_reviews(restored_state,original),{'cell_0':old_note})
+        self.assertEqual(session_reviews(restored_state,refreshed),{'cell_0':new_note})
+
+    def test_export_after_opening_previous_format_carries_missing_notes(self):
+        old = dict(self.tile,key='old')
+        note = {'status':'Cần kiểm tra tiếp','note':'Ảnh lưu trong tệp V3'}
+        saved = export_workspace({'tiles':[old]}, {'old':note})
+        active, unavailable, bank = read_workspace(saved,self.report)
+        self.assertEqual(active,{})
+        self.assertEqual(unavailable,['old'])
+        again = export_workspace(self.report,active,archived=bank)
+        self.assertEqual(import_workspace(again,{'tiles':[old]}),{'old':note})
 
     def test_schema_two_notes_restore_after_unreviewed_tile_changes(self):
         other = dict(self.tile,key='cell_1')

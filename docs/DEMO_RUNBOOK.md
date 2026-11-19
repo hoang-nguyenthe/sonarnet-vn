@@ -12,7 +12,7 @@ Mở [demo công khai](https://sonarnet.streamlit.app/?trang=minh-chung). Nút t
 
 ## Thao tác và câu trả lời khi xem kỹ hơn
 
-- **Kiểm tra chi tiết** trong **Quan sát** có thể lưu ghi chú, lấy ảnh nguồn và xuất ZIP gồm `review.html`, `evidence.json` và `checksums.json`. Bản đọc và in hồ sơ ghi từng đánh giá đã lưu. Khi nạp lại tệp phiên, ứng dụng phục hồi ghi chú khớp ảnh và báo số ô đã thay đổi. Khi chưa có kho ảnh đầy đủ, dùng hồ sơ mẫu thật.
+- **Kiểm tra chi tiết** trong **Quan sát** có thể lưu ghi chú, lấy ảnh nguồn và xuất ZIP gồm `review.html`, `evidence.json` và `checksums.json`. Bản đọc và in hồ sơ ghi từng đánh giá đã lưu. Tệp phiên giữ cả ghi chú của ảnh cũ. Ứng dụng hiển thị mỗi ghi chú khi có đúng ảnh và kết quả của lượt rà. Khi chưa có kho ảnh đầy đủ, dùng hồ sơ mẫu thật.
 - **Không ghép AIS** có nhiều nguyên nhân như không có dữ liệu phù hợp, lệch thời gian, độ bất định hoặc ứng viên cạnh tranh. Chỉ người có chuyên môn xác nhận kết luận nghiệp vụ và căn cứ.
 - **Có dữ liệu AIS thật** trong phép phát lại NOAA và phép thử cùng cảnh ở New York Harbor. Phép ghép trực tiếp có bốn mốc vị trí tham chiếu. So sánh danh tính thật ở Việt Nam cần nguồn độc lập.
 - **Có dữ liệu SAR có vị trí** trong đối chứng OpenSAR và ảnh Sentinel-1 RTC có nhãn điểm Ai2 ở Việt Nam. Điểm khớp trong 100 m đo độ phủ theo nhãn điểm. Khớp hộp theo IoU là phép chấm khác.

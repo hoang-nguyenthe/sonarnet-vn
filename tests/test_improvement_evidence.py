@@ -139,6 +139,31 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertNotIn('che-do', app.query_params)
 
+    def test_review_input_is_bound_to_its_acquisition(self):
+        from demo_snapshot import load_snapshot
+        tile, images, bundle = load_snapshot(ROOT)
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
+        app.query_params['trang'] = 'quan-sat'
+        app.query_params['che-do'] = 'ho-so-mau'
+        note = lambda: next(item for item in app.text_area if item.label == 'Ghi chú kiểm tra')
+        with patch('scan_view.load_snapshot', return_value=(tile, images, bundle)):
+            app.run()
+            app.toggle(key='review_fixed_sample').set_value(True).run()
+            original_key = note().key
+            note().set_value('Ghi chú cho lần chụp gốc')
+            next(item for item in app.button if item.label == 'Lưu ghi chú ô ảnh').click().run()
+            self.assertEqual(note().value, 'Ghi chú cho lần chụp gốc')
+        updated = dict(tile, source_acquired_at='2026-09-12T04:00:00Z')
+        with patch('scan_view.load_snapshot', return_value=(updated, images, bundle)):
+            app.run()
+            self.assertFalse(app.exception)
+            self.assertNotEqual(note().key, original_key)
+            self.assertEqual(note().value, '')
+        with patch('scan_view.load_snapshot', return_value=(tile, images, bundle)):
+            app.run()
+            self.assertEqual(note().key, original_key)
+            self.assertEqual(note().value, 'Ghi chú cho lần chụp gốc')
+
     def test_view_import_recovers_if_hot_reload_removes_module_once(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
         app.query_params['trang'] = 'minh-chung'

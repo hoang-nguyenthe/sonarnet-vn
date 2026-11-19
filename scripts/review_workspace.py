@@ -65,8 +65,16 @@ def session_reviews(state, report):
             for widget in list(state):
                 if widget in (f'verdict_{key}', f'note_{key}') or widget.startswith((f'candidate_status_{key}_', f'operational_{key}_')):
                     del state[widget]
-    notes = {key: deepcopy(bank[(key, identity)]) for key, identity in current.items()
-             if (key, identity) in bank}
+    notes = {}
+    for tile in report['tiles']:
+        key = tile['key']
+        stored = bank.get((key, current.get(key)))
+        if stored is not None:
+            try:
+                notes[key] = validate_note(stored, tile)
+            except ValueError:
+                # An archived record with invalid candidate IDs remains inactive.
+                continue
     state['review_active_identities'] = current
     state['review_active_notes'] = notes
     return notes
@@ -88,11 +96,17 @@ def tile_identity(tile, *, version=3):
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
 
-def export_workspace(report, reviews):
+def export_workspace(report, reviews, *, archived=None):
     identities = {t['key']: tile_identity(t) for t in report['tiles']
                   if t['status'] == 'processed' and t['key'] in reviews}
-    return json.dumps({'schema_version': 3, 'tile_identities': identities, 'reviews': reviews},
-                      ensure_ascii=False, indent=2)
+    if archived is None:
+        return json.dumps({'schema_version': 3, 'tile_identities': identities, 'reviews': reviews},
+                          ensure_ascii=False, indent=2)
+    entries = dict(archived)
+    entries.update({(key, identity):reviews[key] for key,identity in identities.items()})
+    records = [{'tile_key': key, 'evidence_identity': identity, 'review': note}
+               for (key,identity),note in sorted(entries.items())]
+    return json.dumps({'schema_version': 4, 'records': records}, ensure_ascii=False, indent=2)
 
 
 def import_workspace(raw, report):
@@ -103,12 +117,44 @@ def import_workspace(raw, report):
 
 
 def restore_workspace(raw, report):
-    """Recover individually bound notes, leaving stale or absent tiles in the source file."""
-    if len(raw) > 1_000_000:
-        raise ValueError('Hồ sơ quá lớn (giới hạn 1 MB).')
+    restored, unavailable, _ = read_workspace(raw, report)
+    return restored, unavailable
+
+
+def validate_note(item, tile=None):
+    if not isinstance(item, dict):
+        raise ValueError('Hồ sơ chứa ghi chú không hợp lệ.')
+    if item.get('status') not in STATUSES or not isinstance(item.get('note'), str) or len(item['note']) > 5000:
+        raise ValueError('Trạng thái hoặc ghi chú không hợp lệ.')
+    labels = item.get('candidate_labels', {})
+    if not isinstance(labels, dict) or any(label not in CANDIDATE_STATUSES for label in labels.values()):
+        raise ValueError('Đánh giá ứng viên không hợp lệ.')
+    review = {'status': item['status'], 'note': item['note']}
+    if labels:
+        review['candidate_labels'] = labels
+    if tile is None:
+        if item.get('operational_review') is not None:
+            if not isinstance(item['operational_review'], dict):
+                raise ValueError('Xác nhận chuyên viên không hợp lệ.')
+            # A saved assessment stays inactive until its evidence is available.
+            review['operational_review'] = dict(item['operational_review'], authentication='self_declared')
+    else:
+        candidate_ids = {str(candidate['id']) for candidate in tile.get('detections', [])}
+        if not labels.keys() <= candidate_ids:
+            raise ValueError('Đánh giá ứng viên không hợp lệ.')
+        assessment = operational_assessment(tile, item)
+        if assessment['status'] == 'confirmed':
+            review['operational_review'] = assessment
+    return review
+
+
+def read_workspace(raw, report):
+    """Open existing workspace formats, retaining v3/v4 notes for absent evidence."""
+    if len(raw) > 50 * 1024**2:
+        raise ValueError('Hồ sơ quá lớn (giới hạn 50 MB).')
     try:
         data = json.loads(raw)
-    except (ValueError, UnicodeError):
+    except (ValueError, UnicodeError, RecursionError):
         raise ValueError('Tệp không phải JSON hợp lệ.') from None
     if not isinstance(data, dict):
         raise ValueError('Hồ sơ không thuộc đúng bộ ảnh và mô hình này.')
@@ -119,40 +165,44 @@ def restore_workspace(raw, report):
         old_id = hashlib.sha256(json.dumps(legacy_identity, sort_keys=True).encode()).hexdigest()
         if data.get('report_id') != old_id:
             raise ValueError('Hồ sơ cũ cần đúng bộ ảnh ban đầu để mở lại.')
-    elif version not in (2, 3):
+    if version == 4:
+        records = data.get('records')
+        if not isinstance(records, list) or not all(isinstance(r, dict) for r in records):
+            raise ValueError('Danh sách ghi chú không hợp lệ.')
+    elif version in (1, 2, 3):
+        notes = data.get('reviews')
+        if not isinstance(notes, dict):
+            raise ValueError('Danh sách ghi chú không hợp lệ.')
+        ids = data.get('tile_identities', {})
+        if version in (2, 3) and (not isinstance(ids, dict) or not notes.keys() <= ids.keys()):
+            raise ValueError('Ghi chú thiếu mã kiểm chứng ảnh tương ứng.')
+        records = [{'tile_key': key, 'evidence_identity': ids.get(key) if version != 1 else None, 'review': note}
+                   for key,note in notes.items()]
+    else:
         raise ValueError('Phiên bản hồ sơ chưa được hỗ trợ.')
-    reviews = data.get('reviews')
-    if not isinstance(reviews, dict):
-        raise ValueError('Danh sách ghi chú không hợp lệ.')
-    identities = data.get('tile_identities', {})
-    if version in (2, 3) and (not isinstance(identities, dict) or not set(reviews) <= identities.keys()):
-        raise ValueError('Ghi chú thiếu mã kiểm chứng ảnh tương ứng.')
     tiles = {t['key']: t for t in report['tiles'] if t['status'] == 'processed'}
-    result, unavailable = {}, []
-    for key, item in reviews.items():
-        if not isinstance(item, dict):
-            raise ValueError('Hồ sơ chứa ghi chú không hợp lệ.')
+    seen, result, unavailable, archive = set(), {}, [], {}
+    for record in records:
+        key, identity = record.get('tile_key'), record.get('evidence_identity')
+        if not isinstance(key, str) or not key:
+            raise ValueError('Ghi chú thiếu định danh ô ảnh.')
+        if version != 1 and (not isinstance(identity, str) or len(identity) != 64
+                             or any(ch not in '0123456789abcdef' for ch in identity)):
+            raise ValueError('Ghi chú thiếu mã kiểm chứng ảnh tương ứng.')
+        ident = (key,identity)
+        if ident in seen:
+            raise ValueError('Một ảnh có nhiều ghi chú trùng trong tệp.')
+        seen.add(ident)
         tile = tiles.get(key)
-        if tile is None or (version in (2, 3) and identities[key] != tile_identity(tile, version=version)):
+        item = record.get('review')
+        matches = tile is not None and (version == 1 or identity == tile_identity(tile,version=min(3,version)))
+        if matches:
+            result[key] = validate_note(item, tile)
+        else:
             unavailable.append(key)
-            continue
-        if item.get('status') not in STATUSES or not isinstance(item.get('note'), str) or len(item['note']) > 5000:
-            raise ValueError('Trạng thái hoặc ghi chú không hợp lệ.')
-        labels = item.get('candidate_labels', {})
-        if not isinstance(labels, dict):
-            raise ValueError('Đánh giá ứng viên không hợp lệ.')
-        assessment = operational_assessment(tile, item)
-        candidate_ids = {str(candidate['id']) for candidate in tile.get('detections', [])}
-        for candidate_id, label in labels.items():
-            if candidate_id not in candidate_ids or label not in CANDIDATE_STATUSES:
-                raise ValueError('Đánh giá ứng viên không hợp lệ.')
-        review = {'status': item['status'], 'note': item['note']}
-        if labels:
-            review['candidate_labels'] = labels
-        if assessment['status'] == 'confirmed':
-            review['operational_review'] = assessment
-        result[key] = review
-    return result, unavailable
+            if version >= 3:
+                archive[ident] = validate_note(item)
+    return result, unavailable, archive
 
 
 def source_time_caption(tile):

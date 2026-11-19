@@ -44,14 +44,15 @@ def verify():
     assert any('hồ sơ mẫu từ ảnh thật' in item.value for item in app.info)
     key = app.selectbox(key='review_tile').value
     assert app.session_state['review_active_notes'] == {}
+    context = f"{key}_{app.session_state['review_active_identities'][key]}"
     step('switch_to_raw_radar', app.radio(key='review_image_view').set_value('Ảnh radar nguồn'))
     point = next(item.value for item in app.selectbox if item.label=='Mở điểm cần kiểm tra')
-    app.radio(key=f"candidate_status_{key}_{point['id']}").set_value('Có khả năng là tàu')
+    app.radio(key=f"candidate_status_{context}_{point['id']}").set_value('Có khả năng là tàu')
     save_candidate = next(button for button in app.button if button.label=='Lưu đánh giá')
     step('save_candidate_review',save_candidate.click())
-    app.radio(key=f'verdict_{key}').set_value('Cần kiểm tra tiếp')
+    app.radio(key=f'verdict_{context}').set_value('Cần kiểm tra tiếp')
     note = 'Kiểm thử cục bộ: cần đối chiếu nguồn AIS.'
-    app.text_area(key=f'note_{key}').set_value(note)
+    app.text_area(key=f'note_{context}').set_value(note)
     save_note = next(button for button in app.button if button.label=='Lưu ghi chú ô ảnh')
     step('save_review_note',save_note.click())
     review = app.session_state['review_active_notes'][key]
