@@ -116,6 +116,10 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertIn((191, '96/152', '102/152'),
                       list(tta[['Số lượt rà', 'Cấu hình gốc', 'Nhãn khớp']].itertuples(index=False,name=None)))
         self.assertTrue(any('Bắc Trung Bộ' in item.value and '6/8 và 6/8' in item.value for item in app.caption))
+        self.assertTrue(any('58 → 64 nhãn khớp' in item.value and '78 lượt rà' in item.value
+                            for item in app.caption))
+        self.assertTrue(any(item.proto.label == 'Tải tọa độ để tính lại recall'
+                            for item in app.get('download_button')))
 
     def test_direct_link_opens_observation_sample(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)

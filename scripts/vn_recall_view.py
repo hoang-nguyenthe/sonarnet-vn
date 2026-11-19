@@ -242,6 +242,34 @@ def render_map_tta_recall(root: Path) -> None:
                    'sau đó chấm riêng trên 12 lượt chụp đã có nhãn Ai2.')
         st.download_button('Tải kết quả biến đổi ảnh trước suy luận', path.read_bytes(),
                            'sonarnet-recall-bien-doi-anh.json', 'application/json')
+        render_recovered_example(path.parent)
+
+
+def render_recovered_example(folder: Path) -> None:
+    details = folder/'recovered-example.json'
+    packet = folder/'review-queues.json'
+    panels = [folder/f'recovered-{side}.png' for side in ('before','after')]
+    if not all(path.is_file() for path in (details, packet, *panels)):
+        return
+    evidence = json.loads(details.read_text())
+    n = len(evidence['recovered'])
+    st.markdown(f'**{n} nhãn khớp thêm trên một ô ảnh radar**')
+    day = evidence['source']['source_acquired_at'][:10]
+    st.caption(f"Sentinel-1 RTC VV · {day} · ô {evidence['window_id']}. Trên cả lượt chụp, "
+               f"{evidence['before_matches']} → {evidence['after_matches']} nhãn khớp "
+               f"với cùng {evidence['scene_reviews']} lượt rà. "
+               'Hai ảnh chỉ đánh dấu các nhãn tìm thêm trong ô minh họa.')
+    for column, image, heading in zip(st.columns(2),panels,('Ảnh gốc và nhãn Ai2','Sau khi chia ô ảnh chồng lấn')):
+        column.markdown(f'**{heading}**')
+        column.image(str(image), width='stretch')
+    offsets = ' · '.join(f"Nhãn {row['marker']} cách {row['distance_m']:.1f} m".replace('.', ',')
+                         for row in evidence['recovered'])
+    st.caption('Hình thoi lam là nhãn Ai2. Vòng vàng là tâm ứng viên được ghép. '
+               f'{offsets}.')
+    st.download_button('Tải tọa độ để tính lại recall', packet.read_bytes(),
+                       'sonarnet-recall-toa-do-da-cham.json', 'application/json')
+    st.download_button('Tải nguồn và vị trí ba nhãn minh họa', details.read_bytes(),
+                       'sonarnet-recall-nguon-o-anh.json', 'application/json')
 
 
 def render_polarimetric_recall(root: Path) -> None:

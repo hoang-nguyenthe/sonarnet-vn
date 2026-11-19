@@ -37,3 +37,34 @@ PYTHONPATH=src python scripts/confirm_rtc_equal_review.py --source CONFIRM_DIR \
 
 Nhãn điểm từ [Ai2 Vessel Detection with Sentinels](https://github.com/allenai/vessel-detection-sentinels).
 Ảnh Copernicus Sentinel-1 RTC qua [Microsoft Planetary Computer](https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc).
+
+## Chấm lại từ tọa độ đã xuất
+
+`review-queues.json` chứa các nhãn Ai2 nằm trong vùng chấm và bốn danh sách
+đã rà của mỗi lượt chụp. Dùng lệnh sau trong gói Chặng 1 để tính lại số ghép
+một–một ở 50, 100 và 150 m. Phép kiểm tính khoảng cách WGS84 và ghép bằng
+Hungarian. Mã đánh giá ban đầu kiểm tra theo ghép cặp cực đại trên đồ thị
+thưa. Hai cách cho cùng số nhãn khớp ở 144 phép đối chiếu theo ngày, cách
+xếp hạng và bán kính. Tệp đã lưu đủ để chấm lại từ tọa độ mà không tải ảnh,
+chạy YOLO hoặc cần thông tin đăng nhập.
+
+```sh
+python -m pip install numpy scipy pyproj
+python scripts/replay_rtc_equal_review.py
+```
+
+Ảnh minh họa cho thấy ba nhãn tìm thêm trong ô 44544 của lượt chụp
+23/08/2022. Cả lượt chụp khớp 58 → 64 nhãn với cùng 78 lượt rà. Màu và vòng
+trong ảnh chỉ những điểm tăng thêm được chọn theo phép ghép một–một.
+`recovered-example.json` lưu định danh ô, tọa độ, khoảng cách và hash của
+ô raster đã đọc. Nguồn ảnh Copernicus Sentinel-1, xử lý RTC bởi Catalyst và
+phân phối qua Microsoft Planetary Computer. Ảnh minh họa được trích và phủ
+ký hiệu. Nhãn Ai2 theo [giấy phép Apache-2.0 của nguồn](AI2-LICENSE.txt).
+
+Tạo lại ảnh và gói tọa độ từ cache đã tạo ở trên.
+
+```sh
+PYTHONPATH=src python scripts/export_rtc_review_evidence.py \
+  --source FRESH_DIR --cache RANKER_DIR/fresh_features.json.gz \
+  --views OUT_DIR/held-out-views.json --font /path/to/DejaVuSans.ttf
+```

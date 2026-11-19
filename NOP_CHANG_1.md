@@ -30,7 +30,7 @@ Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Tr�
 
 > Trong **Recall trên 12 lượt chụp mới**, chuyển giữa cùng mức trần theo diện tích và đúng số lượt rà của bản đồ để so sánh ngưỡng 0,35 với 0,05 và các bộ xếp hạng thử nghiệm. Dữ liệu là nhãn điểm lịch sử, khớp trong 100 m. Mở **Xem ảnh radar thật và các điểm được tìm thêm** để đối chiếu bằng mắt các điểm khớp và chưa khớp trên cùng một ô ảnh.
 
-> Mở **Phát hiện thêm với cùng số lượt rà** để so sánh lọc điểm cách nhau trong 35 m và chia ô ảnh chồng lấn. Kết quả theo từng lượt chụp và đối chứng bổ sung ở Bắc Trung Bộ nằm trong hồ sơ.
+> Mở **Phát hiện thêm với cùng số lượt rà** để so sánh lọc điểm cách nhau trong 35 m và chia ô ảnh chồng lấn. Mở **Thử xoay, lật và chia ô ảnh cho mô hình bản đồ** để xem ba nhãn tìm thêm trên cùng ảnh radar. Tải tọa độ của các danh sách đã chấm và dùng lệnh trong [hướng dẫn tái lập](reports/final/vietnam_rtc_tta_20261119/README.md) để tính lại số nhãn khớp.
 
 > Ở mục **Kiểm tra trên ảnh ven biển Việt Nam**, xem mẫu Sentinel-1 có nhãn điểm Ai2 ở Đà Nẵng và Vũng Tàu. Có thể đổi bán kính 50, 100, 150 m và xem số ứng viên cần rà. Đây là phép so sánh với nhãn điểm, khác với IoU 0,50 dùng để chấm hộp trên SLC.
 
