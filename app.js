@@ -146,14 +146,21 @@ function renderRankFusion(data) {
   for (const [key, label] of [
     ['held_out', 'Ven biển Việt Nam'],
     ['confirmation', 'Bắc Trung Bộ'],
+    ['ais_holdout', 'Mốc AIS · 6 cảnh cảng Mỹ'],
   ]) {
+    if (!data.rank_fusion[key]) continue;
     for (const mode of Object.values(data.rank_fusion[key])) {
       const baseline = mode.published['100'];
       addRow(table, `${label} · ${formatCount(baseline.predictions)}`,
         fraction(baseline), fraction(mode.rank_60['100']), fraction(mode.rank_60_keep_75['100']));
     }
   }
-  addLinks($('rank-links'), [['Số liệu và cách chấm lại', data.links.rankFusionProtocol]]);
+  const links = [['Số liệu và cách chấm lại', data.links.rankFusionProtocol]];
+  if (data.links.rankAisHoldout) {
+    $('rank-ais-scope').hidden = false;
+    links.push(['Kiểm tra trên 6 ngày chụp khác', data.links.rankAisHoldout]);
+  }
+  addLinks($('rank-links'), links);
 }
 
 function drawCasePositions(payload) {
