@@ -2,6 +2,8 @@
 
 Mở [demo công khai](https://sonarnet.streamlit.app/?trang=minh-chung). Nút tải PDF và hồ sơ mẫu nằm ngay dưới phần giới thiệu. Có thể [mở trực tiếp hồ sơ mẫu](https://sonarnet.streamlit.app/?trang=quan-sat&che-do=ho-so-mau) để bỏ qua bước mở bản đồ. Bật **Rà soát và lưu ghi chú trên hồ sơ mẫu** để thử lưu từng đánh giá và tải hồ sơ có mã băm. Dùng [hướng dẫn nộp và chạy ngoại tuyến](../NOP_CHANG_1.md) để kiểm tra bản ZIP hoặc tải báo cáo.
 
+[Trang minh chứng công khai](https://hoang-nguyenthe.github.io/sonarnet-vn/) mở không cần đăng nhập. Chọn tập chấm, số ứng viên cần rà và bán kính để đối chiếu kết quả. Mở **Hồ sơ mẫu** để tải lại ảnh nguồn, ZIP và ghi chú có mã băm. Trang đọc dữ liệu từ bản phát hành đã ghim. Streamlit phục vụ bản đồ và luồng xử lý của ứng dụng.
+
 | Thời gian dự kiến | Thao tác | Điểm cần quan sát |
 | --- | --- | --- |
 | 0:00–0:25 | Bật **Mở hồ sơ ảnh SAR thật thiếu AIS** | Ảnh, ngày chụp và trạng thái thiếu AIS. Hồ sơ ảnh ở trạng thái chờ xác minh. |

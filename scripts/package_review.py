@@ -58,6 +58,10 @@ CHANG1_FILES = {
     'docs/FINAL_STATUS.md',
     'docs/DEMO_RUNBOOK.md',
     'docs/AI_DECLARATION_CHANG1.md',
+    'scripts/build_chang1_public_site.py',
+    'web/chang1/index.html',
+    'web/chang1/style.css',
+    'web/chang1/app.js',
     'assets/models/sonarnet_slc_vv_20261118.pt',
     'scripts/evaluate_ais_trajectories.py',
     'scripts/evaluate_coincident_sar_ais.py',
@@ -211,6 +215,12 @@ https://sonarnet.streamlit.app/?trang=minh-chung
 ## Phiên bản mã nguồn
 
 {commit}
+
+## Đường dẫn đọc thêm minh chứng
+
+https://hoang-nguyenthe.github.io/sonarnet-vn/
+
+Đường dẫn bổ sung để xem số liệu và tải hồ sơ mẫu.
 
 Ba ô liên kết là bắt buộc. Ô phiên bản là tùy chọn. Xem [hướng dẫn nộp](NOP_CHANG_1.md)
 để lấy nội dung dùng thử và khai báo AI. Chủ dự án kiểm tra lại cam kết và lưu
