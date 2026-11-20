@@ -89,6 +89,7 @@ CHANG1_FILES = {
     'scripts/evaluate_frozen_ais_assignment.py',
     'scripts/evaluate_noaa_ais_replay.py',
     'scripts/demo_snapshot.py',
+    'scripts/review_packet.py',
     'scripts/evaluate_opensar_adaptation.py',
     'scripts/evaluate_sar_review_budget.py',
     'scripts/evaluate_sar_multiscale.py',

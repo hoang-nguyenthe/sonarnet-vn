@@ -148,14 +148,25 @@ def validate_note(item, tile=None):
     return review
 
 
+def read_review_json(raw):
+    """Reject multiple definitions of the same field in evidence and review files."""
+    def unique_fields(pairs):
+        fields = dict(pairs)
+        if len(fields) != len(pairs):
+            raise ValueError('Tệp JSON có trường trùng.')
+        return fields
+
+    try:
+        return json.loads(raw, object_pairs_hook=unique_fields)
+    except (UnicodeError, RecursionError, json.JSONDecodeError):
+        raise ValueError('Tệp không phải JSON hợp lệ.') from None
+
+
 def read_workspace(raw, report):
     """Open existing workspace formats, retaining v3/v4 notes for absent evidence."""
     if len(raw) > 50 * 1024**2:
         raise ValueError('Hồ sơ quá lớn (giới hạn 50 MB).')
-    try:
-        data = json.loads(raw)
-    except (ValueError, UnicodeError, RecursionError):
-        raise ValueError('Tệp không phải JSON hợp lệ.') from None
+    data = read_review_json(raw)
     if not isinstance(data, dict):
         raise ValueError('Hồ sơ không thuộc đúng bộ ảnh và mô hình này.')
     version = data.get('schema_version')

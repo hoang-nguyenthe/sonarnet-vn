@@ -73,6 +73,8 @@ Mở `http://localhost:8501/?trang=minh-chung` sau khi chạy. Ảnh bản đồ
 
 Trong bản chạy từ ZIP, **Quan sát → Kiểm tra chi tiết** mở hồ sơ ảnh thật đã xác minh khi kho ảnh chưa sẵn sàng. Tệp lưu phiên giữ cả ghi chú của ảnh cũ. Khi mở lại, từng ghi chú hiện trên đúng ảnh và kết quả tương ứng. Bản ZIP của từng ô gồm ảnh, mã băm, trạng thái thiếu AIS và từng đánh giá đã lưu. Chạy `python scripts/verify_chang1_runtime.py` để kiểm tra luồng này trong thư mục vừa giải nén.
 
+Đối với ZIP bằng chứng của một ô ảnh, dùng `python scripts/review_packet.py duong-dan-toi-ho-so.zip` để kiểm tra tệp trước khi mở. Có thể thêm `--sha256 MA_BAM_TU_NGUON_TIN_CAY` để đối chiếu với mã nhận riêng từ người gửi. Trạng thái xác nhận trong bản xuất được đối chiếu với mã ảnh. Danh tính người rà trong phiên demo là thông tin tự khai.
+
 ## Nội dung khai báo AI và nguồn để đối chiếu trước khi điền
 
 > Trong lượt cải tiến Chặng 1, OpenAI Codex hỗ trợ đối chiếu yêu cầu, sửa mã, viết kiểm thử, chuẩn bị và kiểm tra dữ liệu, chạy huấn luyện và đối chứng, trình bày báo cáo. Số liệu lấy từ đầu ra chạy thực nghiệm trong reports/final. Dữ liệu SAR sử dụng Copernicus Sentinel-1, LS-SSDD, OSSDD và OpenSAR Insight. GSHHG dùng để xác định đường bờ. YOLO11n khởi tạo từ trọng số COCO của Ultralytics. AIS có bài thử mô phỏng và đối chứng giữ lại bản tin lịch sử NOAA Marine Cadastre. Phép kiểm tra ven biển Việt Nam dùng nhãn điểm công khai Ai2 và ảnh Sentinel-1 RTC từ Microsoft Planetary Computer. Nguồn, phiên bản, mã băm và phạm vi đánh giá nằm trong báo cáo và tài liệu tái lập.

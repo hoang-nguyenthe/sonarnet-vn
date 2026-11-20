@@ -1,13 +1,10 @@
 """Exercise the review ZIP in a fresh Streamlit runtime without scan assets."""
 import argparse
-from hashlib import sha256
 from importlib.metadata import version
-from io import BytesIO
 import json
 from pathlib import Path
 import platform
 import time
-from zipfile import ZipFile
 
 from streamlit.testing.v1 import AppTest
 
@@ -73,19 +70,15 @@ def verify():
     assert any(node.proto.label=='Tải hồ sơ kèm ảnh' for node in app.get('download_button'))
 
     from demo_snapshot import load_snapshot
+    from review_packet import read_evidence_packet
     from review_workspace import evidence_bundle
     tile, images, _ = load_snapshot(ROOT)
     bundle = evidence_bundle(ROOT,tile,review,tile['observation_day_utc'],fixed_images=images)
-    with ZipFile(BytesIO(bundle)) as z:
-        metadata = json.loads(z.read('evidence.json'))
-        hashes = json.loads(z.read('checksums.json'))
-        assert metadata['review'] == review
-        assert metadata['data_status'] == 'MISSING_DATA'
-        assert metadata['operational_assessment']['conclusion'] is None
-        assert metadata['image_sha256'] == hashes['source.png']
-        printable = z.read('review.html').decode()
-        assert 'Đánh giá của người rà' in printable and 'Có khả năng là tàu' in printable
-        assert all(sha256(z.read(name)).hexdigest()==expected for name,expected in hashes.items())
+    metadata, files, hashes = read_evidence_packet(bundle)
+    assert metadata['review'] == review
+    assert metadata['operational_assessment']['conclusion'] is None
+    printable = files['review.html'].decode()
+    assert 'Đánh giá của người rà' in printable and 'Có khả năng là tàu' in printable
     step('research_page', app.radio(key='main_section').set_value('Nghiên cứu'))
     step('help_page', app.radio(key='main_section').set_value('Hướng dẫn'))
     versions = {name:version(name) for name in ('streamlit','numpy','pandas','scipy','folium','pillow','shapely','plotly')}

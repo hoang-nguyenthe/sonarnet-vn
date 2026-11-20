@@ -8,6 +8,7 @@ from io import BytesIO
 from tempfile import TemporaryDirectory
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'scripts'))
+from review_packet import read_evidence_packet
 from review_workspace import (export_workspace, import_workspace, printable_review, evidence_bundle,
                               session_reviews, restore_workspace, read_workspace, tile_identity, confirm_operational_review)
 
@@ -128,6 +129,39 @@ class WorkspaceTests(unittest.TestCase):
         digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
         raw = json.dumps({'schema_version': 1, 'report_id': digest, 'reviews': {}})
         self.assertEqual(import_workspace(raw, self.report), {})
+
+    def test_workspace_refuses_duplicate_review_fields(self):
+        note = {'status': 'Cần kiểm tra tiếp', 'note': 'Ảnh gốc'}
+        raw = export_workspace(self.report, {'cell_0': note})
+        raw = raw.replace('"note":', '"note": "Ghi chú trước", "note":', 1)
+        with self.assertRaisesRegex(ValueError, 'trường trùng'):
+            import_workspace(raw, self.report)
+
+    def test_export_verifies_decision_against_exact_source_evidence(self):
+        root = Path(__file__).resolve().parents[1]
+        pinned = root/'reports/final/export_verification/sample_evidence.zip'
+        tile, images, _ = read_evidence_packet(pinned.read_bytes())
+        review = {'status': 'Cần kiểm tra tiếp', 'note': 'Cần AIS cùng giờ chụp'}
+        review['operational_review'] = confirm_operational_review(
+            tile, 'Người rà A', 'Cần bổ sung dữ liệu', 'Cần AIS cùng giờ chụp', True
+        )
+        payload = evidence_bundle(root, tile, review, tile['observation_day_utc'], fixed_images=images)
+        metadata, files, _ = read_evidence_packet(payload)
+        self.assertEqual(metadata['operational_assessment']['authentication'], 'self_declared')
+        self.assertEqual(metadata['operational_assessment']['status'], 'confirmed')
+
+        # Updating the component hashes must not hide a decision bound to an older acquisition.
+        metadata['observation_day_utc'] = '2026-11-19'
+        files['evidence.json'] = json.dumps(metadata).encode()
+        hashes = {name: hashlib.sha256(data).hexdigest() for name, data in files.items()
+                  if name != 'checksums.json'}
+        files['checksums.json'] = json.dumps(hashes).encode()
+        inconsistent = BytesIO()
+        with zipfile.ZipFile(inconsistent, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
+            for name, data in files.items():
+                archive.writestr(name, data)
+        with self.assertRaisesRegex(ValueError, 'không khớp bằng chứng'):
+            read_evidence_packet(inconsistent.getvalue())
 
     def test_candidate_labels_roundtrip(self):
         report = {'tiles': [dict(self.tile, detections=[{'id': 1}, {'id': 2}])]}

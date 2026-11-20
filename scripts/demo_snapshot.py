@@ -1,44 +1,24 @@
 """Open a pinned, previously published SAR observation without the map or API."""
 from functools import lru_cache
-from hashlib import sha256
-from io import BytesIO
-import json
 from pathlib import Path
-from zipfile import BadZipFile, ZipFile
+from zipfile import BadZipFile
 
-from PIL import Image
 import streamlit as st
+
+from review_packet import read_evidence_packet
 
 ARCHIVE_SHA256 = '09a64b8c0e2fe5a86b4496c1abf9901ba3cede8bab6bdc5f11f12c85ad87c1bc'
 MAX_BUNDLE = 8 * 1024**2
-MEMBERS = {'evidence.json', 'source.png', 'candidates.jpg', 'raw-model-candidates.jpg', 'review.html', 'checksums.json'}
 
 
 @lru_cache(maxsize=4)
 def _read(path, fingerprint):
     payload = path.read_bytes()
-    if len(payload) > MAX_BUNDLE or sha256(payload).hexdigest() != ARCHIVE_SHA256:
-        raise ValueError('Mã băm tệp mẫu không khớp')
-    with ZipFile(BytesIO(payload)) as archive:
-        members = archive.infolist()
-        if {m.filename for m in members} != MEMBERS or len(members) != len(MEMBERS):
-            raise ValueError('Danh sách thành viên ZIP không đúng')
-        if any(m.file_size > MAX_BUNDLE or m.is_dir() for m in members) or sum(m.file_size for m in members) > MAX_BUNDLE:
-            raise ValueError('Tệp mẫu vượt giới hạn bộ nhớ')
-        items = {m.filename: archive.read(m) for m in members}
-    checksum = json.loads(items['checksums.json'])
-    if checksum != {k:sha256(v).hexdigest() for k,v in items.items() if k!='checksums.json'}:
-        raise ValueError('Một thành phần không khớp mã băm')
-    evidence = json.loads(items['evidence.json'])
-    if (evidence['key'] != 'cell_0_1' or evidence['image_sha256'] != checksum['source.png'] or
-        evidence['data_status'] != 'MISSING_DATA' or evidence['operational_assessment'].get('status') != 'pending' or
-        evidence['operational_assessment'].get('conclusion') is not None):
+    evidence, items, _ = read_evidence_packet(
+        payload, expected_sha256=ARCHIVE_SHA256, max_bytes=MAX_BUNDLE
+    )
+    if evidence.get('key') != 'cell_0_1' or evidence['operational_assessment']['status'] != 'pending':
         raise ValueError('Bản sao không phải hồ sơ chưa xác minh đã khóa')
-    for k in ('source.png','candidates.jpg'):
-        with Image.open(BytesIO(items[k])) as im:
-            if list(im.size) != evidence['image_size']:
-                raise ValueError('Kích thước ảnh không khớp')
-            im.verify()
     return evidence, items, payload
 
 
