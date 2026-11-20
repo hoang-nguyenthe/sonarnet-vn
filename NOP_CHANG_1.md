@@ -12,7 +12,7 @@ Thư mục **thuyet_trinh** trong gói bàn giao có PowerPoint, lời thoại 5
 | --- | --- |
 | Liên kết mã nguồn | https://github.com/hoang-nguyenthe/sonarnet-vn. Ghi thêm mã commit đã thử vào ô phiên bản nếu dùng. |
 | Liên kết sản phẩm chạy thử | https://sonarnet.streamlit.app/?trang=minh-chung mở thẳng phần minh chứng. Thử mở bằng cửa sổ chưa đăng nhập. |
-| Liên kết báo cáo cải tiến PDF/Word | https://raw.githubusercontent.com/hoang-nguyenthe/sonarnet-vn/main/output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf. Dùng URL ghim theo commit khi chốt bản nộp. |
+| Liên kết báo cáo cải tiến PDF/Word | https://raw.githubusercontent.com/hoang-nguyenthe/sonarnet-vn/main/output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf. Dùng URL ghim theo commit khi chốt bản nộp. |
 
 Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng C. ZIP là bản bàn giao mã nguồn và bằng chứng để rà soát. Chủ dự án kiểm tra quyền mở cả ba liên kết rồi tự xác nhận cam kết và nộp chính thức.
 
@@ -25,6 +25,7 @@ Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng
 | Phân biệt thiếu dữ liệu, không ghép và đang xác minh | **Mở hồ sơ ảnh SAR thật thiếu AIS**, sau đó thử **Kích thước mâu thuẫn** | Trang 1 và 7. [Hồ sơ xuất mẫu](reports/final/export_verification/sample_evidence.zip) |
 | Dùng thời gian và bất định để ghép AIS | **Vì sao một cặp ghép bị từ chối?**, **Kiểm tra lỗi đổi đối tác sau khi lọc AIS** | Trang 3, 5–7 và 13. [Kết quả SAR–AIS sáu lượt chụp](reports/final/multiscene_sar_ais_20261119/results.json) |
 | Đánh giá độc lập trên ảnh SAR thật và ghi giới hạn | **Đánh giá trên ảnh SAR thật**, **Đối chứng SAR có tọa độ**, **Recall trên 12 lượt chụp mới** | Trang 2, 4, 8–12 và 14. [Kết quả theo cảnh ở Việt Nam](reports/final/vietnam_rtc_ranking_20261118/results.json) |
+| Sai số vị trí và kích thước | [Tâm và kích thước hộp SAR](https://hoang-nguyenthe.github.io/sonarnet-vn/#kich-thuoc) | Trang 17 và 20. [Kết quả theo cảnh](reports/final/vietnam_rtc_transfer_20261119/ais-box-dimensions/results.json) |
 | Truy về ảnh nguồn, xuất hồ sơ phục vụ người rà | **Quan sát → Kiểm tra chi tiết**, lưu ghi chú và tải bản xuất | [Hướng dẫn demo](docs/DEMO_RUNBOOK.md) và lệnh kiểm tra ZIP ở dưới |
 | Bộ hồ sơ và khai báo nguồn | Link demo, PDF, mã nguồn ở đầu trang | [Khai báo AI](docs/AI_DECLARATION_CHANG1.md) và [các điểm còn cần xác nhận](docs/FINAL_STATUS.md) |
 

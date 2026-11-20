@@ -163,6 +163,23 @@ function renderRankFusion(data) {
   addLinks($('rank-links'), links);
 }
 
+function renderDimensions(data) {
+  if (!data.dimensions) return;
+  const formatMetres = value => value.toLocaleString('vi-VN', {
+    minimumFractionDigits: 1, maximumFractionDigits: 1,
+  }) + ' m';
+  $('kich-thuoc').hidden = false;
+  for (const [threshold, row] of Object.entries(data.dimensions)) {
+    addRow($('dimension-metrics'), threshold.replace('.', ',') + ' · ' + formatCount(row.candidates),
+      fraction({matched: row.matched, labels: row.anchors}),
+      formatMetres(row.anchor_distance.median_absolute_m),
+      formatCount(row.size_pairs),
+      formatMetres(row.length_error.mae_m),
+      formatMetres(row.width_error.mae_m));
+  }
+  addLinks($('dimension-links'), [['Số liệu từng cặp', data.links.dimensionResults]]);
+}
+
 function drawCasePositions(payload) {
   const canvas = $('case-positions');
   const {width, height} = canvas.getBoundingClientRect();
@@ -313,6 +330,7 @@ async function start() {
   if (['held_out', 'confirmation', 'ais'].includes(requested)) $('cohort').value = requested;
   selectCohort(data);
   renderRankFusion(data);
+  renderDimensions(data);
   renderAssociation(data);
   setupCaseDemo(data);
   addLinks($('ais-links'), [['Kết quả ghép theo cảnh', data.links.associationResults]]);

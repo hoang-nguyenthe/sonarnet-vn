@@ -58,6 +58,10 @@ def render_improvements(root: Path):
     if final_report.is_file():
         st.download_button('Tải báo cáo cải tiến Chặng 1', final_report.read_bytes(),
                            final_report.name, 'application/pdf', key='download_chang1_report')
+    submission_report = root/'output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf'
+    if submission_report.is_file():
+        st.download_button('Tải báo cáo nộp Chặng 1 · 20 trang', submission_report.read_bytes(),
+                           submission_report.name, 'application/pdf', key='download_submission_report')
     if st.toggle('Mở hồ sơ ảnh SAR thật thiếu AIS', key='evidence_open_snapshot'):
         render_snapshot(root)
     render_contrast_recall(root)

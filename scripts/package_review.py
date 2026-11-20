@@ -46,7 +46,8 @@ CHANG1_SUPPLEMENT = {
     'reports/final/independent_sar/global_threshold_predictions.json',
     'reports/final/opensar_geo_20261118/test_manifest.json.gz',
 }
-CHANG1_REPORT = 'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
+CHANG1_REPORT = 'output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf'
+APP_REPORT = 'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
 PRESENTATION_FILES = (
     'SonarNet_Chung_ket_20261120.pptx',
     'SonarNet_Kich_ban_5_phut_20261120.md',
@@ -59,6 +60,13 @@ CHANG1_FILES = {
     }
 } | {
     CHANG1_REPORT,
+    APP_REPORT,
+    'scripts/evaluate_rtc_ais_dimensions.py',
+    'scripts/build_chang1_submission_pdf.py',
+    'reports/final/vietnam_rtc_transfer_20261119/ais-box-dimensions/README.md',
+    'reports/final/vietnam_rtc_transfer_20261119/ais-box-dimensions/protocol.json',
+    'reports/final/vietnam_rtc_transfer_20261119/ais-box-dimensions/references.json',
+    'reports/final/vietnam_rtc_transfer_20261119/ais-box-dimensions/results.json',
     'NOP_CHANG_1.md',
     'docs/FINAL_STATUS.md',
     'docs/DEMO_RUNBOOK.md',
@@ -299,7 +307,7 @@ def main():
             'assets/real_scan/coverage.json', 'assets/real_scan/refresh_status.json'}
         published = name.startswith('assets/real_scan/published/')
         include_scan = published and args.include_published
-        earlier_output = args.chang1 and name.startswith('output/') and name != CHANG1_REPORT
+        earlier_output = args.chang1 and name.startswith('output/') and name not in {CHANG1_REPORT, APP_REPORT}
         earlier_handoff = args.chang1 and name in {'docs/PACKAGE_README.md', 'docs/FINAL_HANDOFF.md'}
         available = name in published_tree or (path.is_file() and not path.is_symlink())
         if private or training or earlier_output or earlier_handoff or (scan_asset and not include_scan) or not available:

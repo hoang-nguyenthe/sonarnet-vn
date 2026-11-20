@@ -36,18 +36,19 @@ def digest(path):
         return hashlib.file_digest(f, 'sha256').hexdigest()
 
 
-def read_day(path, day, window_centers=None):
+def read_day(path, day, window_centers=None, *, include_dimensions=False):
     """Read and CRC-check the entire daily member, retaining only relevant fixes."""
     expected = path.stem + '.csv'
     base = int(datetime.fromisoformat(day).replace(tzinfo=timezone.utc).timestamp())
     windows = np.array([base+h*3600 for h in HOURS] if window_centers is None else window_centers)
+    dimension_fields = ['Length', 'Width'] if include_dimensions else []
     selected = []
     with ZipFile(path) as z:
         if z.namelist() != [expected]:
             raise ValueError(f'Unexpected NOAA members for {day}')
         info = z.getinfo(expected)
         with z.open(info) as data:
-            for chunk in pd.read_csv(data, usecols=FIELDS, chunksize=300_000,
+            for chunk in pd.read_csv(data, usecols=FIELDS + dimension_fields, chunksize=300_000,
                                      dtype={'LAT':'float64', 'LON':'float64', 'MMSI':'Int64'}):
                 in_area = np.zeros(len(chunk), dtype=bool)
                 for w,s,e,n in AREAS.values():
@@ -59,7 +60,7 @@ def read_day(path, day, window_centers=None):
                 off = np.abs(seconds[:,None]-windows).min(axis=1)
                 if np.any(off <= HISTORY_S):
                     selected.append(chunk.assign(second=seconds).loc[off <= HISTORY_S,
-                                    ['MMSI','LAT','LON','second']])
+                                    ['MMSI','LAT','LON','second', *dimension_fields]])
     if not selected:
         raise ValueError(f'No accepted AIS observations for {day}')
     return pd.concat(selected, ignore_index=True), dict(

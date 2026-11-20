@@ -19,9 +19,10 @@ Xem [đề, hướng dẫn và ba liên kết nộp](../NOP_CHANG_1.md). Mốc �
 | Thử xếp hạng theo đồng thuận hai mô hình | Phép thử giữ đầu danh sách khớp 106/152 so với 103/152 ở 191 lượt rà, 81/152 so với 82/152 ở 116 lượt rà. Bắc Trung Bộ cùng khớp 8/8 ở 10 lượt rà. Đây là khảo sát trên dữ liệu lịch sử đã dùng. Xem [cách chấm lại](../reports/final/vietnam_rtc_transfer_20261119/rank_fusion/README.md). |
 | Gộp thứ hạng trên sáu ngày AIS giữ riêng | Trên 15 mốc AIS ở ba vùng cảng Mỹ, cùng 409 lượt rà, số mốc khớp tăng 12/15 → 14/15. Ở 1.530 lượt rà, cả ba cấu hình khớp 15/15. Cần đánh giá thêm trên cảnh Việt Nam ở mức rà nhỏ trước khi áp dụng lên bản đồ. [Kết quả và cách tái lập](../reports/final/vietnam_rtc_transfer_20261119/rank_fusion/ais-holdout/README.md) |
 | VV và VH | Chấm 12 lượt trên phần ảnh có cả hai kênh. Cùng 114 ứng viên, cách xếp hạng hiện tại khớp 78/150 và hai cấu hình điều chỉnh khớp 77/150. Có hình đối chiếu từ một ô thật. |
+| Vị trí và kích thước so với AIS lịch sử | Ở ngưỡng 0,35, ghép 12/15 mốc trong 100 m. Trung vị lệch tâm 41,1 m. Trên 11 cặp đủ metadata, MAE dài 77,2 m và rộng 143,4 m. [Bảng từng cảnh](../reports/final/vietnam_rtc_transfer_20261119/ais-box-dimensions/results.json) |
 | Khả năng chạy và tải | Streamlit có mục Minh chứng mở trực tiếp. ZIP có hồ sơ mẫu, mã, số liệu và PDF. Lệnh kiểm tra sau giải nén nằm trong hướng dẫn nộp. |
 
-Số chi tiết và bảng từng cảnh nằm trong [PDF cải tiến](../output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf) và [tệp đối chứng](../reports/final/). Quy trình mở ca và đọc chỉ số nằm trong [hướng dẫn demo](DEMO_RUNBOOK.md).
+Số chi tiết và bảng từng cảnh nằm trong [PDF cải tiến](../output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf) và [tệp đối chứng](../reports/final/). Quy trình mở ca và đọc chỉ số nằm trong [hướng dẫn demo](DEMO_RUNBOOK.md).
 
 ## Kiểm tra đường dẫn chấm
 

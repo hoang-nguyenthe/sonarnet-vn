@@ -76,6 +76,20 @@
           <div class="links" id="rank-links"></div>
         </div>
       </section>
+      <section id="kich-thuoc" aria-labelledby="dimensions-title" hidden>
+        <h2 id="dimensions-title">Sai lệch tâm và kích thước hộp SAR</h2>
+        <p>15 mốc AIS ít dịch chuyển trên sáu lượt chụp tại các cảng Mỹ. Ghép một-một trong 100 m trước khi đối chiếu kích thước.</p>
+        <div class="panel">
+          <div class="dimension-table" tabindex="0" aria-label="Số đo theo ngưỡng YOLO">
+            <table>
+              <thead><tr><th scope="col">Ngưỡng · lượt rà</th><th scope="col">Mốc khớp</th><th scope="col">Lệch tâm p50</th><th scope="col">Cặp đo</th><th scope="col">MAE dài</th><th scope="col">MAE rộng</th></tr></thead>
+              <tbody id="dimension-metrics"></tbody>
+            </table>
+          </div>
+          <p class="note">MAE là sai số tuyệt đối trung bình. Hai cạnh hộp SAR được đối chiếu với trường chiều dài và chiều rộng của NOAA. Phản xạ radar, hướng tàu và vị trí anten ảnh hưởng các phép đo.</p>
+          <div class="links" id="dimension-links"></div>
+        </div>
+      </section>
       <section aria-labelledby="examples-title">
         <h2 id="examples-title">Ca tìm thêm trên cùng ảnh SAR</h2>
         <p id="examples-description"></p>

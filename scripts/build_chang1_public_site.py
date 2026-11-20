@@ -19,6 +19,8 @@ DUAL = f'{FINAL}/stationary_ais_detection_20261120/dual-band'
 MATCH = f'{FINAL}/multiscene_sar_ais_20261119/results.json'
 SAMPLE = f'{FINAL}/export_verification/sample_evidence.zip'
 PDF = 'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
+SUBMISSION_PDF = 'output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf'
+DIMENSIONS = f'{TRANSFER}/ais-box-dimensions/results.json'
 
 
 def sha256(data):
@@ -106,7 +108,11 @@ def export(output, repository, revision):
     if sample['data_status'] != 'MISSING_DATA' or len(sample['detections']) != 1:
         raise ValueError('The sample no longer represents the published missing-AIS case')
     media['ho-so-mau.zip'] = sample_zip
-    media['bao-cao-chang-1.pdf'] = read(PDF)
+    updated_report = subprocess.check_output(git + ['ls-tree', '-r', commit, '--', SUBMISSION_PDF])
+    media['bao-cao-chang-1.pdf'] = read(SUBMISSION_PDF if updated_report else PDF)
+    dimensions = read_json(DIMENSIONS)['totals'] if subprocess.check_output(
+        git + ['ls-tree', '-r', commit, '--', DIMENSIONS]
+    ) else None
 
     ais_offset = f"{ais_example['distance_m']:.2f}".replace('.', ',')
     tree = f'{GITHUB}/tree/{commit}'
@@ -117,6 +123,7 @@ def export(output, repository, revision):
         'rank_fusion': {key: value['totals'] for key, value in rank_fusion.items()},
         'ais': dual,
         'association': association,
+        'dimensions': dimensions,
         'scenarios': scenarios,
         'examples': {
             'vietnam': {
@@ -156,6 +163,7 @@ def export(output, repository, revision):
             'aisResults': f'{blob}/{DUAL}/results.json',
             'aisProtocol': f'{blob}/{DUAL}/protocol.json',
             'associationResults': f'{blob}/{MATCH}',
+            'dimensionResults': f'{blob}/{DIMENSIONS}' if dimensions is not None else None,
             'scenarioCode': f'{blob}/scripts/ais_demo_cases.py',
         },
     }
