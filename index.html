@@ -15,7 +15,7 @@
       <a class="brand" href="#"><span aria-hidden="true"></span>SonarNet Việt Nam</a>
       <nav aria-label="Các phần minh chứng">
         <a href="#recall">Recall</a>
-        <a href="#ais">Ghép AIS</a>
+        <a href="#thu-ghep">Thử ghép AIS</a>
         <a href="#hoso">Hồ sơ mẫu</a>
       </nav>
     </div>
@@ -72,9 +72,39 @@
         </div>
         <p id="examples-note" class="note"></p>
       </section>
+      <section id="thu-ghep" aria-labelledby="case-title">
+        <h2 id="case-title">Thử quyết định ghép AIS</h2>
+        <p>Chọn một tình huống và thay đổi tuổi bản tin hoặc độ bất định vị trí. Kết quả mô phỏng được tính trước bằng cùng mã ghép Python của ứng dụng SonarNet.</p>
+        <div class="panel">
+          <div class="controls case-controls">
+            <label>Tình huống<select id="case-type"></select></label>
+            <label>Tuổi bản tin (giây)<select id="case-age"></select></label>
+            <label>Độ bất định (m)<select id="case-sigma"></select></label>
+          </div>
+          <p id="case-description"></p>
+          <figure class="case-figure">
+            <canvas id="case-positions" aria-hidden="true"></canvas>
+            <figcaption id="case-figure-note"></figcaption>
+          </figure>
+          <table class="case-table">
+            <caption class="sr-only">Trạng thái từng điểm SAR theo tình huống mô phỏng</caption>
+            <thead><tr><th scope="col">Điểm SAR</th><th scope="col">Trạng thái và lý do</th><th scope="col">Cặp vị trí</th></tr></thead>
+            <tbody id="case-results"></tbody>
+          </table>
+          <p id="case-status" class="note" role="status"></p>
+          <details>
+            <summary>Ngưỡng quyết định của bản này</summary>
+            <p id="case-thresholds"></p>
+          </details>
+          <div class="links">
+            <button class="button primary" id="case-export" type="button" disabled>Tải kết quả mô phỏng JSON</button>
+            <a id="case-code" href="https://github.com/hoang-nguyenthe/sonarnet-vn">Mã chạy bài thử</a>
+          </div>
+        </div>
+      </section>
       <section id="ais" aria-labelledby="ais-title">
         <h2 id="ais-title">Đối chiếu quyết định ghép AIS</h2>
-        <p>So sánh bốn cách đề xuất ghép trên cùng sáu lượt chụp. Phương án cải tiến giữ cặp đã đề xuất khi vượt qua kiểm tra thời gian, độ bất định và kích thước, đồng thời giữ trạng thái chờ rà khi điều kiện mâu thuẫn.</p>
+        <p>So sánh bốn cách đề xuất ghép trên cùng sáu lượt chụp. Cặp vị trí cần qua kiểm tra thời gian, độ bất định và các ứng viên cạnh tranh. Khi kích thước mâu thuẫn, hồ sơ chuyển sang trạng thái đang xác minh.</p>
         <div class="panel">
           <label>Nhóm tham chiếu<select id="ais-cohort"><option value="near_time">Mốc AIS gần thời điểm chụp</option><option value="near_stationary">Mốc AIS ít dịch chuyển</option></select></label>
           <p id="ais-summary" class="metric-summary" aria-live="polite"></p>
