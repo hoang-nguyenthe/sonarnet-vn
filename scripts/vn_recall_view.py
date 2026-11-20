@@ -293,7 +293,7 @@ def render_transfer_rtc(root: Path) -> None:
                 count = mode[key]
                 row[header] = f"{count['matched']}/{count['labels']}"
             table.append(row)
-        st.dataframe(table, hide_index=True, width='stretch')
+        st.table(table, hide_index=True, border='horizontal')
         prior, transfer = (modes['equal_relaxed'][name] for name in ('previous_best', 'xview3'))
         st.markdown(f"**{prior['matched']}/{prior['labels']} → {transfer['matched']}/{transfer['labels']}** nhãn khớp "
                     f"với cùng **{transfer['predictions']} lượt rà** khi phối hợp xView3 với YOLO.")

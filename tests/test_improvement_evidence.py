@@ -146,7 +146,7 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertTrue(any('102/152 → 103/152' in item.value and '191 lượt rà' in item.value
                             for item in app.markdown))
-        benchmark = next(item.value for item in app.dataframe if 'Cách phát hiện radar' in item.value.columns)
+        benchmark = next(item.value for item in app.table if 'Cách phát hiện radar' in item.value.columns)
         self.assertEqual(benchmark.iloc[-1][['116 lượt rà', '191 lượt rà']].tolist(), ['70/152', '103/152'])
         app.toggle(key='rtc_xview_example').set_value(True).run()
         self.assertFalse(app.exception)
