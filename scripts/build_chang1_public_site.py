@@ -62,6 +62,7 @@ def export(output, repository, revision):
         return json.loads(read(path))
 
     vietnam = read_json(f'{TRANSFER}/summary.json')['datasets']
+    rank_fusion = read_json(f'{TRANSFER}/rank_fusion/results.json')['test']
     dual = read_json(f'{DUAL}/results.json')['totals']
     association = read_json(MATCH)['aggregate']
     scenarios = run_pinned_scenarios(git, commit)
@@ -109,6 +110,7 @@ def export(output, repository, revision):
     data = {
         'commit': commit,
         'vietnam': {key: value['modes'] for key, value in vietnam.items()},
+        'rank_fusion': {key: value['totals'] for key, value in rank_fusion.items()},
         'ais': dual,
         'association': association,
         'scenarios': scenarios,
@@ -145,6 +147,7 @@ def export(output, repository, revision):
             'code': tree,
             'vnResults': f'{blob}/{TRANSFER}/summary.json',
             'vnProtocol': f'{blob}/{TRANSFER}/README.md',
+            'rankFusionProtocol': f'{blob}/{TRANSFER}/rank_fusion/README.md',
             'aisResults': f'{blob}/{DUAL}/results.json',
             'aisProtocol': f'{blob}/{DUAL}/protocol.json',
             'associationResults': f'{blob}/{MATCH}',

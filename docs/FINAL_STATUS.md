@@ -16,6 +16,7 @@ Xem [đề, hướng dẫn và ba liên kết nộp](../NOP_CHANG_1.md). Mốc �
 | Mô hình xView3 và quét tín hiệu yếu | Cùng 191 lượt rà, xView3 phối hợp YOLO khớp 103/152 so với 102/152. Ở Bắc Trung Bộ tăng từ 6/8 lên 8/8 cùng 10 lượt rà. xView3 chạy riêng giảm từ 82/152 xuống 70/152 ở mức 116 lượt rà. Quét tín hiệu yếu không cải thiện số khớp ở hai mức đã khóa. Trang 14. |
 | Thêm lượt rà và đối chứng bằng AIS | Ở 12 lượt ảnh Việt Nam, tăng 191 lên 234 lượt rà vẫn khớp 103/152 nhãn. Trên 13 mốc AIS ít dịch chuyển chọn trước ở sáu lượt chụp, chia ô chồng lấn cho 9/13 so với 10/13 ở 410 lượt rà, và 13/13 so với 12/13 ở 1.483 lượt rà. |
 | xView3 đối chứng với AIS | Trên cùng 13 mốc, kết hợp xView3 vào danh sách hẹp tăng 10/13 lên 11/13 với 410 lượt rà. Mức 1.483 lượt đạt 13/13 ở cả hai phương án. Khóa trọng số, ảnh và số lượt rà theo cảnh. |
+| Thử xếp hạng theo đồng thuận hai mô hình | Phép thử giữ đầu danh sách khớp 106/152 so với 103/152 ở 191 lượt rà, 81/152 so với 82/152 ở 116 lượt rà. Bắc Trung Bộ cùng khớp 8/8 ở 10 lượt rà. Đây là khảo sát trên dữ liệu lịch sử đã dùng. Xem [cách chấm lại](../reports/final/vietnam_rtc_transfer_20261119/rank_fusion/README.md). |
 | VV và VH | Chấm 12 lượt trên phần ảnh có cả hai kênh. Cùng 114 ứng viên, cách xếp hạng hiện tại khớp 78/150 và hai cấu hình điều chỉnh khớp 77/150. Có hình đối chiếu từ một ô thật. |
 | Khả năng chạy và tải | Streamlit có mục Minh chứng mở trực tiếp. ZIP có hồ sơ mẫu, mã, số liệu và PDF. Lệnh kiểm tra sau giải nén nằm trong hướng dẫn nộp. |
 

@@ -47,6 +47,11 @@ CHANG1_SUPPLEMENT = {
     'reports/final/opensar_geo_20261118/test_manifest.json.gz',
 }
 CHANG1_REPORT = 'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
+PRESENTATION_FILES = (
+    'SonarNet_Chung_ket_20261120.pptx',
+    'SonarNet_Kich_ban_5_phut_20261120.md',
+)
+RANK_EVIDENCE = 'reports/final/vietnam_rtc_transfer_20261119/rank_fusion'
 CHANG1_FILES = {
     name for name in FOLLOWUP_FILES
     if not name.startswith('output/') and name not in {
@@ -108,6 +113,7 @@ CHANG1_FILES = {
     'scripts/replay_rtc_transfer.py',
     'scripts/export_rtc_transfer_example.py',
     'scripts/replay_rtc_additional_trials.py',
+    'scripts/evaluate_rtc_rank_fusion.py',
     'scripts/evaluate_rtc_review_extension.py',
     'scripts/evaluate_rtc_stationary_ais_reference.py',
     'scripts/fetch_stationary_ais_rtc_bands.py',
@@ -158,7 +164,10 @@ CHANG1_FILES = {
     'scripts/prepare_opensar_adaptation.py',
     'scripts/verify_chang1_runtime.py',
     'tests/test_demo_snapshot.py',
-}
+} | {f'{RANK_EVIDENCE}/{name}' for name in (
+    'README.md', 'candidates.json.gz', 'protocol.json', 'selection.json',
+    'results.json', 'review-queues.json',
+)}
 
 
 def git_release(repository, commit):
@@ -196,9 +205,12 @@ def file_from_commit(name, path, object_id, repository):
     return data
 
 
-def submission_fields(commit):
+def submission_fields(commit, presentations=False):
     github = 'https://github.com/hoang-nguyenthe/sonarnet-vn'
     pdf = 'https://raw.githubusercontent.com/hoang-nguyenthe/sonarnet-vn'
+    extra = ('\n## Thuyết trình và phản biện\n\n'
+             'Mở thư mục [thuyết trình](thuyet_trinh/) để lấy PowerPoint và lời thoại 5 phút.\n'
+             if presentations else '')
     return f'''# Nội dung điền cổng Chặng 1
 
 ## Mã nguồn
@@ -226,6 +238,7 @@ https://hoang-nguyenthe.github.io/sonarnet-vn/
 Ba ô liên kết là bắt buộc. Ô phiên bản là tùy chọn. Xem [hướng dẫn nộp](NOP_CHANG_1.md)
 để lấy nội dung dùng thử và khai báo AI. Chủ dự án kiểm tra lại cam kết và lưu
 biên nhận từ [cổng nộp](https://ai.tainangviet.vn/dashboard/final) sau khi nộp.
+{extra}
 '''.encode()
 
 
@@ -243,9 +256,13 @@ def main():
                         help='Bundle source, reproducible evidence and the current Chặng 1 report.')
     parser.add_argument('--review-videos', type=Path,
                         help='Include only verified final MP4s, captions and narration from this directory.')
+    parser.add_argument('--presentation-dir', type=Path,
+                        help='Include the prepared final PowerPoint and five-minute script in the Chặng 1 handoff.')
     args = parser.parse_args()
     if args.chang1 and (args.include_btc_followup or args.review_videos):
         parser.error('--chang1 cannot be combined with previous-round drafts or videos')
+    if args.presentation_dir and not args.chang1:
+        parser.error('--presentation-dir requires --chang1')
     pinned = bool(args.source_commit)
     if pinned and not args.chang1:
         parser.error('--source-commit requires --chang1')
@@ -298,10 +315,22 @@ def main():
                 if current != info['sha256'] or not 0 < info['duration_seconds'] < 300:
                     raise ValueError(f'Video not verified for submission review: {name}')
             included['output/videos/' + name] = path
+    presentation_names = set()
+    if args.presentation_dir:
+        for name in PRESENTATION_FILES:
+            path = args.presentation_dir / name
+            if not path.is_file() or path.is_symlink() or not path.stat().st_size:
+                raise FileNotFoundError(f'Expected finished presentation file: {path}')
+            target = 'thuyet_trinh/' + name
+            included[target] = path
+            presentation_names.add(target)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temp = args.output.with_suffix('.zip.part')
     hashes = {}
-    generated = {'NOI_DUNG_DIEN_CONG.md': submission_fields(source_commit)} if pinned else {}
+    generated = (
+        {'NOI_DUNG_DIEN_CONG.md': submission_fields(source_commit, bool(presentation_names))}
+        if pinned else {}
+    )
     with zipfile.ZipFile(temp, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=3, allowZip64=True) as archive:
         for i, (name, path) in enumerate(included.items()):
             if name in published_tree:
@@ -319,13 +348,15 @@ def main():
         manifest = {
             'schema_version': 3,
             'source_base_commit': source_commit,
-            'snapshot': ('Published Git tree at source_base_commit; additional research files are listed separately.'
+            'snapshot': ('Published Git tree at source_base_commit; additional research and presentation files are listed separately.'
                          if pinned else 'Working tree at packaging time; files may differ from source_base_commit.'),
             'untracked_files_included': sorted(set(hashes) - tracked),
             'verified_git_blob_ids': {name: published_tree[name] for name in hashes if name in published_tree},
             'additional_research_files_sha256': {
-                name: hashes[name] for name in hashes if pinned and name not in tracked and name not in generated
+                name: hashes[name] for name in hashes
+                if pinned and name not in tracked and name not in generated and name not in presentation_names
             },
+            'presentation_files_sha256': {name: hashes[name] for name in sorted(presentation_names)},
             'generated_files_sha256': {name: hashes[name] for name in generated},
             'includes_published_map_images': args.include_published,
             'files_sha256': hashes,

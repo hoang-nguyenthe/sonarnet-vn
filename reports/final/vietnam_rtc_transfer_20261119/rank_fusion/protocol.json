@@ -1,0 +1,12 @@
+{
+  "created_utc": "2026-11-20T07:13:23.536984+00:00",
+  "code_sha256": "aeb9f94a8b2e92fa78cd5276c56cbe2ebd482766bad4bfc7fcc85e30dd6b39e4",
+  "input_sha256": "d4f3f585cd65b4a7c35046c384b6ec0e69747e308981be2b34c4ffb5897be7ff",
+  "published_queue_sha256": "70c025b0caafc66ad68473c7bdafeeeb811da010f9e6a1359c390cb27dfc3062",
+  "rationale_reference": "https://doi.org/10.1145/1571941.1572114",
+  "matching": "One-to-one WGS84 at 50, 100 and 150 m. Every method has the same number of reviews per acquisition.",
+  "ranks": "Suppress duplicates within 35 m per detector and add at most one reciprocal rank from each detector.",
+  "lock_scope": "Retrospective: development and scoring dates are disjoint. All scoring acquisitions have been used in earlier SonarNet experiments.",
+  "guarded_scope": "The guarded method was designed after observing the unguarded results on these historical scoring acquisitions. It is exploratory.",
+  "pool_ceiling": "Upper bound: min(review count, matches in the complete candidate pool), per acquisition."
+}

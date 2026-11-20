@@ -323,6 +323,32 @@ def render_transfer_rtc(root: Path, *, expanded=False) -> None:
                                      download_label='Tải thông tin ô ảnh xView3',
                                      show_queue_download=False)
     render_recall_followup(root, path.parent)
+    render_rank_fusion(path.parent / 'rank_fusion')
+
+
+def render_rank_fusion(folder: Path) -> None:
+    path = folder / 'results.json'
+    if not path.is_file():
+        return
+    data = json.loads(path.read_text())['test']
+    with st.expander('Xếp hạng theo đồng thuận YOLO và xView3'):
+        st.caption('Thử nghiệm thăm dò trên các lượt chụp đã dùng. Giữ đúng số lượt rà từng cảnh, ghép trong 100 m.')
+        rows = []
+        for key, label in (('held_out', '12 lượt ven biển'), ('confirmation', '2 lượt Bắc Trung Bộ')):
+            for mode in data[key]['totals'].values():
+                baseline, rank, guarded = (mode[name]['100'] for name in ('published', 'rank_60', 'rank_60_keep_75'))
+                rows.append({
+                    'Tập ảnh': label,
+                    'Lượt rà': baseline['predictions'],
+                    'Đã công bố': f"{baseline['matched']}/{baseline['labels']}",
+                    'Gộp thứ hạng': f"{rank['matched']}/{rank['labels']}",
+                    'Giữ đầu danh sách': f"{guarded['matched']}/{guarded['labels']}",
+                })
+        st.table(rows, hide_index=True, border='horizontal')
+        st.caption('Cấu hình giữ đầu danh sách được thiết kế sau khi xem kết quả gộp thứ hạng. '
+                   'Cần kiểm tra trên ngày chụp mới trước khi chọn cấu hình mặc định.')
+        st.download_button('Tải số liệu thử gộp thứ hạng', path.read_bytes(),
+                           'sonarnet-thu-gop-thu-hang.json', 'application/json')
 
 
 def render_recall_followup(root: Path, folder: Path) -> None:
