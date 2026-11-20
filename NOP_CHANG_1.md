@@ -49,7 +49,18 @@ Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Tr�
 
 > Mở **Minh chứng cải tiến** và bật **Mở hồ sơ ảnh SAR thật thiếu AIS** để xem và tải bằng chứng. Thử **Kích thước mâu thuẫn**, **Hai quỹ đạo giao nhau** và **AIS gần nhất đã cũ, có tín hiệu khác gần đó**. Mở **Đối chiếu SAR và AIS trên sáu lượt chụp** để đổi giữa mốc gần giờ và mốc ít dịch chuyển. Mở **Xem cảnh Sentinel-1 và AIS cùng lượt chụp** để xem ca New York ban đầu. Trong phần kiểm thử SLC VV, có hai nhóm ảnh độc lập và ảnh lỗi. Hồ sơ mẫu mở được khi thiếu nguồn bản đồ.
 
-Chạy bản bàn giao bằng Python 3.12 từ thư mục `SonarNet` trong ZIP.
+Chạy bằng Docker từ thư mục `SonarNet` trong ZIP.
+
+```sh
+docker build -t sonarnet-chang1 .
+docker run --rm -p 127.0.0.1:7860:7860 sonarnet-chang1
+```
+
+Mở `http://localhost:7860/?trang=minh-chung`. Từ image đã build, dùng `docker run --rm sonarnet-chang1 python scripts/verify_chang1_runtime.py` để kiểm tra PDF, bảng recall, hồ sơ ảnh mẫu và luồng rà soát.
+
+Docker mở hồ sơ ảnh mẫu khi chưa có kho ảnh chi tiết. Nếu đã khôi phục kho theo README, có thể gắn thư mục `assets/real_scan/published` ở chế độ chỉ đọc khi khởi động container.
+
+Có thể chạy trực tiếp bằng Python 3.12 từ cùng thư mục.
 
 ```sh
 python -m venv .venv

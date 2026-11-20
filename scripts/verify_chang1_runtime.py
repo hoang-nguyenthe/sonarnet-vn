@@ -30,6 +30,18 @@ def verify():
 
     step('direct_evidence_link', app)
     assert app.radio(key='main_section').value == 'Minh chứng cải tiến'
+    downloads = {button.proto.label for button in app.get('download_button')}
+    assert 'Tải báo cáo nộp Chặng 1 · 20 trang' in downloads
+    recall = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=45)
+    recall.query_params['trang'] = 'minh-chung'
+    recall.query_params['muc'] = 'recall'
+    started = time.perf_counter()
+    recall.run()
+    assert not recall.exception
+    available = {button.proto.label for button in recall.get('download_button')}
+    assert 'Tải kết quả thử radar hai kênh' in available
+    assert 'Tải đối chứng gộp hạng trên sáu cảnh AIS' in available
+    actions['direct_recall_and_rank_downloads'] = round(time.perf_counter()-started, 3)
     assert any(m.label=='Ứng viên radar' and m.value=='77' for m in app.metric)
     assert any('Ghép sai mã' in table.value.columns for table in app.dataframe)
     case = app.selectbox(key='evidence_case')
