@@ -22,6 +22,12 @@ Xem [đề, hướng dẫn và ba liên kết nộp](../NOP_CHANG_1.md). Mốc �
 
 Số chi tiết và bảng từng cảnh nằm trong [PDF cải tiến](../output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf) và [tệp đối chứng](../reports/final/). Quy trình mở ca và đọc chỉ số nằm trong [hướng dẫn demo](DEMO_RUNBOOK.md).
 
+## Kiểm tra đường dẫn chấm
+
+[Lộ trình Vòng Chung kết](https://ai.tainangviet.vn/lo-trinh) yêu cầu sản phẩm ổn định ít nhất 48 giờ trước khi chấm. [Lịch sử kiểm tra công khai](https://github.com/hoang-nguyenthe/sonarnet-vn/actions/workflows/check-web-awake.yml) ghi kết quả theo thời điểm. Bài kiểm tra định kỳ mở đúng trang Minh chứng, chờ kết nối Streamlit ổn định, tải PDF và hồ sơ mẫu rồi so SHA-256 của hai tệp với mã nguồn.
+
+Mỗi lượt chỉ xác nhận tình trạng tại thời điểm kiểm tra. Mốc 48 giờ cần được đối chiếu với thời điểm chấm chính thức.
+
 ## Phần cần xác nhận
 
 - Kết quả khớp điểm trên ảnh Việt Nam dùng nhãn công khai Ai2. Kết luận về danh tính, kích thước thân tàu và sai số vị trí tuyệt đối cần nguồn xác nhận độc lập tương ứng.

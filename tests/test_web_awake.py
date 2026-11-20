@@ -1,7 +1,7 @@
 import importlib.util
 from pathlib import Path
 import tempfile
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 import unittest
 
 spec = importlib.util.spec_from_file_location("web_health", Path(__file__).resolve().parents[1] / "scripts/check_web_awake.py")
@@ -112,6 +112,24 @@ class WebAwakeTests(unittest.TestCase):
             payload.write_bytes(b"previous release")
             with self.assertRaisesRegex(health.HealthCheckError, "differs_from_release"):
                 health.verify_recall_download(page, expected)
+
+    def test_submission_verifies_report_and_sample_after_opening_sample(self):
+        page = MagicMock()
+        frame = MagicMock()
+        page.frames = [frame]
+        frame.url = health.APP_URL + health.EVIDENCE_LINK
+        frame.is_detached.return_value = False
+        toggle = frame.get_by_text.return_value.first
+        toggle.is_visible.return_value = True
+        with patch.object(health, "verify_download", side_effect=["pdf", "sample"]) as verify:
+            result = {}
+            health.verify_submission_downloads(page, result)
+        self.assertEqual(result, {"pdf_sha256": "pdf", "sample_zip_sha256": "sample"})
+        toggle.click.assert_called_once()
+        self.assertEqual(
+            [(call.args[1], call.args[3]) for call in verify.call_args_list],
+            [(health.REPORT_DOWNLOAD, "pdf"), (health.SAMPLE_DOWNLOAD, "sample")],
+        )
 
     def test_only_live_streamlit_socket_counts(self):
         tracker = health.StreamlitConnection()

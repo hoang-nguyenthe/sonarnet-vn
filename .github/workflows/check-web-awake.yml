@@ -35,6 +35,8 @@ jobs:
             /scripts/check_web_awake.py
             /tests/test_web_awake.py
             /reports/final/vietnam_rtc_transfer_20261119/summary.json
+            /reports/final/export_verification/sample_evidence.zip
+            /output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -55,6 +57,8 @@ jobs:
             args+=(--recall)
           elif [ "$CHECK_EVIDENCE" = true ]; then
             args+=(--evidence)
+          else
+            args+=(--submission)
           fi
           python scripts/check_web_awake.py "${args[@]}"
       - name: Save browser evidence

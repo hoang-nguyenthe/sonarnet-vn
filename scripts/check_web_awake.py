@@ -12,11 +12,17 @@ from datetime import datetime, timezone
 from urllib.parse import urlsplit
 
 APP_URL = "https://sonarnet.streamlit.app/"
+EVIDENCE_LINK = "?trang=minh-chung"
+ROOT = Path(__file__).resolve().parents[1]
+REPORT_PDF = ROOT / "output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf"
+SAMPLE_ZIP = ROOT / "reports/final/export_verification/sample_evidence.zip"
+REPORT_DOWNLOAD = "Tải báo cáo cải tiến Chặng 1"
+SAMPLE_TOGGLE = "Mở hồ sơ ảnh SAR thật thiếu AIS"
+SAMPLE_DOWNLOAD = "Tải ZIP ảnh và hồ sơ mẫu"
 RECALL_LINK = "?trang=minh-chung&muc=recall"
 RECALL_HEADING = "Đối chứng recall trên ảnh Sentinel-1"
 RECALL_DOWNLOAD = "Tải kết quả thử radar hai kênh"
-RECALL_SUMMARY = (Path(__file__).resolve().parents[1]
-                  / "reports/final/vietnam_rtc_transfer_20261119/summary.json")
+RECALL_SUMMARY = ROOT / "reports/final/vietnam_rtc_transfer_20261119/summary.json"
 WAKE_BUTTON = "Yes, get this app back up!"
 READY_HEADING = re.compile(r"Đọc tín hiệu biển", re.IGNORECASE)
 
@@ -129,20 +135,45 @@ def wait_for_app(page, connection, report, timeout_seconds=420,
     raise HealthCheckError("app_not_ready_before_deadline")
 
 
-def verify_recall_download(page, expected_sha):
-    """Check the actual release payload from the public evidence control."""
+def verify_download(page, label, expected_sha, field):
     for frame in page.frames:
         if urlsplit(frame.url).hostname != "sonarnet.streamlit.app" or frame.is_detached():
             continue
-        button = frame.get_by_role("button", name=RECALL_DOWNLOAD, exact=True)
+        button = frame.get_by_role("button", name=label, exact=True)
         if button.is_visible():
             with page.expect_download(timeout=30000) as receipt:
                 button.click(timeout=10000)
             actual_sha = sha256(receipt.value.path().read_bytes()).hexdigest()
             if actual_sha != expected_sha:
-                raise HealthCheckError("recall_payload_differs_from_release")
+                raise HealthCheckError(f"{field}_payload_differs_from_release")
             return actual_sha
-    raise HealthCheckError("recall_download_control_missing")
+    raise HealthCheckError(f"{field}_download_control_missing")
+
+
+def verify_recall_download(page, expected_sha):
+    return verify_download(page, RECALL_DOWNLOAD, expected_sha, "recall")
+
+
+def verify_submission_downloads(page, report):
+    """Exercise the judge's public report and evidence downloads."""
+    report["pdf_sha256"] = verify_download(
+        page, REPORT_DOWNLOAD, sha256(REPORT_PDF.read_bytes()).hexdigest(), "pdf"
+    )
+    for frame in page.frames:
+        if urlsplit(frame.url).hostname != "sonarnet.streamlit.app" or frame.is_detached():
+            continue
+        toggle = frame.get_by_text(SAMPLE_TOGGLE, exact=True).first
+        if toggle.is_visible():
+            toggle.click(timeout=10000)
+            frame.get_by_role("button", name=SAMPLE_DOWNLOAD, exact=True).wait_for(
+                state="visible", timeout=20000
+            )
+            break
+    else:
+        raise HealthCheckError("sample_toggle_missing")
+    report["sample_zip_sha256"] = verify_download(
+        page, SAMPLE_DOWNLOAD, sha256(SAMPLE_ZIP.read_bytes()).hexdigest(), "sample"
+    )
 
 
 def write_report(output, report):
@@ -153,7 +184,7 @@ def write_report(output, report):
         with open(summary, "a", encoding="utf-8") as handle:
             handle.write("## SonarNet browser availability check\n\n")
             for key in ("mode", "status", "checked_at", "elapsed_seconds", "wake_clicks",
-                        "websocket_messages", "recall_sha256", "error"):
+                        "websocket_messages", "pdf_sha256", "sample_zip_sha256", "recall_sha256", "error"):
                 if key in report:
                     handle.write(f"- {key}: {report[key]}\n")
             handle.write("\nPassing means the app rendered and the Streamlit connection stayed active at this check, not continuous uptime.\n")
@@ -165,10 +196,13 @@ def main():
     target = parser.add_mutually_exclusive_group()
     target.add_argument("--evidence", action="store_true", help="Require the Chặng 1 evidence page and report control.")
     target.add_argument("--recall", action="store_true", help="Verify the public recall page and its exact release JSON.")
+    target.add_argument("--submission", action="store_true", help="Verify the judge's page and exact PDF and sample ZIP.")
+    parser.add_argument("--chromium-executable", type=Path, help="Optional installed Chromium or Chrome executable.")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    suffix = RECALL_LINK if args.recall else "?trang=minh-chung" if args.evidence else ""
-    mode = "recall" if args.recall else "chang1_evidence" if args.evidence else "homepage"
+    evidence = args.evidence or args.submission
+    suffix = RECALL_LINK if args.recall else EVIDENCE_LINK if evidence else ""
+    mode = "submission" if args.submission else "recall" if args.recall else "chang1_evidence" if evidence else "homepage"
     report = {
         "url": APP_URL + suffix,
         "mode": mode,
@@ -183,19 +217,21 @@ def main():
     try:
         from playwright.sync_api import sync_playwright
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch()
-            context = browser.new_context(viewport={"width": 1365, "height": 900}, locale="en-US")
+            browser = playwright.chromium.launch(executable_path=args.chromium_executable)
+            context = browser.new_context(viewport={"width": 1365, "height": 900}, locale="en-US", accept_downloads=True)
             page = context.new_page()
             page.on("websocket", connection.opened)
             try:
                 page.goto(report["url"], wait_until="domcontentloaded", timeout=60000)
                 # Playwright's wait pumps websocket events; time.sleep would not.
                 wait_for_app(page, connection, report,
-                             inspect=lambda active: inspect_page(active, evidence=args.evidence, recall=args.recall),
+                             inspect=lambda active: inspect_page(active, evidence=evidence, recall=args.recall),
                              sleep=lambda seconds: page.wait_for_timeout(seconds * 1000))
                 if args.recall:
                     expected_sha = sha256(RECALL_SUMMARY.read_bytes()).hexdigest()
                     report["recall_sha256"] = verify_recall_download(page, expected_sha)
+                if args.submission:
+                    verify_submission_downloads(page, report)
                 report["status"] = "healthy"
                 if args.evidence:
                     for frame in page.frames:
