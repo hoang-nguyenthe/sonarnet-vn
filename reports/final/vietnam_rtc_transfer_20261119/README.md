@@ -58,3 +58,17 @@ PYTHONPATH=src python scripts/evaluate_rtc_xview3_transfer.py \
 Mã ghi SHA-256 của từng manifest, checkpoint, cache đối chứng và bộ lựa chọn.
 Ảnh nguồn từ [Sentinel-1 RTC](https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc).
 Nhãn điểm từ [Ai2 Vessel Detection with Sentinels](https://github.com/allenai/vessel-detection-sentinels).
+
+## Thử thêm lượt rà sau danh sách đã chốt
+
+Danh sách mở rộng bắt đầu bằng toàn bộ kết quả xView3 phối hợp YOLO theo đúng thứ tự. So sánh
+bổ sung ứng viên hạ ngưỡng với các cấu hình thêm ô nhỏ, xView3 hoặc tín
+hiệu ven bờ. Chọn cách xếp hạng theo năm lượt phát triển. Số ứng viên bổ
+sung tối đa theo từng cảnh là nửa số đang rà hoặc ít nhất hai điểm khi
+còn đủ diện tích. Số lượt thực tế gắn với danh sách hạ ngưỡng của từng cảnh.
+
+Trên 12 lượt đối chứng, tăng từ 191 lên 234 lượt rà mà số nhãn khớp giữ ở
+103/152 trong cả năm cấu hình đã thử. Hai lượt Bắc Trung Bộ giữ 8/8 khi tăng
+từ 10 lên 15 lượt rà. Xem số liệu, tập chọn cấu hình và tệp tọa độ trong
+`extension/`. Chạy `python scripts/replay_rtc_additional_trials.py` để chấm
+lại. Mã suy luận nằm trong `scripts/evaluate_rtc_review_extension.py`.

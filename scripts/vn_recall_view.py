@@ -322,6 +322,39 @@ def render_transfer_rtc(root: Path, *, expanded=False) -> None:
                                      after='Sau khi phối hợp xView3 với YOLO',
                                      download_label='Tải thông tin ô ảnh xView3',
                                      show_queue_download=False)
+    render_recall_followup(root, path.parent)
+
+
+def render_recall_followup(root: Path, folder: Path) -> None:
+    ais_path = root/'reports/final/stationary_ais_detection_20261120/results.json'
+    extension_path = folder/'extension/results.json'
+    if not ais_path.is_file() or not extension_path.is_file():
+        return
+    ais = json.loads(ais_path.read_text())
+    extension = json.loads(extension_path.read_text())
+    with st.expander('Đối chứng với mốc AIS và chi phí rà bổ sung'):
+        st.markdown('**13 mốc AIS ít dịch chuyển trên sáu lượt chụp**')
+        outcomes = ais['totals']
+        rows = []
+        for label, base, test in (
+                ('Mức rà hẹp', 'base_at_035', 'same_count_overlap'),
+                ('Mức rà rộng', 'base_at_005', 'same_wide_count_overlap')):
+            a, b = (outcomes[name]['100'] for name in (base,test))
+            rows.append({'Mức rà': label, 'Lượt rà': a['predictions'],
+                         'Ảnh nguyên': f"{a['matched']}/{a['labels']}",
+                         'Thêm ô chồng lấn': f"{b['matched']}/{b['labels']}"})
+        st.table(rows, hide_index=True, border='horizontal')
+        st.caption('Mốc được chọn từ bản tin AIS và vùng ảnh hợp lệ trước khi chạy YOLO. '
+                   'Ghép một–một trong 100 m. Các mốc chỉ đại diện vị trí của nhóm phát AIS ít dịch chuyển.')
+        trials = extension['test']['held_out']['totals']
+        prior, expanded = (trials[name]['100'] for name in ('initial', extension['selected']))
+        st.markdown(f"**{prior['predictions']} → {expanded['predictions']} lượt rà**, "
+                    f"vẫn khớp **{expanded['matched']}/{expanded['labels']}** nhãn Ai2 "
+                    'khi bổ sung ứng viên sau danh sách xView3 phối hợp YOLO.')
+        st.download_button('Tải số liệu đối chứng với mốc AIS', ais_path.read_bytes(),
+                           'sonarnet-doi-chung-phat-hien-bang-ais.json', 'application/json')
+        st.download_button('Tải số liệu rà bổ sung', extension_path.read_bytes(),
+                           'sonarnet-doi-chung-ra-bo-sung.json', 'application/json')
 
 
 def render_map_tta_recall(root: Path) -> None:

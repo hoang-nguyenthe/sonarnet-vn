@@ -1,0 +1,26 @@
+{
+  "frozen_at": "2026-11-20T04:50:56.292248+00:00",
+  "code_sha256": "811155257959cf8b150347a6ca1057b0a89ade410d59e43fc9cc50d8c5d6361d",
+  "source_sha256": "9d5d9e4b0c61f22643afcd7f88e5656ae07c7320c8b6b1c2caf2da9c14d08b6d",
+  "previous_association_sha256": "45c4a2019ba7f4c902fb0c89ad7f4ac7df82a0791f9ddbcc70c498d4aaee1388",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "coast_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+  "match_metres": [
+    50,
+    100,
+    150
+  ],
+  "decision": {
+    "base_confidence": 0.35,
+    "relaxed_confidence": 0.05,
+    "centres_collapse_m": 35,
+    "grid": [
+      2,
+      2
+    ],
+    "halo_px": 96,
+    "image_size": 1024,
+    "reference": "Stationary and isolated AIS positions fixed from NOAA and the valid radar footprint before running YOLO."
+  },
+  "scope": "Six previously captured civilian port scenes, no fitting. Eligible AIS positions do not depend on detections. Approximates recall for these references only."
+}

@@ -114,7 +114,7 @@ def build(args):
         c.line(47, 48, 548, 48)
         c.setFillColor(DIM)
         c.setFont('Body', 8)
-        c.drawString(47, 32, 'SONARNET VIỆT NAM  /  CHẶNG 1  /  19.11.2026')
+        c.drawString(47, 32, 'SONARNET VIỆT NAM  /  CHẶNG 1  /  20.11.2026')
         c.drawRightString(548, 32, f'Bản cập nhật {number}/{total_update_pages}')
         c.showPage()
 
@@ -578,6 +578,21 @@ def build(args):
                  'những thử nghiệm SonarNet trước đây và được giữ ngoài bước khóa lần này.',y,muted)-9
         y = text('Nguồn nhãn Ai2 Vessel Detection with Sentinels. Nguồn ảnh Sentinel-1 RTC qua Microsoft '
                  'Planetary Computer. Mã, bảng số đếm theo cảnh và tệp tọa độ để phát lại có trong hồ sơ.',y,muted)
+        cap_path = transfer_dir/'extension/results.json'
+        ais_path = ROOT/'reports/final/stationary_ais_detection_20261120/results.json'
+        if cap_path.is_file() and ais_path.is_file():
+            cap = json.loads(cap_path.read_text())
+            trial = cap['test']['held_out']['totals']
+            first, last = (trial[key]['100'] for key in ('initial', cap['selected']))
+            y = text(f"Rà bổ sung từ {first['predictions']} lên {last['predictions']} lượt vẫn khớp "
+                     f"{last['matched']}/{last['labels']} nhãn Ai2 trên 12 lượt chụp.",y-8,muted)
+            ais = json.loads(ais_path.read_text())['totals']
+            base, narrow, wide, overlap = (ais[key]['100'] for key in (
+                'base_at_035', 'same_count_overlap', 'base_at_005', 'same_wide_count_overlap'))
+            y = text(f"Trên {base['labels']} mốc AIS ít dịch chuyển chọn trước ở sáu lượt chụp, "
+                     f"thêm ô chồng lấn cho {base['matched']} → {narrow['matched']} mốc khớp với "
+                     f"{fmt(base['predictions'])} lượt rà và {wide['matched']} → {overlap['matched']} "
+                     f"với {fmt(wide['predictions'])} lượt rà.",y-5,muted)
         assert y > 67,y
         footer(total_update_pages)
     c.save()

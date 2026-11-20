@@ -1,0 +1,53 @@
+{
+  "locked_utc": "2026-11-20T04:46:28.008621+00:00",
+  "code_sha256": "6f1c02c2578661d0ac0259356367e4cfe9112c36756843f17d3a2166ba469412",
+  "prior": "xview3_fused_tta",
+  "match_metres": [
+    50,
+    100,
+    150
+  ],
+  "mix_weights": {
+    "lower_threshold": {},
+    "add_zoom": {
+      "zoom": 0.8
+    },
+    "add_xview3": {
+      "xview3": 0.4
+    },
+    "add_zoom_and_xview3": {
+      "zoom": 0.8,
+      "xview3": 0.4
+    },
+    "add_coast": {
+      "coast": 0.5
+    }
+  },
+  "scope": "Retrospective check on acquisition days used for previous SonarNet evaluations.",
+  "limit": "Keep all 191 published suggestions. Allow at most max(2, ceil(0.5 * baseline count)) more per scene under its prior area cap. Control eligible count sets the exact total for every method.",
+  "selection": "Compare 100 m matched labels on the five development acquisitions, then apply across different UTC days. Ties prefer the lower-threshold control.",
+  "original_sha256": {
+    "coordinates": "70c025b0caafc66ad68473c7bdafeeeb811da010f9e6a1359c390cb27dfc3062",
+    "results": "dd8d6a5873d1bc779b94d51f57c45eb95bac863417a7d515e978989662e89a50"
+  },
+  "inputs": {
+    "development": {
+      "cache": "dcd6219e879c15627b0db09cda3e51ad6937a20b7de766b41bdb16b6de4397fd",
+      "base": "dd891b9044fc5057d19050818af030dd9668bedb1a17dabb968d42af4cdcbcf3",
+      "weak": "8844d101d13461d9fd990245fabc1e986b9c35f0d0833ea80eee9ddcb299be45",
+      "transfer": "b0ee14f183b156bcc4cdaed942139bfee6282ea57226a5cbce9b4929f64afe7d"
+    },
+    "held_out": {
+      "cache": "e01baea0964edbdb5ee7dd837541a7eeb734696d58b9f53d8fd239f1f067b1b1",
+      "base": "ab7b6f3ed821b52c856f7bc19bf80cd90e9cfe2a9319d1e51af73fb9e37a5a0f",
+      "weak": "756871b8a85a69c9b0032f37c29462a635a02023ba70a327040c1feecb8bb08a",
+      "transfer": "51c0092bed01cd5b5ea2049b41e1906eb65a4d3669a93ef8ec252cd07fffe484"
+    },
+    "confirmation": {
+      "cache": "c90f194158501f5db89c0bdbf4a2be840f43184511a070cda3053bb61c38360d",
+      "base": "34476e8ed9585d364f807b9d62bf436aa2798bdd39f90148f258d5132c5cb6b4",
+      "weak": "27b8e48197e3283beac902a9059d9316c94e293d2b4c195d9e57ae652c2ee193",
+      "transfer": "b171146d5f80837469bec4453d34e6ed19a4d3db39c93f1d4e0e5c64ffe7a769"
+    }
+  }
+}

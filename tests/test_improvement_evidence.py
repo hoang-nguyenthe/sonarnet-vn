@@ -167,7 +167,10 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertEqual(app.radio(key='main_section').value, 'Minh chứng cải tiến')
         self.assertTrue(any('102/152 → 103/152' in item.value for item in app.markdown))
-        self.assertEqual(len(app.table), 1)
+        table = next(item.value for item in app.table if 'Lượt rà' in item.value.columns)
+        self.assertEqual(table['Lượt rà'].tolist(), [410, 1483])
+        self.assertEqual(table['Thêm ô chồng lấn'].tolist(), ['9/13', '13/13'])
+        self.assertTrue(any('191 → 234 lượt rà' in item.value for item in app.markdown))
         app.radio(key='main_section').set_value('Hướng dẫn').run()
         self.assertNotIn('muc', app.query_params)
 

@@ -14,6 +14,7 @@ Xem [đề, hướng dẫn và ba liên kết nộp](../NOP_CHANG_1.md). Mốc �
 | Recall ở cùng số lượt rà | Trên 12 lượt chụp, lọc điểm trong 35 m tăng từ 80/152 lên 82/152 ở 116 lượt rà. Chia ô chồng lấn tăng từ 96/152 lên 102/152 ở 191 lượt rà. Hai cảnh Bắc Trung Bộ bổ sung giữ nguyên số nhãn khớp. |
 | Đối chứng thêm về recall | Thử heatmap từ nhãn tâm, tinh chỉnh YOLO, đổi dải dB, dịch tâm ứng viên và phân bổ lượt giữa các cảnh. Phép thử khóa theo tập phát triển đạt cao nhất trong nhóm mới 80/152 ở 116 lượt rà và 100/152 ở 191 lượt rà. |
 | Mô hình xView3 và quét tín hiệu yếu | Cùng 191 lượt rà, xView3 phối hợp YOLO khớp 103/152 so với 102/152. Ở Bắc Trung Bộ tăng từ 6/8 lên 8/8 cùng 10 lượt rà. xView3 chạy riêng giảm từ 82/152 xuống 70/152 ở mức 116 lượt rà. Quét tín hiệu yếu không cải thiện số khớp ở hai mức đã khóa. Trang 14. |
+| Thêm lượt rà và đối chứng bằng AIS | Ở 12 lượt ảnh Việt Nam, tăng 191 lên 234 lượt rà vẫn khớp 103/152 nhãn. Trên 13 mốc AIS ít dịch chuyển chọn trước ở sáu lượt chụp, chia ô chồng lấn cho 9/13 so với 10/13 ở 410 lượt rà, và 13/13 so với 12/13 ở 1.483 lượt rà. |
 | VV và VH | Chấm 12 lượt trên phần ảnh có cả hai kênh. Cùng 114 ứng viên, cách xếp hạng hiện tại khớp 78/150 và hai cấu hình điều chỉnh khớp 77/150. Có hình đối chiếu từ một ô thật. |
 | Khả năng chạy và tải | Streamlit có mục Minh chứng mở trực tiếp. ZIP có hồ sơ mẫu, mã, số liệu và PDF. Lệnh kiểm tra sau giải nén nằm trong hướng dẫn nộp. |
 
