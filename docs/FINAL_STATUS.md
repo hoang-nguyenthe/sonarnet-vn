@@ -26,7 +26,9 @@ Số chi tiết và bảng từng cảnh nằm trong [PDF cải tiến](../outpu
 
 [Lộ trình Vòng Chung kết](https://ai.tainangviet.vn/lo-trinh) yêu cầu sản phẩm ổn định ít nhất 48 giờ trước khi chấm. [Lịch sử kiểm tra công khai](https://github.com/hoang-nguyenthe/sonarnet-vn/actions/workflows/check-web-awake.yml) ghi kết quả theo thời điểm. Bài kiểm tra định kỳ mở đúng trang Minh chứng, chờ kết nối Streamlit ổn định, tải PDF và hồ sơ mẫu rồi so SHA-256 của hai tệp với mã nguồn.
 
-Mỗi lượt chỉ xác nhận tình trạng tại thời điểm kiểm tra. Mốc 48 giờ cần được đối chiếu với thời điểm chấm chính thức.
+Lịch kiểm tra đặt cách nhau 3 giờ. GitHub có thể khởi chạy trễ nên cần đọc thời gian chạy thực trong từng lượt. Ngày 20/11 lúc 03:36 giờ Việt Nam, một lượt mở trang chủ đã thất bại sau khi yêu cầu đánh thức ứng dụng. Các lượt kiểm tra thành công sau đó xác nhận từng thời điểm. Mốc 48 giờ vẫn cần đối chiếu với thời điểm chấm chính thức. [Lượt kiểm tra bị gián đoạn](https://github.com/hoang-nguyenthe/sonarnet-vn/actions/runs/44610305978)
+
+[Trang minh chứng dự phòng](https://hoang-nguyenthe.github.io/sonarnet-vn/) phục vụ báo cáo, hồ sơ mẫu, ảnh đối chiếu và bảng recall. Khi Streamlit đang khởi động, có thể mở ngay bằng chứng trên trang này.
 
 ## Phần cần xác nhận
 

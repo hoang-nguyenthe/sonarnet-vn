@@ -12,8 +12,8 @@ on:
         type: boolean
         default: false
   schedule:
-    # UTC; avoid the busiest start of the hour. Vietnam: 01:17, 07:17, 13:17, 19:17.
-    - cron: '17 */6 * * *'
+    # UTC. Three-hour spacing leaves room for delayed checks before app hibernation.
+    - cron: '17 */3 * * *'
 
 permissions:
   contents: read
