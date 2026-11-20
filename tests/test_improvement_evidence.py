@@ -159,6 +159,18 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertTrue(any('6/8 → 8/8' in item.value and '10 lượt rà' in item.value
                             for item in app.markdown))
 
+    def test_direct_recall_link_opens_the_benchmark(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
+        app.query_params['trang'] = 'minh-chung'
+        app.query_params['muc'] = 'recall'
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.radio(key='main_section').value, 'Minh chứng cải tiến')
+        self.assertTrue(any('102/152 → 103/152' in item.value for item in app.markdown))
+        self.assertEqual(len(app.table), 1)
+        app.radio(key='main_section').set_value('Hướng dẫn').run()
+        self.assertNotIn('muc', app.query_params)
+
     def test_direct_link_opens_observation_sample(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
         app.query_params['trang'] = 'quan-sat'

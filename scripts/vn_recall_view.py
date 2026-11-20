@@ -265,7 +265,7 @@ def render_followup_rtc(root: Path) -> None:
                            'sonarnet-doi-chung-nam-huong-recall.json','application/json')
 
 
-def render_transfer_rtc(root: Path) -> None:
+def render_transfer_rtc(root: Path, *, expanded=False) -> None:
     path = root / TRANSFER_RESULTS
     if not path.is_file():
         return
@@ -274,7 +274,7 @@ def render_transfer_rtc(root: Path) -> None:
         'held_out': '12 lượt đối chứng',
         'confirmation': '2 lượt Bắc Trung Bộ',
     }
-    with st.expander('Mô hình SAR hai kênh và quét tín hiệu yếu'):
+    with st.expander('Mô hình SAR hai kênh và quét tín hiệu yếu', expanded=expanded):
         group = st.radio('Nhóm ảnh kiểm tra', list(selections),
                          format_func=selections.__getitem__, horizontal=True, key='rtc_transfer_group')
         dataset = results[group]

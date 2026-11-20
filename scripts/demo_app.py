@@ -79,6 +79,8 @@ def update_section_url():
     st.query_params['trang'] = slug
     if slug != 'quan-sat' and 'che-do' in st.query_params:
         del st.query_params['che-do']
+    if slug != 'minh-chung' and 'muc' in st.query_params:
+        del st.query_params['muc']
 
 
 def open_evidence():
@@ -107,7 +109,12 @@ if section == 'Nghiên cứu':
 elif section == 'Quan sát':
     load_view('observation_view').render(ROOT)
 elif section == 'Minh chứng cải tiến':
-    load_view('improvement_view').render_improvements(ROOT)
+    if st.query_params.get('muc') == 'recall':
+        st.subheader('Đối chứng recall trên ảnh Sentinel-1')
+        st.markdown('[Mở toàn bộ minh chứng và báo cáo](?trang=minh-chung)')
+        load_view('vn_recall_view').render_transfer_rtc(ROOT, expanded=True)
+    else:
+        load_view('improvement_view').render_improvements(ROOT)
 else:
     st.subheader('Từ xem ảnh đến kiểm tra bằng chứng.')
     st.markdown('''1. **Chọn khu vực:** xem ảnh vệ tinh và thời gian quan sát. Ảnh màu bên dưới chỉ là nền tham chiếu.
