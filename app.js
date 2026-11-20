@@ -141,6 +141,21 @@ function renderAssociation(data) {
   }
 }
 
+function renderRankFusion(data) {
+  const table = $('rank-metrics');
+  for (const [key, label] of [
+    ['held_out', 'Ven biển Việt Nam'],
+    ['confirmation', 'Bắc Trung Bộ'],
+  ]) {
+    for (const mode of Object.values(data.rank_fusion[key])) {
+      const baseline = mode.published['100'];
+      addRow(table, `${label} · ${formatCount(baseline.predictions)}`,
+        fraction(baseline), fraction(mode.rank_60['100']), fraction(mode.rank_60_keep_75['100']));
+    }
+  }
+  addLinks($('rank-links'), [['Số liệu và cách chấm lại', data.links.rankFusionProtocol]]);
+}
+
 function drawCasePositions(payload) {
   const canvas = $('case-positions');
   const {width, height} = canvas.getBoundingClientRect();
@@ -290,6 +305,7 @@ async function start() {
   const requested = new URL(location.href).searchParams.get('tap');
   if (['held_out', 'confirmation', 'ais'].includes(requested)) $('cohort').value = requested;
   selectCohort(data);
+  renderRankFusion(data);
   renderAssociation(data);
   setupCaseDemo(data);
   addLinks($('ais-links'), [['Kết quả ghép theo cảnh', data.links.associationResults]]);
