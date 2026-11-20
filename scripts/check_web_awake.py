@@ -14,9 +14,9 @@ from urllib.parse import urlsplit
 APP_URL = "https://sonarnet.streamlit.app/"
 EVIDENCE_LINK = "?trang=minh-chung"
 ROOT = Path(__file__).resolve().parents[1]
-REPORT_PDF = ROOT / "output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf"
+REPORT_PDF = ROOT / "output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf"
 SAMPLE_ZIP = ROOT / "reports/final/export_verification/sample_evidence.zip"
-REPORT_DOWNLOAD = "Tải báo cáo cải tiến Chặng 1"
+REPORT_DOWNLOAD = "Tải báo cáo nộp Chặng 1 · 20 trang"
 SAMPLE_TOGGLE = "Mở hồ sơ ảnh SAR thật thiếu AIS"
 SAMPLE_DOWNLOAD = "Tải ZIP ảnh và hồ sơ mẫu"
 RECALL_LINK = "?trang=minh-chung&muc=recall"
@@ -98,7 +98,7 @@ def inspect_page(page, *, evidence=False, recall=False):
                 ready = ready or all(frame.get_by_text(marker, exact=True).first.is_visible() for marker in (
                     "Kết quả trước và sau cải tiến", "Kiểm tra thêm cách đọc SAR ở hai tỷ lệ",
                     "Kiểm tra trên ảnh ven biển Việt Nam", "Huấn luyện ở 640 px giữ thêm mục tiêu",
-                    "Recall trên 12 lượt chụp mới", "Tải báo cáo cải tiến Chặng 1",
+                    "Recall trên 12 lượt chụp mới", REPORT_DOWNLOAD,
                     "Bảng đầy đủ và các bộ xếp hạng",
                     "Xem ảnh radar thật và các điểm được tìm thêm",
                     "Thử xếp hạng bằng hai kênh radar VV và VH", "Mở hồ sơ ảnh SAR thật thiếu AIS",
