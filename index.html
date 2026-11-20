@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Đối chứng recall SAR, kiểm tra ghép AIS và hồ sơ ảnh nguồn của SonarNet Việt Nam.">
+  <title>Minh chứng Chặng 1 · SonarNet Việt Nam</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header>
+    <div class="shell header">
+      <a class="brand" href="#"><span aria-hidden="true"></span>SonarNet Việt Nam</a>
+      <nav aria-label="Các phần minh chứng">
+        <a href="#recall">Recall</a>
+        <a href="#ais">Ghép AIS</a>
+        <a href="#hoso">Hồ sơ mẫu</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">AI 2026 · Bảng C · Chặng 1</p>
+          <h1>Kết quả cải tiến trên ảnh radar thật</h1>
+          <p>Đổi tập ảnh và số lượt rà để kiểm tra số nhãn tìm được. Xem ảnh nguồn, cách hệ thống xử lý khi thiếu AIS và tải hồ sơ đối chiếu.</p>
+          <div class="actions">
+            <a class="button primary" href="#recall">Xem kết quả</a>
+            <a class="button outline" href="data/bao-cao-chang-1.pdf">Mở báo cáo PDF</a>
+          </div>
+        </div>
+        <figure class="hero-figure">
+          <img src="data/ais-after.png" alt="Ảnh radar Sentinel-1 với mốc AIS và ứng viên khớp thêm được đánh dấu" width="256" height="256">
+          <figcaption>Galveston, 11/07/2024 · ảnh Sentinel-1 RTC</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="shell sections">
+      <section id="recall" aria-labelledby="recall-title">
+        <h2 id="recall-title">Recall theo số lượt rà</h2>
+        <p>So sánh các phương pháp với cùng số ứng viên cần rà cho từng cảnh. Một ứng viên được ghép với tối đa một nhãn tham chiếu.</p>
+        <div class="panel">
+          <div class="controls">
+            <label>Tập đánh giá<select id="cohort">
+              <option value="held_out">12 lượt chụp ven biển Việt Nam</option>
+              <option value="confirmation">2 lượt chụp Bắc Trung Bộ</option>
+              <option value="ais">6 lượt chụp có mốc AIS độc lập</option>
+            </select></label>
+            <label>Số ứng viên cần rà<select id="queue"></select></label>
+            <label>Bán kính khớp<select id="radius"></select></label>
+          </div>
+          <p id="metric-summary" class="metric-summary" aria-live="polite">Đang tải số liệu đối chứng…</p>
+          <table>
+            <caption class="sr-only">Số nhãn khớp và số ứng viên chưa khớp tham chiếu</caption>
+            <thead><tr><th scope="col">Phương pháp</th><th scope="col">Khớp nhãn</th><th scope="col">Chưa khớp</th></tr></thead>
+            <tbody id="metrics"></tbody>
+          </table>
+          <p id="cohort-note" class="note"></p>
+          <p class="note">Ứng viên chưa khớp có thể gồm mục tiêu chưa được gắn nhãn. Các tỷ lệ chỉ áp dụng cho phạm vi ảnh và nhãn đã chấm.</p>
+          <div class="links" id="recall-links"></div>
+        </div>
+      </section>
+      <section aria-labelledby="examples-title">
+        <h2 id="examples-title">Ca tìm thêm trên cùng ảnh SAR</h2>
+        <p id="examples-description"></p>
+        <div class="side-by-side">
+          <figure class="image-card"><img id="before-image" src="data/vn-before.png" alt="Kết quả đối chứng trước cải tiến trên ô ảnh Sentinel-1" width="256" height="256" loading="lazy"><figcaption id="before-caption">Trước cải tiến</figcaption></figure>
+          <figure class="image-card"><img id="after-image" src="data/vn-after.png" alt="Kết quả phối hợp YOLO với xView3 trên cùng ô ảnh Sentinel-1" width="256" height="256" loading="lazy"><figcaption id="after-caption">Sau cải tiến</figcaption></figure>
+        </div>
+        <p id="examples-note" class="note"></p>
+      </section>
+      <section id="ais" aria-labelledby="ais-title">
+        <h2 id="ais-title">Đối chiếu quyết định ghép AIS</h2>
+        <p>So sánh bốn cách đề xuất ghép trên cùng sáu lượt chụp. Phương án cải tiến giữ cặp đã đề xuất khi vượt qua kiểm tra thời gian, độ bất định và kích thước, đồng thời giữ trạng thái chờ rà khi điều kiện mâu thuẫn.</p>
+        <div class="panel">
+          <label>Nhóm tham chiếu<select id="ais-cohort"><option value="near_time">Mốc AIS gần thời điểm chụp</option><option value="near_stationary">Mốc AIS ít dịch chuyển</option></select></label>
+          <p id="ais-summary" class="metric-summary" aria-live="polite"></p>
+          <table>
+            <caption class="sr-only">Kết quả ghép AIS theo chính sách</caption>
+            <thead><tr><th scope="col">Phương pháp</th><th scope="col">Đồng ý với mốc</th><th scope="col">Khác mốc</th><th scope="col">Chưa có mốc <span class="desktop-inline">kiểm chứng</span></th></tr></thead>
+            <tbody id="ais-metrics"></tbody>
+          </table>
+          <p class="note">Các đề xuất chưa có mốc kiểm chứng cần được rà thủ công. Tập nhãn dùng để đánh giá quyết định ghép khác với tập 13 mốc dùng để đánh giá recall phát hiện SAR.</p>
+          <div class="links" id="ais-links"></div>
+        </div>
+      </section>
+      <section id="hoso" aria-labelledby="sample-title">
+        <h2 id="sample-title">Hồ sơ ảnh thật thiếu AIS</h2>
+        <div class="sample panel">
+          <img src="data/ung-vien-sar.jpg" alt="Ảnh radar gốc trong hồ sơ mẫu với khung ứng viên số 1" width="1024" height="1024" loading="lazy">
+          <div>
+            <p class="eyebrow">Sentinel-1 VV · 30/10/2026 UTC</p>
+            <h3>Ứng viên số 1 đang chờ xác minh</h3>
+            <p>Ảnh ghép trong ngày từ Copernicus Data Space. Hồ sơ ghi ảnh nguồn, ứng viên và mã băm. Trạng thái AIS là thiếu dữ liệu, nên chưa có kết luận về danh tính.</p>
+            <form id="review">
+              <label>Trạng thái rà ảnh<select id="review-status"><option>Chưa xem</option><option>Cần kiểm tra thêm</option><option>Đã rà ảnh</option></select></label>
+              <label>Ghi chú rà soát<textarea id="review-note" rows="3" maxlength="1000"></textarea></label>
+              <button class="button primary" type="submit">Tải ghi chú JSON</button>
+              <p id="review-result" class="note" role="status">Ghi chú được lưu vào tệp trên thiết bị của bạn.</p>
+            </form>
+            <div class="links"><a href="data/ho-so-mau.zip" download>Tải hồ sơ mẫu ZIP</a><a href="data/anh-nguon.png">Xem ảnh nguồn</a></div>
+          </div>
+        </div>
+      </section>
+      <section class="resources" aria-labelledby="resources-title">
+        <h2 id="resources-title">Tài liệu và ứng dụng</h2>
+        <p>Trang này hiển thị minh chứng đã lưu. Mở ứng dụng Streamlit để dùng bản đồ và các luồng xử lý dữ liệu của SonarNet.</p>
+        <div class="links">
+          <a href="https://sonarnet.streamlit.app/?trang=minh-chung">Mở ứng dụng Streamlit</a>
+          <a href="data/bao-cao-chang-1.pdf">Báo cáo Chặng 1</a>
+          <a id="source-code" href="https://github.com/hoang-nguyenthe/sonarnet-vn">Mã nguồn và dữ liệu</a>
+        </div>
+        <p id="version" class="note"></p>
+      </section>
+    </div>
+  </main>
+  <footer class="shell">SonarNet Việt Nam · Minh chứng Chặng 1</footer>
+</body>
+</html>

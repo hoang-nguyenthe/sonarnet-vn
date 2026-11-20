@@ -1,0 +1,389 @@
+{
+  "commit": "524b71d15cb71f17d15e940f54ccd173742d4abf",
+  "vietnam": {
+    "held_out": {
+      "equal_incumbent": {
+        "map": {
+          "labels": 152,
+          "matched": 80,
+          "predictions": 116,
+          "unmatched": 36
+        },
+        "previous_best": {
+          "labels": 152,
+          "matched": 82,
+          "predictions": 116,
+          "unmatched": 34
+        },
+        "weak_echoes": {
+          "labels": 152,
+          "matched": 82,
+          "predictions": 116,
+          "unmatched": 34
+        },
+        "xview3": {
+          "labels": 152,
+          "matched": 70,
+          "predictions": 116,
+          "unmatched": 46
+        }
+      },
+      "equal_relaxed": {
+        "map": {
+          "labels": 152,
+          "matched": 96,
+          "predictions": 191,
+          "unmatched": 95
+        },
+        "previous_best": {
+          "labels": 152,
+          "matched": 102,
+          "predictions": 191,
+          "unmatched": 89
+        },
+        "weak_echoes": {
+          "labels": 152,
+          "matched": 102,
+          "predictions": 191,
+          "unmatched": 89
+        },
+        "xview3": {
+          "labels": 152,
+          "matched": 103,
+          "predictions": 191,
+          "unmatched": 88
+        }
+      }
+    },
+    "confirmation": {
+      "equal_incumbent": {
+        "map": {
+          "labels": 8,
+          "matched": 5,
+          "predictions": 6,
+          "unmatched": 1
+        },
+        "previous_best": {
+          "labels": 8,
+          "matched": 5,
+          "predictions": 6,
+          "unmatched": 1
+        },
+        "weak_echoes": {
+          "labels": 8,
+          "matched": 5,
+          "predictions": 6,
+          "unmatched": 1
+        },
+        "xview3": {
+          "labels": 8,
+          "matched": 6,
+          "predictions": 6,
+          "unmatched": 0
+        }
+      },
+      "equal_relaxed": {
+        "map": {
+          "labels": 8,
+          "matched": 6,
+          "predictions": 10,
+          "unmatched": 4
+        },
+        "previous_best": {
+          "labels": 8,
+          "matched": 6,
+          "predictions": 10,
+          "unmatched": 4
+        },
+        "weak_echoes": {
+          "labels": 8,
+          "matched": 6,
+          "predictions": 10,
+          "unmatched": 4
+        },
+        "xview3": {
+          "labels": 8,
+          "matched": 8,
+          "predictions": 10,
+          "unmatched": 2
+        }
+      }
+    }
+  },
+  "ais": {
+    "narrow": {
+      "original": {
+        "50": {
+          "matched": 7,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 403
+        },
+        "100": {
+          "matched": 10,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 400
+        },
+        "150": {
+          "matched": 11,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 399
+        }
+      },
+      "prior": {
+        "50": {
+          "matched": 7,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 403
+        },
+        "100": {
+          "matched": 10,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 400
+        },
+        "150": {
+          "matched": 11,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 399
+        }
+      },
+      "fused_xview3": {
+        "50": {
+          "matched": 7,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 403
+        },
+        "100": {
+          "matched": 11,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 399
+        },
+        "150": {
+          "matched": 12,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 398
+        }
+      },
+      "xview3_first": {
+        "50": {
+          "matched": 6,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 404
+        },
+        "100": {
+          "matched": 9,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 401
+        },
+        "150": {
+          "matched": 9,
+          "labels": 13,
+          "predictions": 410,
+          "unmatched": 401
+        }
+      }
+    },
+    "wide": {
+      "original": {
+        "50": {
+          "matched": 10,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1473
+        },
+        "100": {
+          "matched": 12,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1471
+        },
+        "150": {
+          "matched": 13,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1470
+        }
+      },
+      "prior": {
+        "50": {
+          "matched": 9,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1474
+        },
+        "100": {
+          "matched": 13,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1470
+        },
+        "150": {
+          "matched": 13,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1470
+        }
+      },
+      "fused_xview3": {
+        "50": {
+          "matched": 9,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1474
+        },
+        "100": {
+          "matched": 13,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1470
+        },
+        "150": {
+          "matched": 13,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1470
+        }
+      },
+      "xview3_first": {
+        "50": {
+          "matched": 9,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1474
+        },
+        "100": {
+          "matched": 13,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1470
+        },
+        "150": {
+          "matched": 13,
+          "labels": 13,
+          "predictions": 1483,
+          "unmatched": 1470
+        }
+      }
+    }
+  },
+  "association": {
+    "near_time": {
+      "paired_references": 17,
+      "counts": {
+        "distance_only": {
+          "proposed": 184,
+          "withheld": 226,
+          "agree": 13,
+          "disagree": 4,
+          "reference_unpaired": 0,
+          "proposed_without_reference": 167
+        },
+        "previous_gates": {
+          "proposed": 72,
+          "withheld": 338,
+          "agree": 8,
+          "disagree": 1,
+          "reference_unpaired": 8,
+          "proposed_without_reference": 63
+        },
+        "100m_guard": {
+          "proposed": 53,
+          "withheld": 357,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 11,
+          "proposed_without_reference": 47
+        },
+        "propose_then_veto": {
+          "proposed": 37,
+          "withheld": 373,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 11,
+          "proposed_without_reference": 31
+        }
+      }
+    },
+    "near_stationary": {
+      "paired_references": 8,
+      "counts": {
+        "distance_only": {
+          "proposed": 183,
+          "withheld": 227,
+          "agree": 8,
+          "disagree": 0,
+          "reference_unpaired": 0,
+          "proposed_without_reference": 175
+        },
+        "previous_gates": {
+          "proposed": 62,
+          "withheld": 348,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 2,
+          "proposed_without_reference": 56
+        },
+        "100m_guard": {
+          "proposed": 39,
+          "withheld": 371,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 2,
+          "proposed_without_reference": 33
+        },
+        "propose_then_veto": {
+          "proposed": 25,
+          "withheld": 385,
+          "agree": 6,
+          "disagree": 0,
+          "reference_unpaired": 2,
+          "proposed_without_reference": 19
+        }
+      }
+    }
+  },
+  "examples": {
+    "vietnam": {
+      "area": "Vịnh Quảng Ninh, 24/06/2022",
+      "reviewed": 9,
+      "labels": 8,
+      "before": 5,
+      "after": 6,
+      "imagePrefix": "vn",
+      "note": "Ví dụ từ tập 12 lượt chụp, ở mức 191 lượt rà trên toàn tập và bán kính 100 m."
+    },
+    "ais": {
+      "area": "Galveston / Houston Ship Channel, 11/07/2024",
+      "reviewed": 50,
+      "labels": 4,
+      "before": 3,
+      "after": 4,
+      "imagePrefix": "ais",
+      "note": "Ví dụ ở mức 410 lượt rà trên toàn tập và bán kính 100 m. Ứng viên mới cách mốc tham chiếu 52,18 m."
+    }
+  },
+  "sample": {
+    "zipSha256": "09a64b8c0e2fe5a86b4496c1abf9901ba3cede8bab6bdc5f11f12c85ad87c1bc",
+    "imageSha256": "b171841220fae8b5e6c638ca7b81253b19fbfb0cf5bf3a42ae4de42a6d540ae3",
+    "key": "cell_0_1",
+    "candidateId": 1
+  },
+  "links": {
+    "code": "https://github.com/hoang-nguyenthe/sonarnet-vn/tree/524b71d15cb71f17d15e940f54ccd173742d4abf",
+    "vnResults": "https://github.com/hoang-nguyenthe/sonarnet-vn/blob/524b71d15cb71f17d15e940f54ccd173742d4abf/reports/final/vietnam_rtc_transfer_20261119/summary.json",
+    "vnProtocol": "https://github.com/hoang-nguyenthe/sonarnet-vn/blob/524b71d15cb71f17d15e940f54ccd173742d4abf/reports/final/vietnam_rtc_transfer_20261119/README.md",
+    "aisResults": "https://github.com/hoang-nguyenthe/sonarnet-vn/blob/524b71d15cb71f17d15e940f54ccd173742d4abf/reports/final/stationary_ais_detection_20261120/dual-band/results.json",
+    "aisProtocol": "https://github.com/hoang-nguyenthe/sonarnet-vn/blob/524b71d15cb71f17d15e940f54ccd173742d4abf/reports/final/stationary_ais_detection_20261120/dual-band/protocol.json",
+    "associationResults": "https://github.com/hoang-nguyenthe/sonarnet-vn/blob/524b71d15cb71f17d15e940f54ccd173742d4abf/reports/final/multiscene_sar_ais_20261119/results.json"
+  }
+}
