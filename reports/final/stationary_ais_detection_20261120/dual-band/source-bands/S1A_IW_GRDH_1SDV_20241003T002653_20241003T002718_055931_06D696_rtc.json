@@ -1,0 +1,137 @@
+{
+  "product": "S1A_IW_GRDH_1SDV_20241003T002653_20241003T002718_055931_06D696_rtc",
+  "utc": "2024-10-03T00:27:06.240777+00:00",
+  "source_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241003T002653_20241003T002718_055931_06D696_rtc",
+  "source_assets": {
+    "vv": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/3/IW/DV/S1A_IW_GRDH_1SDV_20241003T002653_20241003T002718_055931_06D696_3F3C/measurement/iw-vv.rtc.tiff",
+    "vh": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/3/IW/DV/S1A_IW_GRDH_1SDV_20241003T002653_20241003T002718_055931_06D696_3F3C/measurement/iw-vh.rtc.tiff"
+  },
+  "windows": [
+    {
+      "tile": 0,
+      "bbox": [
+        -94.85,
+        29.29,
+        -94.77333333333333,
+        29.38
+      ],
+      "width": 1024,
+      "preview_sha256": "72d9a40f13fc27b1eccb66532b204548b4924f89e7b5a44aab4f561d31020e3a",
+      "files": {
+        "vv": {
+          "name": "vv-0.npz",
+          "sha256": "23c1b420c58a1492eef522e2fa2097a7a2c808d02c13ffe88cf1d9b2de44a91b"
+        },
+        "vh": {
+          "name": "vh-0.npz",
+          "sha256": "3f771a6738a703bf467375c8e65460737d462d27339b7b86f94479d1e55ab664"
+        }
+      }
+    },
+    {
+      "tile": 1,
+      "bbox": [
+        -94.77333333333333,
+        29.29,
+        -94.69666666666667,
+        29.38
+      ],
+      "width": 1024,
+      "preview_sha256": "ebb569248dccd09507bfb2bf04cc18dfd849dd998258e287c186ac56011f41aa",
+      "files": {
+        "vv": {
+          "name": "vv-1.npz",
+          "sha256": "9e54a72c6f6fd237271eba46ea32fba15e6e9d16cfa49b1736f8a2f5c95f7963"
+        },
+        "vh": {
+          "name": "vh-1.npz",
+          "sha256": "9f0e31676e7569011cb83c2da4dc3794a93aabd11cf00c36bb655ba70dadf5d6"
+        }
+      }
+    },
+    {
+      "tile": 2,
+      "bbox": [
+        -94.69666666666667,
+        29.29,
+        -94.62,
+        29.38
+      ],
+      "width": 1024,
+      "preview_sha256": "461c5800c25eff34fb5827b8c116dc865f2b58dc2e0e0f16f2a685160d2054f4",
+      "files": {
+        "vv": {
+          "name": "vv-2.npz",
+          "sha256": "4a797f22cf80de3a7436c4a936d0062c462d3cedaa3e2881bc4df8b24d329e36"
+        },
+        "vh": {
+          "name": "vh-2.npz",
+          "sha256": "c8b1deb5e699aea82f5d1486719ef93b4c2f25b0852bf41e032c4bf0117993c1"
+        }
+      }
+    },
+    {
+      "tile": 3,
+      "bbox": [
+        -94.85,
+        29.38,
+        -94.77333333333333,
+        29.47
+      ],
+      "width": 1024,
+      "preview_sha256": "3c450638efacb272bf08e3ed1230f783286fe9e78415a9e00416d193ae44cbe5",
+      "files": {
+        "vv": {
+          "name": "vv-3.npz",
+          "sha256": "943d5efdc15d26e7113fab27b83aa2777417d3d775e650b4d133b1a2655c9c07"
+        },
+        "vh": {
+          "name": "vh-3.npz",
+          "sha256": "8669f36453acbf01a718f6ad72dc340a3fab82f7b00f3c0469f67c69e425f51e"
+        }
+      }
+    },
+    {
+      "tile": 4,
+      "bbox": [
+        -94.77333333333333,
+        29.38,
+        -94.69666666666667,
+        29.47
+      ],
+      "width": 1024,
+      "preview_sha256": "8e3c82f917ca0ab608a0247d2ca1d735ef57fed317ff8333166342eaf0c62918",
+      "files": {
+        "vv": {
+          "name": "vv-4.npz",
+          "sha256": "6d0735516e584a5f34e25416ee3c105269edb179fe5ce4a096640d1265f9a5cc"
+        },
+        "vh": {
+          "name": "vh-4.npz",
+          "sha256": "1d802da44df766ae15bd043c025b16250f301313f75d8a9abc12f8df58de8ed4"
+        }
+      }
+    },
+    {
+      "tile": 5,
+      "bbox": [
+        -94.69666666666667,
+        29.38,
+        -94.62,
+        29.47
+      ],
+      "width": 1024,
+      "preview_sha256": "4e18abc7669d8b2777df7e775dddfc39798a2f76320e9f1a26d75dce0886bc63",
+      "files": {
+        "vv": {
+          "name": "vv-5.npz",
+          "sha256": "9a191d6def818e5e52d66daa98a734cade5c69b3cd645bf22b5dc2123c64803e"
+        },
+        "vh": {
+          "name": "vh-5.npz",
+          "sha256": "0176e9825391170d46f62ac5097b09ad20ab4cae7606f249f9eb5ce364397473"
+        }
+      }
+    }
+  ]
+}

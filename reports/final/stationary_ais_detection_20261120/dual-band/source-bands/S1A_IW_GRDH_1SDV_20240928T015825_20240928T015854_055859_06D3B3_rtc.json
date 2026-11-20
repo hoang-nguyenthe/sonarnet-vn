@@ -1,0 +1,137 @@
+{
+  "product": "S1A_IW_GRDH_1SDV_20240928T015825_20240928T015854_055859_06D3B3_rtc",
+  "utc": "2024-09-28T01:58:40.098141+00:00",
+  "source_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240928T015825_20240928T015854_055859_06D3B3_rtc",
+  "source_assets": {
+    "vv": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/9/28/IW/DV/S1A_IW_GRDH_1SDV_20240928T015825_20240928T015854_055859_06D3B3_1933/measurement/iw-vv.rtc.tiff",
+    "vh": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/9/28/IW/DV/S1A_IW_GRDH_1SDV_20240928T015825_20240928T015854_055859_06D3B3_1933/measurement/iw-vh.rtc.tiff"
+  },
+  "windows": [
+    {
+      "tile": 0,
+      "bbox": [
+        -118.3,
+        33.64,
+        -118.23,
+        33.695
+      ],
+      "width": 1024,
+      "preview_sha256": "d91f9d47ac533e7b310fd8f1547941a76bb138032c15770b3901d9efe004d2df",
+      "files": {
+        "vv": {
+          "name": "vv-0.npz",
+          "sha256": "1c538873ea4470f1d581bfcd757b2499e14b856e2f3e0a99f73bde6d364fd855"
+        },
+        "vh": {
+          "name": "vh-0.npz",
+          "sha256": "ce828f1503e79140ee27d9e799965a4f844a5366d0c91c8672b9a58636e52622"
+        }
+      }
+    },
+    {
+      "tile": 1,
+      "bbox": [
+        -118.23,
+        33.64,
+        -118.16,
+        33.695
+      ],
+      "width": 1024,
+      "preview_sha256": "0461acef7c9828ce0e29caef8248c39205f84eaaeee72cf0d284c40223bc1fb4",
+      "files": {
+        "vv": {
+          "name": "vv-1.npz",
+          "sha256": "b982f8097b72d7357042517fed3870c13113ca03a7f39d36f241da23273692a9"
+        },
+        "vh": {
+          "name": "vh-1.npz",
+          "sha256": "3cea0ffc268d09d4df0061136667eb74e70403cc92a802b4e8c2b01130f99d65"
+        }
+      }
+    },
+    {
+      "tile": 2,
+      "bbox": [
+        -118.16,
+        33.64,
+        -118.09,
+        33.695
+      ],
+      "width": 1024,
+      "preview_sha256": "e6501865c6b0c01a99c6bb2df055a54020b8cafdd80637abda487bb49000ab7b",
+      "files": {
+        "vv": {
+          "name": "vv-2.npz",
+          "sha256": "1533016c75eced9d455e06870bac0c37988b27e06ee54a0a6e9989ad48c418da"
+        },
+        "vh": {
+          "name": "vh-2.npz",
+          "sha256": "9fbc232625e6dd66286125a09e8e863bc8d38774eb97fae9af349603866b7926"
+        }
+      }
+    },
+    {
+      "tile": 3,
+      "bbox": [
+        -118.3,
+        33.695,
+        -118.23,
+        33.75
+      ],
+      "width": 1024,
+      "preview_sha256": "7b6aa9ed4ea214ef44fe37ebf5d13a4265bac264e5d26423f3f9cf1359b224e1",
+      "files": {
+        "vv": {
+          "name": "vv-3.npz",
+          "sha256": "2feccb23da4c229e7b6e8c584204dc9f5035348a9954207aff26fef4869d9e7a"
+        },
+        "vh": {
+          "name": "vh-3.npz",
+          "sha256": "eda0deea1c322b9d49e3cb04486a1878cb20a849c500145084d7ad05aa0544dc"
+        }
+      }
+    },
+    {
+      "tile": 4,
+      "bbox": [
+        -118.23,
+        33.695,
+        -118.16,
+        33.75
+      ],
+      "width": 1024,
+      "preview_sha256": "89edb6dfc785db26a85aa4c0cf51e4769b66bee7bbfa9a315b0a4fe28ed80ba5",
+      "files": {
+        "vv": {
+          "name": "vv-4.npz",
+          "sha256": "f1ee85b10c5986db5b6071aa12eac42288d058eaba4a008d8fd4f97532864164"
+        },
+        "vh": {
+          "name": "vh-4.npz",
+          "sha256": "a67328e0294735c48896d93480950f48b291e5a8966a615c0de7f9b38e28f89a"
+        }
+      }
+    },
+    {
+      "tile": 5,
+      "bbox": [
+        -118.16,
+        33.695,
+        -118.09,
+        33.75
+      ],
+      "width": 1024,
+      "preview_sha256": "fd8553bae3dab0b2240ca5539268ce7e9ff60e91859e0a5acbf40bcde2b181d1",
+      "files": {
+        "vv": {
+          "name": "vv-5.npz",
+          "sha256": "2f6cdc99ff2705441d92acf648448baddb517c2330aa9204d565c4b169fb09a3"
+        },
+        "vh": {
+          "name": "vh-5.npz",
+          "sha256": "5feada865b985c35f8d7cfa452ef9f0b22c2685d15bc17159f6dec2a17f31035"
+        }
+      }
+    }
+  ]
+}

@@ -589,10 +589,19 @@ def build(args):
             ais = json.loads(ais_path.read_text())['totals']
             base, narrow, wide, overlap = (ais[key]['100'] for key in (
                 'base_at_035', 'same_count_overlap', 'base_at_005', 'same_wide_count_overlap'))
-            y = text(f"Trên {base['labels']} mốc AIS ít dịch chuyển chọn trước ở sáu lượt chụp, "
-                     f"thêm ô chồng lấn cho {base['matched']} → {narrow['matched']} mốc khớp với "
-                     f"{fmt(base['predictions'])} lượt rà và {wide['matched']} → {overlap['matched']} "
-                     f"với {fmt(wide['predictions'])} lượt rà.",y-5,muted)
+            ais_note = (f"Trên {base['labels']} mốc AIS ít dịch chuyển chọn trước ở sáu lượt chụp, "
+                        f"thêm ô chồng lấn cho {base['matched']} → {narrow['matched']} mốc khớp với "
+                        f"{fmt(base['predictions'])} lượt rà và {wide['matched']} → {overlap['matched']} "
+                        f"với {fmt(wide['predictions'])} lượt rà.")
+            dual_path = ais_path.parent/'dual-band/results.json'
+            if dual_path.is_file():
+                dual = json.loads(dual_path.read_text())['totals']
+                narrow_dual, wide_dual = (dual[key]['fused_xview3']['100']['matched'] for key in ('narrow','wide'))
+                ais_note = (f"Trên {base['labels']} mốc AIS chọn trước ở sáu lượt chụp, ảnh nguyên, chia ô "
+                            f"và phối hợp YOLO với xView3 lần lượt khớp {base['matched']}, {narrow['matched']} "
+                            f"và {narrow_dual} mốc ở {fmt(base['predictions'])} lượt rà. Ở {fmt(wide['predictions'])} "
+                            f"lượt rà, ba cách lần lượt khớp {wide['matched']}, {overlap['matched']} và {wide_dual} mốc.")
+            y = text(ais_note,y-5,muted)
         assert y > 67,y
         footer(total_update_pages)
     c.save()

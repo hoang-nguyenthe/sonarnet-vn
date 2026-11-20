@@ -39,3 +39,34 @@ PYTHONPATH=src python scripts/evaluate_rtc_stationary_ais_reference.py \
 
 Nguồn ảnh [Sentinel-1 RTC](https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc).
 Nguồn vị trí [NOAA Marine Cadastre](https://coast.noaa.gov/htdata/CMSP/AISDataHandler/2024/).
+
+## Đối chứng mô hình VV/VH với cùng 13 mốc AIS
+
+Giữ đúng sáu cảnh, mốc AIS, số điểm cần rà theo cảnh và trọng số xView3
+đã dùng cho thử nghiệm Việt Nam. Tải 32 cặp dải VV/VH vào cùng lưới gốc
+1.024 px. Kiểm từng ảnh VV dựng lại khớp ảnh đã dùng để chấm YOLO.
+Gộp đề xuất theo điểm lớn nhất rồi lọc các tâm trong 35 m. Chốt cách
+so sánh theo phương án đã thử trước trên dữ liệu Ai2.
+
+| Mức rà | Lượt rà | Danh sách đối chứng | Phối hợp xView3 |
+| --- | ---: | ---: | ---: |
+| Hẹp, lọc trùng 35 m | 410 | 10/13 | 11/13 |
+| Rộng, gồm ô chồng lấn | 1.483 | 13/13 | 13/13 |
+
+Ở mức 410 điểm, xếp ứng viên xView3 lên trước cho 9/13. Chênh lệch được
+đo trên 13 mốc ít dịch chuyển. Các tệp trong `dual-band` giữ kết quả cả
+ba bán kính, tọa độ chấm và mã băm dữ liệu từng ô. Tùy chọn xem ảnh cho
+thấy một ca bổ sung mốc khớp, với số lượt rà của cảnh giữ đúng như đối chứng.
+
+```sh
+PYTHONPATH=src python scripts/fetch_stationary_ais_rtc_bands.py \
+  --source SOURCE_DIR --output VV_VH_DIR
+PYTHONPATH=src python scripts/evaluate_xview3_stationary_ais.py \
+  --source SOURCE_DIR --raster VV_VH_DIR --coast gshhg-shp-2.3.7.zip \
+  --ais-evidence reports/final/stationary_ais_detection_20261120 \
+  --upstream XVIEW3_DIR --weights RESNET34_WEIGHT --output OUT_DIR
+PYTHONPATH=src python scripts/replay_rtc_additional_trials.py
+```
+
+Xem [phiên bản mã và trọng số xView3](../vietnam_rtc_transfer_20261119/README.md).
+Dùng Rasterio 1.4.4 để đọc các ô Sentinel-1 từ Microsoft Planetary Computer.

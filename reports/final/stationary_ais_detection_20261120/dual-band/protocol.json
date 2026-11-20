@@ -1,0 +1,29 @@
+{
+  "locked_utc": "2026-11-20T05:03:39.784866+00:00",
+  "code_sha256": "655e972c45fe1d02ced9f7647ab2e4bce2c6f9aa47b870d800b9df10f21c056b",
+  "weights_sha256": "e8996b174d0e8f352a6e4a9f7bf84f3cf5dbcb418498b4cead403aa687b8fda8",
+  "upstream_revision": "558c15a979f889851b86a797518268944866e820",
+  "raster_protocol_sha256": "9d5d9e4b0c61f22643afcd7f88e5656ae07c7320c8b6b1c2caf2da9c14d08b6d",
+  "reference_sha256": "db78705c0316ba3a258100d4d014a8c92a096126e93a53f2c119745131866333",
+  "baseline_queues_sha256": "b8c738bb579a08ef9851b590afd21c9cc1dfda742c67f1f328bc02f385ad5331",
+  "baseline_results_sha256": "5a02fa6c3fb2954f3ffdf52cf7a4c18acadb307629d6d25efe7df39d03244989",
+  "match_metres": [
+    50,
+    100,
+    150
+  ],
+  "mode": {
+    "narrow": [
+      "base_at_035",
+      "same_count_remove_duplicates",
+      "base_at_005"
+    ],
+    "wide": [
+      "base_at_005",
+      "same_wide_count_overlap",
+      "same_wide_count_overlap"
+    ]
+  },
+  "comparison": "Same per-scene review counts. Primary transfer combines scores by max, then suppresses within 35 m. Transfer-first is diagnostic. No tuning on any AIS references.",
+  "scope": "Independent, stationary AIS position proxies chosen without radar detections in the earlier study. Coastal civilian archive, not live tracking or identity validation."
+}

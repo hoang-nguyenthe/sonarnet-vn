@@ -1,0 +1,95 @@
+{
+  "product": "S1A_IW_GRDH_1SDV_20241002T225131_20241002T225156_055930_06D68B_rtc",
+  "utc": "2024-10-02T22:51:44.307015+00:00",
+  "source_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241002T225131_20241002T225156_055930_06D68B_rtc",
+  "source_assets": {
+    "vv": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/2/IW/DV/S1A_IW_GRDH_1SDV_20241002T225131_20241002T225156_055930_06D68B_72AB/measurement/iw-vv.rtc.tiff",
+    "vh": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/2/IW/DV/S1A_IW_GRDH_1SDV_20241002T225131_20241002T225156_055930_06D68B_72AB/measurement/iw-vh.rtc.tiff"
+  },
+  "windows": [
+    {
+      "tile": 0,
+      "bbox": [
+        -74.11,
+        40.48,
+        -74.035,
+        40.56999999999999
+      ],
+      "width": 1024,
+      "preview_sha256": "9ebc6c57d56e167941ffbe447e2a28a161808f74b0e4c3be9d7e9d730ac72a92",
+      "files": {
+        "vv": {
+          "name": "vv-0.npz",
+          "sha256": "c3d09a9bb4781aad8667d702ece22db55eb14cb428671549b876a1d037314380"
+        },
+        "vh": {
+          "name": "vh-0.npz",
+          "sha256": "8b578f39e7e128a584486f731c4aea8d124d74cbf49f5656e38d46d8d1e89fc2"
+        }
+      }
+    },
+    {
+      "tile": 1,
+      "bbox": [
+        -74.035,
+        40.48,
+        -73.96,
+        40.56999999999999
+      ],
+      "width": 1024,
+      "preview_sha256": "4f4ba91b3113f5c6a6845c08a65db18ac69242f13778a8e03c045bff978afbd4",
+      "files": {
+        "vv": {
+          "name": "vv-1.npz",
+          "sha256": "28ac4381b207618febf1993fa27dc016aafeb6c4a1b9b63f633261f149611ba7"
+        },
+        "vh": {
+          "name": "vh-1.npz",
+          "sha256": "8b4ae7bc3e23a966f0896d0524f6682a454f805bc6e088aa68f054c57bb44359"
+        }
+      }
+    },
+    {
+      "tile": 2,
+      "bbox": [
+        -74.11,
+        40.56999999999999,
+        -74.035,
+        40.66
+      ],
+      "width": 1024,
+      "preview_sha256": "02c54e1a66db63b99081928988ec4fa68d860457c46a71d4f4a5751ec9bd72cc",
+      "files": {
+        "vv": {
+          "name": "vv-2.npz",
+          "sha256": "da36bee0bae10e42c026fbddaf671c3d7a63b0291e5cc43b1753b546ce871b80"
+        },
+        "vh": {
+          "name": "vh-2.npz",
+          "sha256": "cd20d4488eda76e01f044f722b36082e879fe1c30a20d46f531b0e9b8337f7ca"
+        }
+      }
+    },
+    {
+      "tile": 3,
+      "bbox": [
+        -74.035,
+        40.56999999999999,
+        -73.96,
+        40.66
+      ],
+      "width": 1024,
+      "preview_sha256": "d35fa3e21e7a6e51ead94cf2f5acd684cd2f5fc0e8374669e6e491d7bdb6c197",
+      "files": {
+        "vv": {
+          "name": "vv-3.npz",
+          "sha256": "3f871be62a8f5420c7fbd6ac410a4c7f56f910d23605d850492f315915e8b169"
+        },
+        "vh": {
+          "name": "vh-3.npz",
+          "sha256": "8f3b744426225ca6b734e51d9d60ec48c5f050567b4d281cb68d65fde9ddf805"
+        }
+      }
+    }
+  ]
+}

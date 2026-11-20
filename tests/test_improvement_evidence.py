@@ -1,4 +1,5 @@
 import importlib
+import json
 from unittest.mock import patch
 import sys
 from pathlib import Path
@@ -171,6 +172,16 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertEqual(table['Lượt rà'].tolist(), [410, 1483])
         self.assertEqual(table['Thêm ô chồng lấn'].tolist(), ['9/13', '13/13'])
         self.assertTrue(any('191 → 234 lượt rà' in item.value for item in app.markdown))
+        study = ROOT/'reports/final/stationary_ais_detection_20261120/dual-band'
+        totals = json.loads((study/'results.json').read_text())['totals']
+        before, after = (totals['narrow'][method]['100'] for method in ('prior','fused_xview3'))
+        transition = f"{before['matched']}/{before['labels']} → {after['matched']}/{after['labels']}"
+        self.assertTrue(any(transition in item.value and '410 lượt rà' in item.value for item in app.markdown))
+        app.toggle(key='rtc_xview3_ais_example').set_value(True).run()
+        self.assertFalse(app.exception)
+        sample = json.loads((study/'example.json').read_text())
+        self.assertTrue(any(sample['area'] in item.value and f"{sample['reviewed']} lượt rà" in item.value
+                            for item in app.caption))
         app.radio(key='main_section').set_value('Hướng dẫn').run()
         self.assertNotIn('muc', app.query_params)
 

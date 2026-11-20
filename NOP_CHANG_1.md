@@ -32,7 +32,7 @@ Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Tr�
 
 > Mở **Phát hiện thêm với cùng số lượt rà** để so sánh lọc điểm cách nhau trong 35 m và chia ô ảnh chồng lấn. Mở **Thử xoay, lật và chia ô ảnh cho mô hình bản đồ** để xem ba nhãn tìm thêm trên cùng ảnh radar. Mục **Kết quả năm hướng tăng recall đã thử** ghi thêm các đối chứng heatmap, tinh chỉnh YOLO, cường độ radar, hiệu chỉnh tâm và phân bổ lượt rà. Tải tọa độ của các danh sách đã chấm và dùng lệnh trong [hướng dẫn tái lập](reports/final/vietnam_rtc_tta_20261119/README.md) để tính lại số nhãn khớp.
 
-> Mở [đối chứng recall](https://sonarnet.streamlit.app/?trang=minh-chung&muc=recall) để xem so sánh xView3 với YOLO. Cùng 191 lượt rà, phương án phối hợp khớp 103/152 so với 102/152. Đổi sang **2 lượt Bắc Trung Bộ** để xem phép kiểm riêng trên tám nhãn. Bật **Xem nhãn tìm thêm trên ảnh radar** để xem ô minh họa. Mục **Đối chứng với mốc AIS và chi phí rà bổ sung** cho thấy tác động của số lượt rà trên sáu cảnh độc lập.
+> Mở [đối chứng recall](https://sonarnet.streamlit.app/?trang=minh-chung&muc=recall) để xem so sánh xView3 với YOLO. Cùng 191 lượt rà, phương án phối hợp khớp 103/152 so với 102/152. Đổi sang **2 lượt Bắc Trung Bộ** để xem phép kiểm riêng trên tám nhãn. Bật **Xem nhãn tìm thêm trên ảnh radar** để xem ô minh họa. Mục **Đối chứng với mốc AIS và chi phí rà bổ sung** cho thấy tác động của số lượt rà trên sáu cảnh độc lập. Bật **Xem ô ảnh xView3 khớp thêm mốc AIS** để xem ca nhận thêm một vị trí tham chiếu trên ảnh thật.
 
 > Ở mục **Kiểm tra trên ảnh ven biển Việt Nam**, xem mẫu Sentinel-1 có nhãn điểm Ai2 ở Đà Nẵng và Vũng Tàu. Có thể đổi bán kính 50, 100, 150 m và xem số ứng viên cần rà. Đây là phép so sánh với nhãn điểm, khác với IoU 0,50 dùng để chấm hộp trên SLC.
 

@@ -1,0 +1,137 @@
+{
+  "product": "S1A_IW_GRDH_1SDV_20240713T015016_20240713T015045_054736_06AA18_rtc",
+  "utc": "2024-07-13T01:50:30.583324+00:00",
+  "source_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240713T015016_20240713T015045_054736_06AA18_rtc",
+  "source_assets": {
+    "vv": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/13/IW/DV/S1A_IW_GRDH_1SDV_20240713T015016_20240713T015045_054736_06AA18_A9F6/measurement/iw-vv.rtc.tiff",
+    "vh": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/13/IW/DV/S1A_IW_GRDH_1SDV_20240713T015016_20240713T015045_054736_06AA18_A9F6/measurement/iw-vh.rtc.tiff"
+  },
+  "windows": [
+    {
+      "tile": 0,
+      "bbox": [
+        -118.3,
+        33.64,
+        -118.23,
+        33.695
+      ],
+      "width": 1024,
+      "preview_sha256": "e2fdf63a8234b0b802458209562c2c6b6440ae53ea43a940e08fff5a225d2f3d",
+      "files": {
+        "vv": {
+          "name": "vv-0.npz",
+          "sha256": "1dcb2dbb59c07fd4b6b477c375ab7e16e799bce88d029ef0dff688458401445f"
+        },
+        "vh": {
+          "name": "vh-0.npz",
+          "sha256": "baa28c85fe9a5675f449c180b20ac6bf509bc421dad36c257e18d32738a6648e"
+        }
+      }
+    },
+    {
+      "tile": 1,
+      "bbox": [
+        -118.23,
+        33.64,
+        -118.16,
+        33.695
+      ],
+      "width": 1024,
+      "preview_sha256": "3cdc80060923e5402abb138937d92329258be2a46719991b27d9bccbdfc28ffa",
+      "files": {
+        "vv": {
+          "name": "vv-1.npz",
+          "sha256": "574b295e7b92cd109e21ec40a41872e61c735d462f75c868c2d0e3c4d7cb54b6"
+        },
+        "vh": {
+          "name": "vh-1.npz",
+          "sha256": "6f333f5492a8ed0f0dff34a926243a8b477d5ce16fcc59399b8ab0f77cb90325"
+        }
+      }
+    },
+    {
+      "tile": 2,
+      "bbox": [
+        -118.16,
+        33.64,
+        -118.09,
+        33.695
+      ],
+      "width": 1024,
+      "preview_sha256": "4eef8c39df3e7bdb1874f1e893700398ef609745f3c6592dd68e9be6a8bda9b9",
+      "files": {
+        "vv": {
+          "name": "vv-2.npz",
+          "sha256": "ae56e65c1bfa470f69d21eca9b5103d3760743b675193aa1e56043f67712ecdd"
+        },
+        "vh": {
+          "name": "vh-2.npz",
+          "sha256": "62e5823b75dd0e0523d1a5b56fd8431b906afc95272747fdd78de9acaad5126f"
+        }
+      }
+    },
+    {
+      "tile": 3,
+      "bbox": [
+        -118.3,
+        33.695,
+        -118.23,
+        33.75
+      ],
+      "width": 1024,
+      "preview_sha256": "1c9ceda08aefc27595e7df67a40e2466d4443f99edeb5b82518f88d51e45d964",
+      "files": {
+        "vv": {
+          "name": "vv-3.npz",
+          "sha256": "9399cd83da7f6f4c5f2f47ae72c25b6799eaeabb66b0529dfe95d1961c8bdd20"
+        },
+        "vh": {
+          "name": "vh-3.npz",
+          "sha256": "76b203ab4357ebe557aa3cb865507a6c946409e694c8b8aa8ebc66f894a53bd4"
+        }
+      }
+    },
+    {
+      "tile": 4,
+      "bbox": [
+        -118.23,
+        33.695,
+        -118.16,
+        33.75
+      ],
+      "width": 1024,
+      "preview_sha256": "b6092571c7f0fe8ec1284b4255d9f91cb51fa4f7e7956d72ab712add2170aa2e",
+      "files": {
+        "vv": {
+          "name": "vv-4.npz",
+          "sha256": "375c9489d89d7f13ad269d2346e4aaef5d661925236c734f3d7ca5ba8fcd4e01"
+        },
+        "vh": {
+          "name": "vh-4.npz",
+          "sha256": "7dbdc5077d9704b68f42dd20de1c3fb194e334757aeb8890240bffc1244744d3"
+        }
+      }
+    },
+    {
+      "tile": 5,
+      "bbox": [
+        -118.16,
+        33.695,
+        -118.09,
+        33.75
+      ],
+      "width": 1024,
+      "preview_sha256": "0dffafe66686c85312bd0adad76d84da173d604fafcbd090e63be75ae45918e5",
+      "files": {
+        "vv": {
+          "name": "vv-5.npz",
+          "sha256": "f4285c4ae3fa9c2a3e3a675f5fc157ad9752fe3a6ac14c810553215c393f0b01"
+        },
+        "vh": {
+          "name": "vh-5.npz",
+          "sha256": "445072ddb7d91875d6c5ce5f1284715f1df37791c88d8870ca1b09c1ab173895"
+        }
+      }
+    }
+  ]
+}

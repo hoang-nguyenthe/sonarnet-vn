@@ -355,6 +355,33 @@ def render_recall_followup(root: Path, folder: Path) -> None:
                            'sonarnet-doi-chung-phat-hien-bang-ais.json', 'application/json')
         st.download_button('Tải số liệu rà bổ sung', extension_path.read_bytes(),
                            'sonarnet-doi-chung-ra-bo-sung.json', 'application/json')
+        render_dual_band_ais(ais_path.parent/'dual-band')
+
+
+def render_dual_band_ais(folder: Path) -> None:
+    report = folder/'results.json'
+    if not report.is_file():
+        return
+    cases = json.loads(report.read_text())['totals']
+    st.markdown('**Kiểm tra xView3 trên cùng các mốc AIS**')
+    for mode in ('narrow','wide'):
+        reference, fused = (cases[mode][key]['100'] for key in ('prior','fused_xview3'))
+        reviews = f"{reference['predictions']:,}".replace(',', '.')
+        st.markdown(f"Ở **{reviews} lượt rà**, phối hợp VV/VH với YOLO cho "
+                    f"**{reference['matched']}/{reference['labels']} → {fused['matched']}/{fused['labels']}** mốc khớp.")
+    st.caption('Dùng cùng trọng số xView3 đã thử trên ảnh Việt Nam. Mỗi ô có hai kênh radar cùng lượt chụp. '
+               'Số điểm cần rà được giữ theo từng cảnh.')
+    st.download_button('Tải kết quả xView3 đối chiếu AIS',report.read_bytes(),
+                       'sonarnet-xview3-doi-chung-ais.json','application/json')
+    if st.toggle('Xem ô ảnh xView3 khớp thêm mốc AIS',key='rtc_xview3_ais_example'):
+        example=json.loads((folder/'example.json').read_text())
+        st.caption(f"{example['area']} · {example['utc'][:10]} · "
+                   f"{example['before']} → {example['after']} mốc khớp với {example['reviewed']} lượt rà.")
+        for column, side, label in zip(st.columns(2),('before','after'),('Danh sách trước','Phối hợp xView3')):
+            column.markdown(f'**{label}**')
+            column.image(str(folder/example['images'][side]['name']),width='stretch')
+        distance=f"{example['distance_m']:.1f}".replace('.', ',')
+        st.caption(f"Hình thoi lam là mốc AIS. Vòng vàng là tâm radar ghép cách mốc {distance} m.")
 
 
 def render_map_tta_recall(root: Path) -> None:
