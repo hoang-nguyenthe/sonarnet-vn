@@ -54,14 +54,14 @@ def render_improvements(root: Path):
     st.markdown('''<div class="sonar-hero"><div class="sonar-eyebrow">KIỂM TRA BẰNG CHỨNG</div>
     <div class="sonar-title">Biết khi nào chưa thể kết luận.</div>
     <div class="sonar-copy">Tự kiểm tra cách SonarNet xử lý thiếu dữ liệu, thông tin mâu thuẫn và những cặp ghép không chắc chắn.</div></div>''', unsafe_allow_html=True)
-    final_report = root/'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
-    if final_report.is_file():
-        st.download_button('Tải báo cáo cải tiến Chặng 1', final_report.read_bytes(),
-                           final_report.name, 'application/pdf', key='download_chang1_report')
     submission_report = root/'output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf'
     if submission_report.is_file():
         st.download_button('Tải báo cáo nộp Chặng 1 · 20 trang', submission_report.read_bytes(),
                            submission_report.name, 'application/pdf', key='download_submission_report')
+    final_report = root/'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
+    if final_report.is_file():
+        st.download_button('Tải báo cáo cải tiến Chặng 1', final_report.read_bytes(),
+                           final_report.name, 'application/pdf', key='download_chang1_report')
     if st.toggle('Mở hồ sơ ảnh SAR thật thiếu AIS', key='evidence_open_snapshot'):
         render_snapshot(root)
     render_contrast_recall(root)
@@ -293,7 +293,10 @@ def render_coincident_replay(root: Path):
         name = tile['marked'] if marked else f"tile_{tile['tile']}.png"
         path_image = directory/name
         if path_image.is_file():
-            st.image(str(path_image),width=680,caption='Lam: có mốc AIS gần và tách biệt. Vàng: ứng viên còn thiếu mốc đối chiếu.')
+            st.container(width=680).image(
+                path_image, width='stretch',
+                caption='Lam: có mốc AIS gần và tách biệt. Vàng: ứng viên còn thiếu mốc đối chiếu.',
+            )
         st.download_button('Tải kết quả đồng thời SAR–AIS',path.read_bytes(),'sonarnet-sar-ais-cung-canh.json','application/json')
 
 
@@ -340,7 +343,7 @@ def render_multiscene_sar_ais(root: Path):
             if marked:
                 caption += (' Lam là khung có mốc ít dịch chuyển, vàng là mốc gần giờ chụp, '
                             'tím là các khung còn lại.')
-            st.image(str(image),width=540,caption=caption)
+            st.container(width=540).image(image, width='stretch', caption=caption)
         st.download_button('Tải số liệu sáu lượt chụp SAR–AIS', path.read_bytes(),
                            'sonarnet-sar-ais-sau-luot-chup.json','application/json')
 

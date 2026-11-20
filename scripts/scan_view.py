@@ -146,7 +146,7 @@ def render_scan(root: Path, *, fixed_sample=False):
     view = st.radio('Lớp hiển thị', image_views, horizontal=True, key='review_image_view')
     image_names = ('candidates.jpg','source.png','raw-model-candidates.jpg')
     displayed = images[image_names[image_views.index(view)]]
-    st.image(displayed, width=704, caption=f'{tile_label(tile)} · {view}')
+    st.container(width=704).image(displayed, width='stretch', caption=f'{tile_label(tile)} · {view}')
     if view == image_views[2] and snapshot is None:
         excluded = tile.get('excluded_detections', [])
         coast = sum(d.get('surface') == 'excluded_coast' for d in excluded)

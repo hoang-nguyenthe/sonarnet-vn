@@ -41,8 +41,11 @@ def render_snapshot(root: Path):
     st.write(f"**Ảnh {evidence['key']} · {evidence['observation_day_utc']} UTC**")
     st.caption(f"Nguồn: {evidence['source']}. Ảnh ghép trong ngày, chưa có thời điểm riêng cho từng điểm ảnh.")
     highlighted = st.toggle('Xem ảnh có đánh dấu ứng viên', value=False, key='snapshot_highlight')
-    st.image(files['candidates.jpg' if highlighted else 'source.png'], width=520,
-             caption='Ảnh có khung ứng viên · chưa xác minh' if highlighted else 'Ảnh radar gốc dùng trong hồ sơ mẫu')
+    st.container(width=520).image(
+        files['candidates.jpg' if highlighted else 'source.png'],
+        width='stretch',
+        caption='Ảnh có khung ứng viên · chưa xác minh' if highlighted else 'Ảnh radar gốc dùng trong hồ sơ mẫu',
+    )
     st.info('Thiếu dữ liệu AIS · Đang xác minh · Chưa có kết luận nghiệp vụ.')
     st.download_button('Tải ZIP ảnh và hồ sơ mẫu',payload,'sonarnet-ho-so-mau-cell-0-1.zip','application/zip',key='snapshot_zip')
     with st.expander('Nguồn và mã kiểm chứng'):
