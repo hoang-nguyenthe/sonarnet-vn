@@ -3,9 +3,11 @@ import argparse
 import hashlib
 from io import BytesIO
 import json
+import os
 from pathlib import Path
-import shutil
 import subprocess
+import sys
+from tempfile import TemporaryDirectory
 import zipfile
 
 
@@ -21,6 +23,29 @@ PDF = 'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
 
 def sha256(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def run_pinned_scenarios(git, commit):
+    """Use the engine and scenarios from the evidence revision."""
+    script = 'scripts/ais_demo_cases.py'
+    entries = subprocess.check_output(
+        git + ['ls-tree', '-rz', commit, '--', 'src/sonarnet', script], text=True
+    )
+    with TemporaryDirectory(prefix='sonarnet-ais-cases-') as directory:
+        root = Path(directory)
+        for entry in entries.rstrip('\0').split('\0'):
+            metadata, name = entry.split('\t', 1)
+            mode, kind, object_id = metadata.split()
+            target = root / name
+            if kind != 'blob' or mode not in {'100644', '100755'}:
+                raise ValueError(f'Unexpected Git entry in pinned scenario module: {name}')
+            if not target.resolve().is_relative_to(root.resolve()):
+                raise ValueError(f'Unexpected path in pinned scenario module: {name}')
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(subprocess.check_output(git + ['cat-file', 'blob', object_id]))
+        env = {**os.environ, 'PYTHONPATH': str(root / 'src')}
+        result = subprocess.check_output([sys.executable, str(root / script)], cwd=root, env=env)
+    return json.loads(result)
 
 
 def export(output, repository, revision):
@@ -39,6 +64,7 @@ def export(output, repository, revision):
     vietnam = read_json(f'{TRANSFER}/summary.json')['datasets']
     dual = read_json(f'{DUAL}/results.json')['totals']
     association = read_json(MATCH)['aggregate']
+    scenarios = run_pinned_scenarios(git, commit)
     local_example = read_json(f'{TRANSFER}/xview3/recovered-example.json')
     ais_example = read_json(f'{DUAL}/example.json')
     local_results = read_json(f'{TRANSFER}/xview3/results.json')
@@ -85,6 +111,7 @@ def export(output, repository, revision):
         'vietnam': {key: value['modes'] for key, value in vietnam.items()},
         'ais': dual,
         'association': association,
+        'scenarios': scenarios,
         'examples': {
             'vietnam': {
                 'area': 'Vịnh Quảng Ninh, 24/06/2022',
@@ -121,18 +148,19 @@ def export(output, repository, revision):
             'aisResults': f'{blob}/{DUAL}/results.json',
             'aisProtocol': f'{blob}/{DUAL}/protocol.json',
             'associationResults': f'{blob}/{MATCH}',
+            'scenarioCode': f'{blob}/scripts/ais_demo_cases.py',
         },
     }
 
     output.mkdir(parents=True, exist_ok=False)
     (output / 'data').mkdir()
     for name in ('index.html', 'style.css', 'app.js'):
-        shutil.copyfile(ROOT / 'web/chang1' / name, output / name)
+        (output / name).write_bytes(read(f'web/chang1/{name}'))
     (output / '.nojekyll').touch()
     for name, contents in media.items():
         (output / 'data' / name).write_bytes(contents)
     (output / 'data/minh-chung.json').write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+        json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8'
     )
 
 

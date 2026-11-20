@@ -9,74 +9,7 @@ import streamlit as st
 from demo_snapshot import render_snapshot
 from evaluation_summary import render_evaluation_summary
 from vn_recall_view import render_contrast_recall, render_fresh_recall, render_vn_recall
-from sonarnet.config import RunConfig
-from sonarnet.fusion.kalman import KalmanEstimate
-from sonarnet.fusion.matching import Detection, SARAISFusion
-from sonarnet.fusion.status import STATE_LABELS, pending_review
-
-SCENARIOS = {
-    'Thiếu AIS': 'missing',
-    'AIS ở ngoài vùng ghép': 'distant',
-    'Kích thước mâu thuẫn': 'conflict',
-    'Thiếu kích thước khai báo': 'missing_size',
-    'AIS quá cũ': 'stale',
-    'AIS gần nhất đã cũ, có tín hiệu khác gần đó': 'stale_nearby',
-    'Hai quỹ đạo giao nhau': 'crossing',
-    'Chuỗi AIS lệch vị trí': 'bias',
-    'Dữ liệu đủ điều kiện ghép': 'clean',
-}
-REASONS = {
-    'no_ais': 'Không có AIS để đối chiếu',
-    'out_of_range': 'Không có AIS trong ngưỡng ghép',
-    'stale_ais': 'AIS cách thời điểm chụp quá xa',
-    'uncertain_position': 'Độ bất định vị trí vượt ngưỡng',
-    'invalid_ais': 'AIS thiếu hoặc có giá trị không hợp lệ',
-    'ambiguous': 'Nhiều ứng viên cạnh tranh; chưa thể chọn',
-    'assigned_elsewhere': 'Không có cặp duy nhất trong phép gán',
-    'matched': 'Đạt điều kiện ghép vị trí',
-    'invalid_detection': 'Tọa độ SAR không hợp lệ',
-}
-
-
-def run_scenario(kind, age_s=None, sigma_m=20.):
-    """Illustrative inputs go through the production association/classification code."""
-    cfg = RunConfig()
-    fusion = SARAISFusion(cfg)
-    positions = {'crossing': [-5., 5.], 'bias': [-70., 70.]}.get(kind, [0.])
-    detections = [Detection(i, 0., x / 111195., 80., 20., (0, 0, 8, 2))
-                  for i, x in enumerate(positions)]
-    estimates = {}
-    positions_ais = {}
-    if kind != 'missing':
-        for i, x in enumerate(positions):
-            offset = 700. if kind == 'distant' else 3.
-            if kind == 'bias':
-                offset = (160., -160.)[i]
-            age = age_s if age_s is not None else (600. if kind in {'stale','stale_nearby'} else 10.)
-            estimate = KalmanEstimate(0., (x + offset) / 111195., 0., 0., sigma_m, age, 5)
-            estimate.declared_length_m = float('nan') if kind == 'missing_size' else (200. if kind == 'conflict' else 80.)
-            estimates[100 + i] = estimate
-            positions_ais[100 + i] = x + offset
-    if kind == 'stale_nearby':
-        estimates[101] = KalmanEstimate(0.,80/111195.,0.,0.,20.,10.,5)
-        positions_ais[101] = 80.
-    matches, distances, reasons = fusion.match_with_reasons(detections, estimates)
-    states = fusion.classify_states(detections, matches, estimates, reasons)
-    rows = []
-    for i, state in enumerate(states):
-        rows.append({
-            'Điểm SAR': f'Điểm {i + 1}',
-            'Trạng thái': STATE_LABELS[state],
-            'Mã AIS mẫu': str(matches[i]) if i in matches else 'Chưa ghép',
-            'Khoảng cách (m)': round(distances[i], 1) if i in distances else None,
-            'Lý do': REASONS[reasons[i]],
-            'Xác minh nghiệp vụ': 'Chờ người có chuyên môn',
-        })
-    return rows, dict(dataset_type='synthetic_demo', scenario=kind,
-        age_s=age_s, sigma_m=sigma_m, thresholds=vars(cfg.fusion),
-        states=states, reasons=reasons, matches=matches,
-        sar_east_m=positions, ais_east_m=positions_ais,
-        operational_assessment=pending_review())
+from ais_demo_cases import SCENARIOS, run_scenario
 
 
 def draw_scenario(payload):

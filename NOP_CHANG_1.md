@@ -14,7 +14,7 @@ Trong ZIP phát hành, mở **NOI_DUNG_DIEN_CONG.md** để sao chép ba liên k
 
 Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng C. ZIP là bản bàn giao mã nguồn và bằng chứng để rà soát. Chủ dự án kiểm tra quyền mở cả ba liên kết rồi tự xác nhận cam kết và nộp chính thức.
 
-[Trang minh chứng công khai](https://hoang-nguyenthe.github.io/sonarnet-vn/) mở trực tiếp các đối chứng recall, số liệu ghép AIS, ảnh trước và sau, báo cáo PDF và hồ sơ xuất mẫu. Có thể lọc kết quả và tải ghi chú rà ảnh. Đây là đường dẫn để đọc minh chứng, còn ô **Sản phẩm chạy thử** dùng ứng dụng Streamlit ở bảng trên.
+[Trang minh chứng công khai](https://hoang-nguyenthe.github.io/sonarnet-vn/) mở trực tiếp các đối chứng recall, ảnh trước và sau, báo cáo PDF và hồ sơ xuất mẫu. [Thử quyết định ghép AIS](https://hoang-nguyenthe.github.io/sonarnet-vn/#thu-ghep) để đổi ca, tuổi AIS và độ bất định ở hai phía của ngưỡng. Kết quả mô phỏng được tính bằng cùng bộ ghép của ứng dụng và có thể tải JSON gắn với commit. Ô **Sản phẩm chạy thử** dùng ứng dụng Streamlit ở bảng trên.
 
 ## Đối chiếu yêu cầu với minh chứng
 

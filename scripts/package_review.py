@@ -59,6 +59,7 @@ CHANG1_FILES = {
     'docs/DEMO_RUNBOOK.md',
     'docs/AI_DECLARATION_CHANG1.md',
     'scripts/build_chang1_public_site.py',
+    'scripts/ais_demo_cases.py',
     'web/chang1/index.html',
     'web/chang1/style.css',
     'web/chang1/app.js',
@@ -220,7 +221,7 @@ https://sonarnet.streamlit.app/?trang=minh-chung
 
 https://hoang-nguyenthe.github.io/sonarnet-vn/
 
-Đường dẫn bổ sung để xem số liệu và tải hồ sơ mẫu.
+Đường dẫn bổ sung để xem số liệu, thử ca ghép AIS và tải hồ sơ mẫu.
 
 Ba ô liên kết là bắt buộc. Ô phiên bản là tùy chọn. Xem [hướng dẫn nộp](NOP_CHANG_1.md)
 để lấy nội dung dùng thử và khai báo AI. Chủ dự án kiểm tra lại cam kết và lưu

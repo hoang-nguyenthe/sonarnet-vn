@@ -62,6 +62,16 @@ tbody tr:last-child > * { border-bottom: 0; }
 .fraction { white-space: nowrap; font-weight: 700; }
 .metric-bar { display: block; height: .25rem; width: min(100%, 8rem); background: #e0eeeb; border-radius: .25rem; margin-top: .3rem; }
 .metric-bar > span { display: block; height: 100%; background: var(--teal); border-radius: .25rem; }
+.case-controls { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr); }
+.case-figure { margin-top: 1rem; padding: .5rem .75rem .75rem; border: 1px solid var(--line); border-radius: .5rem; background: #f4f8f8; }
+.case-figure canvas { display: block; width: 100%; height: 124px; }
+.case-figure figcaption { color: var(--muted); font-size: .86rem; }
+.case-table tbody th { width: 16%; }
+.case-table td strong, .case-table td small { display: block; }
+.case-table td small { margin-top: .22rem; color: var(--muted); }
+.panel details { margin-top: 1rem; }
+.panel summary { color: var(--teal); font-weight: 650; cursor: pointer; }
+.panel details p { margin-top: .5rem; color: var(--muted); }
 .side-by-side { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 47rem; }
 .image-card { border: 1px solid var(--line); border-radius: .8rem; background: #fff; overflow: hidden; }
 .image-card img { width: 100%; border-radius: 0; }
