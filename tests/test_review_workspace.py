@@ -200,10 +200,19 @@ class WorkspaceTests(unittest.TestCase):
                 evidence_bundle(root,tile,review,'12/09/2026')
 
     def test_real_bundle_integrity(self):
-        root=Path(__file__).resolve().parents[1]
-        report=json.loads((root/'assets/real_scan/report.json').read_text())
-        tile=next(t for t in report['tiles'] if t['status']=='processed')
-        raw=evidence_bundle(root,tile,{'status':'Chưa xem xét','note':'test'},'12/09/2026')
+        root = Path(__file__).resolve().parents[1]
+        package = root / 'PACKAGE_MANIFEST.json'
+        fixed_images = None
+        if package.is_file() and not json.loads(package.read_text())['includes_published_map_images']:
+            from demo_snapshot import load_snapshot
+            tile, fixed_images, _ = load_snapshot(root)
+        else:
+            report = json.loads((root / 'assets/real_scan/report.json').read_text())
+            tile = next(t for t in report['tiles'] if t['status'] == 'processed')
+        raw = evidence_bundle(
+            root, tile, {'status': 'Chưa xem xét', 'note': 'test'}, '12/09/2026',
+            fixed_images=fixed_images,
+        )
         with zipfile.ZipFile(BytesIO(raw)) as archive:
             checks=json.loads(archive.read('checksums.json'))
             self.assertEqual(set(checks),{'source.png','candidates.jpg','raw-model-candidates.jpg','review.html','evidence.json'})
