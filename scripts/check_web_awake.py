@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from hashlib import sha256
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,11 @@ from datetime import datetime, timezone
 from urllib.parse import urlsplit
 
 APP_URL = "https://sonarnet.streamlit.app/"
+RECALL_LINK = "?trang=minh-chung&muc=recall"
+RECALL_HEADING = "Đối chứng recall trên ảnh Sentinel-1"
+RECALL_DOWNLOAD = "Tải kết quả thử radar hai kênh"
+RECALL_SUMMARY = (Path(__file__).resolve().parents[1]
+                  / "reports/final/vietnam_rtc_transfer_20261119/summary.json")
 WAKE_BUTTON = "Yes, get this app back up!"
 READY_HEADING = re.compile(r"Đọc tín hiệu biển", re.IGNORECASE)
 
@@ -54,7 +60,7 @@ def classify_error(text):
     return None
 
 
-def inspect_page(page, *, evidence=False):
+def inspect_page(page, *, evidence=False, recall=False):
     """Inspect both Community Cloud's wrapper and the actual Streamlit frame."""
     ready = False
     wake = None
@@ -72,7 +78,12 @@ def inspect_page(page, *, evidence=False):
             button = frame.get_by_role("button", name=WAKE_BUTTON, exact=True)
             if button.is_visible():
                 wake = button
-            if evidence:
+            if recall:
+                ready = ready or (
+                    frame.get_by_role("heading", name=RECALL_HEADING, exact=True).is_visible()
+                    and frame.get_by_role("button", name=RECALL_DOWNLOAD, exact=True).is_visible()
+                )
+            elif evidence:
                 ready = ready or all(frame.get_by_text(marker, exact=True).first.is_visible() for marker in (
                     "Kết quả trước và sau cải tiến", "Kiểm tra thêm cách đọc SAR ở hai tỷ lệ",
                     "Kiểm tra trên ảnh ven biển Việt Nam", "Huấn luyện ở 640 px giữ thêm mục tiêu",
@@ -118,6 +129,22 @@ def wait_for_app(page, connection, report, timeout_seconds=420,
     raise HealthCheckError("app_not_ready_before_deadline")
 
 
+def verify_recall_download(page, expected_sha):
+    """Check the actual release payload from the public evidence control."""
+    for frame in page.frames:
+        if urlsplit(frame.url).hostname != "sonarnet.streamlit.app" or frame.is_detached():
+            continue
+        button = frame.get_by_role("button", name=RECALL_DOWNLOAD, exact=True)
+        if button.is_visible():
+            with page.expect_download(timeout=30000) as receipt:
+                button.click(timeout=10000)
+            actual_sha = sha256(receipt.value.path().read_bytes()).hexdigest()
+            if actual_sha != expected_sha:
+                raise HealthCheckError("recall_payload_differs_from_release")
+            return actual_sha
+    raise HealthCheckError("recall_download_control_missing")
+
+
 def write_report(output, report):
     output.mkdir(parents=True, exist_ok=True)
     (output / "result.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
@@ -125,7 +152,8 @@ def write_report(output, report):
     if summary:
         with open(summary, "a", encoding="utf-8") as handle:
             handle.write("## SonarNet browser availability check\n\n")
-            for key in ("status", "checked_at", "elapsed_seconds", "wake_clicks", "websocket_messages", "error"):
+            for key in ("mode", "status", "checked_at", "elapsed_seconds", "wake_clicks",
+                        "websocket_messages", "recall_sha256", "error"):
                 if key in report:
                     handle.write(f"- {key}: {report[key]}\n")
             handle.write("\nPassing means the app rendered and the Streamlit connection stayed active at this check, not continuous uptime.\n")
@@ -134,12 +162,16 @@ def write_report(output, report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=Path("artifacts/web-health"))
-    parser.add_argument("--evidence", action="store_true", help="Require the Chặng 1 evidence page and report control.")
+    target = parser.add_mutually_exclusive_group()
+    target.add_argument("--evidence", action="store_true", help="Require the Chặng 1 evidence page and report control.")
+    target.add_argument("--recall", action="store_true", help="Verify the public recall page and its exact release JSON.")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
+    suffix = RECALL_LINK if args.recall else "?trang=minh-chung" if args.evidence else ""
+    mode = "recall" if args.recall else "chang1_evidence" if args.evidence else "homepage"
     report = {
-        "url": APP_URL + ("?trang=minh-chung" if args.evidence else ""),
-        "mode": "chang1_evidence" if args.evidence else "homepage",
+        "url": APP_URL + suffix,
+        "mode": mode,
         "checked_at": datetime.now(timezone.utc).isoformat(),
         "run_id": os.environ.get("GITHUB_RUN_ID"),
         "event": os.environ.get("GITHUB_EVENT_NAME"),
@@ -159,8 +191,11 @@ def main():
                 page.goto(report["url"], wait_until="domcontentloaded", timeout=60000)
                 # Playwright's wait pumps websocket events; time.sleep would not.
                 wait_for_app(page, connection, report,
-                             inspect=lambda active: inspect_page(active, evidence=args.evidence),
+                             inspect=lambda active: inspect_page(active, evidence=args.evidence, recall=args.recall),
                              sleep=lambda seconds: page.wait_for_timeout(seconds * 1000))
+                if args.recall:
+                    expected_sha = sha256(RECALL_SUMMARY.read_bytes()).hexdigest()
+                    report["recall_sha256"] = verify_recall_download(page, expected_sha)
                 report["status"] = "healthy"
                 if args.evidence:
                     for frame in page.frames:

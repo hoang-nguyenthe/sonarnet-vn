@@ -7,6 +7,10 @@ on:
         description: Verify the Chặng 1 evidence page and report control
         type: boolean
         default: false
+      recall:
+        description: Verify the public recall page and its exact JSON release
+        type: boolean
+        default: false
   schedule:
     # UTC; avoid the busiest start of the hour. Vietnam: 01:17, 07:17, 13:17, 19:17.
     - cron: '17 */6 * * *'
@@ -30,6 +34,7 @@ jobs:
           sparse-checkout: |
             /scripts/check_web_awake.py
             /tests/test_web_awake.py
+            /reports/final/vietnam_rtc_transfer_20261119/summary.json
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -43,9 +48,14 @@ jobs:
       - name: Open app, wake if needed, and verify rendered UI
         env:
           CHECK_EVIDENCE: ${{ inputs.evidence || 'false' }}
+          CHECK_RECALL: ${{ inputs.recall || 'false' }}
         run: |
           args=()
-          if [ "$CHECK_EVIDENCE" = true ]; then args+=(--evidence); fi
+          if [ "$CHECK_RECALL" = true ]; then
+            args+=(--recall)
+          elif [ "$CHECK_EVIDENCE" = true ]; then
+            args+=(--evidence)
+          fi
           python scripts/check_web_awake.py "${args[@]}"
       - name: Save browser evidence
         if: ${{ always() }}

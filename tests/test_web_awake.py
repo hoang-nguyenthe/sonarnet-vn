@@ -1,5 +1,7 @@
 import importlib.util
 from pathlib import Path
+import tempfile
+from unittest.mock import MagicMock
 import unittest
 
 spec = importlib.util.spec_from_file_location("web_health", Path(__file__).resolve().parents[1] / "scripts/check_web_awake.py")
@@ -75,6 +77,41 @@ class WebAwakeTests(unittest.TestCase):
         self.assertEqual(health.classify_error("Oh no. Error running app."), "app_error")
         self.assertEqual(health.classify_error("This app has gone over its resource limits."), "resource_limit")
         self.assertIsNone(health.classify_error("Your app is in the oven"))
+
+    def test_recall_mode_requires_the_new_heading_and_download_control(self):
+        page = MagicMock()
+        frame = MagicMock()
+        page.frames = [frame]
+        frame.url = health.APP_URL + health.RECALL_LINK
+        frame.is_detached.return_value = False
+        frame.locator.return_value.inner_text.return_value = "Minh chứng cải tiến"
+        frame.locator.return_value.count.return_value = 0
+        visible = {"Kết quả trước và sau cải tiến"}
+        frame.get_by_role.side_effect = lambda role, *, name, exact=False: MagicMock(
+            is_visible=lambda: name in visible)
+        self.assertEqual(health.inspect_page(page, recall=True), (False, None))
+        visible.add(health.RECALL_HEADING)
+        self.assertEqual(health.inspect_page(page, recall=True), (False, None))
+        visible.add(health.RECALL_DOWNLOAD)
+        self.assertEqual(health.inspect_page(page, recall=True), (True, None))
+
+    def test_recall_mode_rejects_an_older_download(self):
+        page = MagicMock()
+        frame = MagicMock()
+        page.frames = [frame]
+        frame.url = health.APP_URL + health.RECALL_LINK
+        frame.is_detached.return_value = False
+        frame.get_by_role.return_value.is_visible.return_value = True
+        with tempfile.TemporaryDirectory() as directory:
+            payload = Path(directory) / "summary.json"
+            payload.write_bytes(b"current release")
+            receipt = page.expect_download.return_value.__enter__.return_value
+            receipt.value.path.return_value = payload
+            expected = health.sha256(payload.read_bytes()).hexdigest()
+            self.assertEqual(health.verify_recall_download(page, expected), expected)
+            payload.write_bytes(b"previous release")
+            with self.assertRaisesRegex(health.HealthCheckError, "differs_from_release"):
+                health.verify_recall_download(page, expected)
 
     def test_only_live_streamlit_socket_counts(self):
         tracker = health.StreamlitConnection()
