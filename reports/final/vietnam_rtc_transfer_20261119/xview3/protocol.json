@@ -1,0 +1,35 @@
+{
+  "locked_utc": "2026-11-19T02:44:46.928423+00:00",
+  "evaluator_sha256": "199a721e51a107b79e86f64bb5e2c9f2fa08c7027a6192a6b259b7d4875d0aad",
+  "upstream_revision": "558c15a979f889851b86a797518268944866e820",
+  "weight_url": "https://github.com/selimsef/xview3_solution/releases/download/weights/val_only_TimmUnet_resnet34_77_xview",
+  "weight_sha256": "e8996b174d0e8f352a6e4a9f7bf84f3cf5dbcb418498b4cead403aa687b8fda8",
+  "torch_version": "2.8.0",
+  "timm_version": "1.0.22",
+  "native_input": "VV then VH, g0 dB mapped (dB+40)/15, invalid 0",
+  "tta": "Mean original and inverse-transformed 180-degree rotation. Local maxima in 7×7 window, floor 40/255.",
+  "shortlist": "Each method keeps the same count as the original map on each acquisition. Suppress centers within 35 m and refill from the previous best if needed.",
+  "metrics": "One-to-one WGS84 distances across original valid-water support including windows whose VH is missing.",
+  "selection": "Maximize number of matches at 100 m on the five development acquisitions. On ties prefer previous best; otherwise prefer no rotation and earlier methods.",
+  "scope": "Single released xView3 checkpoint transfer. Ai2 dates postdate the xView3 challenge. Both evaluation groups were used in prior SonarNet experiments; excluded from all decisions in this transfer.",
+  "inputs": {
+    "development": {
+      "vv_manifest_sha256": "d29f2bc9c82ccbd561a0b952980de5d0aee48351a71df062c2d9d821bbb324b6",
+      "vh_manifest_sha256": "f9e0f435637c226c37986b6749490406df080bc277dadfcdc57e53bc0aa4618b",
+      "yolo_cache_sha256": "dcd6219e879c15627b0db09cda3e51ad6937a20b7de766b41bdb16b6de4397fd",
+      "yolo_overlap_sha256": "dd891b9044fc5057d19050818af030dd9668bedb1a17dabb968d42af4cdcbcf3"
+    },
+    "held_out": {
+      "vv_manifest_sha256": "bdcc58e32153530bea2cb24b02bdd8f109995065316422145bb87cb6f634fe06",
+      "vh_manifest_sha256": "e5dcd7ff912e0d96c29178a3f8e8fac0643831676e327469b46f4803f10f3916",
+      "yolo_cache_sha256": "e01baea0964edbdb5ee7dd837541a7eeb734696d58b9f53d8fd239f1f067b1b1",
+      "yolo_overlap_sha256": "ab7b6f3ed821b52c856f7bc19bf80cd90e9cfe2a9319d1e51af73fb9e37a5a0f"
+    },
+    "confirmation": {
+      "vv_manifest_sha256": "9698a5252b8690b55ca021fd4f0d74186c174be4f9ed231e42adfcf28a1dc7c7",
+      "vh_manifest_sha256": "317e0f87318bd8c5e56a3c76151b275f5c177c016b58c73725587850ee2e1c6a",
+      "yolo_cache_sha256": "c90f194158501f5db89c0bdbf4a2be840f43184511a070cda3053bb61c38360d",
+      "yolo_overlap_sha256": "34476e8ed9585d364f807b9d62bf436aa2798bdd39f90148f258d5132c5cb6b4"
+    }
+  }
+}

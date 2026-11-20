@@ -1,0 +1,5851 @@
+{
+  "selected": {
+    "equal_incumbent": "previous_best",
+    "equal_relaxed": "coastal_review"
+  },
+  "test": {
+    "held_out": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 5,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 17,
+          "zoom": 19,
+          "coast": 0
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 21,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 21,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 21,
+              "unmatched": 15
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 57,
+              "unmatched": 53
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 57,
+              "unmatched": 52
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 57,
+              "unmatched": 51
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 26,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 212,
+          "zoom": 221,
+          "coast": 0
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 66,
+              "labels": 89,
+              "predictions": 244,
+              "unmatched": 178
+            },
+            "100": {
+              "matched": 73,
+              "labels": 89,
+              "predictions": 244,
+              "unmatched": 171
+            },
+            "150": {
+              "matched": 73,
+              "labels": 89,
+              "predictions": 244,
+              "unmatched": 171
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 69,
+              "labels": 89,
+              "predictions": 677,
+              "unmatched": 608
+            },
+            "100": {
+              "matched": 76,
+              "labels": 89,
+              "predictions": 677,
+              "unmatched": 601
+            },
+            "150": {
+              "matched": 76,
+              "labels": 89,
+              "predictions": 677,
+              "unmatched": 601
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 39,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 48,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 8
+            },
+            "150": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 43,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 43,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 43,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 43,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 42,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 14
+            },
+            "100": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 48,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 30
+            },
+            "100": {
+              "matched": 58,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 58,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 20
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 57,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 54,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            },
+            "150": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 54,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            },
+            "150": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 57,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 54,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            },
+            "150": {
+              "matched": 63,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 15
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 57,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 57,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 65,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 13
+            },
+            "150": {
+              "matched": 65,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 13
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 51,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 27
+            },
+            "100": {
+              "matched": 61,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 62,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 16
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 1,
+        "nearshore_labels": 2,
+        "raw_candidates": {
+          "full": 21,
+          "zoom": 38,
+          "coast": 42
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 36,
+              "unmatched": 36
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 137,
+              "unmatched": 137
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 137,
+              "unmatched": 137
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 137,
+              "unmatched": 137
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 2,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 4,
+          "zoom": 2,
+          "coast": 1
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 11,
+              "unmatched": 11
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 11,
+              "unmatched": 11
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 11,
+              "unmatched": 11
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 8,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 32,
+          "zoom": 35,
+          "coast": 5
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 41,
+              "unmatched": 41
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 41,
+              "unmatched": 40
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 41,
+              "unmatched": 39
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 113,
+              "unmatched": 113
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 113,
+              "unmatched": 112
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 113,
+              "unmatched": 110
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 7
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 7
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 7
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 7
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 7
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 14
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 14
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 14
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 3,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 14
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 3,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 18,
+          "zoom": 35,
+          "coast": 0
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 32,
+              "unmatched": 27
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 32,
+              "unmatched": 27
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 32,
+              "unmatched": 27
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 85,
+              "unmatched": 80
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 85,
+              "unmatched": 80
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 85,
+              "unmatched": 80
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 12,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 45,
+          "zoom": 67,
+          "coast": 75
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 50,
+              "unmatched": 45
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 50,
+              "unmatched": 45
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 50,
+              "unmatched": 45
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 237,
+              "unmatched": 232
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 237,
+              "unmatched": 232
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 237,
+              "unmatched": 232
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 5,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 21,
+          "zoom": 31,
+          "coast": 29
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 117,
+              "unmatched": 112
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 117,
+              "unmatched": 112
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 117,
+              "unmatched": 112
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 17,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 57,
+          "zoom": 65,
+          "coast": 47
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 73,
+              "unmatched": 62
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 73,
+              "unmatched": 56
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 73,
+              "unmatched": 54
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 242,
+              "unmatched": 231
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 242,
+              "unmatched": 225
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 242,
+              "unmatched": 223
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 2
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+        "region": "kien_giang_west",
+        "windows": 2,
+        "nearshore_labels": 1,
+        "raw_candidates": {
+          "full": 11,
+          "zoom": 19,
+          "coast": 64
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 20,
+              "unmatched": 20
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 20,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 20,
+              "unmatched": 20
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 114,
+              "unmatched": 114
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 114,
+              "unmatched": 114
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 114,
+              "unmatched": 114
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 4,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 7,
+          "zoom": 4,
+          "coast": 0
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 14,
+              "unmatched": 14
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 14,
+              "unmatched": 13
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 14,
+              "unmatched": 13
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 1,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 8,
+          "zoom": 5,
+          "coast": 0
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 17,
+              "unmatched": 16
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          }
+        }
+      }
+    ],
+    "confirmation": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+        "region": "north_central",
+        "windows": 1,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 1,
+          "zoom": 4,
+          "coast": 0
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 8,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 8,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 8,
+              "unmatched": 7
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+        "region": "north_central",
+        "windows": 4,
+        "nearshore_labels": 0,
+        "raw_candidates": {
+          "full": 13,
+          "zoom": 17,
+          "coast": 0
+        },
+        "coverage": {
+          "previous": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 21,
+              "unmatched": 18
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 21,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 21,
+              "unmatched": 15
+            }
+          },
+          "expanded": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 51,
+              "unmatched": 48
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 51,
+              "unmatched": 46
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 51,
+              "unmatched": 45
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "stronger_zoom": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "weak_full_and_zoom": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "coastal_review": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "all_proposals": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "less_redundancy": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "zoom_less_redundancy": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "view_consensus": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          }
+        }
+      }
+    ]
+  },
+  "selection_sha256": "70faa3f8c773cf3b19bf2cb6ec7847244c698dfcb0311ca516d00dc87f71d141"
+}

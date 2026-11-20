@@ -79,7 +79,11 @@ def build(args):
     joint = json.loads(joint_path.read_text()) if joint_path.is_file() else None
     if joint and not joint['complete']:
         raise ValueError('Multiscene appendix requires the complete frozen cohort')
-    total_update_pages = 7 + bool(retest) + bool(local) + bool(fresh) + bool(polar) + equal_review + bool(joint)
+    transfer_dir = ROOT/'reports/final/vietnam_rtc_transfer_20261119'
+    transfer_path = transfer_dir/'summary.json'
+    transfer = json.loads(transfer_path.read_text()) if transfer_path.is_file() else None
+    total_update_pages = (7 + bool(retest) + bool(local) + bool(fresh) + bool(polar)
+                          + equal_review + bool(joint) + bool(transfer))
     b = BytesIO()
     c = Canvas(b, pagesize=A4)
 
@@ -497,7 +501,7 @@ def build(args):
                  'và mã tái lập có trong mục Minh chứng. Nguồn nhãn Ai2 Vessel Detection with '
                  'Sentinels, ảnh Sentinel-1 RTC từ Microsoft Planetary Computer.',y,muted)
         assert y > 66,y
-        footer(total_update_pages - bool(joint))
+        footer(total_update_pages - bool(joint) - bool(transfer))
     if joint:
         y = header('SENTINEL-1 RTC VÀ AIS NOAA', 'Đối chiếu đồng thời trên sáu lượt chụp')
         scenes = joint['scenes']
@@ -538,6 +542,43 @@ def build(args):
                  'ảnh hưởng vị trí. Số liệu cảnh và mã băm ảnh có trong hồ sơ.',y-125,muted,238,310)
             y -= image_size
         assert y > 58,y
+        footer(total_update_pages - bool(transfer))
+    if transfer:
+        y = header('KIỂM TRA RECALL TRÊN ẢNH LỊCH SỬ', 'Tăng recall bằng radar VV và VH')
+        y = text('So hai hướng mở rộng nguồn ứng viên. Một hướng giữ YOLO và đọc ô 3×3 ở ngưỡng thấp. '
+                 'Hướng còn lại dùng checkpoint xView3 đọc VV và VH cùng lượt chụp. '
+                 'Khóa công thức xếp hạng trên năm lượt phát triển theo số nhãn khớp trong 100 m.',y)-12
+        primary = transfer['datasets']['held_out']
+        confirmation = transfer['datasets']['confirmation']
+        y = text(f"Đối chứng chính · {primary['scenes']} lượt chụp, {primary['windows']} ô ảnh",y,sub)-6
+        method_labels = [('map','Bản đồ theo ngưỡng tương ứng'),
+                         ('previous_best','Lọc 35 m hoặc chia ô chồng lấn'),
+                         ('weak_echoes','Quét tín hiệu yếu'),
+                         ('xview3','Mô hình xView3 đọc VV và VH')]
+        def transfer_rows(dataset):
+            modes = list(dataset['modes'].values())
+            return [['Cách phát hiện radar',*(f"{m['map']['predictions']} lượt rà" for m in modes)],
+                    *[[name, *(f"{m[key]['matched']}/{m[key]['labels']}" for m in modes)]
+                      for key,name in method_labels]]
+        y = table(transfer_rows(primary),[301,100,100],y)-11
+        y = text(f"Bắc Trung Bộ · {confirmation['scenes']} lượt chụp, {confirmation['windows']} ô ảnh",y,sub)-6
+        y = table(transfer_rows(confirmation),[301,100,100],y)-9
+        y = text('Mức rà nhỏ dùng riêng điểm tâm xView3 và giữ lọc 35 m cho nhóm quét tín hiệu yếu. '
+                 'Mức rà lớn phối hợp xView3 với YOLO. Một ô thiếu kênh VH vẫn giữ nhãn và đối chứng.',y,muted)-13
+        raw = primary['coverage']
+        y = text('Từ ứng viên đến danh sách có thể rà',y,sub)-7
+        rows = [['Nguồn đề xuất','Nhãn khớp trong toàn bộ danh sách','Ứng viên phải rà']]
+        for key,label in [('previous','Các danh sách YOLO trước đây'),('weak_echoes','Thêm quét tín hiệu yếu'),
+                          ('combined','Các danh sách YOLO trước đây và xView3')]:
+            r = raw[key]
+            rows.append([label,f"{r['matched']}/{r['labels']}",fmt(r['predictions'])])
+        y = table(rows,[233,148,120],y)-10
+        y = text('Số liệu toàn danh sách đo độ phủ của ứng viên thô. Bảng đối chứng ở trên giữ số lượt rà '
+                 'theo từng cảnh. Lượt chụp Bắc Trung Bộ là mẫu nhỏ. Các ngày chấm đã được dùng trong '
+                 'những thử nghiệm SonarNet trước đây và được giữ ngoài bước khóa lần này.',y,muted)-9
+        y = text('Nguồn nhãn Ai2 Vessel Detection with Sentinels. Nguồn ảnh Sentinel-1 RTC qua Microsoft '
+                 'Planetary Computer. Mã, bảng số đếm theo cảnh và tệp tọa độ để phát lại có trong hồ sơ.',y,muted)
+        assert y > 67,y
         footer(total_update_pages)
     c.save()
     b.seek(0)

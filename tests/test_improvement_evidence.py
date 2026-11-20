@@ -139,6 +139,26 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertTrue(any(item.proto.label == 'Tải tọa độ để tính lại recall'
                             for item in app.get('download_button')))
 
+    def test_rtc_transfer_shows_both_test_groups_and_source_example(self):
+        app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
+        app.query_params['trang'] = 'minh-chung'
+        app.run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('102/152 → 103/152' in item.value and '191 lượt rà' in item.value
+                            for item in app.markdown))
+        benchmark = next(item.value for item in app.dataframe if 'Cách phát hiện radar' in item.value.columns)
+        self.assertEqual(benchmark.iloc[-1][['116 lượt rà', '191 lượt rà']].tolist(), ['70/152', '103/152'])
+        app.toggle(key='rtc_xview_example').set_value(True).run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('5 → 6 nhãn khớp' in item.value and '9 lượt rà' in item.value
+                            for item in app.caption))
+        self.assertTrue(any(item.proto.label == 'Tải thông tin ô ảnh xView3'
+                            for item in app.get('download_button')))
+        app.radio(key='rtc_transfer_group').set_value('confirmation').run()
+        self.assertFalse(app.exception)
+        self.assertTrue(any('6/8 → 8/8' in item.value and '10 lượt rà' in item.value
+                            for item in app.markdown))
+
     def test_direct_link_opens_observation_sample(self):
         app = AppTest.from_file(str(ROOT/'scripts/demo_app.py'), default_timeout=60)
         app.query_params['trang'] = 'quan-sat'

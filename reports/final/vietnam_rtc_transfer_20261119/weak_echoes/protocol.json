@@ -1,0 +1,67 @@
+{
+  "started_at": "2026-11-19T02:39:50.802554+00:00",
+  "evaluator_sha256": "8f3073efcc2f6429afffd6b31de7cb0bb9afbf907b02463af9aed2af179223b7",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "coast_mask_sha256": "d60230d20336609872f09794ab008a75d6afbccba9126be58a41d7d6860a7f31",
+  "versions": {
+    "torch": "2.8.0",
+    "numpy": "2.4.6"
+  },
+  "zoom": {
+    "grid": [
+      3,
+      3
+    ],
+    "halo_pixels": 48,
+    "input_pixels": 640
+  },
+  "floor": 0.01,
+  "policies": {
+    "stronger_zoom": [
+      "zoom"
+    ],
+    "weak_full_and_zoom": [
+      "full",
+      "zoom"
+    ],
+    "coastal_review": [
+      "coast"
+    ],
+    "all_proposals": [
+      "full",
+      "zoom",
+      "coast"
+    ],
+    "less_redundancy": [],
+    "zoom_less_redundancy": [
+      "zoom"
+    ],
+    "view_consensus": [
+      "zoom"
+    ]
+  },
+  "match_metres": [
+    50,
+    100,
+    150
+  ],
+  "selection": "Choose the strongest per budget on development at 100 m. Ties preserve the previous best. Evaluate on separate days. No tuning on held-out or confirmation dates.",
+  "scope": "Retrospective on acquisition dates previously used in other locked experiments.",
+  "inputs": {
+    "development": {
+      "manifest_sha256": "d29f2bc9c82ccbd561a0b952980de5d0aee48351a71df062c2d9d821bbb324b6",
+      "cache_sha256": "dcd6219e879c15627b0db09cda3e51ad6937a20b7de766b41bdb16b6de4397fd",
+      "prior_views_sha256": "dd891b9044fc5057d19050818af030dd9668bedb1a17dabb968d42af4cdcbcf3"
+    },
+    "held_out": {
+      "manifest_sha256": "bdcc58e32153530bea2cb24b02bdd8f109995065316422145bb87cb6f634fe06",
+      "cache_sha256": "e01baea0964edbdb5ee7dd837541a7eeb734696d58b9f53d8fd239f1f067b1b1",
+      "prior_views_sha256": "ab7b6f3ed821b52c856f7bc19bf80cd90e9cfe2a9319d1e51af73fb9e37a5a0f"
+    },
+    "confirmation": {
+      "manifest_sha256": "9698a5252b8690b55ca021fd4f0d74186c174be4f9ed231e42adfcf28a1dc7c7",
+      "cache_sha256": "c90f194158501f5db89c0bdbf4a2be840f43184511a070cda3053bb61c38360d",
+      "prior_views_sha256": "34476e8ed9585d364f807b9d62bf436aa2798bdd39f90148f258d5132c5cb6b4"
+    }
+  }
+}

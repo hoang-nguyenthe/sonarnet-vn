@@ -20,7 +20,7 @@ Cổng Chặng 1 không có ô nộp video hoặc biểu mẫu đăng ký Bảng
 | --- | --- | --- |
 | Phân biệt thiếu dữ liệu, không ghép và đang xác minh | **Mở hồ sơ ảnh SAR thật thiếu AIS**, sau đó thử **Kích thước mâu thuẫn** | Trang 1 và 7. [Hồ sơ xuất mẫu](reports/final/export_verification/sample_evidence.zip) |
 | Dùng thời gian và bất định để ghép AIS | **Vì sao một cặp ghép bị từ chối?**, **Kiểm tra lỗi đổi đối tác sau khi lọc AIS** | Trang 3, 5–7 và 13. [Kết quả SAR–AIS sáu lượt chụp](reports/final/multiscene_sar_ais_20261119/results.json) |
-| Đánh giá độc lập trên ảnh SAR thật và ghi giới hạn | **Đánh giá trên ảnh SAR thật**, **Đối chứng SAR có tọa độ**, **Recall trên 12 lượt chụp mới** | Trang 2, 4, 8–12. [Kết quả theo cảnh ở Việt Nam](reports/final/vietnam_rtc_ranking_20261118/results.json) |
+| Đánh giá độc lập trên ảnh SAR thật và ghi giới hạn | **Đánh giá trên ảnh SAR thật**, **Đối chứng SAR có tọa độ**, **Recall trên 12 lượt chụp mới** | Trang 2, 4, 8–12 và 14. [Kết quả theo cảnh ở Việt Nam](reports/final/vietnam_rtc_ranking_20261118/results.json) |
 | Truy về ảnh nguồn, xuất hồ sơ phục vụ người rà | **Quan sát → Kiểm tra chi tiết**, lưu ghi chú và tải bản xuất | [Hướng dẫn demo](docs/DEMO_RUNBOOK.md) và lệnh kiểm tra ZIP ở dưới |
 | Bộ hồ sơ và khai báo nguồn | Link demo, PDF, mã nguồn ở đầu trang | [Khai báo AI](docs/AI_DECLARATION_CHANG1.md) và [các điểm còn cần xác nhận](docs/FINAL_STATUS.md) |
 
@@ -31,6 +31,8 @@ Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Tr�
 > Trong **Recall trên 12 lượt chụp mới**, chuyển giữa cùng mức trần theo diện tích và đúng số lượt rà của bản đồ để so sánh ngưỡng 0,35 với 0,05 và các bộ xếp hạng thử nghiệm. Dữ liệu là nhãn điểm lịch sử, khớp trong 100 m. Mở **Xem ảnh radar thật và các điểm được tìm thêm** để đối chiếu bằng mắt các điểm khớp và chưa khớp trên cùng một ô ảnh.
 
 > Mở **Phát hiện thêm với cùng số lượt rà** để so sánh lọc điểm cách nhau trong 35 m và chia ô ảnh chồng lấn. Mở **Thử xoay, lật và chia ô ảnh cho mô hình bản đồ** để xem ba nhãn tìm thêm trên cùng ảnh radar. Mục **Kết quả năm hướng tăng recall đã thử** ghi thêm các đối chứng heatmap, tinh chỉnh YOLO, cường độ radar, hiệu chỉnh tâm và phân bổ lượt rà. Tải tọa độ của các danh sách đã chấm và dùng lệnh trong [hướng dẫn tái lập](reports/final/vietnam_rtc_tta_20261119/README.md) để tính lại số nhãn khớp.
+
+> Mở **Mô hình SAR hai kênh và quét tín hiệu yếu** để xem so sánh xView3 với YOLO. Cùng 191 lượt rà, phương án phối hợp khớp 103/152 so với 102/152. Đổi sang **2 lượt Bắc Trung Bộ** để xem phép kiểm riêng trên tám nhãn. Bật **Xem nhãn tìm thêm trên ảnh radar** để xem ô minh họa.
 
 > Ở mục **Kiểm tra trên ảnh ven biển Việt Nam**, xem mẫu Sentinel-1 có nhãn điểm Ai2 ở Đà Nẵng và Vũng Tàu. Có thể đổi bán kính 50, 100, 150 m và xem số ứng viên cần rà. Đây là phép so sánh với nhãn điểm, khác với IoU 0,50 dùng để chấm hộp trên SLC.
 

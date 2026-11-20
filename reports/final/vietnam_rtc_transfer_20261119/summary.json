@@ -1,0 +1,175 @@
+{
+  "comparisons": 714,
+  "datasets": {
+    "held_out": {
+      "scenes": 12,
+      "modes": {
+        "equal_incumbent": {
+          "map": {
+            "labels": 152,
+            "matched": 80,
+            "predictions": 116,
+            "unmatched": 36
+          },
+          "previous_best": {
+            "labels": 152,
+            "matched": 82,
+            "predictions": 116,
+            "unmatched": 34
+          },
+          "weak_echoes": {
+            "labels": 152,
+            "matched": 82,
+            "predictions": 116,
+            "unmatched": 34
+          },
+          "xview3": {
+            "labels": 152,
+            "matched": 70,
+            "predictions": 116,
+            "unmatched": 46
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "labels": 152,
+            "matched": 96,
+            "predictions": 191,
+            "unmatched": 95
+          },
+          "previous_best": {
+            "labels": 152,
+            "matched": 102,
+            "predictions": 191,
+            "unmatched": 89
+          },
+          "weak_echoes": {
+            "labels": 152,
+            "matched": 102,
+            "predictions": 191,
+            "unmatched": 89
+          },
+          "xview3": {
+            "labels": 152,
+            "matched": 103,
+            "predictions": 191,
+            "unmatched": 88
+          }
+        }
+      },
+      "coverage": {
+        "previous": {
+          "labels": 152,
+          "matched": 112,
+          "predictions": 564,
+          "unmatched": 452
+        },
+        "weak_echoes": {
+          "labels": 152,
+          "matched": 116,
+          "predictions": 1821,
+          "unmatched": 1705
+        },
+        "xview3": {
+          "labels": 152,
+          "matched": 66,
+          "predictions": 121,
+          "unmatched": 55
+        },
+        "combined": {
+          "labels": 152,
+          "matched": 119,
+          "predictions": 685,
+          "unmatched": 566
+        }
+      },
+      "missing_vh_windows": 1,
+      "windows": 86
+    },
+    "confirmation": {
+      "scenes": 2,
+      "modes": {
+        "equal_incumbent": {
+          "map": {
+            "labels": 8,
+            "matched": 5,
+            "predictions": 6,
+            "unmatched": 1
+          },
+          "previous_best": {
+            "labels": 8,
+            "matched": 5,
+            "predictions": 6,
+            "unmatched": 1
+          },
+          "weak_echoes": {
+            "labels": 8,
+            "matched": 5,
+            "predictions": 6,
+            "unmatched": 1
+          },
+          "xview3": {
+            "labels": 8,
+            "matched": 6,
+            "predictions": 6,
+            "unmatched": 0
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "labels": 8,
+            "matched": 6,
+            "predictions": 10,
+            "unmatched": 4
+          },
+          "previous_best": {
+            "labels": 8,
+            "matched": 6,
+            "predictions": 10,
+            "unmatched": 4
+          },
+          "weak_echoes": {
+            "labels": 8,
+            "matched": 6,
+            "predictions": 10,
+            "unmatched": 4
+          },
+          "xview3": {
+            "labels": 8,
+            "matched": 8,
+            "predictions": 10,
+            "unmatched": 2
+          }
+        }
+      },
+      "coverage": {
+        "previous": {
+          "labels": 8,
+          "matched": 6,
+          "predictions": 24,
+          "unmatched": 18
+        },
+        "weak_echoes": {
+          "labels": 8,
+          "matched": 6,
+          "predictions": 59,
+          "unmatched": 53
+        },
+        "xview3": {
+          "labels": 8,
+          "matched": 8,
+          "predictions": 8,
+          "unmatched": 0
+        },
+        "combined": {
+          "labels": 8,
+          "matched": 8,
+          "predictions": 32,
+          "unmatched": 24
+        }
+      },
+      "missing_vh_windows": 0,
+      "windows": 5
+    }
+  }
+}

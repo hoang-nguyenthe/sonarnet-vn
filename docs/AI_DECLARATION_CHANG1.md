@@ -1,6 +1,6 @@
 # Khai báo hỗ trợ AI trong lượt cải tiến SonarNet
 
-Phạm vi: công việc được thực hiện trong cuộc trò chuyện Codex này cho chặng cải tiến, ngày 16–19/11/2026. Đây là phụ lục để tác giả đối chiếu và điền vào mẫu BTC, không phải một biểu mẫu BTC tự thiết kế lại.
+Phạm vi: công việc được thực hiện trong cuộc trò chuyện Codex này cho chặng cải tiến, ngày 16–20/11/2026. Đây là phụ lục để tác giả đối chiếu và điền vào mẫu BTC, không phải một biểu mẫu BTC tự thiết kế lại.
 
 | Công đoạn | Vai trò của AI | Căn cứ kiểm tra |
 |---|---|---|
@@ -11,7 +11,7 @@ Phạm vi: công việc được thực hiện trong cuộc trò chuyện Codex 
 | Đánh giá | Viết/chạy công cụ, lưu dự đoán và lỗi; tạo mô phỏng AIS riêng | results.json; summary.csv; kiểm thử |
 | Tài liệu | Soạn báo cáo, vẽ biểu đồ Python, dựng slide và lời thoại | Mã dựng, PDF, PPTX và kịch bản |
 
-Các con số công bố lấy từ đầu ra thực nghiệm. Codex hỗ trợ chuẩn bị và chạy đối chứng đa tỷ lệ, đối chiếu nhãn điểm Ai2 với lịch chụp Sentinel-1 RTC ở ven biển Việt Nam và trình bày bảng kết quả. Các nguồn nhãn SAR gồm LS-SSDD, OSSDD, OpenSAR Insight và Ai2. Nhãn thuộc các bộ nguồn đã công bố. AIS gồm các ca mô phỏng, phát lại bản tin NOAA thật và một cảnh SAR–AIS cùng thời điểm. Từng phép thử có ghi nguồn và phạm vi trong báo cáo.
+Các con số công bố lấy từ đầu ra thực nghiệm. Codex hỗ trợ chuẩn bị và chạy đối chứng đa tỷ lệ, đối chiếu nhãn điểm Ai2 với lịch chụp Sentinel-1 RTC ở ven biển Việt Nam và trình bày bảng kết quả. Các nguồn nhãn SAR gồm LS-SSDD, OSSDD, OpenSAR Insight và Ai2. Nhãn thuộc các bộ nguồn đã công bố. AIS gồm các ca mô phỏng, phát lại bản tin NOAA thật và một cảnh SAR–AIS cùng thời điểm. Đối chứng bổ sung sử dụng checkpoint ResNet34 U-Net do tác giả giải pháp xView3 phát hành và thư viện timm. Đội áp dụng chuẩn hóa ảnh RTC, đối chiếu phương án phối hợp YOLO, kiểm lại phép ghép và trình bày kết quả. Nguồn mã, phiên bản, trọng số và quy trình nằm trong [tài liệu thí nghiệm](../reports/final/vietnam_rtc_transfer_20261119/README.md).
 
 Tác giả cần tự kiểm tra tính đúng của mã, nguồn dữ liệu, nội dung hồ sơ, quyền sử dụng và các cam kết trước khi nộp. AI không thay tác giả ký hoặc xác nhận, không xác nhận thay chuyên gia và không đưa ra kết luận vi phạm.
 

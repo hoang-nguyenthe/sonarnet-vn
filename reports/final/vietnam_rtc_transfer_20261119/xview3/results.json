@@ -1,0 +1,4453 @@
+{
+  "selected": {
+    "equal_incumbent": "xview3_center",
+    "equal_relaxed": "xview3_fused_tta"
+  },
+  "test": {
+    "held_out": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220624T104952_20220624T105017_043804_053ABA_75DA.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 5,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 2,
+          "xview3_vessel": 2,
+          "xview3_vessel_tta": 3
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 21,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 21,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 21,
+              "unmatched": 15
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 2,
+              "labels": 8,
+              "predictions": 3,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 3,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 3,
+              "unmatched": 0
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 24,
+              "unmatched": 20
+            },
+            "100": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 24,
+              "unmatched": 18
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 24,
+              "unmatched": 18
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 3,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 6,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 6,
+              "labels": 8,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220823T104956_20220823T105021_044679_055580_8EDD.SAFE",
+        "region": "quang_ninh_gulf",
+        "windows": 26,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 27,
+          "xview3_vessel": 27,
+          "xview3_vessel_tta": 34
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 66,
+              "labels": 89,
+              "predictions": 244,
+              "unmatched": 178
+            },
+            "100": {
+              "matched": 73,
+              "labels": 89,
+              "predictions": 244,
+              "unmatched": 171
+            },
+            "150": {
+              "matched": 73,
+              "labels": 89,
+              "predictions": 244,
+              "unmatched": 171
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 26,
+              "labels": 89,
+              "predictions": 34,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 30,
+              "labels": 89,
+              "predictions": 34,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 30,
+              "labels": 89,
+              "predictions": 34,
+              "unmatched": 4
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 68,
+              "labels": 89,
+              "predictions": 278,
+              "unmatched": 210
+            },
+            "100": {
+              "matched": 75,
+              "labels": 89,
+              "predictions": 278,
+              "unmatched": 203
+            },
+            "150": {
+              "matched": 75,
+              "labels": 89,
+              "predictions": 278,
+              "unmatched": 203
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 39,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 48,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 8
+            },
+            "150": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            },
+            "100": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 50,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 6
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 31,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 37,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 19
+            },
+            "150": {
+              "matched": 37,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 19
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 31,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 25
+            },
+            "100": {
+              "matched": 37,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 19
+            },
+            "150": {
+              "matched": 37,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 19
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 33,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 23
+            },
+            "100": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 40,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 16
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 39,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 47,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 47,
+              "labels": 89,
+              "predictions": 56,
+              "unmatched": 9
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 48,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 30
+            },
+            "100": {
+              "matched": 58,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 58,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 20
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 57,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 21
+            },
+            "100": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            },
+            "150": {
+              "matched": 64,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 14
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 29
+            },
+            "100": {
+              "matched": 53,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 25
+            },
+            "150": {
+              "matched": 53,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 25
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 49,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 29
+            },
+            "100": {
+              "matched": 53,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 25
+            },
+            "150": {
+              "matched": 53,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 25
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 48,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 30
+            },
+            "100": {
+              "matched": 54,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 24
+            },
+            "150": {
+              "matched": 54,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 24
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 54,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 61,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 61,
+              "labels": 89,
+              "predictions": 78,
+              "unmatched": 17
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220313T105524_20220313T105553_042302_050ADC_7B2B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 1,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 3,
+          "xview3_vessel": 3,
+          "xview3_vessel_tta": 5
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 36,
+              "unmatched": 36
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 36,
+              "unmatched": 36
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 5,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 5,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 5,
+              "unmatched": 5
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 41,
+              "unmatched": 41
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 41,
+              "unmatched": 41
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 41,
+              "unmatched": 41
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220124T105525_20220124T105554_041602_04F2CF_8C3B.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 2,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 3,
+          "xview3_vessel": 3,
+          "xview3_vessel_tta": 3
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 3,
+              "unmatched": 3
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 1,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 3,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220524T105527_20220524T105556_043352_052D4B_5ADE.SAFE",
+        "region": "khanh_hoa_binh_thuan",
+        "windows": 8,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 13,
+          "xview3_vessel": 13,
+          "xview3_vessel_tta": 15
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 41,
+              "unmatched": 41
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 41,
+              "unmatched": 40
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 41,
+              "unmatched": 39
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 15,
+              "unmatched": 15
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 15,
+              "unmatched": 14
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 15,
+              "unmatched": 13
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 56,
+              "unmatched": 56
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 56,
+              "unmatched": 55
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 56,
+              "unmatched": 54
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 9
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 10,
+              "unmatched": 8
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 17
+            },
+            "100": {
+              "matched": 1,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 2,
+              "labels": 9,
+              "predictions": 17,
+              "unmatched": 15
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220510T111112_20220510T111141_043148_05273A_1263.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 3,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 4,
+          "xview3_vessel": 4,
+          "xview3_vessel_tta": 4
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 32,
+              "unmatched": 27
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 32,
+              "unmatched": 27
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 32,
+              "unmatched": 27
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 12,
+              "unmatched": 7
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220122T111110_20220122T111139_041573_04F1D7_41EC.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 12,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 14,
+          "xview3_vessel": 14,
+          "xview3_vessel_tta": 16
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 50,
+              "unmatched": 45
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 50,
+              "unmatched": 45
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 50,
+              "unmatched": 45
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 16,
+              "unmatched": 10
+            },
+            "100": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 16,
+              "unmatched": 10
+            },
+            "150": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 16,
+              "unmatched": 10
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 66,
+              "unmatched": 60
+            },
+            "100": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 66,
+              "unmatched": 60
+            },
+            "150": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 66,
+              "unmatched": 60
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 13
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            },
+            "100": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            },
+            "150": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            },
+            "100": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            },
+            "150": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            },
+            "100": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            },
+            "150": {
+              "matched": 6,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 11
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            },
+            "150": {
+              "matched": 5,
+              "labels": 6,
+              "predictions": 17,
+              "unmatched": 12
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220323T111110_20220323T111139_042448_050FDA_2FDA.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 5,
+        "missing_vh_windows": [
+          35800
+        ],
+        "raw_candidate_counts": {
+          "xview3_center": 4,
+          "xview3_vessel": 4,
+          "xview3_vessel_tta": 4
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 36,
+              "unmatched": 31
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 40,
+              "unmatched": 35
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 40,
+              "unmatched": 35
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 40,
+              "unmatched": 35
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 2,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 4,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 3,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "150": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 5,
+              "labels": 5,
+              "predictions": 9,
+              "unmatched": 4
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220416T111110_20220416T111139_042798_051BB4_E752.SAFE",
+        "region": "south_mekong_coast",
+        "windows": 17,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 20,
+          "xview3_vessel": 20,
+          "xview3_vessel_tta": 23
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 73,
+              "unmatched": 62
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 73,
+              "unmatched": 56
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 73,
+              "unmatched": 54
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 23,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 23,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 23,
+              "unmatched": 5
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 96,
+              "unmatched": 84
+            },
+            "100": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 96,
+              "unmatched": 78
+            },
+            "150": {
+              "matched": 20,
+              "labels": 20,
+              "predictions": 96,
+              "unmatched": 76
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 15,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 8
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 18,
+              "unmatched": 1
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 10,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 24
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 23
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 18
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 23
+            },
+            "100": {
+              "matched": 16,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 18
+            },
+            "150": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 12,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 22
+            },
+            "100": {
+              "matched": 17,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 17
+            },
+            "150": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 11,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 23
+            },
+            "100": {
+              "matched": 18,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 19,
+              "labels": 20,
+              "predictions": 34,
+              "unmatched": 15
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220701T225404_20220701T225429_043913_053E06_8477.SAFE",
+        "region": "kien_giang_west",
+        "windows": 2,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 11,
+          "xview3_vessel": 11,
+          "xview3_vessel_tta": 12
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 20,
+              "unmatched": 20
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 20,
+              "unmatched": 20
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 20,
+              "unmatched": 20
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 12,
+              "unmatched": 12
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 12,
+              "unmatched": 11
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 12,
+              "unmatched": 11
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 32,
+              "unmatched": 32
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 32,
+              "unmatched": 31
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 32,
+              "unmatched": 31
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 3
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 6
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 6
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            },
+            "150": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 7,
+              "unmatched": 7
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220619T225404_20220619T225428_043738_0538CB_0DC9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 4,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 1,
+          "xview3_vessel": 1,
+          "xview3_vessel_tta": 1
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 3
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220409T111936_20220409T112001_042696_051841_C4B9.SAFE",
+        "region": "kien_giang_west",
+        "windows": 1,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 2,
+          "xview3_vessel": 2,
+          "xview3_vessel_tta": 1
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 4,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 4,
+              "unmatched": 4
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 1,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 5,
+              "unmatched": 5
+            },
+            "100": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 5,
+              "unmatched": 4
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 0,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 2,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 2,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 2,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 2,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 1
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 0,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 1,
+              "labels": 2,
+              "predictions": 2,
+              "unmatched": 1
+            }
+          }
+        }
+      }
+    ],
+    "confirmation": [
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220708T224349_20220708T224418_044015_054100_87D0.SAFE",
+        "region": "north_central",
+        "windows": 1,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 1,
+          "xview3_vessel": 1,
+          "xview3_vessel_tta": 1
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 3,
+              "unmatched": 2
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 3
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 4,
+              "unmatched": 3
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "100": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 1,
+              "labels": 1,
+              "predictions": 1,
+              "unmatched": 0
+            }
+          }
+        }
+      },
+      {
+        "scene": "S1A_IW_GRDH_1SDV_20220626T224348_20220626T224417_043840_053BD2_2244.SAFE",
+        "region": "north_central",
+        "windows": 4,
+        "missing_vh_windows": [],
+        "raw_candidate_counts": {
+          "xview3_center": 7,
+          "xview3_vessel": 7,
+          "xview3_vessel_tta": 7
+        },
+        "source_candidate_coverage": {
+          "previous": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 21,
+              "unmatched": 18
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 21,
+              "unmatched": 16
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 21,
+              "unmatched": 15
+            }
+          },
+          "xview3": {
+            "50": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 7,
+              "unmatched": 2
+            },
+            "100": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 7,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 7,
+              "unmatched": 0
+            }
+          },
+          "combined": {
+            "50": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 28,
+              "unmatched": 23
+            },
+            "100": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 28,
+              "unmatched": 21
+            },
+            "150": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 28,
+              "unmatched": 21
+            }
+          }
+        },
+        "equal_incumbent": {
+          "map": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 1,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 4,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 1
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            },
+            "150": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 5,
+              "unmatched": 0
+            }
+          }
+        },
+        "equal_relaxed": {
+          "map": {
+            "50": {
+              "matched": 2,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 7
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "previous_best": {
+            "50": {
+              "matched": 3,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 6
+            },
+            "100": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "150": {
+              "matched": 6,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 3
+            }
+          },
+          "xview3_center": {
+            "50": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            }
+          },
+          "xview3_vessel": {
+            "50": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            }
+          },
+          "xview3_vessel_tta": {
+            "50": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            }
+          },
+          "xview3_fused_tta": {
+            "50": {
+              "matched": 5,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 4
+            },
+            "100": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            },
+            "150": {
+              "matched": 7,
+              "labels": 7,
+              "predictions": 9,
+              "unmatched": 2
+            }
+          }
+        }
+      }
+    ]
+  },
+  "selection_sha256": "001042e1d0411de8665c1d7492f0e91e1439ff8c2cebfb7b6327f487b201d975"
+}

@@ -10,6 +10,7 @@ POLARIMETRIC_RESULTS = 'reports/final/vietnam_rtc_vv_vh_20261118/results.json'
 CONTRAST_RESULTS = 'reports/final/vietnam_rtc_contrast_20261119/results.json'
 TTA_RESULTS = 'reports/final/vietnam_rtc_tta_20261119/results.json'
 FOLLOWUP_RESULTS = 'reports/final/vietnam_rtc_followup_20261119/summary.json'
+TRANSFER_RESULTS = 'reports/final/vietnam_rtc_transfer_20261119/summary.json'
 RECALL_NAMES = {
     'map_default': 'Bản đồ · ngưỡng 0,35',
     'map_lower_threshold': 'Bản đồ · ngưỡng 0,05',
@@ -217,6 +218,7 @@ def render_contrast_recall(root: Path) -> None:
                            'sonarnet-recall-loc-diem-gan.json', 'application/json')
     render_map_tta_recall(root)
     render_followup_rtc(root)
+    render_transfer_rtc(root)
     confirmation = (root / TTA_RESULTS).parent / 'confirmation/results.json'
     if confirmation.is_file():
         new_cases = json.loads(confirmation.read_text())['cases']
@@ -263,6 +265,65 @@ def render_followup_rtc(root: Path) -> None:
                            'sonarnet-doi-chung-nam-huong-recall.json','application/json')
 
 
+def render_transfer_rtc(root: Path) -> None:
+    path = root / TRANSFER_RESULTS
+    if not path.is_file():
+        return
+    results = json.loads(path.read_text())['datasets']
+    selections = {
+        'held_out': '12 lượt đối chứng',
+        'confirmation': '2 lượt Bắc Trung Bộ',
+    }
+    with st.expander('Mô hình SAR hai kênh và quét tín hiệu yếu'):
+        group = st.radio('Nhóm ảnh kiểm tra', list(selections),
+                         format_func=selections.__getitem__, horizontal=True, key='rtc_transfer_group')
+        dataset = results[group]
+        modes = dataset['modes']
+        headers = [f"{mode['map']['predictions']} lượt rà" for mode in modes.values()]
+        names = {
+            'map': 'Bản đồ theo ngưỡng tương ứng',
+            'previous_best': 'Lọc 35 m hoặc chia ô chồng lấn',
+            'weak_echoes': 'Quét tín hiệu yếu theo mức rà',
+            'xview3': 'xView3 dùng VV và VH theo mức rà',
+        }
+        table = []
+        for key, label in names.items():
+            row = {'Cách phát hiện radar': label}
+            for header, mode in zip(headers, modes.values(), strict=True):
+                count = mode[key]
+                row[header] = f"{count['matched']}/{count['labels']}"
+            table.append(row)
+        st.dataframe(table, hide_index=True, width='stretch')
+        prior, transfer = (modes['equal_relaxed'][name] for name in ('previous_best', 'xview3'))
+        st.markdown(f"**{prior['matched']}/{prior['labels']} → {transfer['matched']}/{transfer['labels']}** nhãn khớp "
+                    f"với cùng **{transfer['predictions']} lượt rà** khi phối hợp xView3 với YOLO.")
+        st.caption(f"{dataset['scenes']} lượt chụp · {dataset['windows']} ô ảnh · ghép một–một trong 100 m. "
+                   'Năm lượt phát triển khác ngày dùng để chọn cấu hình. Ở mức rà nhỏ, hàng quét tín hiệu yếu '
+                   'dùng phương án lọc 35 m và hàng xView3 ưu tiên điểm tâm của mô hình.')
+        coverage = dataset['coverage']
+        baseline, expanded = (coverage[key] for key in ('previous', 'weak_echoes'))
+        expanded_count = f"{expanded['predictions']:,}".replace(',', '.')
+        baseline_count = f"{baseline['predictions']:,}".replace(',', '.')
+        st.markdown(f"Rà toàn bộ danh sách quét tín hiệu yếu khớp **{expanded['matched']}/{expanded['labels']}** "
+                    f"nhãn qua **{expanded_count}** ứng viên. Danh sách trước đó khớp "
+                    f"**{baseline['matched']}/{baseline['labels']}** nhãn qua **{baseline_count}** ứng viên.")
+        missing = dataset['missing_vh_windows']
+        if missing:
+            st.caption(f"Thiếu kênh VH ở {missing} ô. Phép chấm giữ nguyên các nhãn và danh sách đối chứng ở những ô đó.")
+        st.caption('Đối chứng trên ảnh lịch sử. Điểm không khớp nhãn vẫn cần xem trên ảnh nguồn.')
+        st.download_button('Tải kết quả thử radar hai kênh',
+                           path.read_bytes(), 'sonarnet-thu-radar-hai-kenh.json', 'application/json')
+        sample = path.parent / 'xview3'
+        coords = sample / 'review-queues.json'
+        st.download_button('Tải tọa độ đối chiếu xView3', coords.read_bytes(),
+                           'sonarnet-toa-do-xview3.json', 'application/json')
+        if group == 'held_out' and st.toggle('Xem nhãn tìm thêm trên ảnh radar', key='rtc_xview_example'):
+            render_recovered_example(sample,
+                                     after='Sau khi phối hợp xView3 với YOLO',
+                                     download_label='Tải thông tin ô ảnh xView3',
+                                     show_queue_download=False)
+
+
 def render_map_tta_recall(root: Path) -> None:
     path = root / TTA_RESULTS
     if not path.is_file():
@@ -287,7 +348,9 @@ def render_map_tta_recall(root: Path) -> None:
         render_recovered_example(path.parent)
 
 
-def render_recovered_example(folder: Path) -> None:
+def render_recovered_example(folder: Path, *, after='Sau khi chia ô ảnh chồng lấn',
+                             download_label='Tải nguồn và vị trí ba nhãn minh họa',
+                             show_queue_download=True) -> None:
     details = folder/'recovered-example.json'
     packet = folder/'review-queues.json'
     panels = [folder/f'recovered-{side}.png' for side in ('before','after')]
@@ -301,16 +364,17 @@ def render_recovered_example(folder: Path) -> None:
                f"{evidence['before_matches']} → {evidence['after_matches']} nhãn khớp "
                f"với cùng {evidence['scene_reviews']} lượt rà. "
                'Hai ảnh chỉ đánh dấu các nhãn tìm thêm trong ô minh họa.')
-    for column, image, heading in zip(st.columns(2),panels,('Ảnh gốc và nhãn Ai2','Sau khi chia ô ảnh chồng lấn')):
+    for column, image, heading in zip(st.columns(2),panels,('Ảnh gốc và nhãn Ai2', after)):
         column.markdown(f'**{heading}**')
         column.image(str(image), width='stretch')
     offsets = ' · '.join(f"Nhãn {row['marker']} cách {row['distance_m']:.1f} m".replace('.', ',')
                          for row in evidence['recovered'])
     st.caption('Hình thoi lam là nhãn Ai2. Vòng vàng là tâm ứng viên được ghép. '
                f'{offsets}.')
-    st.download_button('Tải tọa độ để tính lại recall', packet.read_bytes(),
-                       'sonarnet-recall-toa-do-da-cham.json', 'application/json')
-    st.download_button('Tải nguồn và vị trí ba nhãn minh họa', details.read_bytes(),
+    if show_queue_download:
+        st.download_button('Tải tọa độ để tính lại recall', packet.read_bytes(),
+                           'sonarnet-recall-toa-do-da-cham.json', 'application/json')
+    st.download_button(download_label, details.read_bytes(),
                        'sonarnet-recall-nguon-o-anh.json', 'application/json')
 
 
