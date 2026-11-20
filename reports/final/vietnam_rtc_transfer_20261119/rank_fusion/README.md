@@ -15,6 +15,8 @@ So sánh gộp thứ hạng khóa lựa chọn trên 5 lượt phát triển, t�
 
 Tại 191 lượt rà, giới hạn trên của tập ứng viên đã có là 119/152. Giới hạn này giả định biết trước nhãn và không phải một danh sách có thể triển khai. Kết quả chính của phiên bản đang công bố là 103/152 ở mức này.
 
+[Phép kiểm trên sáu ngày chụp giữ riêng](ais-holdout/README.md) đạt 14/15 mốc AIS ở cùng 409 lượt rà, từ 12/15. Bảng trên dùng nhãn Ai2 ở Việt Nam. Phép kiểm mới dùng mốc AIS ít dịch chuyển ở các cảng Mỹ.
+
 ## Chấm lại
 
 Từ thư mục mã nguồn hoặc thư mục SonarNet trong ZIP, chạy với NumPy, SciPy và pyproj.

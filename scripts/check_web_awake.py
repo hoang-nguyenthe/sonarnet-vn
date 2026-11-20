@@ -26,6 +26,8 @@ RECALL_SUMMARY = ROOT / "reports/final/vietnam_rtc_transfer_20261119/summary.jso
 RANK_TOGGLE = "Xếp hạng theo đồng thuận YOLO và xView3"
 RANK_DOWNLOAD = "Tải số liệu thử gộp thứ hạng"
 RANK_RESULTS = RECALL_SUMMARY.parent / "rank_fusion/results.json"
+AIS_RANK_DOWNLOAD = "Tải đối chứng gộp hạng trên sáu cảnh AIS"
+AIS_RANK_RESULTS = RANK_RESULTS.parent / "ais-holdout/results.json"
 WAKE_BUTTON = "Yes, get this app back up!"
 READY_HEADING = re.compile(r"Đọc tín hiệu biển", re.IGNORECASE)
 
@@ -196,7 +198,7 @@ def write_report(output, report):
             handle.write("## SonarNet browser availability check\n\n")
             for key in ("mode", "status", "checked_at", "elapsed_seconds", "wake_clicks",
                         "websocket_messages", "pdf_sha256", "sample_zip_sha256",
-                        "recall_sha256", "rank_sha256", "error"):
+                        "recall_sha256", "rank_sha256", "ais_rank_sha256", "error"):
                 if key in report:
                     handle.write(f"- {key}: {report[key]}\n")
             handle.write("\nPassing means the app rendered and the Streamlit connection stayed active at this check, not continuous uptime.\n")
@@ -243,6 +245,10 @@ def main():
                     expected_sha = sha256(RECALL_SUMMARY.read_bytes()).hexdigest()
                     report["recall_sha256"] = verify_recall_download(page, expected_sha)
                     report["rank_sha256"] = verify_rank_download(page)
+                    if AIS_RANK_RESULTS.is_file():
+                        report["ais_rank_sha256"] = verify_download(
+                            page, AIS_RANK_DOWNLOAD, sha256(AIS_RANK_RESULTS.read_bytes()).hexdigest(), "ais_rank"
+                        )
                 if args.submission:
                     verify_submission_downloads(page, report)
                 report["status"] = "healthy"

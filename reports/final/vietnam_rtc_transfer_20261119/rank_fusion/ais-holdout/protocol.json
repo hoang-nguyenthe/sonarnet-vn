@@ -1,0 +1,19 @@
+{
+  "started_utc": "2026-11-20T08:09:11.388899+00:00",
+  "schedule_sha256": "e3c8008c615f2601f20af757978f7f8238ade2aa0517fa0422654471b0799c10",
+  "coast_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+  "yolo_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "xview3_revision": "558c15a979f889851b86a797518268944866e820",
+  "xview3_weights_sha256": "e8996b174d0e8f352a6e4a9f7bf84f3cf5dbcb418498b4cead403aa687b8fda8",
+  "code_sha256": "7b654ab0d74f467b8db6716afc7a3c8e766a2a6272ba702bb5cb834614006ea0",
+  "ranking_code_sha256": "aeb9f94a8b2e92fa78cd5276c56cbe2ebd482766bad4bfc7fcc85e30dd6b39e4",
+  "policy": {
+    "reference": "Stationary and isolated NOAA positions selected independently of SAR detections using the prior fixed rule.",
+    "comparison": "Original YOLO map, previously published SonarNet policy, plain rank_60 and guarded rank_60_keep_75, preserving the exact per-scene number of reviews at 0.35 and 0.05. Score at 50, 100 and 150 m, with 100 m primary. No parameter fitting or substitutions after opening this sample.",
+    "policy_source_commit": "e318d78ac",
+    "scope": "Civilian US harbour archive transfer check using stationary AIS proxies."
+  },
+  "match": "One-to-one WGS84 distances at 50, 100 and 150 m. The primary radius is 100 m.",
+  "review_counts": "Original per-scene YOLO counts at 0.35 and 0.05. Same count for every comparison.",
+  "duplicate_distance_m": 35
+}

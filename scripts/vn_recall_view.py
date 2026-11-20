@@ -331,11 +331,16 @@ def render_rank_fusion(folder: Path) -> None:
     if not path.is_file():
         return
     data = json.loads(path.read_text())['test']
+    cohorts = [('12 lượt ven biển', data['held_out']['totals']),
+               ('2 lượt Bắc Trung Bộ', data['confirmation']['totals'])]
+    holdout = folder / 'ais-holdout' / 'results.json'
+    if holdout.is_file():
+        cohorts.append(('Mốc AIS · 6 cảnh cảng Mỹ', json.loads(holdout.read_text())['totals']))
     with st.expander('Xếp hạng theo đồng thuận YOLO và xView3'):
-        st.caption('Thử nghiệm thăm dò trên các lượt chụp đã dùng. Giữ đúng số lượt rà từng cảnh, ghép trong 100 m.')
+        st.caption('Giữ đúng số lượt rà từng cảnh, ghép trong 100 m.')
         rows = []
-        for key, label in (('held_out', '12 lượt ven biển'), ('confirmation', '2 lượt Bắc Trung Bộ')):
-            for mode in data[key]['totals'].values():
+        for label, totals in cohorts:
+            for mode in totals.values():
                 baseline, rank, guarded = (mode[name]['100'] for name in ('published', 'rank_60', 'rank_60_keep_75'))
                 rows.append({
                     'Tập ảnh': label,
@@ -345,10 +350,14 @@ def render_rank_fusion(folder: Path) -> None:
                     'Giữ đầu danh sách': f"{guarded['matched']}/{guarded['labels']}",
                 })
         st.table(rows, hide_index=True, border='horizontal')
-        st.caption('Cấu hình giữ đầu danh sách được thiết kế sau khi xem kết quả gộp thứ hạng. '
-                   'Cần kiểm tra trên ngày chụp mới trước khi chọn cấu hình mặc định.')
+        st.caption('Cấu hình giữ đầu danh sách được thiết kế sau khi xem kết quả trên nhóm ảnh Việt Nam.')
         st.download_button('Tải số liệu thử gộp thứ hạng', path.read_bytes(),
                            'sonarnet-thu-gop-thu-hang.json', 'application/json')
+        if holdout.is_file():
+            st.caption('Sáu cảnh cảng Mỹ dùng mốc AIS ít dịch chuyển, chọn trước khi chạy mô hình. '
+                       'Các mốc này được chấm riêng với nhãn Ai2 ven biển Việt Nam.')
+            st.download_button('Tải đối chứng gộp hạng trên sáu cảnh AIS', holdout.read_bytes(),
+                               'sonarnet-gop-thu-hang-doi-chung-ais.json', 'application/json')
 
 
 def render_recall_followup(root: Path, folder: Path) -> None:

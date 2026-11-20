@@ -8,7 +8,7 @@ on:
         type: boolean
         default: false
       recall:
-        description: Verify the public recall page and both JSON downloads
+        description: Verify the public recall page and its JSON downloads
         type: boolean
         default: false
   schedule:
@@ -36,6 +36,7 @@ jobs:
             /tests/test_web_awake.py
             /reports/final/vietnam_rtc_transfer_20261119/summary.json
             /reports/final/vietnam_rtc_transfer_20261119/rank_fusion/results.json
+            /reports/final/vietnam_rtc_transfer_20261119/rank_fusion/ais-holdout/results.json
             /reports/final/export_verification/sample_evidence.zip
             /output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf
           persist-credentials: false

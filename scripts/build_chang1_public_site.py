@@ -63,6 +63,10 @@ def export(output, repository, revision):
 
     vietnam = read_json(f'{TRANSFER}/summary.json')['datasets']
     rank_fusion = read_json(f'{TRANSFER}/rank_fusion/results.json')['test']
+    holdout = f'{TRANSFER}/rank_fusion/ais-holdout'
+    if subprocess.check_output(git + ['ls-tree', '-r', commit, '--', f'{holdout}/results.json']):
+        result = read_json(f'{holdout}/results.json')
+        rank_fusion['ais_holdout'] = {'totals': result['totals']}
     dual = read_json(f'{DUAL}/results.json')['totals']
     association = read_json(MATCH)['aggregate']
     scenarios = run_pinned_scenarios(git, commit)
@@ -148,6 +152,7 @@ def export(output, repository, revision):
             'vnResults': f'{blob}/{TRANSFER}/summary.json',
             'vnProtocol': f'{blob}/{TRANSFER}/README.md',
             'rankFusionProtocol': f'{blob}/{TRANSFER}/rank_fusion/README.md',
+            'rankAisHoldout': f'{blob}/{holdout}/README.md' if 'ais_holdout' in rank_fusion else None,
             'aisResults': f'{blob}/{DUAL}/results.json',
             'aisProtocol': f'{blob}/{DUAL}/protocol.json',
             'associationResults': f'{blob}/{MATCH}',

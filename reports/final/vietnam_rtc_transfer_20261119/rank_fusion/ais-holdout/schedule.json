@@ -1,0 +1,375 @@
+{
+  "frozen_at": "2026-11-20T07:54:18.393668+00:00",
+  "selection_code_sha256": "fe409474dc6c1b09f9ff30043ad5edc9321945f174dac22d2db45775d11432ce",
+  "catalogue_sha256": "2d9580c4187808afd2ae7f2acb8bbe34a2895d9d630e049f94801b172e10d5f7",
+  "selection": "In the fixed order of the existing six harbour and target-day strata, take the first archived candidate with at least 99.9% metadata coverage and a UTC date absent from previous SonarNet AIS tests and earlier selections in this run.",
+  "acquisition_targets": [
+    "2024-07-14",
+    "2024-10-01"
+  ],
+  "date_window_days": 13,
+  "products": [
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240718T015824_20240718T015853_054809_06ACA2_rtc",
+      "area": "Los Angeles / Long Beach",
+      "bounds": [
+        -118.3,
+        33.64,
+        -118.09,
+        33.75
+      ],
+      "tiles_wsen": [
+        [
+          -118.3,
+          33.64,
+          -118.23,
+          33.695
+        ],
+        [
+          -118.23,
+          33.64,
+          -118.16,
+          33.695
+        ],
+        [
+          -118.16,
+          33.64,
+          -118.09,
+          33.695
+        ],
+        [
+          -118.3,
+          33.695,
+          -118.23,
+          33.75
+        ],
+        [
+          -118.23,
+          33.695,
+          -118.16,
+          33.75
+        ],
+        [
+          -118.16,
+          33.695,
+          -118.09,
+          33.75
+        ]
+      ],
+      "acquired_at": "2024-07-18T01:58:39.271778+00:00",
+      "start_datetime": "2024-07-18 01:58:24.743313+00:00",
+      "end_datetime": "2024-07-18 01:58:53.800243+00:00",
+      "day_delta": 4,
+      "coverage_fraction": 1.0,
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/18/IW/DV/S1A_IW_GRDH_1SDV_20240718T015824_20240718T015853_054809_06ACA2_DFDF/measurement/iw-vv.rtc.tiff",
+      "native_resolution_m": 10.0,
+      "orbit_direction": "ascending",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240718T015824_20240718T015853_054809_06ACA2_rtc"
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20241005T015016_20241005T015045_055961_06D7BE_rtc",
+      "area": "Los Angeles / Long Beach",
+      "bounds": [
+        -118.3,
+        33.64,
+        -118.09,
+        33.75
+      ],
+      "tiles_wsen": [
+        [
+          -118.3,
+          33.64,
+          -118.23,
+          33.695
+        ],
+        [
+          -118.23,
+          33.64,
+          -118.16,
+          33.695
+        ],
+        [
+          -118.16,
+          33.64,
+          -118.09,
+          33.695
+        ],
+        [
+          -118.3,
+          33.695,
+          -118.23,
+          33.75
+        ],
+        [
+          -118.23,
+          33.695,
+          -118.16,
+          33.75
+        ],
+        [
+          -118.16,
+          33.695,
+          -118.09,
+          33.75
+        ]
+      ],
+      "acquired_at": "2024-10-05T01:50:31.381115+00:00",
+      "start_datetime": "2024-10-05 01:50:16.868678+00:00",
+      "end_datetime": "2024-10-05 01:50:45.893552+00:00",
+      "day_delta": 4,
+      "coverage_fraction": 1.0,
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/5/IW/DV/S1A_IW_GRDH_1SDV_20241005T015016_20241005T015045_055961_06D7BE_E8C8/measurement/iw-vv.rtc.tiff",
+      "native_resolution_m": 10.0,
+      "orbit_direction": "ascending",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241005T015016_20241005T015045_055961_06D7BE_rtc"
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240706T001857_20240706T001922_054633_06A68D_rtc",
+      "area": "Galveston / Houston Ship Channel",
+      "bounds": [
+        -94.85,
+        29.29,
+        -94.62,
+        29.47
+      ],
+      "tiles_wsen": [
+        [
+          -94.85,
+          29.29,
+          -94.77333333333333,
+          29.38
+        ],
+        [
+          -94.77333333333333,
+          29.29,
+          -94.69666666666667,
+          29.38
+        ],
+        [
+          -94.69666666666667,
+          29.29,
+          -94.62,
+          29.38
+        ],
+        [
+          -94.85,
+          29.38,
+          -94.77333333333333,
+          29.47
+        ],
+        [
+          -94.77333333333333,
+          29.38,
+          -94.69666666666667,
+          29.47
+        ],
+        [
+          -94.69666666666667,
+          29.38,
+          -94.62,
+          29.47
+        ]
+      ],
+      "acquired_at": "2024-07-06T00:19:09.661632+00:00",
+      "start_datetime": "2024-07-06 00:18:57.162381+00:00",
+      "end_datetime": "2024-07-06 00:19:22.160883+00:00",
+      "day_delta": 8,
+      "coverage_fraction": 1.0,
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/6/IW/DV/S1A_IW_GRDH_1SDV_20240706T001857_20240706T001922_054633_06A68D_7E2F/measurement/iw-vv.rtc.tiff",
+      "native_resolution_m": 10.0,
+      "orbit_direction": "ascending",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240706T001857_20240706T001922_054633_06A68D_rtc"
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20241010T001858_20241010T001923_056033_06DA8E_rtc",
+      "area": "Galveston / Houston Ship Channel",
+      "bounds": [
+        -94.85,
+        29.29,
+        -94.62,
+        29.47
+      ],
+      "tiles_wsen": [
+        [
+          -94.85,
+          29.29,
+          -94.77333333333333,
+          29.38
+        ],
+        [
+          -94.77333333333333,
+          29.29,
+          -94.69666666666667,
+          29.38
+        ],
+        [
+          -94.69666666666667,
+          29.29,
+          -94.62,
+          29.38
+        ],
+        [
+          -94.85,
+          29.38,
+          -94.77333333333333,
+          29.47
+        ],
+        [
+          -94.77333333333333,
+          29.38,
+          -94.69666666666667,
+          29.47
+        ],
+        [
+          -94.69666666666667,
+          29.38,
+          -94.62,
+          29.47
+        ]
+      ],
+      "acquired_at": "2024-10-10T00:19:10.841811+00:00",
+      "start_datetime": "2024-10-10 00:18:58.342685+00:00",
+      "end_datetime": "2024-10-10 00:19:23.340938+00:00",
+      "day_delta": 9,
+      "coverage_fraction": 1.0,
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/10/10/IW/DV/S1A_IW_GRDH_1SDV_20241010T001858_20241010T001923_056033_06DA8E_2EE5/measurement/iw-vv.rtc.tiff",
+      "native_resolution_m": 10.0,
+      "orbit_direction": "ascending",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20241010T001858_20241010T001923_056033_06DA8E_rtc"
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240722T225130_20240722T225155_054880_06AF14_rtc",
+      "area": "New York Harbor",
+      "bounds": [
+        -74.11,
+        40.48,
+        -73.96,
+        40.66
+      ],
+      "tiles_wsen": [
+        [
+          -74.11,
+          40.48,
+          -74.035,
+          40.56999999999999
+        ],
+        [
+          -74.035,
+          40.48,
+          -73.96,
+          40.56999999999999
+        ],
+        [
+          -74.11,
+          40.56999999999999,
+          -74.035,
+          40.66
+        ],
+        [
+          -74.035,
+          40.56999999999999,
+          -73.96,
+          40.66
+        ]
+      ],
+      "acquired_at": "2024-07-22T22:51:43.175245+00:00",
+      "start_datetime": "2024-07-22 22:51:30.676223+00:00",
+      "end_datetime": "2024-07-22 22:51:55.674266+00:00",
+      "day_delta": 8,
+      "coverage_fraction": 1.0,
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/7/22/IW/DV/S1A_IW_GRDH_1SDV_20240722T225130_20240722T225155_054880_06AF14_B854/measurement/iw-vv.rtc.tiff",
+      "native_resolution_m": 10.0,
+      "orbit_direction": "ascending",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240722T225130_20240722T225155_054880_06AF14_rtc"
+    },
+    {
+      "product": "S1A_IW_GRDH_1SDV_20240920T225131_20240920T225156_055755_06CF98_rtc",
+      "area": "New York Harbor",
+      "bounds": [
+        -74.11,
+        40.48,
+        -73.96,
+        40.66
+      ],
+      "tiles_wsen": [
+        [
+          -74.11,
+          40.48,
+          -74.035,
+          40.56999999999999
+        ],
+        [
+          -74.035,
+          40.48,
+          -73.96,
+          40.56999999999999
+        ],
+        [
+          -74.11,
+          40.56999999999999,
+          -74.035,
+          40.66
+        ],
+        [
+          -74.035,
+          40.56999999999999,
+          -73.96,
+          40.66
+        ]
+      ],
+      "acquired_at": "2024-09-20T22:51:43.971414+00:00",
+      "start_datetime": "2024-09-20 22:51:31.471671+00:00",
+      "end_datetime": "2024-09-20 22:51:56.471157+00:00",
+      "day_delta": 11,
+      "coverage_fraction": 1.0,
+      "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2024/9/20/IW/DV/S1A_IW_GRDH_1SDV_20240920T225131_20240920T225156_055755_06CF98_15D9/measurement/iw-vv.rtc.tiff",
+      "native_resolution_m": 10.0,
+      "orbit_direction": "ascending",
+      "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1A_IW_GRDH_1SDV_20240920T225131_20240920T225156_055755_06CF98_rtc"
+    }
+  ],
+  "raster": {
+    "width": 1024,
+    "minimum_valid_fraction": 0.9,
+    "normalization": "[-25,+5] dB",
+    "detector": "assets/models/sonarnet_baseline.pt",
+    "confidence": 0.35,
+    "imgsz": 1024,
+    "nms_iou": 0.7
+  },
+  "weak_reference": {
+    "near_s": 20,
+    "unique_match_m": 100,
+    "competitor_m": 250
+  },
+  "stationary_reference": {
+    "holdout_s": 120,
+    "max_median_displacement_m": 35,
+    "minimum_fixes": 2,
+    "minimum_span_s": 30,
+    "require_bracketing": true,
+    "max_nearest_offset_s": 65,
+    "unique_match_m": 100,
+    "competitor_m": 250
+  },
+  "history_s": 600,
+  "scope": "Commercial US harbors. Radar/reference agreement on recorded approximate positions, withholds AIS around overpass. Center timestamp cannot resolve per-vessel sensing time. No verified identity.",
+  "previous_protocol_sha256": "9d5d9e4b0c61f22643afcd7f88e5656ae07c7320c8b6b1c2caf2da9c14d08b6d",
+  "excluded_utc_days": [
+    "2024-07-10",
+    "2024-07-11",
+    "2024-07-13",
+    "2024-07-14",
+    "2024-09-28",
+    "2024-10-01",
+    "2024-10-02",
+    "2024-10-03",
+    "2024-12-13"
+  ],
+  "confirm": {
+    "reference": "Stationary and isolated NOAA positions selected independently of SAR detections using the prior fixed rule.",
+    "comparison": "Original YOLO map, previously published SonarNet policy, plain rank_60 and guarded rank_60_keep_75, preserving the exact per-scene number of reviews at 0.35 and 0.05. Score at 50, 100 and 150 m, with 100 m primary. No parameter fitting or substitutions after opening this sample.",
+    "policy_source_commit": "e318d78ac",
+    "scope": "Civilian US harbour archive transfer check using stationary AIS proxies."
+  }
+}

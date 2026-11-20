@@ -114,6 +114,7 @@ CHANG1_FILES = {
     'scripts/export_rtc_transfer_example.py',
     'scripts/replay_rtc_additional_trials.py',
     'scripts/evaluate_rtc_rank_fusion.py',
+    'scripts/confirm_rtc_rank_with_ais.py',
     'scripts/evaluate_rtc_review_extension.py',
     'scripts/evaluate_rtc_stationary_ais_reference.py',
     'scripts/fetch_stationary_ais_rtc_bands.py',
@@ -167,6 +168,9 @@ CHANG1_FILES = {
 } | {f'{RANK_EVIDENCE}/{name}' for name in (
     'README.md', 'candidates.json.gz', 'protocol.json', 'selection.json',
     'results.json', 'review-queues.json',
+)} | {f'{RANK_EVIDENCE}/ais-holdout/{name}' for name in (
+    'README.md', 'schedule.json', 'catalogue-screen.json', 'protocol.json',
+    'references.json', 'candidates.json.gz', 'results.json', 'review-queues.json',
 )}
 
 

@@ -40,6 +40,8 @@ Nút tải PDF và mở hồ sơ ảnh thật nằm ở đầu Minh chứng. Tr�
 
 > [Phép thử theo thứ hạng](https://hoang-nguyenthe.github.io/sonarnet-vn/#thu-hang) khớp 106/152 ở 191 lượt rà khi giữ đầu danh sách. Ở mức 116 lượt, phép thử khớp 81/152 so với 82/152 trước đó. Số liệu, giới hạn và lệnh chấm lại nằm ở [hồ sơ thăm dò](reports/final/vietnam_rtc_transfer_20261119/rank_fusion/README.md).
 
+> Cùng 409 lượt rà trên sáu ngày chụp giữ riêng ở ba vùng cảng Mỹ, gộp thứ hạng tăng từ 12/15 lên 14/15 mốc AIS khớp ở 100 m. Bảng trên web ghi riêng tập mốc AIS này. [Bảng gộp thứ hạng](https://hoang-nguyenthe.github.io/sonarnet-vn/#thu-hang) · [Đối chứng và cách tái lập](reports/final/vietnam_rtc_transfer_20261119/rank_fusion/ais-holdout/README.md)
+
 > Ở mục **Kiểm tra trên ảnh ven biển Việt Nam**, xem mẫu Sentinel-1 có nhãn điểm Ai2 ở Đà Nẵng và Vũng Tàu. Có thể đổi bán kính 50, 100, 150 m và xem số ứng viên cần rà. Đây là phép so sánh với nhãn điểm, khác với IoU 0,50 dùng để chấm hộp trên SLC.
 
 > Ở đầu trang Minh chứng, chuyển **Phạm vi so sánh** giữa mọi ứng viên qua ngưỡng và cùng giới hạn rà soát để xem recall SAR trước–sau. Mở **Xem tác động của ngưỡng điểm và ưu tiên ven bờ** để xem kết quả riêng khi chỉ hạ ngưỡng. Bảng giữ cả số điểm không khớp nhãn và độ trễ.

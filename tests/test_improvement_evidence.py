@@ -173,8 +173,9 @@ class ImprovementEvidenceTests(unittest.TestCase):
         self.assertEqual(table['Thêm ô chồng lấn'].tolist(), ['9/13', '13/13'])
         self.assertTrue(any('191 → 234 lượt rà' in item.value for item in app.markdown))
         self.assertTrue(any('sonarnet-vn/#thu-hang' in item.value for item in app.markdown))
-        self.assertTrue(any(item.proto.label == 'Tải số liệu thử gộp thứ hạng'
-                            for item in app.get('download_button')))
+        download_labels = {item.proto.label for item in app.get('download_button')}
+        self.assertIn('Tải số liệu thử gộp thứ hạng', download_labels)
+        self.assertIn('Tải đối chứng gộp hạng trên sáu cảnh AIS', download_labels)
         study = ROOT/'reports/final/stationary_ais_detection_20261120/dual-band'
         totals = json.loads((study/'results.json').read_text())['totals']
         before, after = (totals['narrow'][method]['100'] for method in ('prior','fused_xview3'))
