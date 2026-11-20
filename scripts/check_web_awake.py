@@ -23,6 +23,9 @@ RECALL_LINK = "?trang=minh-chung&muc=recall"
 RECALL_HEADING = "Đối chứng recall trên ảnh Sentinel-1"
 RECALL_DOWNLOAD = "Tải kết quả thử radar hai kênh"
 RECALL_SUMMARY = ROOT / "reports/final/vietnam_rtc_transfer_20261119/summary.json"
+RANK_TOGGLE = "Xếp hạng theo đồng thuận YOLO và xView3"
+RANK_DOWNLOAD = "Tải số liệu thử gộp thứ hạng"
+RANK_RESULTS = RECALL_SUMMARY.parent / "rank_fusion/results.json"
 WAKE_BUTTON = "Yes, get this app back up!"
 READY_HEADING = re.compile(r"Đọc tín hiệu biển", re.IGNORECASE)
 
@@ -154,23 +157,31 @@ def verify_recall_download(page, expected_sha):
     return verify_download(page, RECALL_DOWNLOAD, expected_sha, "recall")
 
 
+def open_download_panel(page, label, download_label, field):
+    for frame in page.frames:
+        if urlsplit(frame.url).hostname != "sonarnet.streamlit.app" or frame.is_detached():
+            continue
+        toggle = frame.get_by_text(label, exact=True).first
+        if toggle.is_visible():
+            toggle.click(timeout=10000)
+            frame.get_by_role("button", name=download_label, exact=True).wait_for(
+                state="visible", timeout=20000
+            )
+            return
+    raise HealthCheckError(f"{field}_toggle_missing")
+
+
+def verify_rank_download(page):
+    open_download_panel(page, RANK_TOGGLE, RANK_DOWNLOAD, "rank")
+    return verify_download(page, RANK_DOWNLOAD, sha256(RANK_RESULTS.read_bytes()).hexdigest(), "rank")
+
+
 def verify_submission_downloads(page, report):
     """Exercise the judge's public report and evidence downloads."""
     report["pdf_sha256"] = verify_download(
         page, REPORT_DOWNLOAD, sha256(REPORT_PDF.read_bytes()).hexdigest(), "pdf"
     )
-    for frame in page.frames:
-        if urlsplit(frame.url).hostname != "sonarnet.streamlit.app" or frame.is_detached():
-            continue
-        toggle = frame.get_by_text(SAMPLE_TOGGLE, exact=True).first
-        if toggle.is_visible():
-            toggle.click(timeout=10000)
-            frame.get_by_role("button", name=SAMPLE_DOWNLOAD, exact=True).wait_for(
-                state="visible", timeout=20000
-            )
-            break
-    else:
-        raise HealthCheckError("sample_toggle_missing")
+    open_download_panel(page, SAMPLE_TOGGLE, SAMPLE_DOWNLOAD, "sample")
     report["sample_zip_sha256"] = verify_download(
         page, SAMPLE_DOWNLOAD, sha256(SAMPLE_ZIP.read_bytes()).hexdigest(), "sample"
     )
@@ -184,7 +195,8 @@ def write_report(output, report):
         with open(summary, "a", encoding="utf-8") as handle:
             handle.write("## SonarNet browser availability check\n\n")
             for key in ("mode", "status", "checked_at", "elapsed_seconds", "wake_clicks",
-                        "websocket_messages", "pdf_sha256", "sample_zip_sha256", "recall_sha256", "error"):
+                        "websocket_messages", "pdf_sha256", "sample_zip_sha256",
+                        "recall_sha256", "rank_sha256", "error"):
                 if key in report:
                     handle.write(f"- {key}: {report[key]}\n")
             handle.write("\nPassing means the app rendered and the Streamlit connection stayed active at this check, not continuous uptime.\n")
@@ -230,6 +242,7 @@ def main():
                 if args.recall:
                     expected_sha = sha256(RECALL_SUMMARY.read_bytes()).hexdigest()
                     report["recall_sha256"] = verify_recall_download(page, expected_sha)
+                    report["rank_sha256"] = verify_rank_download(page)
                 if args.submission:
                     verify_submission_downloads(page, report)
                 report["status"] = "healthy"

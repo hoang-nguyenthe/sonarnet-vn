@@ -113,6 +113,16 @@ class WebAwakeTests(unittest.TestCase):
             with self.assertRaisesRegex(health.HealthCheckError, "differs_from_release"):
                 health.verify_recall_download(page, expected)
 
+    def test_recall_rank_check_rejects_a_deployed_page_missing_the_latest_panel(self):
+        page = MagicMock()
+        frame = MagicMock()
+        page.frames = [frame]
+        frame.url = health.APP_URL + health.RECALL_LINK
+        frame.is_detached.return_value = False
+        frame.get_by_text.return_value.first.is_visible.return_value = False
+        with self.assertRaisesRegex(health.HealthCheckError, "rank_toggle_missing"):
+            health.verify_rank_download(page)
+
     def test_submission_verifies_report_and_sample_after_opening_sample(self):
         page = MagicMock()
         frame = MagicMock()

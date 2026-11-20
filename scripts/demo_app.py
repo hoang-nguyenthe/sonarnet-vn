@@ -111,7 +111,9 @@ elif section == 'Quan sát':
 elif section == 'Minh chứng cải tiến':
     if st.query_params.get('muc') == 'recall':
         st.subheader('Đối chứng recall trên ảnh Sentinel-1')
-        st.markdown('[Mở toàn bộ minh chứng và báo cáo](?trang=minh-chung)')
+        st.markdown('[Mở toàn bộ minh chứng và báo cáo](?trang=minh-chung) · '
+                    '[Xem bảng gộp thứ hạng và dữ liệu chấm lại]'
+                    '(https://hoang-nguyenthe.github.io/sonarnet-vn/#thu-hang)')
         load_view('vn_recall_view').render_transfer_rtc(ROOT, expanded=True)
     else:
         load_view('improvement_view').render_improvements(ROOT)
