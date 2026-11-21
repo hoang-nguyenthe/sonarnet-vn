@@ -212,6 +212,24 @@ def test_behaviour(tmp: Path):
     print(f"  ✔ hành vi: F1 vĩ mô {report.macro_f1:.3f} ({report.backend})")
 
 
+def test_binary_behavior_predictions_keep_one_label_per_track():
+    import pytest
+
+    pytest.importorskip("xgboost")
+    from sonarnet.behavior.classifier import BehaviorClassifier
+
+    rng = np.random.default_rng(20261120)
+    features = rng.normal(size=(80, 3))
+    labels = np.where(features[:, 0] > 0, "qua_canh", "neo_dau")
+    classifier = BehaviorClassifier(backend="xgboost", seed=7).fit(features, labels)
+    probabilities = classifier.predict_proba(features)
+
+    assert probabilities.shape == (len(features), 2)
+    np.testing.assert_allclose(probabilities.sum(axis=1), 1, atol=1e-6)
+    expected = np.asarray(classifier.classes_)[probabilities.argmax(axis=1)]
+    np.testing.assert_array_equal(classifier.predict(features), expected)
+
+
 def test_detection_metrics():
     """Chỉ tiêu phát hiện phải đúng trên các trường hợp đã biết đáp án."""
     from sonarnet.evaluation.detection_metrics import box_iou, evaluate_detections

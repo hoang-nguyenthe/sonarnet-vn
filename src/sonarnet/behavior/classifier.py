@@ -8,6 +8,8 @@ scikit-learn — thư viện luôn có mặt trong ảnh Python của Kaggle. C�
 
 from __future__ import annotations
 
+import sys
+from contextlib import nullcontext
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
@@ -63,6 +65,15 @@ class BehaviorClassifier:
         self.classes_: List[str] = []
         self._label_to_idx: Dict[str, int] = {}
 
+    def _openmp_context(self):
+        if self.backend != "xgboost" or sys.platform != "darwin":
+            return nullcontext()
+
+        # XGBoost and scikit-learn can load separate OpenMP runtimes on macOS.
+        from threadpoolctl import threadpool_limits
+
+        return threadpool_limits(limits=1, user_api="openmp")
+
     # -- Huấn luyện --------------------------------------------------------
     def fit(self, X: np.ndarray, y: np.ndarray) -> "BehaviorClassifier":
         self.classes_ = sorted(set(map(str, y)))
@@ -79,12 +90,10 @@ class BehaviorClassifier:
                 subsample=0.85,
                 colsample_bytree=0.85,
                 reg_lambda=1.2,
-                objective="multi:softprob",
-                num_class=len(self.classes_),
                 tree_method="hist",
                 random_state=self.seed,
-                n_jobs=-1,
-                eval_metric="mlogloss",
+                n_jobs=1 if sys.platform == "darwin" else -1,
+                eval_metric="mlogloss" if len(self.classes_) > 2 else "logloss",
             )
         else:
             from sklearn.ensemble import HistGradientBoostingClassifier
@@ -96,22 +105,26 @@ class BehaviorClassifier:
                 l2_regularization=1.0,
                 random_state=self.seed,
             )
-        self.model.fit(X, y_idx)
+        with self._openmp_context():
+            self.model.fit(X, y_idx)
         return self
 
     # -- Suy luận ----------------------------------------------------------
     def predict(self, X: np.ndarray) -> np.ndarray:
-        idx = self.model.predict(X)
+        with self._openmp_context():
+            idx = self.model.predict(X)
         return np.array([self.classes_[int(i)] for i in idx])
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
-        return self.model.predict_proba(X)
+        with self._openmp_context():
+            return self.model.predict_proba(X)
 
     # -- Độ quan trọng đặc trưng ------------------------------------------
     def feature_importance(self, names: Sequence[str]) -> Optional[Dict[str, float]]:
         try:
             if self.backend == "xgboost":
-                imp = np.asarray(self.model.feature_importances_, dtype=float)
+                with self._openmp_context():
+                    imp = np.asarray(self.model.feature_importances_, dtype=float)
             else:
                 from sklearn.inspection import permutation_importance  # noqa: F401
                 return None  # bỏ qua để tránh chi phí tính toán lớn
