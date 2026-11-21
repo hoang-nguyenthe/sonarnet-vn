@@ -1,0 +1,302 @@
+{
+  "key": "grid_b5dbbe163b22c4d4",
+  "bbox": [
+    109.0,
+    20.0,
+    109.1,
+    20.1
+  ],
+  "row": 140,
+  "column": 70,
+  "region_key": "vietnam",
+  "region_label": "Việt Nam",
+  "asset_dir": "assets/real_scan/published/388fbd9715e83b35/grid_b5dbbe163b22c4d4",
+  "image_size": [
+    1024,
+    1024
+  ],
+  "status": "processed",
+  "source": "Copernicus Sentinel-1 GRD · RTC by Catalyst · hosted by Microsoft Planetary Computer",
+  "band": "VV",
+  "time_scope": "Single RTC acquisition; exact acquisition time retained, no multi-day mosaic",
+  "reference_product": "S1C_IW_GRDH_1SDV_20261119T104845_20261119T104918_010405_014CB6_rtc",
+  "observation_day_utc": "2026-11-19",
+  "image_sha256": "cb91430816c4afa0ffaf97df64dd15f780e8528997ce5e560d278770bb0ec307",
+  "weights_sha256": "68c7fa1958032acae397f9e5a1e0b6d905cbcd489baa628893bd3237ba2b285b",
+  "device": "cpu",
+  "confidence_threshold": 0.35,
+  "inference_policy_sha256": "79033dec4a2c2e932ee9d9e74a36d997ad35a046aab42c6d58d345341c939f47",
+  "valid_pixel_fraction": 1.0,
+  "catalog_checked_at": "2026-11-21T07:23:44.790090+00:00",
+  "inference_pipeline": "detailed-vv-rtc-land-coast-masked-v1",
+  "inference_audit": {
+    "input_mask_version": "gshhg-2.3.7-full-maritime-seaward-500m-v2",
+    "input_mask_buffer_m": 500,
+    "allowed_pixel_fraction": 1.0,
+    "excluded_candidates": []
+  },
+  "validation": "Synthetic-SAR-trained baseline; candidates require human verification. Real-domain accuracy not validated.",
+  "generated_at": "2026-11-21T07:23:44.790113+00:00",
+  "detections": [
+    {
+      "id": 1,
+      "bbox_px": [
+        358.65069580078125,
+        0.3532218933105469,
+        369.49334716796875,
+        18.731121063232422
+      ],
+      "confidence": 0.6644325256347656,
+      "longitude": 109.03555390834808,
+      "latitude": 20.099068147316576
+    },
+    {
+      "id": 2,
+      "bbox_px": [
+        859.3680419921875,
+        276.6942138671875,
+        871.548095703125,
+        301.17767333984375
+      ],
+      "confidence": 0.6641058325767517,
+      "longitude": 109.0845173895359,
+      "latitude": 20.07178359925747
+    },
+    {
+      "id": 3,
+      "bbox_px": [
+        443.40985107421875,
+        414.94732666015625,
+        455.44256591796875,
+        437.95611572265625
+      ],
+      "confidence": 0.6561145186424255,
+      "longitude": 109.04388927817344,
+      "latitude": 20.058354324102403
+    },
+    {
+      "id": 4,
+      "bbox_px": [
+        595.3453369140625,
+        84.91382598876953,
+        605.49755859375,
+        94.55573272705078
+      ],
+      "confidence": 0.6373720765113831,
+      "longitude": 109.05863490700722,
+      "latitude": 20.091236837953332
+    },
+    {
+      "id": 5,
+      "bbox_px": [
+        391.5838317871094,
+        164.38482666015625,
+        404.3910827636719,
+        188.82470703125
+      ],
+      "confidence": 0.6214535236358643,
+      "longitude": 109.03886596262454,
+      "latitude": 20.082753440737726
+    },
+    {
+      "id": 6,
+      "bbox_px": [
+        982.8370361328125,
+        264.57818603515625,
+        994.5347900390625,
+        281.32867431640625
+      ],
+      "confidence": 0.6213611960411072,
+      "longitude": 109.0965513586998,
+      "latitude": 20.073344391584396
+    },
+    {
+      "id": 7,
+      "bbox_px": [
+        661.65380859375,
+        390.85626220703125,
+        673.895263671875,
+        415.4317626953125
+      ],
+      "confidence": 0.6026027202606201,
+      "longitude": 109.06521235704422,
+      "latitude": 20.060630467534065
+    },
+    {
+      "id": 8,
+      "bbox_px": [
+        839.5,
+        189.4656982421875,
+        855.662841796875,
+        218.07568359375
+      ],
+      "confidence": 0.6024572849273682,
+      "longitude": 109.0827716231346,
+      "latitude": 20.080100518465045
+    },
+    {
+      "id": 9,
+      "bbox_px": [
+        375.34063720703125,
+        79.17379760742188,
+        386.94659423828125,
+        102.5574951171875
+      ],
+      "confidence": 0.600547730922699,
+      "longitude": 109.03722105622292,
+      "latitude": 20.091126401722434
+    },
+    {
+      "id": 10,
+      "bbox_px": [
+        823.130126953125,
+        102.61822509765625,
+        835.9786376953125,
+        128.2068328857422
+      ],
+      "confidence": 0.5939344167709351,
+      "longitude": 109.08101117014884,
+      "latitude": 20.088729245215657
+    },
+    {
+      "id": 11,
+      "bbox_px": [
+        617.2425537109375,
+        182.58311462402344,
+        629.5880126953125,
+        205.52552795410156
+      ],
+      "confidence": 0.5902747511863708,
+      "longitude": 109.0608803987503,
+      "latitude": 20.081049382686615
+    },
+    {
+      "id": 12,
+      "bbox_px": [
+        425.447021484375,
+        330.3699951171875,
+        437.4310302734375,
+        354.34619140625
+      ],
+      "confidence": 0.5899965763092041,
+      "longitude": 109.04213271737099,
+      "latitude": 20.06656659245491
+    },
+    {
+      "id": 13,
+      "bbox_px": [
+        407.81201171875,
+        246.931640625,
+        422.63751220703125,
+        271.77972412109375
+      ],
+      "confidence": 0.582065999507904,
+      "longitude": 109.04054929316044,
+      "latitude": 20.074672296643257
+    },
+    {
+      "id": 14,
+      "bbox_px": [
+        583.5313720703125,
+        685.2783203125,
+        601.3292236328125,
+        714.242431640625
+      ],
+      "confidence": 0.5572561025619507,
+      "longitude": 109.05785452127456,
+      "latitude": 20.031664025783538
+    },
+    {
+      "id": 15,
+      "bbox_px": [
+        357.502197265625,
+        93.30269622802734,
+        367.0247802734375,
+        102.14868927001953
+      ],
+      "confidence": 0.5543261766433716,
+      "longitude": 109.03537729382515,
+      "latitude": 20.09045647531748
+    },
+    {
+      "id": 16,
+      "bbox_px": [
+        639.217529296875,
+        286.9229736328125,
+        650.901123046875,
+        311.2076416015625
+      ],
+      "confidence": 0.5535159111022949,
+      "longitude": 109.06299407482148,
+      "latitude": 20.07079440355301
+    },
+    {
+      "id": 17,
+      "bbox_px": [
+        879.0070190429688,
+        366.8703308105469,
+        890.4140014648438,
+        388.8075256347656
+      ],
+      "confidence": 0.5428265929222107,
+      "longitude": 109.08639751076697,
+      "latitude": 20.063101667165757
+    },
+    {
+      "id": 18,
+      "bbox_px": [
+        805.4341430664062,
+        20.438213348388672,
+        815.7030639648438,
+        40.173316955566406
+      ],
+      "confidence": 0.5040091872215271,
+      "longitude": 109.07915709018707,
+      "latitude": 20.09704045262188
+    },
+    {
+      "id": 19,
+      "bbox_px": [
+        804.4625854492188,
+        113.4467544555664,
+        815.3568725585938,
+        126.16558074951172
+      ],
+      "confidence": 0.4388885200023651,
+      "longitude": 109.07909274697303,
+      "latitude": 20.088300178945065
+    },
+    {
+      "id": 20,
+      "bbox_px": [
+        341.05902099609375,
+        5.186634063720703,
+        350.33648681640625,
+        17.187305450439453
+      ],
+      "confidence": 0.404381662607193,
+      "longitude": 109.03375954627991,
+      "latitude": 20.098907522484662
+    },
+    {
+      "id": 21,
+      "bbox_px": [
+        861.53125,
+        375.17547607421875,
+        869.768310546875,
+        386.38995361328125
+      ],
+      "confidence": 0.35465285181999207,
+      "longitude": 109.08453611135482,
+      "latitude": 20.06281418800354
+    }
+  ],
+  "source_provider": "planetary",
+  "source_collection": "sentinel-1-rtc",
+  "source_item_url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-1-rtc/items/S1C_IW_GRDH_1SDV_20261119T104845_20261119T104918_010405_014CB6_rtc",
+  "source_asset_url": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2026/11/19/IW/DV/S1C_IW_GRDH_1SDV_20261119T104845_20261119T104918_010405_014CB6_33FB/measurement/iw-vv.rtc.tiff",
+  "source_acquired_at": "2026-11-19T10:49:01.912805Z",
+  "source_native_pixel_spacing_m": 10.0,
+  "radiometry": "terrain-corrected gamma0; 10*log10, fixed [-25,+5] dB; nearest-neighbour",
+  "license": "CC-BY-4.0"
+}
