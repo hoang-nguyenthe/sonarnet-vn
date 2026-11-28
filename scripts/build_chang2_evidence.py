@@ -1,0 +1,276 @@
+"""Build the Vietnamese report, web evidence and reproducibility bundle."""
+from collections import defaultdict
+from hashlib import file_digest
+from html import escape
+import json
+from pathlib import Path
+from statistics import mean, stdev
+from xml.sax.saxutils import escape as markup_escape
+from zipfile import ZIP_DEFLATED, ZipFile
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle,
+                                PageBreak, Image)
+
+ROOT=Path(__file__).resolve().parents[1]
+OUT=ROOT/'reports/final/chang2'
+WEB=ROOT/'web/chang2'
+PAGE='https://hoang-nguyenthe.github.io/sonarnet-vn/chang2/'
+SOURCE='https://github.com/hoang-nguyenthe/sonarnet-vn/tree/chang-2'
+REPORT='SonarNet_Bao_cao_cai_tien_Chang2.pdf'
+ZIP='SonarNet_Minh_chung_Chang2.zip'
+SCENARIOS={'clean':'Đủ bản tin','gaps':'Mất bản tin','short_noisy':'Cửa sổ ngắn','overlap':'Tín hiệu chồng lấn'}
+MODELS={
+    'snapshot':'SOG mới nhất · 400',
+    'history_limited_training':'Quỹ đạo sạch · 48',
+    'history_full':'Quỹ đạo sạch · 400',
+    'history_augmented_matched':'Quỹ đạo có nhiễu · 400',
+    'history_augmented':'Sạch và nhiễu · 800',
+}
+FUSION={'mixed_quality':'AIS hỗn hợp','near_crossing':'Tàu cắt nhau',
+        'position_bias':'Lệch vị trí','size_noise':'Nhiễu kích thước'}
+
+
+def fst(value,places=3):
+    return f'{value:.{places}f}'.replace('.',',')
+
+
+def count(n):
+    return f'{n:,}'.replace(',','.')
+
+
+def checksum(path):
+    with path.open('rb') as f:
+        return file_digest(f,'sha256').hexdigest()
+
+
+def metrics(raw,study):
+    groups=defaultdict(list)
+    for item in raw['behavior']:
+        groups[item['scenario'],item['model']].append(item)
+    behavior={}
+    for key, rows in groups.items():
+        values=[r['macro_f1'] for r in rows]
+        behavior[key]=dict(mean=mean(values),sd=stdev(values),minimum=min(values),maximum=max(values),
+                    misses=sum(r['review_missed'] for r in rows),false_flags=sum(r['review_false_flags'] for r in rows),
+                    positives=sum(r['review_targets'] for r in rows))
+    fusion=defaultdict(dict)
+    keys=('n','id_correct','id_wrong','id_abstained','valid_declared_pairs','mismatches_on_valid_pairs',
+          'mod_mismatch_true','mod_mismatch_missed','mod_mismatch_false','downstream_blocked')
+    for scenario in ('all',*FUSION):
+        for k,s in ((False,False),(False,True),(True,False),(True,True)):
+            selection=[r for r in raw['fusion'] if r['kalman']==k and r['size_check']==s
+                       and (scenario=='all' or r['scenario']==scenario)]
+            fusion[scenario][k,s]={key:sum(row[key] for row in selection) for key in keys}
+    return behavior,fusion,study['groups']
+
+
+def figure(behavior):
+    fig,ax=plt.subplots(figsize=(9,3.65),layout='constrained')
+    fig.patch.set_facecolor('#f9fcfc')
+    ax.set_facecolor('#f9fcfc')
+    lines=[
+        ('snapshot','SOG mới nhất · 400','#79654c','o'),
+        ('history_full','Quỹ đạo sạch · 400','#bb5639','s'),
+        ('history_augmented_matched','Quỹ đạo có nhiễu · 400','#00786b','D'),
+    ]
+    for model,label,color,marker in lines:
+        ax.errorbar(range(4),[behavior[s,model]['mean'] for s in SCENARIOS],
+                    yerr=[behavior[s,model]['sd'] for s in SCENARIOS],
+                    marker=marker,capsize=3,label=label,color=color,linewidth=2)
+    ax.set(xticks=range(4),xticklabels=SCENARIOS.values(),ylim=(.12,1.055),ylabel='Macro-F1 (4 lớp)')
+    ax.grid(axis='y',alpha=.24)
+    ax.spines[['top','right']].set_visible(False)
+    ax.legend(loc='lower left',ncols=1,frameon=False,fontsize=9)
+    fig.savefig(WEB/'behavior.png',dpi=145,facecolor=fig.get_facecolor())
+    plt.close(fig)
+
+
+def label(k,s):
+    return ('Kalman' if k else 'Tuyến tính')+' · '+('có' if s else 'tắt')+' kích thước'
+
+
+def pdf_report(raw, behavior, fusion, study):
+    base=Path('/System/Library/Fonts/Supplemental')
+    pdfmetrics.registerFont(TTFont('ArabicFreeNormal',str(base/'Arial.ttf')))
+    pdfmetrics.registerFont(TTFont('ArabicFreeBold',str(base/'Arial Bold.ttf')))
+    pdfmetrics.registerFontFamily('ArabicFreeNormal',normal='ArabicFreeNormal',bold='ArabicFreeBold')
+    navy=colors.HexColor('#102e3e')
+    teal=colors.HexColor('#00675c')
+    line=colors.HexColor('#d5e5e5')
+    body=ParagraphStyle('body',fontName='ArabicFreeNormal',fontSize=11,leading=16,textColor=navy,spaceAfter=9)
+    heading=ParagraphStyle('heading',parent=body,fontName='ArabicFreeBold',fontSize=17,leading=22,spaceBefore=10,spaceAfter=9)
+    title=ParagraphStyle('title',parent=heading,fontSize=29,leading=34,spaceBefore=7,spaceAfter=13)
+    caption=ParagraphStyle('caption',parent=body,fontSize=9.3,leading=13,textColor=colors.HexColor('#425e68'))
+    cell=ParagraphStyle('cell',parent=body,fontSize=9.3,leading=12,spaceAfter=0)
+    cell_bold=ParagraphStyle('cell_bold',parent=cell,fontName='ArabicFreeBold',textColor=teal)
+    story=[]
+    def p(text, style=body):
+        story.append(Paragraph(text,style))
+    def h(text):
+        p(text,heading)
+    def page(name, subtitle):
+        p(name,title)
+        p(subtitle,caption)
+    def table(rows,widths):
+        converted=[[Paragraph(markup_escape(str(x)),cell_bold if idx==0 else cell)
+                    for x in row] for idx,row in enumerate(rows)]
+        tbl=Table(converted,colWidths=widths,hAlign='LEFT',repeatRows=1)
+        tbl.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e5f3ef')),
+          ('LINEBELOW',(0,0),(-1,-1),.35,line),('VALIGN',(0,0),(-1,-1),'TOP'),
+          ('TOPPADDING',(0,0),(-1,-1),6),('BOTTOMPADDING',(0,0),(-1,-1),6),
+          ('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f5f9f9')])]))
+        story.extend([tbl,Spacer(1,8)])
+    page('Kiểm chứng mô-đun hành vi','SONARNET VIỆT NAM  ·  CHUNG KẾT AI 2026  ·  CHẶNG 2, PHIÊN BẢN 1')
+    p('Một gợi ý hành vi chỉ có ích khi quỹ đạo đủ chất lượng, cặp SAR–AIS đủ căn cứ và người rà có thể kiểm tra lại. Đội chạy các cấu hình bật/tắt trên cùng ca, rồi dùng một bài thử đối chứng để đo thao tác của người rà.')
+    h('Kết quả chính')
+    table([['Đối chứng','Kết quả','Điều cần giữ khi đọc'],
+           ['Ghép bằng Kalman','1.229 → 1.239 cặp đúng, 3 → 0 cặp sai','4.800 mục tiêu mô phỏng cho mỗi cấu hình. Cùng quy tắc ghép và từ chối.'],
+           ['Đối chiếu kích thước','393/418 trường hợp mâu thuẫn được phát hiện, 23 cờ nhầm','Tính ở những cặp Kalman đã ghép đúng. Khi kích thước radar nhiễu mạnh, còn 25/110 trường hợp bị bỏ sót.'],
+           ['Huấn luyện với chuỗi nhiễu','Macro-F1 0,236 → 0,883 trong kịch bản chồng lấn','Giữ 400 mẫu huấn luyện, cùng 5 seed và cùng tập chấm. Mô phỏng.'],
+          ],[142,152,207])
+    h('Phạm vi xác nhận')
+    specialist=study['specialists_self_reported']
+    pilot=study['other_pilot']
+    p(f"<b>Đối chứng mô hình.</b> Năm seed, bốn kịch bản ghép, bốn kịch bản hành vi. Có số đếm theo seed, ma trận nhầm lẫn, mã chạy và dữ liệu ca thử.")
+    if specialist['n']:
+        p(f"<b>Khảo sát.</b> Có {specialist['n']} phiếu của người tự khai chuyên môn liên quan và {pilot['n']} phiếu nhóm thử nghiệm khác. Kết quả theo cặp ở trang 4.")
+    else:
+        p(f"<b>Khảo sát.</b> Có {specialist['n']} phiếu chuyên viên hoàn chỉnh và {pilot['n']} phiếu nhóm thử nghiệm khác. Bài thử đã chạy qua kiểm tra trình duyệt. Kết quả kiểm tra tự động được loại khỏi số liệu người tham gia.")
+    p('Nhãn hành vi trong báo cáo đến từ trình sinh quỹ đạo. SonarNet chưa có nhãn hành vi đã xác nhận ngoài thực địa để đo hiệu lực thực tế.',caption)
+    h('Mở kết quả và thử trực tiếp')
+    p(f'<link href="{PAGE}" color="#00675c">Ứng dụng Chặng 2</link>  ·  <link href="{PAGE}evidence.html" color="#00675c">Minh chứng và tệp tải</link>  ·  <link href="{SOURCE}" color="#00675c">Mã nguồn</link>')
+    story.append(PageBreak())
+
+    page('Kalman và kích thước','ĐỐI CHỨNG 2 × 2  ·  CÙNG DỮ LIỆU THEO TỪNG SEED')
+    p('Dùng 5 seed (101, 203, 307, 409, 503), mỗi seed có 60 lượt cho mỗi kịch bản. Mỗi lượt có bốn mục tiêu. Cấu hình tuyến tính và Kalman dùng cùng điểm radar, bản tin AIS, ngưỡng tuổi, bất định và cạnh tranh. Kiểm kích thước diễn ra sau khi ghép. Bật/tắt bước này chỉ tác động tới trạng thái dùng khi rà.')
+    table([['Cấu hình','Đúng','Sai','Từ chối','Phát hiện mâu thuẫn¹','Cờ nhầm¹']]
+          +[[label(k,s), count(v['id_correct']),v['id_wrong'],count(v['id_abstained']),
+             f"{v['mod_mismatch_true']}/{v['mismatches_on_valid_pairs']}",v['mod_mismatch_false']]
+            for (k,s),v in fusion['all'].items()],[144,52,42,63,116,84])
+    p('¹ Chấm mâu thuẫn kích thước trên các cặp ghép đúng. Mâu thuẫn là kích thước khai báo bị nhân 2,25 trong mô phỏng. Cờ nhầm là cặp không bị đổi kích thước nhưng thuật toán báo mâu thuẫn. Ngưỡng chênh lệch tương đối 0,42 được giữ từ hệ thống gốc.',caption)
+    h('Cặp ghép qua từng tình huống')
+    rows=[['Kịch bản','Tuyến tính đúng/sai','Kalman đúng/sai','Từ chối tuyến tính → Kalman']]
+    for scenario, wording in FUSION.items():
+        before,after=fusion[scenario][False,True],fusion[scenario][True,True]
+        rows.append([wording,f"{before['id_correct']} / {before['id_wrong']}",
+                     f"{after['id_correct']} / {after['id_wrong']}",
+                     f"{before['id_abstained']} → {after['id_abstained']}"])
+    table(rows,[146,107,104,144])
+    p('Mức tăng Kalman tập trung ở AIS hỗn hợp và nhiễu kích thước. Ở nhóm tàu cắt nhau và lệch vị trí, hai bộ ước lượng cùng giữ 300 cặp đúng và từ chối 900 trường hợp mỗi nhóm. Bộ ghép ưu tiên giữ ca bất định để rà tiếp.')
+    p('Ở kịch bản hộp radar nhiễu mạnh, kiểm kích thước trên cặp Kalman ghép đúng phát hiện 85/110 mâu thuẫn, bỏ sót 25 và tạo 23 cờ nhầm. Kích thước vì vậy phù hợp để yêu cầu rà thêm.')
+    story.append(PageBreak())
+
+    page('Dữ liệu huấn luyện hành vi','XGBOOST  ·  BỐN LỚP HÀNH VI  ·  5 SEED ĐỘC LẬP')
+    p('Mỗi seed sinh riêng 400 quỹ đạo học và 240 quỹ đạo chấm (60 mỗi lớp). Các phương án dùng cùng quỹ đạo chấm. So tốc độ mới nhất với đặc trưng toàn chuỗi, giảm số mẫu học xuống 48 và đối chiếu tăng cường nhiễu ở cùng 400 mẫu. Biến thể 800 gồm các bản gốc và biến thể nhiễu của 400 quỹ đạo học.')
+    story.append(Image(str(WEB/'behavior.png'),width=499,height=202))
+    p('Đường và thanh dọc lần lượt là trung bình và độ lệch chuẩn giữa 5 seed. Kịch bản làm mất 60% bản tin là kỳ vọng của cơ chế lấy mẫu, có ràng buộc giữ tối thiểu 5 mốc. Nhóm cửa sổ ngắn và tín hiệu chồng lấn gồm 9–19 mốc trước khi loại ngẫu nhiên. Kịch bản chồng lấn thêm nhiễu vị trí, hướng, hệ số và độ lệch tốc độ báo.',caption)
+    table([['Dữ liệu học · số hàng','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
+         +[[label,*[fst(behavior[s,m]['mean']) for s in SCENARIOS]] for m,label in MODELS.items()],
+          [168,75,83,87,88])
+    p('Ở kịch bản chồng lấn, bản có nhiễu 400 mẫu đạt 0,883 (độ lệch chuẩn 0,021), so với 0,236 (0,033) khi học trên quỹ đạo sạch. Theo quy tắc giản lược ưu tiên rà hai lớp khai thác, số mẫu dương bị mô hình bỏ sót giảm từ 38 xuống 8 trên 600 mẫu, và số gợi ý ưu tiên nhầm giảm từ 503 xuống 2.')
+    story.append(PageBreak())
+    page('Đo thao tác của người rà','THỬ CHÉO HAI ĐIỀU KIỆN  ·  GIỮ CÙNG LOẠI BẰNG CHỨNG')
+    p('Mỗi người làm hai lượt, mỗi lượt 8 ca khác nhau. Hai tập A và B đều có bốn ca cần ưu tiên theo nhãn mô phỏng, đủ bốn lớp hành vi. Mã được phân theo bốn bố trí để cân bằng thứ tự và tập ca. Cả hai chế độ có cùng biểu đồ; chế độ AI thêm gợi ý từ mô hình XGBoost đã chạy trên chính ca đó.')
+    table([['Mã','Lượt 1','Lượt 2'],['R01','A · không gợi ý','B · có gợi ý'],
+           ['R02','B · có gợi ý','A · không gợi ý'],['R03','A · có gợi ý','B · không gợi ý'],
+           ['R04','B · không gợi ý','A · có gợi ý']],[100,200,201])
+    p('<b>Chỉ số.</b> Tính trung vị thời gian mỗi điều kiện và chênh lệch có gợi ý trừ không gợi ý trong từng người. Bỏ thời gian của ca đổi tab, giữ đáp án để tính lỗi. Bỏ sót là ca dương được chọn chưa ưu tiên hoặc chưa đủ dữ liệu. Ghi riêng cờ ưu tiên nhầm.')
+    counts=[['Nhóm','Người rà','Bỏ sót không / có AI','Chênh thời gian²']]
+    for key, wording in (('specialists_self_reported','Chuyên viên tự khai'),('other_pilot','Thử nghiệm sơ bộ')):
+        item=study[key]
+        c,a=item['control'],item['ai']
+        delta=item['median_paired_delta_seconds']
+        counts.append([wording,item['n'],f"{c['missed']}/{c['positive']} · {a['missed']}/{a['positive']}" if item['n'] else 'Chưa có phiếu',
+                       fst(delta,2)+' giây' if delta is not None else 'Chưa ước tính'])
+    table(counts,[151,61,150,139])
+    p('² Chênh lệch tính theo từng người, rồi lấy trung vị giữa những người có hai điều kiện hợp lệ. Bài thử tăng cường ca khó và có ba gợi ý sai về mức ưu tiên trên 16 ca. Kết quả, khi có, phản ánh thao tác với bộ ca này. Nghề và kinh nghiệm do người tham gia tự khai.',caption)
+    h('Giới hạn khi dùng ngoài hiện trường')
+    p('Chuỗi AIS ngoài thực địa có mất tín hiệu, sai số và hành vi hỗn hợp khác trình sinh. Kết quả mô phỏng dùng để chọn thiết kế thử nghiệm tiếp theo. Cần nhãn đối chiếu độc lập, tách tàu và ngày thu nhận, cùng đánh giá có chuyên viên xác nhận trước khi áp dụng nghiệp vụ.')
+    p(f'<link href="{PAGE}study.html" color="#00675c">Mở bài thử</link>  ·  <link href="{PAGE}{ZIP}" color="#00675c">Tải dữ liệu, giao thức và mã tái lập</link>',caption)
+
+    def footer(c,doc):
+        c.setFillColor(teal)
+        c.rect(0,A4[1]-8,A4[0],8,fill=1,stroke=0)
+        c.setStrokeColor(line)
+        c.line(47,40,A4[0]-47,40)
+        c.setFillColor(navy)
+        c.setFont('ArabicFreeNormal',8)
+        c.drawString(47,24,'SONARNET VIỆT NAM  /  28.11.2026')
+        c.drawRightString(A4[0]-47,24,str(doc.page))
+    doc=SimpleDocTemplate(str(WEB/REPORT),pagesize=A4,leftMargin=47,rightMargin=47,
+                          topMargin=35,bottomMargin=54,title='SonarNet • Báo cáo Chặng 2')
+    doc.build(story,onFirstPage=footer,onLaterPages=footer)
+
+
+def html_table(rows):
+    rendered=[]
+    for i,row in enumerate(rows):
+        tag='th' if i==0 else 'td'
+        rendered.append('<tr>'+''.join(f'<{tag}>{escape(str(v))}</{tag}>' for v in row)+'</tr>')
+    return '<div class="table-wrap"><table>'+''.join(rendered)+'</table></div>'
+
+
+def web_report(behavior,fusion,study):
+    behavior_table=html_table([['Dữ liệu học','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
+        +[[name,*[fst(behavior[s,m]['mean'])+' ± '+fst(behavior[s,m]['sd']) for s in SCENARIOS]]
+          for m,name in MODELS.items()])
+    fusion_table=html_table([['Cấu hình','Cặp đúng','Cặp sai','Từ chối','Mâu thuẫn đúng / tổng¹','Cờ nhầm¹']]
+       +[[label(k,s),count(v['id_correct']),v['id_wrong'],count(v['id_abstained']),
+          f"{v['mod_mismatch_true']}/{v['mismatches_on_valid_pairs']}",v['mod_mismatch_false']] for (k,s),v in fusion['all'].items()])
+    study_rows=[['Nhóm','Số phiếu','Bỏ sót không / có AI','Chênh giây có − không AI']]
+    for key,name in (('specialists_self_reported','Chuyên viên tự khai'),('other_pilot','Thử nghiệm sơ bộ')):
+        row=study[key]
+        before,after=row['control'],row['ai']
+        misses=f"{before['missed']}/{before['positive']} · {after['missed']}/{after['positive']}" if row['n'] else 'Chưa có phiếu'
+        delta=row['median_paired_delta_seconds']
+        study_rows.append([name,row['n'],misses,fst(delta,2) if delta is not None else 'Chưa ước tính'])
+    html=f"""<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minh chứng Chặng 2 · SonarNet Việt Nam</title><link rel="stylesheet" href="style.css"></head>
+<body><header><div><a href="./">SonarNet Việt Nam</a><span>Chung kết AI 2026 · Bảng C</span></div><a href="study.html">Thử rà quỹ đạo</a></header>
+<main><section><h1>Kiểm chứng mô-đun hành vi</h1><p>Đề Chặng 2 yêu cầu tách đóng góp của bộ ước lượng Kalman, đối chiếu kích thước và dữ liệu hành vi, rồi kiểm tra ảnh hưởng của gợi ý AI lên thao tác rà.</p>
+<div class="stats"><div class="stat"><strong>5 seed</strong>4 kịch bản ghép và 4 mức chất lượng quỹ đạo</div><div class="stat"><strong>3 → 0</strong>cặp ghép sai trên 4.800 mục tiêu mô phỏng</div><div class="stat"><strong>0,236 → 0,883</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
+<div class="links"><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a></div></section>
+<section><h2>Kalman và kiểm tra kích thước</h2>{fusion_table}
+<p class="muted">¹ Trên cặp ghép đúng. Kịch bản hộp radar nhiễu mạnh có 85/110 mâu thuẫn được phát hiện, 25 bỏ sót và 23 cờ nhầm với Kalman và kiểm kích thước. Dữ liệu mô phỏng.</p>
+<p><a href="fusion.csv" download>Tải CSV ghép và kích thước theo từng seed</a></p></section>
+<section><h2>Dữ liệu huấn luyện hành vi</h2><img class="chart" src="behavior.png" width="1305" height="530" alt="Biểu đồ F1 qua bốn mức chất lượng, so quỹ đạo sạch, quỹ đạo thêm nhiễu và chỉ tốc độ cuối">
+{behavior_table}<p class="muted">Trung bình ± độ lệch chuẩn trên 5 seed. Nhãn từ trình sinh quỹ đạo. Chưa có nhãn hành vi ngoài thực địa đã xác nhận.</p>
+<p><a href="behavior.csv" download>Tải CSV hành vi theo từng seed</a></p></section>
+<section><h2>Rà với và không có gợi ý AI</h2><p>Hai lượt, mỗi lượt 8 ca mô phỏng, đổi thứ tự và điều kiện theo mã người rà. Thời lượng, ca bỏ sót và cờ nhầm được tính từ phiếu thực tế.</p>{html_table(study_rows)}
+<p><a href="study.html">Mở bài thử và tải phiếu sau hai lượt</a> · <a href="study-summary.json" download>Tải số liệu khảo sát</a></p></section></main>
+<footer>SonarNet Việt Nam · Chặng 2 · 28/11/2026</footer></body></html>"""
+    (WEB/'evidence.html').write_text(html)
+
+
+def main():
+    raw=json.loads((OUT/'results.json').read_text())
+    study=json.loads((OUT/'study-summary.json').read_text())
+    assert not study['qa_fixture_only']
+    behavior,fusion,groups=metrics(raw,study)
+    figure(behavior)
+    pdf_report(raw,behavior,fusion,groups)
+    web_report(behavior,fusion,groups)
+    import shutil
+    for name in ('behavior.csv','fusion.csv','study-summary.json'):
+        shutil.copyfile(OUT/name,WEB/name)
+    files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md')]
+    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py')]
+    files += [(WEB/file,file) for file in (REPORT,'behavior.png')]
+    with ZipFile(WEB/ZIP,'w',compression=ZIP_DEFLATED) as archive:
+        for source,name in files:
+            archive.write(source,name)
+        archive.writestr('SHA256SUMS',''.join(f'{checksum(file)}  {name}\n' for file,name in files))
+    print(WEB/REPORT,WEB/ZIP)
+
+
+if __name__=='__main__':
+    main()
