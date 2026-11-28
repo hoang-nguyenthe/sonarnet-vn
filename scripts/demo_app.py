@@ -71,7 +71,7 @@ with st.sidebar:
     st.info('Chưa có dữ liệu định danh tàu. Kết quả cần người có chuyên môn xác minh.')
 
 SECTIONS = {'gioi-thieu': 'Nghiên cứu', 'quan-sat': 'Quan sát',
-            'minh-chung': 'Minh chứng cải tiến', 'huong-dan': 'Hướng dẫn'}
+            'minh-chung': 'Minh chứng cải tiến', 'quan-ly': 'Quản lý quyết định', 'huong-dan': 'Hướng dẫn'}
 
 
 def update_section_url():
@@ -90,6 +90,27 @@ def open_evidence():
     update_section_url()
 
 
+def open_manager(region, point_id):
+    st.session_state.main_section = SECTIONS['quan-ly']
+    st.session_state.manager_region = region
+    st.session_state.manager_point = point_id
+    st.session_state.manager_filter = 'Tất cả'
+    update_section_url()
+
+
+def open_decided_observation(label, point_id):
+    st.session_state.main_section = SECTIONS['quan-sat']
+    st.session_state.observation_region = label
+    st.session_state.observation_workflow = 'Xem toàn cảnh'
+    st.session_state.panorama_yolo_enabled = True
+    st.session_state.panorama_illustrative = False
+    st.session_state.panorama_decided_only = False
+    st.session_state.panorama_candidate = point_id
+    st.session_state.observation_focus = point_id
+    update_section_url()
+    st.query_params['che-do'] = 'xem-toan-canh'
+
+
 def load_view(module_name):
     try:
         return import_module(module_name)
@@ -104,26 +125,31 @@ if 'main_section' not in st.session_state:
     st.session_state.main_section = SECTIONS.get(st.query_params.get('trang'), SECTIONS['gioi-thieu'])
 section = st.radio('Điều hướng', list(SECTIONS.values()), horizontal=True, index=None,
                    label_visibility='collapsed', key='main_section', on_change=update_section_url)
-# st.tabs evaluates every tab on every rerun.  Do not construct the national
-# raster workspace while a visitor is reading the lightweight introduction.
+# Build only the selected workspace, including the active evidence tab.
 if section == 'Nghiên cứu':
     load_view('introduction').render_introduction(ROOT, open_evidence=open_evidence)
 elif section == 'Quan sát':
-    load_view('observation_view').render(ROOT)
+    load_view('observation_view').render(ROOT, open_manager=open_manager)
 elif section == 'Minh chứng cải tiến':
     default_stage = 'Chặng 2' if st.query_params.get('chang') == '2' else 'Chặng 1'
-    stage_one, stage_two = st.tabs(('Chặng 1', 'Chặng 2'), default=default_stage)
-    with stage_one:
-        if st.query_params.get('muc') == 'recall':
-            st.subheader('Đối chứng recall trên ảnh Sentinel-1')
-            st.markdown('[Mở toàn bộ minh chứng và báo cáo](?trang=minh-chung) · '
-                        '[Xem bảng gộp thứ hạng và dữ liệu chấm lại]'
-                        '(https://hoang-nguyenthe.github.io/sonarnet-vn/#thu-hang)')
-            load_view('vn_recall_view').render_transfer_rtc(ROOT, expanded=True)
-        else:
-            load_view('improvement_view').render_improvements(ROOT)
-    with stage_two:
-        load_view('chang2_view').render(ROOT)
+    stage_one, stage_two = st.tabs(
+        ('Chặng 1', 'Chặng 2'), default=default_stage, key='evidence_stage', on_change='rerun',
+    )
+    if stage_one.open:
+        with stage_one:
+            if st.query_params.get('muc') == 'recall':
+                st.subheader('Đối chứng recall trên ảnh Sentinel-1')
+                st.markdown('[Mở toàn bộ minh chứng và báo cáo](?trang=minh-chung) · '
+                            '[Xem bảng gộp thứ hạng và dữ liệu chấm lại]'
+                            '(https://hoang-nguyenthe.github.io/sonarnet-vn/#thu-hang)')
+                load_view('vn_recall_view').render_transfer_rtc(ROOT, expanded=True)
+            else:
+                load_view('improvement_view').render_improvements(ROOT)
+    if stage_two.open:
+        with stage_two:
+            load_view('chang2_view').render(ROOT)
+elif section == 'Quản lý quyết định':
+    load_view('decision_manager_view').render(ROOT, open_decided_observation)
 else:
     st.subheader('Từ xem ảnh đến kiểm tra bằng chứng.')
     st.markdown('''1. **Chọn khu vực:** xem ảnh vệ tinh và thời gian quan sát. Ảnh màu bên dưới chỉ là nền tham chiếu.
