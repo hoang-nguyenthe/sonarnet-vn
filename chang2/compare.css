@@ -32,3 +32,14 @@
 .table-navigation button:disabled{opacity:.45;cursor:default}
 @media(max-width:760px){.case-tools{grid-template-columns:1fr 1fr}}
 @media(max-width:440px){.case-tools{grid-template-columns:1fr}}
+
+.hint-audit{border:1px solid #a8c8c5;border-radius:12px;background:#f5faf9;margin:.25rem 0 .6rem}
+.hint-audit>summary{padding:.7rem .85rem;font-weight:760;color:#15584f;cursor:pointer}
+.hint-audit>div,.hint-audit>p{margin:.1rem .85rem .85rem}
+.hint-audit h3{font-size:1rem;line-height:1.3;margin:1rem 0 .35rem}
+.hint-audit p{font-size:.92rem;margin:.35rem 0 .6rem}
+.hint-audit th,.hint-audit td{font-size:.84rem;padding:.4rem .45rem}
+.hint-audit td:not(:first-child){font-variant-numeric:tabular-nums;white-space:nowrap}
+.hint-audit .links{align-items:center}
+.hint-audit .links button{padding:.45rem .65rem}
+.hint-audit details{margin:.65rem 0}
