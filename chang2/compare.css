@@ -26,3 +26,9 @@
 #ket-qua-ca details{margin-top:.9rem}#ket-qua-ca summary{cursor:pointer;font-weight:700;margin-bottom:.45rem}
 #tat-ca-ca tbody th,#ket-qua-ca tbody th{background:transparent;color:var(--ink);font-weight:650}
 @media(max-width:520px){.case-controls{align-items:flex-start;flex-direction:column;gap:.3rem}#tat-ca-ca th,#tat-ca-ca td{padding:.43rem .5rem}}
+
+.case-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem}
+.table-navigation{align-items:center}
+.table-navigation button:disabled{opacity:.45;cursor:default}
+@media(max-width:760px){.case-tools{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.case-tools{grid-template-columns:1fr}}

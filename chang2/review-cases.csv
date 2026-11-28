@@ -1,17 +1,201 @@
-﻿Ca,Nhãn mô phỏng,Gợi ý ưu tiên,Ưu tiên K / C,Lỗi K / C,Trung vị K / C (ms)
-Q01,Câu,Có,8/8,0/0,33/33
-Q02,Câu,Không,8/6,0/2,32/33
-Q03,Kéo lưới,Có,8/8,0/0,"33/32,5"
-Q04,Kéo lưới,Có,8/8,0/0,"32,5/33"
-Q05,Neo đậu/trôi,Không,0/0,0/0,33/32
-Q06,Neo đậu/trôi,Không,8/6,8/6,33/33
-Q07,Quá cảnh,Không,0/0,0/0,33/32
-Q08,Quá cảnh,Có,0/1,0/1,33/32
-Q09,Quá cảnh,Không,0/0,0/0,"32/32,5"
-Q10,Quá cảnh,Không,0/0,0/0,32/32
-Q11,Neo đậu/trôi,Không,0/0,0/0,33/33
-Q12,Neo đậu/trôi,Không,8/6,8/6,33/32
-Q13,Kéo lưới,Có,8/8,0/0,33/33
-Q14,Kéo lưới,Không,0/0,8/8,"32,5/33"
-Q15,Câu,Có,6/8,2/0,32/33
-Q16,Câu,Có,2/7,6/1,33/32
+﻿Mã ca,Nhãn mô phỏng,Chất lượng AIS,Số bản tin,Số phút,Ca cần ưu tiên,AI gợi ý ưu tiên,Lớp gợi ý,Ưu tiên không AI,Ưu tiên có AI,Lỗi không AI,Lỗi có AI,Chưa đủ dữ liệu không AI,Chưa đủ dữ liệu có AI,Quy tắc đổi đúng,Quy tắc đổi sai,Bấm trung vị không AI (ms),Bấm trung vị có AI (ms),P90 không AI (ms),P90 có AI (ms),Chênh ghép cặp trung vị (ms)
+C001,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,31,31,34.5,32,0
+C002,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,31,31,32,32,0
+C003,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,31,31,32,32,0
+C004,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,31,31,33.5,35.5,0
+C005,Câu,Đủ bản tin,108,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,31,31,32,32.5,-1
+C006,Câu,Đủ bản tin,108,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,31,31.5,32,32,0
+C007,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,31,31,32,31.5,0
+C008,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,31,32,32,0
+C009,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,31,31.5,32,32,0
+C010,Câu,Đủ bản tin,108,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,31,31,32,32,0
+C011,Câu,Mất bản tin rải rác,51,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,31,32,32,32.5,0.5
+C012,Câu,Mất bản tin rải rác,49,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32.5,32.5,0
+C013,Câu,Mất bản tin rải rác,43,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,33,0
+C014,Câu,Mất bản tin rải rác,51,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,32.5,0
+C015,Câu,Mất bản tin rải rác,45,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,32,-0.5
+C016,Câu,Mất bản tin rải rác,42,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32,32,0
+C017,Câu,Mất bản tin rải rác,46,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32.5,32,0
+C018,Câu,Mất bản tin rải rác,49,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32,32,0
+C019,Câu,Mất bản tin rải rác,45,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,32,32.5,0
+C020,Câu,Mất bản tin rải rác,48,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32.5,32,0
+C021,Câu,"Cửa sổ ngắn, có nhiễu",11,100.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,33,0
+C022,Câu,"Cửa sổ ngắn, có nhiễu",10,90.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33.5,32.5,-1
+C023,Câu,"Cửa sổ ngắn, có nhiễu",12,150.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,33,33,0
+C024,Câu,"Cửa sổ ngắn, có nhiễu",11,110.0,True,True,Câu,2,7,6,1,2,0,5,0,33,32,33,33,-1
+C025,Câu,"Cửa sổ ngắn, có nhiễu",19,180.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,33,0
+C026,Câu,"Cửa sổ ngắn, có nhiễu",13,150.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,33,0
+C027,Câu,"Cửa sổ ngắn, có nhiễu",14,150.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,33,0
+C028,Câu,"Cửa sổ ngắn, có nhiễu",8,80.0,True,False,Neo đậu/trôi,0,0,8,8,2,0,0,0,32,32,33,33,0
+C029,Câu,"Cửa sổ ngắn, có nhiễu",7,100.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,33,0
+C030,Câu,"Cửa sổ ngắn, có nhiễu",9,90.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,32,0
+C031,Câu,Tín hiệu chồng lấn,9,130.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32.5,33,0
+C032,Câu,Tín hiệu chồng lấn,10,170.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,33,0
+C033,Câu,Tín hiệu chồng lấn,15,170.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,33,0
+C034,Câu,Tín hiệu chồng lấn,12,150.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,33,0
+C035,Câu,Tín hiệu chồng lấn,14,180.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,33,33,0
+C036,Câu,Tín hiệu chồng lấn,8,100.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,33,0
+C037,Câu,Tín hiệu chồng lấn,12,140.0,True,True,Câu,2,7,6,1,2,0,5,0,32,32,32.5,33,1
+C038,Câu,Tín hiệu chồng lấn,15,180.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,32.5,0
+C039,Câu,Tín hiệu chồng lấn,9,110.0,True,True,Câu,0,3,8,5,2,2,3,0,32,32,33,33,0
+C040,Câu,Tín hiệu chồng lấn,9,130.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,33,0
+C041,Câu,Mất liên tục,27,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,35,33,0
+C042,Câu,Mất liên tục,27,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,32.5,33,0
+C043,Câu,Mất liên tục,27,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,33,0
+C044,Câu,Mất liên tục,27,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,32.5,0
+C045,Câu,Mất liên tục,27,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32.5,33,0
+C046,Câu,Mất liên tục,27,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32.5,33,0.5
+C047,Câu,Mất liên tục,27,1070.0,True,True,Câu,6,8,2,0,2,0,2,0,32,32,33,33,0
+C048,Câu,Mất liên tục,27,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32,32.5,0
+C049,Câu,Mất liên tục,27,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,32.5,33,0
+C050,Câu,Mất liên tục,27,1070.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,33.5,0
+C051,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,31,31,32,31,0
+C052,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,31,31,32,32,0
+C053,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,31,31,32.5,32.5,0
+C054,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,2,7,6,1,2,0,5,0,31,31,32,32,0
+C055,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,31,31,32,32,0
+C056,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,31,31,32,32,0
+C057,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,31,31,32,32,0.5
+C058,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,31,31,32,32,1
+C059,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,2,7,6,1,2,0,5,0,31,31,32,32,0
+C060,Kéo lưới,Đủ bản tin,108,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,31,32,32,0
+C061,Kéo lưới,Mất bản tin rải rác,56,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,32.5,0
+C062,Kéo lưới,Mất bản tin rải rác,56,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,32,32,0
+C063,Kéo lưới,Mất bản tin rải rác,46,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,31,32,32,-0.5
+C064,Kéo lưới,Mất bản tin rải rác,40,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,32,32,0
+C065,Kéo lưới,Mất bản tin rải rác,36,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,32.5,33,0
+C066,Kéo lưới,Mất bản tin rải rác,51,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,31,32,32,33,0
+C067,Kéo lưới,Mất bản tin rải rác,42,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,0
+C068,Kéo lưới,Mất bản tin rải rác,39,1070.0,True,True,Kéo lưới,2,7,6,1,2,0,5,0,32,32,33,32,0
+C069,Kéo lưới,Mất bản tin rải rác,40,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,32.5,32.5,0
+C070,Kéo lưới,Mất bản tin rải rác,46,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,33,32,0
+C071,Kéo lưới,"Cửa sổ ngắn, có nhiễu",10,110.0,True,True,Kéo lưới,2,7,6,1,2,0,5,0,32,32,33,32.5,0
+C072,Kéo lưới,"Cửa sổ ngắn, có nhiễu",15,160.0,True,True,Câu,8,8,0,0,0,0,0,0,32,32,33,32,0
+C073,Kéo lưới,"Cửa sổ ngắn, có nhiễu",15,170.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,32.5,0
+C074,Kéo lưới,"Cửa sổ ngắn, có nhiễu",17,180.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,33,32,33,33,-1
+C075,Kéo lưới,"Cửa sổ ngắn, có nhiễu",13,160.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,0
+C076,Kéo lưới,"Cửa sổ ngắn, có nhiễu",7,80.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,32.5,0
+C077,Kéo lưới,"Cửa sổ ngắn, có nhiễu",15,170.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,33,32,33,33,-1
+C078,Kéo lưới,"Cửa sổ ngắn, có nhiễu",9,90.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,0
+C079,Kéo lưới,"Cửa sổ ngắn, có nhiễu",9,80.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,0
+C080,Kéo lưới,"Cửa sổ ngắn, có nhiễu",12,130.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,33,33,0
+C081,Kéo lưới,Tín hiệu chồng lấn,15,170.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,33,32.5,0
+C082,Kéo lưới,Tín hiệu chồng lấn,10,100.0,True,True,Kéo lưới,0,3,8,5,2,2,3,0,32,33,33,33,1
+C083,Kéo lưới,Tín hiệu chồng lấn,13,180.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,-0.5
+C084,Kéo lưới,Tín hiệu chồng lấn,7,80.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,-0.5
+C085,Kéo lưới,Tín hiệu chồng lấn,15,170.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33.5,32,-1
+C086,Kéo lưới,Tín hiệu chồng lấn,5,80.0,True,False,Quá cảnh,6,3,2,5,2,1,0,3,32,32,33,33,0
+C087,Kéo lưới,Tín hiệu chồng lấn,11,160.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,0
+C088,Kéo lưới,Tín hiệu chồng lấn,11,170.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32.5,33,33,0
+C089,Kéo lưới,Tín hiệu chồng lấn,5,80.0,True,True,Câu,8,8,0,0,0,0,0,0,32.5,32,33,33,0
+C090,Kéo lưới,Tín hiệu chồng lấn,5,100.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,33,32.5,-0.5
+C091,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32.5,33,33,0
+C092,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,0
+C093,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,6,8,2,0,2,0,2,0,32,32,33,33,0
+C094,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33,0
+C095,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,33.5,0
+C096,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,32,33,0
+C097,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,32.5,33,0.5
+C098,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33.5,32.5,0
+C099,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,32.5,33,0
+C100,Kéo lưới,Mất liên tục,27,1070.0,True,True,Kéo lưới,8,8,0,0,0,0,0,0,32,32,33,32,-0.5
+C101,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31.5,31.5,32,32,0
+C102,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,31,32,32,0
+C103,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31,32,32,0
+C104,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31,32.5,32,0
+C105,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31.5,31,32,32,0
+C106,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31,32,32,0
+C107,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31,32,32,0.5
+C108,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31,32,32,0
+C109,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31,32.5,33.5,0
+C110,Neo đậu/trôi,Đủ bản tin,108,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31,32.5,32,0
+C111,Neo đậu/trôi,Mất bản tin rải rác,47,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,32,32.5,0
+C112,Neo đậu/trôi,Mất bản tin rải rác,44,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,32,32,0
+C113,Neo đậu/trôi,Mất bản tin rải rác,38,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,32.5,0
+C114,Neo đậu/trôi,Mất bản tin rải rác,47,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31.5,32,32,32.5,0
+C115,Neo đậu/trôi,Mất bản tin rải rác,43,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,32,32,0
+C116,Neo đậu/trôi,Mất bản tin rải rác,41,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,32,0
+C117,Neo đậu/trôi,Mất bản tin rải rác,47,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,32.5,32.5,0
+C118,Neo đậu/trôi,Mất bản tin rải rác,40,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,32,0
+C119,Neo đậu/trôi,Mất bản tin rải rác,45,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31.5,32,32.5,32,0
+C120,Neo đậu/trôi,Mất bản tin rải rác,45,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,32.5,0
+C121,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",14,160.0,False,False,Neo đậu/trôi,0,0,0,0,2,0,0,0,32,32,33,33,0
+C122,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",12,140.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C123,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",8,90.0,False,False,Neo đậu/trôi,0,0,0,0,2,0,0,0,32,32,33,33,0
+C124,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",18,180.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C125,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",9,80.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32.5,33,33,0
+C126,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",12,170.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C127,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",10,150.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0.5
+C128,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",12,130.0,False,False,Neo đậu/trôi,0,0,0,0,2,0,0,0,32,32,33,32.5,0
+C129,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",8,80.0,False,False,Neo đậu/trôi,0,0,0,0,2,0,0,0,32,32,33,33,0
+C130,Neo đậu/trôi,"Cửa sổ ngắn, có nhiễu",11,130.0,False,False,Neo đậu/trôi,2,0,2,0,2,1,2,0,32,32,33,33,0
+C131,Neo đậu/trôi,Tín hiệu chồng lấn,17,170.0,False,False,Neo đậu/trôi,8,6,8,6,0,1,2,0,32,32,33,32.5,0
+C132,Neo đậu/trôi,Tín hiệu chồng lấn,13,160.0,False,False,Neo đậu/trôi,0,0,0,0,2,0,0,0,32,32,33,33,0
+C133,Neo đậu/trôi,Tín hiệu chồng lấn,10,150.0,False,False,Neo đậu/trôi,8,6,8,6,0,1,2,0,32,32,32.5,33,0
+C134,Neo đậu/trôi,Tín hiệu chồng lấn,14,180.0,False,False,Neo đậu/trôi,2,0,2,0,2,1,2,0,32,32,33,32.5,0
+C135,Neo đậu/trôi,Tín hiệu chồng lấn,13,170.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C136,Neo đậu/trôi,Tín hiệu chồng lấn,9,120.0,False,False,Neo đậu/trôi,2,0,2,0,2,1,2,0,32,32,33,33,0
+C137,Neo đậu/trôi,Tín hiệu chồng lấn,8,80.0,False,False,Neo đậu/trôi,0,0,0,0,2,0,0,0,32,32,33,33,0
+C138,Neo đậu/trôi,Tín hiệu chồng lấn,8,90.0,False,False,Neo đậu/trôi,8,6,8,6,0,1,2,0,32,32,33,34,0.5
+C139,Neo đậu/trôi,Tín hiệu chồng lấn,10,120.0,False,False,Neo đậu/trôi,8,6,8,6,0,1,2,0,32.5,32,33,33,-0.5
+C140,Neo đậu/trôi,Tín hiệu chồng lấn,7,90.0,False,False,Neo đậu/trôi,8,6,8,6,0,1,2,0,32,32,33,32.5,0
+C141,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,31,31.5,32.5,33,0
+C142,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C143,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C144,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,32.5,33,1
+C145,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C146,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,32.5,33,0.5
+C147,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,32.5,32,0
+C148,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C149,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C150,Neo đậu/trôi,Mất liên tục,27,1070.0,False,False,Neo đậu/trôi,0,0,0,0,0,0,0,0,32,32,33,33,0
+C151,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,32,32,32,1
+C152,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31,32,32,0
+C153,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31,32,32,0
+C154,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31,32,32,0
+C155,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31.5,32,32.5,1
+C156,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31,33.5,32,0
+C157,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31.5,32,32,0
+C158,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31,32,32,0
+C159,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31,31,32,-0.5
+C160,Quá cảnh,Đủ bản tin,108,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31,31,32,32,0
+C161,Quá cảnh,Mất bản tin rải rác,49,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31.5,32,32,32.5,0
+C162,Quá cảnh,Mất bản tin rải rác,46,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,32,33,0
+C163,Quá cảnh,Mất bản tin rải rác,38,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C164,Quá cảnh,Mất bản tin rải rác,38,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32.5,0
+C165,Quá cảnh,Mất bản tin rải rác,40,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32.5,0
+C166,Quá cảnh,Mất bản tin rải rác,47,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32.5,0
+C167,Quá cảnh,Mất bản tin rải rác,49,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,32,32.5,0
+C168,Quá cảnh,Mất bản tin rải rác,40,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,31,33,32,0
+C169,Quá cảnh,Mất bản tin rải rác,46,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,32.5,33,0
+C170,Quá cảnh,Mất bản tin rải rác,55,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,31.5,32,33,32,0
+C171,Quá cảnh,"Cửa sổ ngắn, có nhiễu",16,150.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C172,Quá cảnh,"Cửa sổ ngắn, có nhiễu",9,120.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,33,32,33,32.5,-1
+C173,Quá cảnh,"Cửa sổ ngắn, có nhiễu",10,110.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32.5,0
+C174,Quá cảnh,"Cửa sổ ngắn, có nhiễu",12,120.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C175,Quá cảnh,"Cửa sổ ngắn, có nhiễu",10,110.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C176,Quá cảnh,"Cửa sổ ngắn, có nhiễu",9,110.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C177,Quá cảnh,"Cửa sổ ngắn, có nhiễu",15,160.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C178,Quá cảnh,"Cửa sổ ngắn, có nhiễu",12,130.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C179,Quá cảnh,"Cửa sổ ngắn, có nhiễu",16,170.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C180,Quá cảnh,"Cửa sổ ngắn, có nhiễu",17,180.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C181,Quá cảnh,Tín hiệu chồng lấn,9,100.0,False,False,Quá cảnh,0,0,0,0,2,0,0,0,32,32,33,32,0
+C182,Quá cảnh,Tín hiệu chồng lấn,13,170.0,False,False,Quá cảnh,6,3,6,3,2,1,3,0,32,32,33,33,0
+C183,Quá cảnh,Tín hiệu chồng lấn,7,80.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C184,Quá cảnh,Tín hiệu chồng lấn,10,120.0,False,False,Quá cảnh,2,0,2,0,2,1,2,0,32,32,33,33,0
+C185,Quá cảnh,Tín hiệu chồng lấn,11,170.0,False,False,Quá cảnh,0,0,0,0,2,0,0,0,32,32.5,33,33,0
+C186,Quá cảnh,Tín hiệu chồng lấn,8,130.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,33,32,33,33,-0.5
+C187,Quá cảnh,Tín hiệu chồng lấn,7,90.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32.5,0
+C188,Quá cảnh,Tín hiệu chồng lấn,11,170.0,False,False,Quá cảnh,0,0,0,0,2,0,0,0,32,32,33,33,0
+C189,Quá cảnh,Tín hiệu chồng lấn,10,140.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C190,Quá cảnh,Tín hiệu chồng lấn,16,170.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0.5
+C191,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C192,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C193,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C194,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32,0
+C195,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C196,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32,-1
+C197,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C198,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,33,0
+C199,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32,0
+C200,Quá cảnh,Mất liên tục,27,1070.0,False,False,Quá cảnh,0,0,0,0,0,0,0,0,32,32,33,32.5,0

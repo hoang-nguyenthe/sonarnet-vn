@@ -36,7 +36,7 @@ function seededOrder(rows,seed) {
 
 function nextCase() {
   const block=blocks[blockIndex],sample=block.cases[caseIndex];
-  byId('progress').textContent='Lượt '+(blockIndex+1)+'/2 · Ca '+(caseIndex+1)+'/8';
+  byId('progress').textContent='Lượt '+(blockIndex+1)+'/2 · Ca '+(caseIndex+1)+'/'+block.cases.length;
   byId('condition').textContent=block.hint?'Có gợi ý AI':'Không có gợi ý AI';
   byId('case-title').textContent='Ca '+sample.id;
   window.SonarNetReviewView.evidence(byId('track'),byId('speed'),byId('observations'),sample);
