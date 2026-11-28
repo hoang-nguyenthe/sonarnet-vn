@@ -212,3 +212,29 @@ người rà và nhóm chuyên môn tự khai.
 3. Tải phiếu JSON sau hai lượt và gửi lại đội để tổng hợp. Mỗi người dùng
    một mã. Đội phân lần lượt R01, R02, R03, R04 để phủ cả bốn bố trí.
 4. Đội chỉ công bố kết quả tổng hợp. Các phiếu gốc do người điều phối giữ.
+
+## Kiểm tra từ ghép tàu đến hàng ưu tiên
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=src:scripts python3 scripts/chain_ablation_chang2.py
+```
+
+Kết hợp hai lựa chọn ghép, hai lựa chọn kích thước và ba cách dùng hành vi thành
+12 tổ hợp (2 cách ước lượng vị trí × 2 cách dùng kích thước × 3 cách dùng
+hành vi). Mỗi seed sinh 55 cảnh cho mỗi trong tám kịch bản, tổng 4.400 cảnh
+và 17.600 tàu. Mỗi cảnh có đủ bốn lớp và hai ca dương theo quy ước bài thử.
+Ghép và phân loại đọc cùng tàu: đặt quỹ đạo tiềm ẩn vào cảnh, lấy AIS gần
+thời điểm chụp để ghép và chỉ lấy lịch sử đến thời điểm chụp để suy luận
+hành vi. Hai mô hình đọc quỹ đạo học trên cùng 400 quỹ đạo sạch hoặc hỗn hợp.
+Kiểm soát tắt hành vi ưu tiên tất cả cặp đã ghép đủ điều kiện.
+
+- Ca đúng cần đồng thời là ca dương, được ưu tiên và giữ đúng danh tính tàu.
+  Ca ưu tiên còn lại được đếm là cờ không đúng. Mỗi ca bỏ sót có đúng một
+  nguyên nhân đầu tiên, theo thứ tự chưa ghép, ghép sai, bị bước kích thước
+  chặn hoặc mô hình hành vi không ưu tiên.
+- Khi bật kích thước ở phép thử hàng rà, chỉ trạng thái AIS_OK được đi tiếp.
+  Đây là quy tắc để đo mức lọc, không đồng nghĩa mọi ca thiếu kích thước hoặc
+  mâu thuẫn bị xóa khỏi tác nghiệp. Số liệu chỉ áp dụng cho hàng rà giả định.
+- Dùng 4.000 lần bootstrap trên 10 chênh lệch ghép cặp theo seed. Kết quả
+  chính kiểm tra chất lượng quyết định trên tập phát hiện SAR mô phỏng có
+  sẵn. Cần phép đo riêng cho lỗi bỏ sót của detector và thao tác của chuyên viên.

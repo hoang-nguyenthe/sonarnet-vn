@@ -311,7 +311,41 @@ def measured_contrast(deep, scenario, contrast):
     return next(r for r in deep['behavior_contrasts'] if (r['scenario'],r['contrast'])==(scenario,contrast))
 
 
-def pdf_report(study, external, proxy, robust, transfer, sar, deep):
+CHAIN_PRIMARY = (
+    (False,True,'mixed_training'), (True,False,'mixed_training'),
+    (True,True,'without_behavior'), (True,True,'clean_training'),
+    (True,True,'mixed_training'),
+)
+CHAIN_BEHAVIOR = {'without_behavior':'Duyệt tất cả cặp đủ điều kiện',
+                  'clean_training':'Hành vi · học sạch',
+                  'mixed_training':'Hành vi · học hỗn hợp'}
+
+
+def chain_lookup(chain):
+    return {(r['kalman'],r['size_check'],r['behavior']):r
+            for r in chain['aggregate'] if r['scenario']=='all'}
+
+
+def chain_rows(chain, keys=None):
+    lookup=chain_lookup(chain)
+    return [['Ước lượng / kích thước / hành vi','Ca đưa vào rà','Đúng mục tiêu',
+             'Cờ không đúng','Bỏ sót','Recall (%)']]+[
+        [f"{label(k,z)} · {CHAIN_BEHAVIOR[m]}", *[count(r[v]) for v in
+         ('reviewed','hits','false_priorities','misses')],pp(r['recall'])]
+        for k,z,m in (keys or tuple(lookup)) for r in [lookup[k,z,m]]
+    ]
+
+
+def chain_miss_rows(chain):
+    data=[row for row in chain['aggregate'] if row['kalman'] and row['size_check']
+          and row['behavior']=='mixed_training']
+    return [['Kịch bản','Chưa ghép','Ghép sai','Chặn do chiều dài','Hành vi chưa ưu tiên']]+[
+        [FUSION_DEEP.get(r['scenario'],'Tất cả'),r['miss_unmatched'],r['miss_wrong_id'],
+         r['miss_size_gate'],r['miss_behavior']] for r in data
+    ]
+
+
+def pdf_report(study, external, proxy, robust, transfer, sar, deep, chain):
     base=Path('/System/Library/Fonts/Supplemental')
     pdfmetrics.registerFont(TTFont('ArabicFreeNormal',str(base/'Arial.ttf')))
     pdfmetrics.registerFont(TTFont('ArabicFreeBold',str(base/'Arial Bold.ttf')))
@@ -358,6 +392,8 @@ def pdf_report(study, external, proxy, robust, transfer, sar, deep):
            ['Khảo sát chuyên viên','Thử chéo A/B. Báo thời gian, bỏ sót, cờ nhầm.',
             f"{specialist['n']} phiếu chuyên viên hợp lệ. Có {proxy['sessions']} phiên kiểm tra tự động giao diện."],
           ],[110,196,195])
+    h('Kiểm tra tác động đến quyết định ưu tiên')
+    p(f"Trên {count(chain['scenes_per_scenario_seed']*len(chain['scenarios'])*len(chain['seeds']))} cảnh kiểm tra bổ sung, 12 tổ hợp ghép, kích thước và hành vi cho thấy đánh đổi giữa lượng hồ sơ cần rà và ca bị bỏ sót. Xem trang 5.")
     h('Đối chứng bằng dữ liệu AIS có nhãn')
     p(f"Chấm nhị phân trên {count(coverage['scored_windows'])} cửa sổ AIS Đan Mạch và {count(transfer['suites']['9']['windows'])} cửa sổ của Global Fishing Watch. Đối chứng này giúp đo khả năng chuyển nguồn. SonarNet còn thiếu nhãn bốn lớp xác minh ở Việt Nam và đánh giá thao tác với chuyên viên.")
     p(f'<link href="{PAGE}evidence.html#ablation" color="#00675c">Mở bảng đối chứng đầy đủ</link>  ·  <link href="{PAGE}study.html" color="#00675c">Mở khảo sát</link>  ·  <link href="{SOURCE}" color="#00675c">Mã nguồn</link>')
@@ -404,6 +440,23 @@ def pdf_report(study, external, proxy, robust, transfer, sar, deep):
     vol_mixed=measured_contrast(deep,'overlap','volume_mixed_48_400')
     p(f"<b>Tăng số mẫu phụ thuộc chất lượng tập học.</b> Trong kịch bản chồng lấn, tăng 48 → 400 quỹ đạo làm macro-F1 đổi {fst(vol_clean['mean'])} nếu học sạch và +{fst(vol_mixed['mean'])} nếu học hỗn hợp. Tệp JSON lưu ma trận nhầm lẫn và F1 từng lớp.")
     p(f'<link href="{PAGE}deep-ablation.json" color="#00675c">Mở các chênh lệch theo cặp và khoảng bất định</link>',caption)
+    story.append(PageBreak())
+
+    page('Từ ghép tàu đến quyết định rà','12 TỔ HỢP  ·  10 SEED  ·  CÙNG CẢNH VÀ NHÃN')
+    lookup=chain_lookup(chain)
+    simulated_scenes=chain['scenes_per_scenario_seed']*len(chain['scenarios'])*len(chain['seeds'])
+    chosen=lookup[True,True,'mixed_training']
+    p(f"Trong {count(simulated_scenes)} cảnh mới, cùng một quỹ đạo tiềm ẩn tạo bản tin AIS gần giờ chụp và lịch sử hành vi. Chấm {count(chosen['positives'])} mục tiêu cần ưu tiên. Một ca chỉ tính đúng khi được ưu tiên và gắn đúng tàu. Bảng trình bày năm đối chiếu chính cùng số lượng ca phải rà.")
+    table(chain_rows(chain,CHAIN_PRIMARY),[171,61,66,69,60,74])
+    before=lookup[True,True,'without_behavior']
+    clean=lookup[True,True,'clean_training']
+    p(f"<b>Khối lượng rà.</b> Khi đã dùng Kalman và kiểm kích thước, thêm hành vi học hỗn hợp đổi số ca đưa vào rà {count(before['reviewed'])} → {count(chosen['reviewed'])}, số cờ không đúng {count(before['false_priorities'])} → {count(chosen['false_priorities'])} và số ca đúng {count(before['hits'])} → {count(chosen['hits'])}. Học hỗn hợp lấy lại {count(chosen['hits']-clean['hits'])} ca đúng so với học sạch.")
+    ungated=lookup[True,False,'mixed_training']
+    p(f"<b>Đánh đổi của điều kiện kích thước.</b> Dùng kích thước để loại ca ở đầu ra làm số ca đúng giảm từ {count(ungated['hits'])} xuống {count(chosen['hits'])}. Giữ ca thiếu bằng chứng ở một hàng rà riêng là phương án cần thử trước vận hành.")
+    h('Ca dương bị bỏ qua ở bước nào?')
+    table(chain_miss_rows(chain)[:5],[155,72,72,101,101])
+    p('Bảng hiển thị tổng và ba kịch bản đầu. Mỗi ca chỉ thuộc nguyên nhân đầu tiên xảy ra. Phần còn lại, đủ 12 tổ hợp và khoảng bootstrap theo seed có trong dữ liệu. Thử nghiệm bắt đầu từ các phát hiện SAR mô phỏng có sẵn và đo hàng rà giả định, chưa đo người rà hoặc radar ngoài thực địa.',caption)
+    p(f'<link href="{PAGE}chain-ablation.json" color="#00675c">Đầy đủ 12 tổ hợp, nguyên nhân bỏ sót và khoảng bootstrap</link>',caption)
     story.append(PageBreak())
 
     page('Đối chứng bằng AIS thật','ĐAN MẠCH  ·  PHÂN LOẠI NHỊ PHÂN  ·  TÁCH THEO TÀU')
@@ -519,7 +572,7 @@ def html_table(rows):
     return '<div class="table-wrap"><table>'+''.join(rendered)+'</table></div>'
 
 
-def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar,deep):
+def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar,deep,chain):
     behavior_table=html_table([['Dữ liệu học','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
         +[[name,*[fst(behavior[s,m]['mean'])+' ± '+fst(behavior[s,m]['sd']) for s in SCENARIOS]]
           for m,name in MODELS.items()])
@@ -552,7 +605,7 @@ def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar,deep):
 <body><header><div><a href="./">SonarNet Việt Nam</a><span>Chung kết AI 2026 · Bảng C</span></div><a href="study.html">Thử rà quỹ đạo</a></header>
 <main><section><h1>Kiểm chứng mô-đun hành vi</h1><p>Đề Chặng 2 yêu cầu tách đóng góp của bộ ước lượng Kalman, đối chiếu kích thước và dữ liệu hành vi, rồi kiểm tra ảnh hưởng của gợi ý AI lên thao tác rà.</p>
 <div class="stats"><div class="stat"><strong>10 seed</strong>8 kịch bản ghép, 5 điều kiện hành vi</div><div class="stat"><strong>{count(total['correct_0'])} → {count(total['correct_1'])}</strong>cặp đúng trên cùng {count(total['targets'])} mục tiêu mô phỏng</div><div class="stat"><strong>+{fst(highlight['mean'])}</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
-<div class="links"><a href="#ablation">Đối chứng chính</a><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div></section>
+<div class="links"><a href="#ablation">Đối chứng chính</a><a href="#chuoi-ra">Kiểm tra đầu ra</a><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div></section>
 <section id="ablation"><h2>Đối chứng Kalman trên cùng từng ca</h2>
 <p>10 seed, 8 kịch bản và 90 cảnh mỗi kịch bản ở mỗi seed. Cùng bản tin, cùng điểm SAR và cùng luật ghép, thay cách ước lượng vị trí. Hai cột “chỉ đúng” cho biết từng phương pháp cứu hay làm mất bao nhiêu ca.</p>
 {html_table(fusion_deep_rows(deep))}
@@ -568,6 +621,13 @@ def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar,deep):
 {html_table(behavior_deep_rows(deep))}
 <p class="muted">Chỉ số là macro-F1 trung bình qua 10 seed trên bốn lớp mô phỏng. Đối chứng ngoài mô phỏng được báo riêng trên AIS có nhãn nhị phân.</p>
 <p><a href="behavior-factorial.csv" download>Tải kết quả theo seed</a> · <a href="deep-ablation.json" download>Tải ma trận nhầm lẫn và khoảng bootstrap</a></p></section>
+<section id="chuoi-ra"><h2>Từ ghép tàu đến danh sách ưu tiên</h2>
+<p>Giữ cùng cảnh và nhãn qua 12 tổ hợp. Ca đúng là ca dương được ưu tiên và ghép đúng tàu. Khi tắt mô-đun hành vi, mọi cặp qua các bước kiểm còn lại đều đưa vào hàng rà.</p>
+{html_table(chain_rows(chain))}
+<h3>Nguyên nhân bỏ sót khi bật Kalman, kích thước và học hỗn hợp</h3>
+{html_table(chain_miss_rows(chain))}
+<p class="muted">Đo trên danh sách phát hiện SAR mô phỏng có sẵn và hàng rà giả định. Mỗi ca dương bỏ sót chỉ được gán cho nguyên nhân đầu tiên.</p>
+<p><a href="chain-ablation.csv" download>Tải kết quả theo kịch bản và seed</a> · <a href="chain-ablation.json" download>Tải số liệu tổng hợp và khoảng bootstrap</a></p></section>
 <section><h2>Kalman và kích thước · đợt kiểm tra ban đầu</h2>{fusion_table}
 <p class="muted">¹ Trên cặp ghép đúng. Kịch bản hộp radar nhiễu mạnh có 85/110 mâu thuẫn được phát hiện, 25 bỏ sót và 23 cờ nhầm với Kalman và kiểm kích thước. Dữ liệu mô phỏng.</p>
 <p><a href="fusion.csv" download>Tải CSV ghép và kích thước theo từng seed</a></p></section>
@@ -625,16 +685,17 @@ def main():
     robustness_plot(robust)
     sar=json.loads((OUT/'sar-tile-4048.json').read_text())
     deep=json.loads((OUT/'deep-ablation.json').read_text())
-    pdf_report(groups,external,proxy,robust,transfer,sar,deep)
-    web_report(behavior,fusion,groups,external,proxy,robust,transfer,sar,deep)
+    chain=json.loads((OUT/'chain-ablation.json').read_text())
+    pdf_report(groups,external,proxy,robust,transfer,sar,deep,chain)
+    web_report(behavior,fusion,groups,external,proxy,robust,transfer,sar,deep,chain)
     import shutil
     for name in ('behavior.csv','fusion.csv','study-summary.json','real-ais.json','proxy-study.json',
                  'ais-robustness.json','gfw-transfer.json','sar-tile-4048.json','deep-ablation.json','fusion-paired-scenes.csv',
-                 'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv'):
+                 'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv','chain-ablation.csv','chain-ablation.json'):
         shutil.copyfile(OUT/name,WEB/name)
     files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json','sar-tile-4048.json','deep-ablation.json','fusion-paired-scenes.csv',
-                                       'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv')]
-    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py','deep_ablation_chang2.py')]
+                                       'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv','chain-ablation.csv','chain-ablation.json')]
+    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py','deep_ablation_chang2.py','chain_ablation_chang2.py')]
     files += [(WEB/file,file) for file in (REPORT,'behavior.png','robustness.png')]
     with ZipFile(WEB/ZIP,'w',compression=ZIP_DEFLATED) as archive:
         for source,name in files:
