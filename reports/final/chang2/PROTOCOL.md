@@ -311,3 +311,9 @@ Bộ 200 dùng bản phân tầng cân bằng và không đại diện tần su�
 ngoài thực địa. Đối chứng thử thách được giữ riêng để minh họa
 tác động bất lợi khi gợi ý sai. Cả hai bộ đều dùng dữ liệu mô phỏng
 và thời gian thao tác của trình duyệt tự động.
+
+### Giải thích gợi ý theo từng ca
+
+Chạy `PYTHONPATH=src python scripts/build_chang2_hint_explanations.py` với phiên bản đã ghi trong `results.json`. Trình xuất tái tạo hai bộ ca, kiểm tra toàn bộ trường dữ liệu khớp bản đã công bố rồi dùng TreeSHAP của XGBoost để tách chênh điểm thô giữa hai lớp đứng đầu. Mỗi đóng góp là chênh giữa đóng góp vào lớp đứng đầu và vào lớp thứ hai. Tổng các đóng góp cộng chênh nền bằng chênh điểm thô. Có thể kiểm tra bản tin, điểm bốn lớp, 26 đầu vào và dữ liệu JSON tải từ từng ca.
+
+Điểm softmax mô tả kết quả mô hình trên ca mô phỏng. Dùng nhãn mô phỏng để kiểm tra riêng lớp hành vi và quyết định ưu tiên. Các số đo thời gian đã công bố được thu trước khi bổ sung bảng giải thích.

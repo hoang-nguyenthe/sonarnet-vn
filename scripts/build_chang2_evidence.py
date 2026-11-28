@@ -773,6 +773,7 @@ def web_report(behavior,fusion,external,proxy,robust,transfer,sar,deep,chain,rev
 <section id="do-goi-y"><h2>So sánh có và không có gợi ý AI</h2>
 <p>Hai bên cùng dữ liệu AIS và ba lựa chọn. Người rà tự dựng giả thuyết ở bên không AI. Ở bên có AI, đề xuất tạo một điểm bắt đầu để đối chiếu lại với hai đồ thị.</p>
 <p><a href="compare.html"><strong>Mở hai giao diện cạnh nhau trên đủ {len(review["cases"])} ca</strong></a></p>
+<p>Bên có AI có mục “Vì sao AI gợi ý?” với điểm bốn lớp, đầu vào và đóng góp TreeSHAP của từng ca. Mở “Đối chiếu với nhãn mô phỏng” để kiểm tra quyết định.</p>
 <h3>Bỏ sót và cờ nhầm trong mô phỏng</h3>
 <p>{proxy['sessions']} phiên trình duyệt tự động, {proxy['browser_decisions']} lượt chọn, {len(proxy['policies'])} quy tắc và {proxy['unique_cases']} ca mô phỏng. Bảng gộp các lần lặp của cùng một ca và quy tắc.</p>
 {html_table(proxy_rows(proxy))}

@@ -45,7 +45,7 @@ document.getElementById('case-examples').append(bankLink);
 for(const row of results){
   const option=document.createElement('option');
   option.value=row.id;
-  option.textContent=row.id+' · '+row.reference+' · '+row.scenario_label;
+  option.textContent=row.id+' · '+row.scenario_label;
   picker.append(option);
 }
 
@@ -82,12 +82,20 @@ function render(id){
     const field=selector=>panel.querySelector(selector);
     field('[data-case-number]').textContent='Ca '+id;
     window.SonarNetReviewView.evidence(field('[data-track]'),field('[data-speed]'),field('[data-observations]'),sample);
-    if(panel.dataset.mode==='ai') field('[data-hint]').textContent=window.SonarNetReviewView.hintText(sample);
+    if(panel.dataset.mode==='ai'){
+      field('[data-hint]').textContent=window.SonarNetReviewView.hintText(sample);
+      const audit=field('[data-hint-audit]');
+      audit.open=false;
+      window.SonarNetHintAudit?.render(audit.querySelector('[data-audit-content]'),sample);
+    }
     field('[data-feedback]').hidden=true;
     for(const button of panel.querySelectorAll('[data-answer]')) button.setAttribute('aria-pressed','false');
   }
+  document.getElementById('case-verdict').open=false;
   document.getElementById('example-explanation').textContent=
-    id+' có nhãn mô phỏng “'+result.reference+'”. Gợi ý ưu tiên '+
+    id+' có nhãn mô phỏng “'+result.reference+'”, AI dự đoán “'+sample.hint_class+
+    '”. Lớp hành vi '+(result.reference===sample.hint_class?'khớp':'không khớp')+
+    ' nhãn. Quyết định ưu tiên '+
     (result.priority===result.hint_priority?'phù hợp':'mâu thuẫn')+
     ' với nhãn. Trong '+rulesPerCase+' quy tắc, '+result.improved+
     ' đổi từ lỗi sang đúng và '+result.worsened+' đổi từ đúng sang lỗi.';

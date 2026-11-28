@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>So sánh có và không có gợi ý AI · SonarNet</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="compare.css">
+  <link rel="stylesheet" href="compare.css?v=2">
   <script src="review-bank-200.js" defer></script>
   <script src="cases.js" defer></script>
   <script src="review-view.js" defer></script>
+  <script src="hint-explanations.js" defer></script>
+  <script src="hint-audit.js" defer></script>
   <script src="compare-data.js" defer></script>
-  <script src="compare.js" defer></script>
+  <script src="compare.js?v=2" defer></script>
 </head>
 <body>
 <header><div><a href="index.html">SonarNet</a><span>Chặng 2 · So sánh giao diện</span></div><div><a href="evidence.html#do-goi-y">Kết quả đối chứng</a><a href="../tai-lieu/index.html">Tài liệu</a></div></header>
@@ -54,6 +56,10 @@
       </div>
       <p data-observations class="observations"></p>
       <p data-hint class="notice"></p>
+      <details class="hint-audit" data-hint-audit>
+        <summary>Vì sao AI gợi ý?</summary>
+        <div data-audit-content></div>
+      </details>
       <div class="answers" aria-label="Quyết định có gợi ý AI">
         <button type="button" data-answer="priority" aria-pressed="false">Ưu tiên rà</button>
         <button type="button" class="secondary" data-answer="not_priority" aria-pressed="false">Chưa ưu tiên</button>
@@ -64,7 +70,10 @@
   </div>
   <section class="review-meaning" id="ket-qua-ca">
     <h2>Kết quả ca đang xem</h2>
-    <p id="example-explanation" class="notice" aria-live="polite"></p>
+    <details id="case-verdict" class="hint-audit">
+      <summary>Đối chiếu với nhãn mô phỏng</summary>
+      <p id="example-explanation" class="notice" aria-live="polite"></p>
+    </details>
     <div class="table-wrap"><table>
       <thead><tr><th scope="col">Chỉ số</th><th scope="col">Không gợi ý</th><th scope="col">Có gợi ý</th></tr></thead>
       <tbody id="case-metrics"></tbody>

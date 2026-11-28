@@ -25,7 +25,7 @@ def trained_model(seed):
             return stop.value
 
 
-def main():
+def review_bank(model):
     conditions = (*SCENARIOS, 'block_gap')
     rng = np.random.default_rng(NOISE_SEED)
     tracks = dataset(len(conditions)*PER_CELL, np.random.default_rng(BANK_SEED))
@@ -41,8 +41,8 @@ def main():
                 # cell evenly so A/B have the same reference case mix.
                 observed = block_gap(track,rng) if scenario=='block_gap' else degraded(track,scenario,rng)
                 groups.append((observed, scenario, 'AB'[j%2]))
-    model = trained_model(MODEL_SEED)
-    predictions = model.predict(features_matrix([g[0] for g in groups])[0])
+    inputs = features_matrix([g[0] for g in groups])[0]
+    predictions = model.predict(inputs)
     cases = []
     for i,((track,scenario,pack),hint) in enumerate(zip(groups,predictions),1):
         mlat,mlon = meters_per_degree(float(track.lats[0]))
@@ -58,6 +58,11 @@ def main():
         ))
     assert len(cases)==200
     assert sum(x['priority'] for x in cases)==100
+    return cases, inputs
+
+
+def main():
+    cases, _ = review_bank(trained_model(MODEL_SEED))
     write_json(OUTPUT,cases)
     print(f'{len(cases)} cases ({sum(x["priority"] for x in cases)} positive)')
     print(f'{sum(x["priority"]!=x["hint_priority"] for x in cases)} incorrect priority hints')

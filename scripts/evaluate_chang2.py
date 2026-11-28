@@ -154,16 +154,18 @@ def fusion_rows(seed):
             yield row
 
 
-def study_bank(model):
+def study_bank(model, *, with_inputs=False):
     rng=np.random.default_rng(2026112801)
     cfg=RunConfig()
     cfg.behavior.n_tracks_per_class=160
     tracks=generate_track_dataset(cfg,rng)
     scenarios=['short_noisy' if i%2==0 else 'overlap' for i in range(len(tracks))]
     samples=[degraded(t,s,rng) for t,s in zip(tracks,scenarios)]
-    pred=model.predict(features_matrix(samples)[0])
+    inputs=features_matrix(samples)[0]
+    pred=model.predict(inputs)
     candidates=list(zip(samples,scenarios,pred))
     used=set()
+    selected=[]
     rows=[]
     for pack in ('A','B'):
         # Include one misleading alert and one misleading omission when
@@ -180,6 +182,7 @@ def study_bank(model):
                 i,track,suggested=(preferred or pool)[0]
                 wrong_slots[priority]-=int((suggested in REVIEW_POSITIVE)!=priority)
                 used.add(i)
+                selected.append(i)
                 lat_m,lon_m=meters_per_degree(float(track.lats[0]))
                 rows.append(dict(id=f'Q{len(rows)+1:02d}',pack=pack,scenario=scenario,
                     elapsed_min=np.round((track.times_s-track.times_s[0])/60,1).tolist(),
@@ -189,7 +192,7 @@ def study_bank(model):
                     course_deg=np.round(track.courses_deg).astype(int).tolist(),
                     reference_class=c,priority=priority,hint_class=VN[suggested],
                     hint_priority=suggested in REVIEW_POSITIVE))
-    return rows
+    return (rows, inputs[selected]) if with_inputs else rows
 
 
 def write_csv(rows,path):
