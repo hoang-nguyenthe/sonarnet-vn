@@ -1,6 +1,7 @@
 """Manage decisions on the same observed points that appear on the public map."""
 from hashlib import sha256
 import json
+from math import ceil
 import sqlite3
 
 import pandas as pd
@@ -15,6 +16,40 @@ from observation_labels import coordinates, observation_time
 from observation_view import candidate_crop, local_time, published_layers, published_yolo_result
 from review_workspace import OPERATIONAL_DECISIONS, tile_identity
 from scan_assets import resolve_scan_directory, validate_tile
+
+POINTS_PER_PAGE = 12
+
+
+def reset_queue_page():
+    st.session_state.manager_page = 1
+
+
+def render_queue(candidates, decisions):
+    count = len(candidates)
+    page_count = ceil(count / POINTS_PER_PAGE)
+    st.caption(f'Hiển thị danh sách {count:,} điểm phù hợp. Chọn một dòng để mở ảnh và form của điểm đó.'.replace(',', '.'))
+    page_value = st.session_state.get('manager_page', 1)
+    if page_value > page_count:
+        st.session_state.manager_page = page_count
+    page = st.number_input('Trang danh sách', 1, page_count, key='manager_page')
+    start = (page - 1) * POINTS_PER_PAGE
+    page_points = list(candidates.values())[start:start + POINTS_PER_PAGE]
+    rows = [
+        {'Mã điểm': point['id'], 'Tọa độ': coordinates(point['latitude'], point['longitude']),
+         'Ngày ảnh': observation_time(point),
+         'Hướng xử lý': decisions.get(point['id'], {}).get('outcome', PENDING)}
+        for point in page_points
+    ]
+    queue_id = 'manager_queue_' + sha256(json.dumps(list(candidates)).encode()).hexdigest()[:16] + f'_{page}'
+
+    def open_selected_row():
+        selected = st.session_state[queue_id]['selection']['rows']
+        if selected:
+            st.session_state.manager_point = page_points[selected[0]]['id']
+
+    st.dataframe(rows, key=queue_id, hide_index=True, width='stretch',
+                 height=35 * len(rows) + 39, selection_mode='single-row',
+                 on_select=open_selected_row)
 
 
 def verified_source(root, tile):
@@ -36,6 +71,7 @@ def render(root, open_observation):
         st.info('Chưa có khu vực với ảnh công bố để rà soát.')
         return
     region = st.selectbox('Khu vực', list(regions), key='manager_region',
+                          on_change=reset_queue_page,
                           format_func=lambda key: regions[key]['label'])
     result = published_yolo_result(root, regions[region])
     if not result or not result['detections']:
@@ -54,12 +90,19 @@ def render(root, open_observation):
     first.metric('Chưa có quyết định', pending_count)
     second.metric('Đã có quyết định', len(decisions))
     filter_mode = st.radio('Lọc hàng rà', ('Tất cả', 'Chưa có quyết định', 'Đã có quyết định'),
-                           horizontal=True, key='manager_filter')
-    candidates = {point['id']: point for point in available if
-                  filter_mode == 'Tất cả' or (point['id'] in decisions) == (filter_mode == 'Đã có quyết định')}
+                           horizontal=True, key='manager_filter', on_change=reset_queue_page)
+    search = st.text_input('Tìm theo mã điểm', key='manager_search', on_change=reset_queue_page,
+                           placeholder='Ví dụ grid_… hoặc cell_…').strip().casefold()
+    candidates = {
+        point['id']: point for point in available
+        if search in point['id'].casefold()
+        and (filter_mode == 'Tất cả' or (point['id'] in decisions) == (filter_mode == 'Đã có quyết định'))
+    }
     if not candidates:
-        st.info('Không có điểm trong nhóm này.')
+        st.info('Không tìm thấy điểm khớp bộ lọc và mã tìm kiếm.')
         return
+    with st.expander('Danh sách điểm cần rà', expanded=True):
+        render_queue(candidates, decisions)
     point_id = st.selectbox(
         'Điểm cần rà', list(candidates), key='manager_point',
         format_func=lambda key: f"{key} · {coordinates(candidates[key]['latitude'], candidates[key]['longitude'])} · "
