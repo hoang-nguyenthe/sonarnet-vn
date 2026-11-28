@@ -3,6 +3,7 @@ from collections import Counter, defaultdict
 import csv
 from hashlib import file_digest
 from html import escape
+from io import BytesIO
 import json
 from pathlib import Path
 from statistics import mean, stdev
@@ -12,6 +13,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from PIL import Image as RasterImage
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
@@ -469,6 +471,13 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
     def h(text):
         p(text,heading)
 
+    def figure_gray(file, width, height, **options):
+        buffer=BytesIO()
+        with RasterImage.open(WEB/file) as raster:
+            raster.convert('L').save(buffer,format='PNG')
+        buffer.seek(0)
+        story.append(Image(buffer,width=width,height=height,**options))
+
     def page(name, subtitle):
         nonlocal section_number
         section_number+=1
@@ -493,16 +502,21 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
     headline=measured_contrast(deep,'overlap','mix_given_history_400')
     coverage=external['coverage']
     page('Kiểm chứng mô-đun hành vi','SONARNET VIỆT NAM  ·  CHUNG KẾT AI 2026  ·  CHẶNG 2  ·  ĐỀ PHIÊN BẢN 1  ·  28.11.2026')
+    p('Đội ALGORHYTHM · Trường Đại học Bách khoa - ĐHQG-HCM',label_style)
+    p('SonarNet-VN: Hệ thống Deep Learning và phân tích địa không gian đa nguồn từ ảnh radar vệ tinh Sentinel-1 và dữ liệu AIS cho giám sát và kiểm tra tàu cá, phục vụ phòng, chống khai thác IUU',label_style)
+    h('Vấn đề Ban Tổ chức đặt ra')
+    p('F1 hành vi đạt 1,0 trên mô phỏng mới chỉ mô tả một thiết lập thử nghiệm. Chặng 2 cần xác định phần đóng góp của Kalman, kiểm tra kích thước và dữ liệu hành vi qua nhiều seed, đồng thời kiểm tra tác động của gợi ý AI đến thời gian và bỏ sót khi rà.')
+    h('Cách tiếp cận và đối chiếu minh chứng')
     p('Một nhận định hành vi đi qua ba bước có thể mắc lỗi riêng. SonarNet phải ghép đúng tàu, nhìn được kích thước đủ tin cậy và đọc được tín hiệu từ chuỗi AIS. Báo cáo kiểm tra từng bước trên cùng ca và kiểm tra mô hình hành vi trên hai nguồn AIS công khai.')
     table([['Yêu cầu của BTC','Thiết kế đối chứng','Minh chứng'],
            ['Tách Kalman',f"Bật/tắt trên {count(total['scenes'])} cảnh mô phỏng, cùng dữ liệu và luật ghép.",
-            f"{count(total['correct_0'])} → {count(total['correct_1'])} cặp đúng. Bật Kalman giúp đúng ở {count(total['only_kalman'])} ca và làm mất {count(total['only_linear'])} ca đúng."],
+            f"Trang 2. {count(total['correct_0'])} → {count(total['correct_1'])} cặp đúng. Bật Kalman giúp đúng ở {count(total['only_kalman'])} ca và làm mất {count(total['only_linear'])} ca đúng."],
            ['Tách kích thước','Bật/tắt sau khi đã ghép. Chấm theo mức lệch khai báo và nhiễu đo.',
-            'Bảng độ nhạy và số cặp được qua bước kiểm tra kích thước.'],
+            'Trang 3. Bảng độ nhạy và số cặp được qua bước kiểm tra kích thước.'],
            ['Tách dữ liệu hành vi','Đổi đầu vào, chất lượng và lượng dữ liệu trên cùng mẫu chấm.',
-            f"Kiểm thử 10 seed. Khi tín hiệu chồng lấn và đủ 400 mẫu học, macro-F1 tăng {fst(headline['mean'])} khi đưa chuỗi nhiễu vào tập học."],
+            f"Trang 4. Kiểm thử 10 seed. Khi tín hiệu chồng lấn và đủ 400 mẫu học, macro-F1 tăng {fst(headline['mean'])} khi đưa chuỗi nhiễu vào tập học."],
            ['Khảo sát chuyên viên','Đối chiếu giao diện trên cùng ca. Chấm bỏ sót và cờ nhầm theo quy tắc mô phỏng.',
-            f"{proxy['sessions']} phiên trình duyệt tự động. Chưa đo thời gian quyết định của chuyên viên."],
+            f"Trang 7–10. {proxy['sessions']} phiên tự động trên 200 ca. Có 0 phiếu chuyên viên. Yêu cầu khảo sát người dùng thực tế còn mở."],
           ],[110,196,195])
     h('Kiểm tra tác động đến quyết định ưu tiên')
     p(f"Trên {count(chain['scenes_per_scenario_seed']*len(chain['scenarios'])*len(chain['seeds']))} cảnh kiểm tra bổ sung, 12 tổ hợp ghép, kích thước và hành vi cho thấy đánh đổi giữa lượng hồ sơ cần rà và ca bị bỏ sót. Xem trang 5.")
@@ -589,13 +603,14 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
     comparison=proxy_comparison(proxy)
     page('Cùng một ca AIS, hai cách rà','ĐỐI CHIẾU GIAO DIỆN  ·  QUỸ ĐẠO MÔ PHỎNG')
     p('Hai chế độ giữ cùng dữ liệu AIS, câu hỏi và ba nút lựa chọn. Bên có AI thêm một dòng đề xuất mức ưu tiên và lớp hành vi. Người rà vẫn chọn quyết định.')
-    story.append(Image(str(WEB/'review-comparison.png'),width=content_width,height=250,kind='proportional'))
+    figure_gray('review-comparison.png',content_width,250,kind='proportional')
     p(f"Ảnh chụp ca {review['default_case']} từ trang so sánh. Hai bên giữ nguyên quỹ đạo, tốc độ, thời gian và lựa chọn.",caption)
     table([['Bước rà','Không có gợi ý AI','Có gợi ý AI'],
            ['Bắt đầu','Đọc hai đồ thị rồi tự hình thành giả thuyết.','Đọc đề xuất và lớp dự đoán để có giả thuyết ban đầu.'],
            ['Kiểm tra','Đối chiếu tốc độ, đổi hướng và số bản tin.','Đối chiếu gợi ý với cùng dữ liệu, nhất là khi có mâu thuẫn.'],
            ['Quyết định','Chọn ưu tiên, chưa ưu tiên hoặc chưa đủ dữ liệu.','Giữ ba lựa chọn và quyền quyết định của người rà.']],[102,200,199])
     examples={r['id']:r for r in review['cases']}
+    p(f'Ở ca Q16, điểm Câu là 96,84% và Kéo lưới là 2,76%. Tốc độ trung vị 2,429 kn đóng góp +1,113 vào chênh điểm thô Câu so với Kéo lưới. Độ lệch chuẩn góc đổi hướng 45,057° đóng góp −1,201 theo chiều ngược lại. Chênh cuối +3,558 gồm chênh nền −0,075 và đóng góp của 26 đầu vào. Người rà có thể đối chiếu các giá trị với đồ thị AIS, mở công thức và xem nhãn mô phỏng. <link href="{PAGE}compare.html?ca=Q16">Mở chứng cứ Q16</link>.',caption)
     example=examples[review['default_case']]
     p(f"Ca {example['id']} minh họa nhóm cần ưu tiên với nhãn mô phỏng {example['reference'].lower()}. Có {example['improved']} trong {review['rules_per_case']} quy tắc đổi sang đúng ưu tiên khi có gợi ý.")
     for ident in review['exception_cases']:
@@ -645,7 +660,7 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
 
     page('Khi bản tin AIS bị thiếu','ĐAN MẠCH  ·  5 LẦN CHIA NHÓM  ·  25 LƯỢT GIỮ RIÊNG TÀU')
     p('Mỗi lần chia đánh giá trên cùng 1.155 cửa sổ khai thác. Hai phép thử giữ nhãn tham chiếu, rồi xóa ba mốc 10 phút liên tiếp hoặc xóa ngẫu nhiên khoảng một nửa các mốc. XGBoost tăng cường chỉ học thêm bản sao làm thưa từ các tàu thuộc tập huấn luyện.')
-    story.append(Image(str(WEB/'robustness.png'),width=content_width,height=182))
+    figure_gray('robustness.png',content_width,182)
     p('Các cột cho biết số bỏ sót trung bình và độ lệch chuẩn trên năm lần chia. Quy tắc chọn chất lượng dùng mô hình học chuỗi thiếu khi có dưới 9 mốc hoặc khoảng trống bên trong dài hơn 30 phút.',caption)
     table(robustness_rows(robust),[175,103,110,113])
     rows=robustness_summary(robust)
@@ -684,7 +699,38 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
     table([['Phần cần kiểm chứng','Giới hạn đã quan sát','Thí nghiệm hoặc dữ liệu cần có'],*FUTURE],
           [100,153,248])
     p('Ưu tiên xác nhận độ bền và độ chuyển vùng trên dữ liệu giữ riêng trước khi thay mô hình vận hành. Báo riêng kết quả kỹ thuật, đánh giá chuyên viên và bằng chứng trực tiếp từ thực địa.')
-    p(f'<link href="{PAGE}evidence.html#gioi-han" color="#00675c">Bảng đối chiếu và dữ liệu tải về</link>',caption)
+    p(f'<link href="{PAGE}evidence.html#gioi-han">Bảng đối chiếu và dữ liệu tải về</link>',caption)
+    story.append(PageBreak())
+
+    page('Cách chấm lại và truy vết kết quả','DỮ LIỆU GỐC, BẢNG KẾT QUẢ VÀ ĐƠN VỊ ĐO')
+    p('Bắt đầu từ gói minh chứng. Đối chiếu các tệp với SHA256SUMS. Dùng PROTOCOL.md để kiểm tra cách tạo mẫu, lọc dữ liệu, giữ riêng tàu và phiên bản phần mềm. Với từng kết luận, kiểm tra cả số lỗi giảm và số lỗi mới phát sinh.')
+    table([
+        ['Nội dung','Tệp cần mở','Thao tác đối chiếu'],
+        ['Kalman · trang 2','fusion-paired-scenes.csv và deep-ablation.json','Cùng cảnh, mục tiêu và seed. Đếm đúng ở cả hai, chỉ đúng khi bật, chỉ đúng khi tắt, sai hoặc từ chối. Kiểm tra chênh tổng = số ca chỉ Kalman đúng trừ số ca chỉ tuyến tính đúng.'],
+        ['Kích thước · trang 3','size-by-factor.csv và paired-size-noise.csv','Lọc đúng cặp trước khi chấm kích thước. So số cờ đúng, số bỏ sót và số cờ nhầm theo mức nhiễu và độ lệch.'],
+        ['Hành vi · trang 4–5','behavior-factorial.csv, chain-ablation.csv và deep-ablation.json','So cùng quỹ đạo chấm khi đổi nguồn, lượng và kiểu dữ liệu học. So macro-F1 và lỗi ưu tiên theo từng seed. Với phép thử nối chuỗi, chỉ tính đúng khi ghép đúng tàu và đưa đúng ca lên hàng ưu tiên.'],
+        ['AIS có nhãn · trang 6, 11–12','real-ais.json, ais-robustness.json và gfw-transfer.json','Kiểm tra miền dữ liệu, định nghĩa nhãn nhị phân và danh sách tàu giữ riêng. Đọc cả recall và cờ nhầm ở cùng kịch bản thiếu bản tin.'],
+        ['Rà có/không AI · trang 7–10','review-cases.csv, proxy-study.json và proxy-study-challenge-16.json','Chọn một mã ca, đối chiếu nhãn, lớp AI và quyết định của tám quy tắc ở hai chế độ. Báo riêng 200 ca cân bằng và 16 ca thử thách.'],
+        ['Hộp SAR · trang 13','sar-tile-4048.json','Kiểm tra tọa độ và tính lại IoU theo diện tích giao/hợp. Chấm ở ngưỡng 0,50 và giữ ghép một–một.'],
+    ],[108,150,243])
+    h('Cách đọc chỉ số')
+    p('Macro-F1 là trung bình F1 theo bốn lớp mô phỏng, với F1 từng lớp tính từ precision và recall. Bỏ sót là ca dương không được ưu tiên, kể cả khi chọn chưa đủ dữ liệu. Cờ nhầm là ca âm được ưu tiên. Thời gian trình duyệt được ghép theo cùng ca, quy tắc và vị trí lượt, rồi báo trung vị và phân vị 90. Các lượt chạy lặp dùng chung ca, vì vậy số lượt bấm không phải số người tham gia độc lập.')
+    p(f'<link href="{PAGE}{ZIP}">Tải gói minh chứng và SHA256SUMS</link> · <link href="{PAGE}evidence.html">Xem bảng số liệu trực tuyến</link>',caption)
+    story.append(PageBreak())
+
+    page('Đánh giá chuyên viên và kết luận','THIẾT KẾ KIỂM CHỨNG, TRẠNG THÁI MINH CHỨNG VÀ PHẠM VI SỬ DỤNG')
+    p('Bài thử cho người tham gia đã có hai lượt, mỗi lượt tám ca, và hoán đổi thứ tự hoặc chế độ theo mã R01–R04. Cả hai lượt giữ cùng loại đồ thị, câu hỏi và lựa chọn. Ghi thời gian từ lúc mở ca đến lúc chọn, giữ lựa chọn khi thời gian bị loại. Dùng cùng tiêu chí cho ca dương và âm đã gán nhãn mô phỏng.')
+    table([
+        ['Bước','Cách thực hiện','Kiểm tra chất lượng'],
+        ['Tuyển người rà','Mời người làm giám sát tàu, thủy sản, hàng hải hoặc SAR/AIS. Ghi nhóm kinh nghiệm và đồng ý tham gia theo mã.','Tổng hợp chuyên viên riêng với sinh viên và thành viên đội. Chỉ tổng hợp phiếu thực tế đủ ca và có đồng ý.'],
+        ['Đo thời gian','Đổi thứ tự hai điều kiện theo mã. Tính trung vị từng người và chênh theo cặp giữa hai chế độ.','Loại thời lượng dưới 250 ms và lúc đổi tab. Phân tích chính cần ít nhất sáu thời lượng hợp lệ mỗi lượt.'],
+        ['Đếm lỗi','Chấm bỏ sót, cờ nhầm và chưa đủ dữ liệu theo nhãn tham chiếu. Đối chiếu riêng các ca AI gợi ý sai.','Báo số người, số ca và cả lỗi giảm lẫn lỗi tăng. Lưu phiếu JSON theo mã để chấm lại.'],
+    ],[100,200,201])
+    p('Tại thời điểm lập báo cáo có 0 phiếu chuyên viên. Nhóm chỉ tổng hợp đối chứng giao diện và thời gian thao tác tự động. Phép đo tự động đã công bố được thu trước khi bổ sung bảng giải thích chi tiết, vì thế cần đo riêng công đọc phần giải thích khi triển khai khảo sát.')
+    h('Kết luận và phạm vi áp dụng')
+    p('Ablation cho thấy Kalman cải thiện số cặp ghép đúng ở nhiều kịch bản, nhưng vẫn có ca đúng bị mất. Kích thước hỗ trợ kiểm tra nhất quán sau ghép và nhạy với sai số đo. Huấn luyện trên chuỗi có nhiễu giúp mô hình giữ được hiệu quả khi AIS thiếu hoặc chồng lấn. Các kết quả trên AIS giữ riêng làm rõ độ chuyển nguồn và chi phí cờ nhầm.')
+    p('Đối chứng 200 ca cho phép kiểm tra từng quyết định có hoặc không có gợi ý, kể cả trường hợp AI kéo quyết định sai. Trung vị thời gian trình duyệt bấm nút không đổi. Chưa có phiếu chuyên viên để ước lượng thời gian và bỏ sót của con người, và chưa có nhãn hành vi thực địa tại Việt Nam để xác nhận hiệu quả nghiệp vụ.')
+    p(f'<link href="{PAGE}study.html">Mở bài thử cho người rà</link> · <link href="{PAGE}evidence.html#gioi-han">Đối chiếu giới hạn và minh chứng</link>',caption)
 
     def footer(c,doc):
         page_number(c,doc.page)
