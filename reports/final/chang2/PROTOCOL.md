@@ -282,3 +282,32 @@ Hai nhóm chất lượng (cửa sổ ngắn, tín hiệu chồng lấn) và hai
 phân nhóm. 8 quy tắc dùng chung bộ 16 ca; số lần chạy lặp không phải
 số người rà độc lập. Gợi ý có thể thay đổi công hình thành hoặc
 kiểm chứng giả thuyết. Thời gian suy nghĩ thực tế chưa được đo.
+
+## Mở rộng trước khi chấm lên 200 ca
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=src:scripts python3 scripts/build_chang2_review_bank.py
+node scripts/replay_chang2_proxy.cjs reports/final/chang2/review-bank-200.json
+python3 scripts/build_chang2_evidence.py
+node scripts/capture_chang2_comparison.cjs
+python3 scripts/build_chang2_evidence.py
+```
+
+Dùng RNG 2026112802 sinh quỹ đạo và RNG 2026112803 tạo nhiễu, tách
+khỏi tập huấn luyện và bộ 16 ca. Cố định trước 10 ca ở mỗi tổ hợp
+của 4 nhãn hành vi và 5 mức chất lượng AIS. Chia đều 5 ca mỗi ô
+vào mỗi nhóm A và B. Mỗi quỹ đạo gốc xuất hiện đúng một lần. Không
+chọn thêm hoặc loại ca theo việc gợi ý đúng hay sai. XGBoost dùng
+model gợi ý seed 101, giữ nguyên trước khi chấm các ca mới.
+
+Phát lại trên giao diện đang dùng, trong trình duyệt kiểm thử với một
+bản ngân hàng 200 ca chỉ nạp vào phiên nội bộ. Công cụ tham gia bằng
+phiếu thực tế vẫn dùng bộ 16 ca. Mỗi điều kiện có 16 lần bấm tự
+động cho mỗi ca (8 quy tắc × 2 vị trí lượt), tổng 6.400 lần bấm,
+ghép được 3.200 cặp thời gian theo đúng ca, quy tắc và vị trí lượt.
+
+Không gộp kết quả bộ 200 với bộ thử thách 16 ca lọc theo gợi ý.
+Bộ 200 dùng bản phân tầng cân bằng và không đại diện tần suất
+ngoài thực địa. Đối chứng thử thách được giữ riêng để minh họa
+tác động bất lợi khi gợi ý sai. Cả hai bộ đều dùng dữ liệu mô phỏng
+và thời gian thao tác của trình duyệt tự động.

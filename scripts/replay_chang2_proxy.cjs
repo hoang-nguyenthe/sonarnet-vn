@@ -8,8 +8,13 @@ const {pathToFileURL} = require('node:url');
 const {chromium} = require(process.env.SONARNET_PLAYWRIGHT_PATH || 'playwright');
 
 const root = path.resolve(__dirname, '..');
-const bankBytes = fs.readFileSync(path.join(root, 'reports/final/chang2/study-cases.json'));
+const bankPath = process.argv[2] || path.join(root,'reports/final/chang2/study-cases.json');
+const bankBytes = fs.readFileSync(bankPath);
 const bank = JSON.parse(bankBytes);
+const bankHash = crypto.createHash('sha256').update(bankBytes).digest('hex');
+const packCounts = ['A','B'].map(pack=>bank.filter(c=>c.pack===pack).length);
+assert.equal(packCounts[0],packCounts[1]);
+assert.equal(packCounts[0]+packCounts[1],bank.length);
 const cases = new Map(bank.map(c => [c.id, c]));
 const profiles = [
   {name:'Nhạy', cutoff:1.2},
@@ -45,6 +50,10 @@ async function session(browser, profile, index, layout) {
   const context = await browser.newContext({acceptDownloads:true, viewport:{width:1100,height:840}});
   try {
     const page = await context.newPage();
+    if (process.argv[2]) await page.addInitScript(benchmark=>{
+      // Override the 16-case bank only in this private automation context.
+      Object.defineProperty(window,'SONARNET_STUDY',{get:()=>benchmark,set:()=>{}});
+    },{sha256:bankHash,cases:bank});
     const errors = [];
     page.on('pageerror', error => errors.push(String(error)));
     await page.goto(pathToFileURL(path.join(root, 'web/chang2/study.html')).href);
@@ -55,7 +64,7 @@ async function session(browser, profile, index, layout) {
     const expected = new Map();
     for (let block=0; block<2; block++) {
       if (block) await page.locator('#continue').click();
-      for (let i=0; i<8; i++) {
+      for (let i=0; i<packCounts[0]; i++) {
         const {id, hint} = await page.evaluate(()=>{
           const field=document.getElementById('hint');
           const suggested=field.textContent.startsWith('Gợi ý mô hình: ưu tiên rà');
@@ -73,9 +82,9 @@ async function session(browser, profile, index, layout) {
     ]);
     const data = JSON.parse(fs.readFileSync(await download.path(), 'utf8'));
     await download.delete();
-    assert.equal(data.bank_sha256, crypto.createHash('sha256').update(bankBytes).digest('hex'));
-    assert.equal(data.responses.length, 16);
-    assert.equal(expected.size, 16);
+    assert.equal(data.bank_sha256,bankHash);
+    assert.equal(data.responses.length,bank.length);
+    assert.equal(expected.size,bank.length);
     for (const row of data.responses) {
       assert.deepEqual({decision:row.decision, condition:row.condition}, expected.get(row.case_id));
     }
@@ -107,7 +116,7 @@ function pairedPolicy(runs, index) {
       if (unique.has(row.case_id)) assert.equal(unique.get(row.case_id).decision, row.decision);
       unique.set(row.case_id, row);
     }
-    assert.equal(unique.size, 16);
+    assert.equal(unique.size,bank.length);
     outputs[condition] = score([...unique.values()]);
     decisions[condition] = unique;
   }
@@ -169,7 +178,7 @@ async function main() {
     const result = {
       evidence_type:'browser_simulation_only', human_survey_responses:0,
       sessions:runs.length, browser_decisions:all.length, unique_cases:cases.size,
-      chrome_version:browser.version(),
+      chrome_version:browser.version(), bank_sha256:bankHash,
       browser_click_time_ms:{unit:'automation telemetry only', ...summarize(pairs)},
       paired_case_times:[...cases.keys()].map(id=>({
         id, ...summarize(pairs.filter(p=>p.id===id))
