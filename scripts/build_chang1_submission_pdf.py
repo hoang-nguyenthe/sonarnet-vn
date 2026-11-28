@@ -4,14 +4,15 @@ import argparse
 from io import BytesIO
 import json
 from pathlib import Path
+from unicodedata import normalize
 
 from pypdf import PdfReader, PdfWriter
 from reportlab.graphics.shapes import Circle, Drawing, Line, String
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
+from document_format import register_document_fonts, page_number
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
@@ -61,14 +62,12 @@ def plot(results):
     return figure
 
 
-def build(base, regular, bold, output):
-    for name, source in (('Sonar', regular), ('SonarBold', bold)):
-        pdfmetrics.registerFont(TTFont(name, str(source)))
-    pdfmetrics.registerFontFamily('Sonar', normal='Sonar', bold='SonarBold')
-    normal = ParagraphStyle('body', fontName='Sonar', fontSize=10.5, leading=15.2, textColor=INK, spaceAfter=9)
-    small = ParagraphStyle('caption', parent=normal, fontSize=8.5, leading=12, textColor=MUTED)
-    label = ParagraphStyle('label', parent=normal, fontName='SonarBold', fontSize=9, textColor=TEAL)
-    title = ParagraphStyle('title', parent=normal, fontName='SonarBold', fontSize=24, leading=29, spaceAfter=13)
+def build(base, regular, bold, output, formatted_appendix=None):
+    register_document_fonts('Sonar','SonarBold')
+    normal = ParagraphStyle('body', fontName='Sonar', fontSize=10.5, leading=15.2, textColor=colors.black, spaceAfter=9, alignment=TA_JUSTIFY)
+    small = ParagraphStyle('caption', parent=normal, fontSize=9.5, leading=12, textColor=colors.black, alignment=TA_LEFT)
+    label = ParagraphStyle('label', parent=normal, fontName='SonarBold', fontSize=9, textColor=colors.black, alignment=TA_LEFT)
+    title = ParagraphStyle('title', parent=normal, fontName='SonarBold', fontSize=16, leading=20, spaceAfter=12, alignment=TA_LEFT)
     heading = ParagraphStyle('heading', parent=normal, fontName='SonarBold', fontSize=13, leading=17, spaceBefore=8)
     story = []
 
@@ -79,9 +78,9 @@ def build(base, regular, bold, output):
         cells = [[Paragraph(str(cell), small) for cell in row] for row in rows]
         grid = Table(cells, colWidths=widths, hAlign='LEFT')
         grid.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), BG), ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('GRID',(0,0),(-1,-1),.45,colors.black), ('VALIGN', (0, 0), (-1, -1), 'TOP'),
             ('TOPPADDING', (0, 0), (-1, -1), 7), ('BOTTOMPADDING', (0, 0), (-1, -1), 7),
-            ('LINEBELOW', (0, 0), (-1, -1), .5, GRID),
+            ('TEXTCOLOR',(0,0),(-1,-1),colors.black),
         ]))
         story.extend((grid, Spacer(1, 12)))
 
@@ -122,10 +121,7 @@ def build(base, regular, bold, output):
     add('<link href="https://www.fisheries.noaa.gov/inport/item/73064" color="#007f86">NOAA 2024</link> và Sentinel-1 RTC. Tệp kết quả theo cảnh, ngưỡng và từng cặp nằm tại <b>reports/final/vietnam_rtc_transfer_20261119/ais-box-dimensions</b>.', small)
 
     def footer(canvas, document):
-        canvas.setFillColor(TEAL)
-        canvas.setFont('Sonar', 8)
-        canvas.drawString(55, 27, 'SONARNET-VN  /  BÁO CÁO CẢI TIẾN CHẶNG 1')
-        canvas.drawRightString(540, 27, str(len(PAGES) + document.page))
+        page_number(canvas,len(PAGES)+document.page,'Sonar')
 
     buffer = BytesIO()
     SimpleDocTemplate(buffer, pagesize=A4, leftMargin=53, rightMargin=53, topMargin=43, bottomMargin=39
@@ -136,19 +132,33 @@ def build(base, regular, bold, output):
         raise ValueError('Expected exactly two pages for the closing evidence')
     source = PdfReader(base)
     writer = PdfWriter()
-    for ordinal, index in enumerate(PAGES, start=1):
-        page = source.pages[index]
-        if index >= 14:
-            overlay = BytesIO()
-            stamp = Canvas(overlay, pagesize=(float(page.mediabox.width), float(page.mediabox.height)))
-            stamp.setFillColor(colors.white)
-            stamp.rect(500, 16, 53, 29, fill=1, stroke=0)
-            stamp.setFillColor(TEAL)
-            stamp.setFont('Sonar', 8)
-            stamp.drawRightString(540, 27, str(ordinal))
-            stamp.save()
-            overlay.seek(0)
-            page.merge_page(PdfReader(overlay).pages[0])
+    if formatted_appendix:
+        expected = ('Đo khả năng tổng quát, giữ cả điểm yếu',
+                    'Những ảnh hệ thống vẫn xử lý chưa tốt',
+                    'Đánh giá SAR có tọa độ',
+                    'Khả năng lặp lại trên ba cảnh SAR mới')
+        prior = PdfReader(formatted_appendix)
+        pages = list(source.pages)
+        if len(pages)!=14:
+            raise ValueError('Expected 14 pages of updated Chặng 1 evidence.')
+        for title in expected:
+            matches = [page for page in prior.pages if title in
+                       ' '.join(normalize('NFC',page.extract_text()).split())]
+            if len(matches)!=1:
+                raise ValueError(f'Expected a single appendix page for {title}.')
+            pages.extend(matches)
+    else:
+        pages = [source.pages[index] for index in PAGES]
+    for ordinal,page in enumerate(pages,start=1):
+        overlay = BytesIO()
+        width,height = float(page.mediabox.width),float(page.mediabox.height)
+        stamp = Canvas(overlay,pagesize=(width,height))
+        stamp.setFillColor(colors.white)
+        stamp.rect(width/2-44,25,88,22,fill=1,stroke=0)
+        page_number(stamp,ordinal,'Sonar')
+        stamp.save()
+        overlay.seek(0)
+        page.merge_page(PdfReader(overlay).pages[0])
         writer.add_page(page)
     writer.append(appendix, outline_item='Đối chiếu yêu cầu và đo kích thước')
     writer.add_metadata({'/Title': 'SonarNet Việt Nam - Báo cáo cải tiến Chặng 1'})
@@ -159,5 +169,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for flag in ('base', 'regular', 'bold', 'output'):
         parser.add_argument('--'+flag, type=Path, required=True)
+    parser.add_argument('--formatted-appendix', type=Path)
     options = parser.parse_args()
-    build(options.base, options.regular, options.bold, options.output)
+    build(options.base, options.regular, options.bold, options.output, options.formatted_appendix)

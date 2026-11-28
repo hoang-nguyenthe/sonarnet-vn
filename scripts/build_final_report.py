@@ -1,5 +1,6 @@
 """Build the final-round evidence report from measured results. No invented metrics."""
 from pathlib import Path
+import os
 import json, csv
 import numpy as np
 import matplotlib
@@ -10,19 +11,16 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak, KeepTogether
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
+from document_format import register_document_fonts, page_number
 from reportlab.lib.pagesizes import A4
 from xml.sax.saxutils import escape
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'output/pdf';OUT.mkdir(parents=True,exist_ok=True)
-FIG=ROOT/'reports/final/figures';FIG.mkdir(parents=True,exist_ok=True)
+OUT=Path(os.environ.get('SONARNET_CHANG1_PDF_DIR',str(ROOT/'output/pdf')));OUT.mkdir(parents=True,exist_ok=True)
+FIG=Path(os.environ.get('SONARNET_CHANG1_FIG_DIR',str(ROOT/'reports/final/figures')));FIG.mkdir(parents=True,exist_ok=True)
 SAR=ROOT/'reports/final/independent_sar'
 r=json.loads((SAR/'results.json').read_text()); y=r['models']['yolo_rebuilt']['metrics']
-fontdir=Path(matplotlib.get_data_path())/'fonts/ttf'
-for name,file in [('DV','DejaVuSans.ttf'),('DV-Bold','DejaVuSans-Bold.ttf')]:pdfmetrics.registerFont(TTFont(name,str(fontdir/file)))
-pdfmetrics.registerFontFamily('DV',normal='DV',bold='DV-Bold',italic='DV',boldItalic='DV-Bold')
+register_document_fonts('DV','DV-Bold')
 NAVY='#102B40';TEAL='#007F86';LIGHT='#EAF4F6';ORANGE='#D97135';GRAY='#526574'
 plt.rcParams.update({'font.family':'DejaVu Sans','font.size':11,'axes.spines.top':False,'axes.spines.right':False,'axes.edgecolor':'#D2E0E5','text.color':NAVY,'axes.labelcolor':NAVY,'xtick.color':GRAY,'ytick.color':GRAY})
 # Training/validation/test split with exclusions visible.
@@ -51,12 +49,12 @@ fig.tight_layout();fig.savefig(FIG/'recall.png',dpi=180,bbox_inches='tight',face
 with (SAR/'training_curve.csv').open() as f:curve=[{k.strip():float(v) for k,v in row.items()} for row in csv.DictReader(f)]
 fig,ax=plt.subplots(figsize=(10,3.3));ax.plot([v['epoch'] for v in curve],[v['metrics/mAP50(B)'] for v in curve],color=TEAL,lw=2,label='Validation AP50 (Ultralytics)');ax.plot([v['epoch'] for v in curve],[v['metrics/mAP50-95(B)'] for v in curve],color=NAVY,lw=2,label='Validation AP50-95 (Ultralytics)');ax.set_xlabel('Epoch');ax.set_ylabel('AP');ax.legend(frameon=False);ax.grid(alpha=.15);fig.tight_layout();fig.savefig(FIG/'training.png',dpi=180,bbox_inches='tight',facecolor='white');plt.close(fig)
 styles=getSampleStyleSheet()
-styles.add(ParagraphStyle(name='BodyVI',fontName='DV',fontSize=10.2,leading=15.8,textColor=colors.HexColor(NAVY),spaceAfter=9))
-styles.add(ParagraphStyle(name='SmallVI',parent=styles['BodyVI'],fontSize=8.4,leading=12,spaceAfter=6))
-styles.add(ParagraphStyle(name='TitleVI',parent=styles['BodyVI'],fontName='DV-Bold',fontSize=28,leading=35,spaceAfter=16))
-styles.add(ParagraphStyle(name='HeadingVI',parent=styles['BodyVI'],fontName='DV-Bold',fontSize=18,leading=24,spaceAfter=15))
-styles.add(ParagraphStyle(name='SubVI',parent=styles['BodyVI'],fontName='DV-Bold',fontSize=11.5,leading=17,spaceBefore=7))
-styles.add(ParagraphStyle(name='CellVI',parent=styles['BodyVI'],fontSize=8.5,leading=12,spaceAfter=0))
+styles.add(ParagraphStyle(name='BodyVI',fontName='DV',fontSize=10.2,leading=15.8,textColor=colors.black,spaceAfter=9,alignment=TA_JUSTIFY,firstLineIndent=12))
+styles.add(ParagraphStyle(name='SmallVI',parent=styles['BodyVI'],fontSize=9.5,leading=12,spaceAfter=6,firstLineIndent=0,alignment=TA_LEFT))
+styles.add(ParagraphStyle(name='TitleVI',parent=styles['BodyVI'],fontName='DV-Bold',fontSize=16,leading=20,spaceAfter=12,firstLineIndent=0,alignment=TA_CENTER))
+styles.add(ParagraphStyle(name='HeadingVI',parent=styles['BodyVI'],fontName='DV-Bold',fontSize=15,leading=19,spaceAfter=12,firstLineIndent=0,alignment=TA_LEFT))
+styles.add(ParagraphStyle(name='SubVI',parent=styles['BodyVI'],fontName='DV-Bold',fontSize=11.5,leading=17,spaceBefore=7,firstLineIndent=0,alignment=TA_LEFT))
+styles.add(ParagraphStyle(name='CellVI',parent=styles['BodyVI'],fontSize=9.2,leading=12,spaceAfter=0,firstLineIndent=0,alignment=TA_LEFT))
 story=[];textpages=[]
 def para(t,style='BodyVI'):
  story.append(Paragraph(t,styles[style]));textpages.append(t)
@@ -69,7 +67,7 @@ def pic(path,width=485):
  story.append(Image(str(path),width=width,height=width*h/w));story.append(Spacer(1,9))
 def table(rows,widths):
  data=[[Paragraph(str(c),styles['CellVI']) for c in row] for row in rows]
- t=Table(data,colWidths=widths,hAlign='LEFT');t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor(LIGHT)),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),8),('RIGHTPADDING',(0,0),(-1,-1),8),('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8),('LINEBELOW',(0,0),(-1,-1),.4,colors.HexColor('#D6E3E8'))]));story.append(t);story.append(Spacer(1,12));textpages.extend([' | '.join(map(str,row)) for row in rows])
+ t=Table(data,colWidths=widths,hAlign='LEFT');t.setStyle(TableStyle([('GRID',(0,0),(-1,-1),.45,colors.black),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),8),('RIGHTPADDING',(0,0),(-1,-1),8),('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8),('TEXTCOLOR',(0,0),(-1,-1),colors.black)]));story.append(t);story.append(Spacer(1,12));textpages.extend([' | '.join(map(str,row)) for row in rows])
 def page():story.append(PageBreak());textpages.append('\n---\n')
 para('SONARNET / BẢNG C / BÁO CÁO CẢI TIẾN', 'SmallVI');story.append(Spacer(1,24))
 para('Từ một điểm sáng<br/>đến bằng chứng<br/>có thể kiểm tra.', 'TitleVI')
@@ -119,7 +117,7 @@ imgs=['yolo_rebuilt_error_14_16_6.png','yolo_rebuilt_error_15_15_22.png']
 from PIL import Image as PI,ImageDraw,ImageFont
 ims=[PI.open(SAR/name).convert('RGB') for name in imgs]
 can=PI.new('RGB',(1600,860),'white');can.paste(ims[0],(0,0));can.paste(ims[1],(800,0));can.save(FIG/'errors_pair.png')
-pic(FIG/'errors_pair.png')
+pic(ROOT/'reports/final/figures/errors_pair.png')
 sub('Báo nhầm: cảnh 14, ô 16_6')
 para('Có 12 dự đoán không khớp nhãn và 3 nhãn bị bỏ sót. Cần xem bối cảnh bờ, cảng và kết cấu sáng trước khi gọi một điểm là phương tiện. Với nhãn nguồn hiện có, đây là lỗi đánh giá; chưa có rà soát độc lập để xác định có nhãn bỏ thiếu hay không.')
 sub('Bỏ sót: cảnh 15, ô 15_22')
@@ -152,9 +150,7 @@ sub('Danh sách còn mở trước khi nộp')
 para('1. Hoàn tất hiệu chuẩn mét/diện tích hoặc bổ sung đánh giá thực địa có georeference.<br/>2. Kiểm tra quy trình trên bản triển khai công khai sau khi cập nhật.<br/>3. Cập nhật mã nguồn/demo; đưa PDF lên URL HTTPS truy cập được.<br/>4. Chốt họ tên, đội, người rà soát và khai báo AI theo mẫu BTC.<br/>5. Tác giả xem lại cam kết và thực hiện bước nộp cuối trên cổng.')
 para('Trạng thái bản này: có kết quả huấn luyện và đánh giá thật, còn các mục mở nêu trên. Không tự nhận đã hoàn thành 100% yêu cầu BTC.', 'SmallVI')
 def footer(c,doc):
- w,h=A4;c.setStrokeColor(colors.HexColor('#D6E3E8'));c.line(45,h-41,w-45,h-41)
- c.setFont('DV-Bold',8);c.setFillColor(colors.HexColor(TEAL));c.drawString(45,h-30,'SONARNET  /  BẰNG CHỨNG CẢI TIẾN')
- c.setFont('DV',8);c.setFillColor(colors.HexColor(GRAY));c.drawString(45,28,'BẢNG C · 17/11/2026 · Bản kỹ thuật có giới hạn công bố');c.drawRightString(w-45,28,str(doc.page))
+    page_number(c,doc.page,'DV')
 pdf=OUT/'SonarNet_Bao_cao_cai_tien_Chang1.pdf'
 doc=SimpleDocTemplate(str(pdf),pagesize=A4,rightMargin=55,leftMargin=55,topMargin=60,bottomMargin=50,title='SonarNet - Báo cáo cải tiến Chặng 1',author='SonarNet')
 doc.build(story,onFirstPage=footer,onLaterPages=footer)

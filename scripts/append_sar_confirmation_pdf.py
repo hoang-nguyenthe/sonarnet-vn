@@ -7,9 +7,9 @@ from pathlib import Path
 from pypdf import PdfReader, PdfWriter
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_JUSTIFY
+from document_format import register_document_fonts, page_number
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -26,21 +26,19 @@ def build(font, base, output):
     follow=json.loads((BENCH/'followup/frozen_operating_points.json').read_text())
     first=json.loads((BENCH/'followup/results.json').read_text())['models']['reference']['metrics']
     diag=json.loads((BENCH/'posthoc_diagnostics.json').read_text())['box_iou_sensitivity']
-    for name,file in [('DV','DejaVuSans.ttf'),('DV-Bold','DejaVuSans-Bold.ttf')]:
-        pdfmetrics.registerFont(TTFont(name,str(font/file)))
-    pdfmetrics.registerFontFamily('DV',normal='DV',bold='DV-Bold')
-    normal=ParagraphStyle('p',fontName='DV',fontSize=10.3,leading=15.7,textColor=colors.HexColor(INK),spaceAfter=8)
-    label=ParagraphStyle('k',parent=normal,fontName='DV-Bold',fontSize=9,textColor=colors.HexColor(TEAL))
-    title=ParagraphStyle('h',parent=normal,fontName='DV-Bold',fontSize=22,leading=28,spaceAfter=11)
+    register_document_fonts('DV','DV-Bold')
+    normal=ParagraphStyle('p',fontName='DV',fontSize=10.3,leading=15.7,textColor=colors.black,spaceAfter=8)
+    label=ParagraphStyle('k',parent=normal,fontName='DV-Bold',fontSize=9,textColor=colors.black)
+    title=ParagraphStyle('h',parent=normal,fontName='DV-Bold',fontSize=15,leading=19,spaceAfter=11)
     head=ParagraphStyle('h2',parent=normal,fontName='DV-Bold',fontSize=12,leading=17,spaceBefore=6)
     small=ParagraphStyle('s',parent=normal,fontSize=8.8,leading=13)
     story=[]
     def add(t,style=normal):story.append(Paragraph(t,style))
     def table(rows,widths):
         t=Table([[Paragraph(str(c),small) for c in row] for row in rows],colWidths=widths,hAlign='LEFT')
-        t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor(BG)),('VALIGN',(0,0),(-1,-1),'TOP'),
+        t.setStyle(TableStyle([('GRID',(0,0),(-1,-1),.45,colors.black),('VALIGN',(0,0),(-1,-1),'TOP'),
             ('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7),
-            ('LINEBELOW',(0,0),(-1,-1),.4,colors.HexColor('#d6e2e8'))]))
+            ('TEXTCOLOR',(0,0),(-1,-1),colors.black)]))
         story.extend([t,Spacer(1,10)])
     add('CHẶNG 1 / PHỤ LỤC / 18.11.2026',label)
     add('Khả năng lặp lại trên ba cảnh SAR mới',title)
@@ -70,8 +68,7 @@ def build(font, base, output):
         'Chi tiết, giới hạn nhãn nguồn và kết quả từng phương án nằm trong reports/final/opensar_confirmation_20261118.',small)
     pages=BytesIO(); prev=PdfReader(base); n=len(prev.pages)
     def footer(c,d):
-        c.setFillColor(colors.HexColor(TEAL)); c.setFont('DV',8)
-        c.drawString(56,26,'SONARNET-VN  /  BẰNG CHỨNG KỸ THUẬT'); c.drawRightString(540,26,str(d.page+n))
+        page_number(c,d.page+n,'DV')
     SimpleDocTemplate(pages,pagesize=A4,leftMargin=55,rightMargin=55,topMargin=42,bottomMargin=43).build(story,onFirstPage=footer,onLaterPages=footer)
     pages.seek(0)
     if len(PdfReader(pages).pages)!=1:raise ValueError('Unexpected appendix pagination')

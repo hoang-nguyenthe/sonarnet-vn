@@ -14,9 +14,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from document_format import PAGE_MARGIN, page_number, register_document_fonts
 from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle,
                                 PageBreak, Image)
 
@@ -445,40 +445,54 @@ def proxy_time_rows(proxy):
 
 
 def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, challenge):
-    base=Path('/System/Library/Fonts/Supplemental')
-    pdfmetrics.registerFont(TTFont('ArabicFreeNormal',str(base/'Arial.ttf')))
-    pdfmetrics.registerFont(TTFont('ArabicFreeBold',str(base/'Arial Bold.ttf')))
-    pdfmetrics.registerFontFamily('ArabicFreeNormal',normal='ArabicFreeNormal',bold='ArabicFreeBold')
-    navy=colors.HexColor('#102e3e')
-    teal=colors.HexColor('#00675c')
-    line=colors.HexColor('#d5e5e5')
-    body=ParagraphStyle('body',fontName='ArabicFreeNormal',fontSize=11,leading=16,textColor=navy,spaceAfter=9)
-    heading=ParagraphStyle('heading',parent=body,fontName='ArabicFreeBold',fontSize=17,leading=22,spaceBefore=10,spaceAfter=9)
-    title=ParagraphStyle('title',parent=heading,fontSize=29,leading=34,spaceBefore=7,spaceAfter=13)
-    caption=ParagraphStyle('caption',parent=body,fontSize=9.3,leading=13,textColor=colors.HexColor('#425e68'))
-    cell=ParagraphStyle('cell',parent=body,fontSize=9.3,leading=12,spaceAfter=0)
-    cell_bold=ParagraphStyle('cell_bold',parent=cell,fontName='ArabicFreeBold',textColor=teal)
+    register_document_fonts()
+    body=ParagraphStyle('body',fontName='Document',fontSize=11,leading=14.4,
+                        textColor=colors.black,spaceAfter=7,firstLineIndent=18,alignment=TA_JUSTIFY)
+    heading=ParagraphStyle('heading',parent=body,fontName='DocumentBold',fontSize=12,
+                           leading=15,spaceBefore=9,spaceAfter=6,firstLineIndent=0,alignment=TA_LEFT)
+    title=ParagraphStyle('title',parent=heading,fontSize=16,leading=19,
+                         spaceBefore=0,spaceAfter=8,alignment=TA_CENTER)
+    section=ParagraphStyle('section',parent=heading,fontSize=14,leading=17,spaceBefore=0,spaceAfter=5)
+    caption=ParagraphStyle('caption',parent=body,fontSize=9.5,leading=12.2,firstLineIndent=0,
+                           alignment=TA_LEFT,spaceAfter=6)
+    label_style=ParagraphStyle('label',parent=caption,alignment=TA_CENTER)
+    cell=ParagraphStyle('cell',parent=body,fontSize=9.6,leading=11.7,spaceAfter=0,
+                        firstLineIndent=0,alignment=TA_LEFT)
+    cell_bold=ParagraphStyle('cell_bold',parent=cell,fontName='DocumentBold',alignment=TA_CENTER)
     story=[]
+    section_number=0
+    content_width=A4[0]-2*PAGE_MARGIN-12
+
     def p(text, style=body):
-        story.append(Paragraph(text,style))
+        story.append(Paragraph(text.replace('color="#00675c"','color="#000000"'),style))
+
     def h(text):
         p(text,heading)
+
     def page(name, subtitle):
-        p(name,title)
-        p(subtitle,caption)
+        nonlocal section_number
+        section_number+=1
+        if section_number==1:
+            p('BÁO CÁO CẢI TIẾN CHẶNG 2',title)
+            p(subtitle,label_style)
+            p('1. '+name,section)
+        else:
+            p(f'{section_number}. {name}',section)
+            p(subtitle,caption)
+
     def table(rows,widths):
         converted=[[Paragraph(markup_escape(str(x)),cell_bold if idx==0 else cell)
                     for x in row] for idx,row in enumerate(rows)]
-        tbl=Table(converted,colWidths=widths,hAlign='LEFT',repeatRows=1)
-        tbl.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e5f3ef')),
-          ('LINEBELOW',(0,0),(-1,-1),.35,line),('VALIGN',(0,0),(-1,-1),'TOP'),
-          ('TOPPADDING',(0,0),(-1,-1),6),('BOTTOMPADDING',(0,0),(-1,-1),6),
-          ('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f5f9f9')])]))
-        story.extend([tbl,Spacer(1,8)])
+        factor=content_width/sum(widths)
+        tbl=Table(converted,colWidths=[w*factor for w in widths],hAlign='LEFT',repeatRows=1)
+        tbl.setStyle(TableStyle([('GRID',(0,0),(-1,-1),.45,colors.black),
+            ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
+            ('TOPPADDING',(0,0),(-1,-1),4),('BOTTOMPADDING',(0,0),(-1,-1),4)]))
+        story.extend([tbl,Spacer(1,7)])
     total=deep['fusion_paired'][0]
     headline=measured_contrast(deep,'overlap','mix_given_history_400')
     coverage=external['coverage']
-    page('Kiểm chứng mô-đun hành vi','SONARNET VIỆT NAM  ·  CHUNG KẾT AI 2026  ·  CHẶNG 2  ·  ĐỀ PHIÊN BẢN 1')
+    page('Kiểm chứng mô-đun hành vi','SONARNET VIỆT NAM  ·  CHUNG KẾT AI 2026  ·  CHẶNG 2  ·  ĐỀ PHIÊN BẢN 1  ·  28.11.2026')
     p('Một nhận định hành vi đi qua ba bước có thể mắc lỗi riêng. SonarNet phải ghép đúng tàu, nhìn được kích thước đủ tin cậy và đọc được tín hiệu từ chuỗi AIS. Báo cáo kiểm tra từng bước trên cùng ca và kiểm tra mô hình hành vi trên hai nguồn AIS công khai.')
     table([['Yêu cầu của BTC','Thiết kế đối chứng','Minh chứng'],
            ['Tách Kalman',f"Bật/tắt trên {count(total['scenes'])} cảnh mô phỏng, cùng dữ liệu và luật ghép.",
@@ -575,7 +589,7 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
     comparison=proxy_comparison(proxy)
     page('Cùng một ca AIS, hai cách rà','ĐỐI CHIẾU GIAO DIỆN  ·  QUỸ ĐẠO MÔ PHỎNG')
     p('Hai chế độ giữ cùng dữ liệu AIS, câu hỏi và ba nút lựa chọn. Bên có AI thêm một dòng đề xuất mức ưu tiên và lớp hành vi. Người rà vẫn chọn quyết định.')
-    story.append(Image(str(WEB/'review-comparison.png'),width=499,height=250,kind='proportional'))
+    story.append(Image(str(WEB/'review-comparison.png'),width=content_width,height=250,kind='proportional'))
     p(f"Ảnh chụp ca {review['default_case']} từ trang so sánh. Hai bên giữ nguyên quỹ đạo, tốc độ, thời gian và lựa chọn.",caption)
     table([['Bước rà','Không có gợi ý AI','Có gợi ý AI'],
            ['Bắt đầu','Đọc hai đồ thị rồi tự hình thành giả thuyết.','Đọc đề xuất và lớp dự đoán để có giả thuyết ban đầu.'],
@@ -631,7 +645,7 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
 
     page('Khi bản tin AIS bị thiếu','ĐAN MẠCH  ·  5 LẦN CHIA NHÓM  ·  25 LƯỢT GIỮ RIÊNG TÀU')
     p('Mỗi lần chia đánh giá trên cùng 1.155 cửa sổ khai thác. Hai phép thử giữ nhãn tham chiếu, rồi xóa ba mốc 10 phút liên tiếp hoặc xóa ngẫu nhiên khoảng một nửa các mốc. XGBoost tăng cường chỉ học thêm bản sao làm thưa từ các tàu thuộc tập huấn luyện.')
-    story.append(Image(str(WEB/'robustness.png'),width=499,height=182))
+    story.append(Image(str(WEB/'robustness.png'),width=content_width,height=182))
     p('Các cột cho biết số bỏ sót trung bình và độ lệch chuẩn trên năm lần chia. Quy tắc chọn chất lượng dùng mô hình học chuỗi thiếu khi có dưới 9 mốc hoặc khoảng trống bên trong dài hơn 30 phút.',caption)
     table(robustness_rows(robust),[175,103,110,113])
     rows=robustness_summary(robust)
@@ -673,16 +687,10 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review, chal
     p(f'<link href="{PAGE}evidence.html#gioi-han" color="#00675c">Bảng đối chiếu và dữ liệu tải về</link>',caption)
 
     def footer(c,doc):
-        c.setFillColor(teal)
-        c.rect(0,A4[1]-8,A4[0],8,fill=1,stroke=0)
-        c.setStrokeColor(line)
-        c.line(47,40,A4[0]-47,40)
-        c.setFillColor(navy)
-        c.setFont('ArabicFreeNormal',8)
-        c.drawString(47,24,'SONARNET VIỆT NAM  /  28.11.2026')
-        c.drawRightString(A4[0]-47,24,str(doc.page))
-    doc=SimpleDocTemplate(str(WEB/REPORT),pagesize=A4,leftMargin=47,rightMargin=47,
-                          topMargin=35,bottomMargin=54,title='SonarNet • Báo cáo Chặng 2')
+        page_number(c,doc.page)
+
+    doc=SimpleDocTemplate(str(WEB/REPORT),pagesize=A4,leftMargin=PAGE_MARGIN,rightMargin=PAGE_MARGIN,
+                          topMargin=PAGE_MARGIN,bottomMargin=48,title='SonarNet - Báo cáo cải tiến Chặng 2')
     doc.build(story,onFirstPage=footer,onLaterPages=footer)
 
 
@@ -716,11 +724,18 @@ def web_report(behavior,fusion,external,proxy,robust,transfer,sar,deep,chain,rev
     ])
     html=f"""<!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Minh chứng Chặng 2 · SonarNet Việt Nam</title><link rel="stylesheet" href="style.css"></head>
+<title>Minh chứng Chặng 2 · SonarNet Việt Nam</title><link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../tai-lieu/viewer.css">
+<script src="../tai-lieu/documents.js" defer></script><script src="../tai-lieu/viewer.js" defer></script></head>
 <body><header><div><a href="./">SonarNet Việt Nam</a><span>Chung kết AI 2026 · Bảng C</span></div><a href="study.html">Thử rà quỹ đạo</a></header>
 <main><section><h1>Kiểm chứng mô-đun hành vi</h1><p>Đề Chặng 2 yêu cầu tách đóng góp của bộ ước lượng Kalman, đối chiếu kích thước và dữ liệu hành vi, rồi kiểm tra ảnh hưởng của gợi ý AI lên thao tác rà.</p>
 <div class="stats"><div class="stat"><strong>10 seed</strong>8 kịch bản ghép, 5 điều kiện hành vi</div><div class="stat"><strong>{count(total['correct_0'])} → {count(total['correct_1'])}</strong>cặp đúng trên cùng {count(total['targets'])} mục tiêu mô phỏng</div><div class="stat"><strong>+{fst(highlight['mean'])}</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
-<div class="links"><a href="#ablation">Đối chứng chính</a><a href="#chuoi-ra">Kiểm tra đầu ra</a><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div></section>
+<div class="links"><a href="#ablation">Đối chứng chính</a><a href="#chuoi-ra">Kiểm tra đầu ra</a><a href="../tai-lieu/index.html">Thư viện tài liệu</a><a href="{ZIP}" download>Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div>
+<h2>Báo cáo cải tiến Chặng 2</h2>
+<div class="document-actions">
+  <a class="document-button" href="{REPORT}" data-document="bao-cao-chang-2" aria-label="Xem báo cáo cải tiến Chặng 2">Xem</a>
+  <a class="document-button secondary" href="{REPORT}" download aria-label="Tải về báo cáo cải tiến Chặng 2">Tải về</a>
+</div></section>
 <section id="ablation"><h2>Đối chứng Kalman trên cùng từng ca</h2>
 <p>10 seed, 8 kịch bản và 90 cảnh mỗi kịch bản ở mỗi seed. Cùng bản tin, cùng điểm SAR và cùng luật ghép, thay cách ước lượng vị trí. Hai cột “chỉ đúng” cho biết từng phương pháp cứu hay làm mất bao nhiêu ca.</p>
 {html_table(fusion_deep_rows(deep))}
@@ -847,7 +862,7 @@ def main():
         shutil.copyfile(OUT/name,WEB/name)
     files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json','sar-tile-4048.json','deep-ablation.json','fusion-paired-scenes.csv',
                                        'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv','chain-ablation.csv','chain-ablation.json','review-bank-200.json','proxy-study-challenge-16.json')]
-    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py','deep_ablation_chang2.py','chain_ablation_chang2.py','capture_chang2_comparison.cjs','build_chang2_review_bank.py')]
+    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py','deep_ablation_chang2.py','chain_ablation_chang2.py','capture_chang2_comparison.cjs','build_chang2_review_bank.py','document_format.py')]
     files += [(WEB/file,file) for file in (REPORT,'behavior.png','robustness.png','review-comparison.png','review-cases.csv','compare-data.js','review-bank-200.js')]
     with ZipFile(WEB/ZIP,'w',compression=ZIP_DEFLATED) as archive:
         for source,name in files:

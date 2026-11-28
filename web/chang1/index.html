@@ -7,6 +7,9 @@
   <meta name="description" content="Đối chứng recall SAR, kiểm tra ghép AIS và hồ sơ ảnh nguồn của SonarNet Việt Nam.">
   <title>Minh chứng Chặng 1 · SonarNet Việt Nam</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="tai-lieu/viewer.css">
+  <script src="tai-lieu/documents.js" defer></script>
+  <script src="tai-lieu/viewer.js" defer></script>
   <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -17,6 +20,7 @@
         <a href="#recall">Recall</a>
         <a href="#thu-ghep">Thử ghép AIS</a>
         <a href="#hoso">Hồ sơ mẫu</a>
+        <a href="tai-lieu/index.html">Tài liệu</a>
       </nav>
     </div>
   </header>
@@ -29,7 +33,7 @@
           <p>Đổi tập ảnh và số lượt rà để kiểm tra số nhãn tìm được. Xem ảnh nguồn, cách hệ thống xử lý khi thiếu AIS và tải hồ sơ đối chiếu.</p>
           <div class="actions">
             <a class="button primary" href="#recall">Xem kết quả</a>
-            <a class="button outline" href="data/bao-cao-chang-1.pdf">Mở báo cáo PDF</a>
+            <a class="button outline" href="#bao-cao">Báo cáo Chặng 1</a>
           </div>
         </div>
         <figure class="hero-figure">
@@ -167,8 +171,15 @@
         <p>Trang này hiển thị minh chứng đã lưu. Mở ứng dụng Streamlit để dùng bản đồ và các luồng xử lý dữ liệu của SonarNet.</p>
         <div class="links">
           <a href="https://sonarnet.streamlit.app/?trang=minh-chung">Mở ứng dụng Streamlit</a>
-          <a href="data/bao-cao-chang-1.pdf">Báo cáo Chặng 1</a>
+          <a href="tai-lieu/index.html">Thư viện tài liệu</a>
           <a id="source-code" href="https://github.com/hoang-nguyenthe/sonarnet-vn">Mã nguồn và dữ liệu</a>
+        </div>
+        <div id="bao-cao">
+          <h3>Báo cáo cải tiến Chặng 1</h3>
+          <div class="document-actions">
+            <a class="document-button" href="data/bao-cao-chang-1.pdf" data-document="bao-cao-chang-1" aria-label="Xem báo cáo cải tiến Chặng 1">Xem</a>
+            <a class="document-button secondary" href="data/bao-cao-chang-1.pdf" download aria-label="Tải về báo cáo cải tiến Chặng 1">Tải về</a>
+          </div>
         </div>
         <p id="version" class="note"></p>
       </section>
