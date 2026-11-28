@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>So sánh có và không có gợi ý AI · SonarNet</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="compare.css">
+  <script src="cases.js" defer></script>
+  <script src="review-view.js" defer></script>
+  <script src="compare.js" defer></script>
+</head>
+<body>
+<header><div><a href="./">SonarNet</a><span>Chặng 2 · So sánh giao diện</span></div><a href="evidence.html#do-goi-y">Kết quả đối chứng</a></header>
+<main>
+  <section class="compare-intro">
+    <h1>Cùng một ca AIS, hai cách rà</h1>
+    <p>Hai bên dùng cùng quỹ đạo, tốc độ, thời gian và nút quyết định. Bên phải hiển thị thêm đề xuất của mô hình. Chọn một tình huống rồi thử quyết định ở từng bên.</p>
+    <div class="case-picker">
+      <label for="demo-case">Tình huống minh họa</label>
+      <select id="demo-case">
+        <option value="Q16">Q16 · Gợi ý đúng</option>
+        <option value="Q02">Q02 · Nguy cơ bỏ sót</option>
+        <option value="Q08">Q08 · Nguy cơ cờ nhầm</option>
+      </select>
+    </div>
+  </section>
+  <div id="compare-panels" class="compare-pair">
+    <article class="compare-mode" data-mode="control">
+      <div class="mode-heading"><h2>Không có gợi ý AI</h2><p data-case-number></p></div>
+      <p class="decision-question">Ca này có nên được ưu tiên để rà thêm dấu hiệu câu hoặc kéo lưới?</p>
+      <div class="evidence-grid">
+        <figure><figcaption>Quỹ đạo tương đối</figcaption><svg data-track viewBox="0 0 340 198" role="img" aria-label="Đồ thị quỹ đạo Đông và Bắc, đơn vị mét"></svg></figure>
+        <figure><figcaption>Tốc độ theo thời gian</figcaption><svg data-speed viewBox="0 0 340 198" role="img" aria-label="Đồ thị tốc độ theo phút, đơn vị hải lý trên giờ"></svg></figure>
+      </div>
+      <p data-observations class="observations"></p>
+      <p data-hint class="notice" hidden></p>
+      <div class="answers" aria-label="Quyết định không có gợi ý AI">
+        <button type="button" data-answer="priority" aria-pressed="false">Ưu tiên rà</button>
+        <button type="button" class="secondary" data-answer="not_priority" aria-pressed="false">Chưa ưu tiên</button>
+        <button type="button" class="secondary" data-answer="insufficient" aria-pressed="false">Chưa đủ dữ liệu</button>
+      </div>
+      <p class="decision-feedback" data-feedback aria-live="polite" hidden></p>
+    </article>
+    <article class="compare-mode assisted" data-mode="ai">
+      <div class="mode-heading"><h2>Có gợi ý AI</h2><p data-case-number></p></div>
+      <p class="decision-question">Ca này có nên được ưu tiên để rà thêm dấu hiệu câu hoặc kéo lưới?</p>
+      <div class="evidence-grid">
+        <figure><figcaption>Quỹ đạo tương đối</figcaption><svg data-track viewBox="0 0 340 198" role="img" aria-label="Đồ thị quỹ đạo Đông và Bắc, đơn vị mét"></svg></figure>
+        <figure><figcaption>Tốc độ theo thời gian</figcaption><svg data-speed viewBox="0 0 340 198" role="img" aria-label="Đồ thị tốc độ theo phút, đơn vị hải lý trên giờ"></svg></figure>
+      </div>
+      <p data-observations class="observations"></p>
+      <p data-hint class="notice"></p>
+      <div class="answers" aria-label="Quyết định có gợi ý AI">
+        <button type="button" data-answer="priority" aria-pressed="false">Ưu tiên rà</button>
+        <button type="button" class="secondary" data-answer="not_priority" aria-pressed="false">Chưa ưu tiên</button>
+        <button type="button" class="secondary" data-answer="insufficient" aria-pressed="false">Chưa đủ dữ liệu</button>
+      </div>
+      <p class="decision-feedback" data-feedback aria-live="polite" hidden></p>
+    </article>
+  </div>
+  <section class="review-meaning">
+    <h2>Cách đọc hai bên</h2>
+    <div class="meaning-grid">
+      <div><h3>Tự hình thành giả thuyết</h3><p>Đọc hướng đi, tốc độ và số bản tin để tự cân nhắc dấu hiệu khai thác. Nếu bằng chứng còn mơ hồ, chọn “Chưa đủ dữ liệu”.</p></div>
+      <div><h3>Kiểm chứng giả thuyết do AI đưa ra</h3><p>Dùng gợi ý làm điểm bắt đầu. Kiểm tra lại cả hai đồ thị trước khi quyết định, nhất là khi gợi ý mâu thuẫn với tín hiệu quan sát.</p></div>
+    </div>
+    <p id="example-explanation" class="notice" aria-live="polite"></p>
+    <div class="links"><a href="evidence.html#do-goi-y">Xem số liệu bỏ sót và thời gian thao tác tự động</a><a href="study.html">Thử quy trình 16 ca</a></div>
+  </section>
+</main>
+<footer>Các ca minh họa dùng quỹ đạo và nhãn mô phỏng.</footer>
+</body>
+</html>

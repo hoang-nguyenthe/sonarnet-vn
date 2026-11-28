@@ -9,13 +9,13 @@
     "unit": "automation telemetry only",
     "control": {
       "median_ms": 33,
-      "min_ms": 29,
-      "max_ms": 83
+      "min_ms": 28,
+      "max_ms": 82
     },
     "ai": {
       "median_ms": 33,
-      "min_ms": 29,
-      "max_ms": 89
+      "min_ms": 28,
+      "max_ms": 83
     }
   },
   "policies": [
@@ -36,7 +36,121 @@
         "missed": 1,
         "false_flags": 2,
         "insufficient": 0
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "insufficient",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        }
+      ]
     },
     {
       "name": "Nhạy · AI mạnh",
@@ -55,7 +169,121 @@
         "missed": 1,
         "false_flags": 3,
         "insufficient": 0
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "insufficient",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        }
+      ]
     },
     {
       "name": "Cân bằng · AI nhẹ",
@@ -74,7 +302,121 @@
         "missed": 1,
         "false_flags": 2,
         "insufficient": 0
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "insufficient",
+          "ai": "priority"
+        }
+      ]
     },
     {
       "name": "Cân bằng · AI mạnh",
@@ -93,7 +435,121 @@
         "missed": 1,
         "false_flags": 2,
         "insufficient": 0
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "insufficient",
+          "ai": "priority"
+        }
+      ]
     },
     {
       "name": "Thận trọng · AI nhẹ",
@@ -112,7 +568,121 @@
         "missed": 1,
         "false_flags": 2,
         "insufficient": 0
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "priority"
+        }
+      ]
     },
     {
       "name": "Thận trọng · AI mạnh",
@@ -131,7 +701,121 @@
         "missed": 2,
         "false_flags": 0,
         "insufficient": 3
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "insufficient"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "insufficient"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "insufficient"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "priority"
+        }
+      ]
     },
     {
       "name": "Chọn lọc · AI nhẹ",
@@ -150,7 +834,121 @@
         "missed": 2,
         "false_flags": 2,
         "insufficient": 0
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "insufficient",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        }
+      ]
     },
     {
       "name": "Chọn lọc · AI mạnh",
@@ -169,7 +967,121 @@
         "missed": 2,
         "false_flags": 0,
         "insufficient": 0
-      }
+      },
+      "per_case": [
+        {
+          "id": "Q01",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q02",
+          "priority": true,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q03",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q04",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q05",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q06",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q07",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q08",
+          "priority": false,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q09",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q10",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q11",
+          "priority": false,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q12",
+          "priority": false,
+          "hint_priority": false,
+          "control": "priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q13",
+          "priority": true,
+          "hint_priority": true,
+          "control": "priority",
+          "ai": "priority"
+        },
+        {
+          "id": "Q14",
+          "priority": true,
+          "hint_priority": false,
+          "control": "not_priority",
+          "ai": "not_priority"
+        },
+        {
+          "id": "Q15",
+          "priority": true,
+          "hint_priority": true,
+          "control": "insufficient",
+          "ai": "priority"
+        },
+        {
+          "id": "Q16",
+          "priority": true,
+          "hint_priority": true,
+          "control": "not_priority",
+          "ai": "priority"
+        }
+      ]
     }
   ],
   "browser_runs": [

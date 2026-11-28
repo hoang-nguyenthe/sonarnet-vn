@@ -98,7 +98,7 @@ function score(rows) {
 
 function pairedPolicy(runs, index) {
   const rows = runs.filter(r => r.profile===index).flatMap(r => r.responses);
-  const outputs = {};
+  const outputs = {}, decisions = {};
   for (const condition of ['control','ai']) {
     const unique = new Map();
     for (const row of rows.filter(r => r.condition===condition)) {
@@ -107,8 +107,13 @@ function pairedPolicy(runs, index) {
     }
     assert.equal(unique.size, 16);
     outputs[condition] = score([...unique.values()]);
+    decisions[condition] = unique;
   }
-  return {...profiles[index], ...outputs};
+  const per_case = [...cases].map(([id,sample]) => ({
+    id, priority:sample.priority, hint_priority:sample.hint_priority,
+    control:decisions.control.get(id).decision, ai:decisions.ai.get(id).decision,
+  }));
+  return {...profiles[index], ...outputs, per_case};
 }
 
 async function main() {

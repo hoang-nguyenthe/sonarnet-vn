@@ -238,3 +238,25 @@ Kiểm soát tắt hành vi ưu tiên tất cả cặp đã ghép đủ điều 
 - Dùng 4.000 lần bootstrap trên 10 chênh lệch ghép cặp theo seed. Kết quả
   chính kiểm tra chất lượng quyết định trên tập phát hiện SAR mô phỏng có
   sẵn. Cần phép đo riêng cho lỗi bỏ sót của detector và thao tác của chuyên viên.
+
+## Đối chiếu hai giao diện trên cùng ca
+
+Trang [so sánh](https://hoang-nguyenthe.github.io/sonarnet-vn/chang2/compare.html)
+hiển thị cùng quỹ đạo, tốc độ, số bản tin, câu hỏi và lựa chọn. Chế độ có AI
+thêm đề xuất ưu tiên và lớp hành vi. Q16 minh họa gợi ý phù hợp, Q02 minh
+họa nguy cơ bỏ sót và Q08 minh họa nguy cơ cờ nhầm. Ba ví dụ được công
+khai cùng nhãn mô phỏng. Nếu sau này đo người tham gia, dùng các ca chưa
+tiết lộ nhãn để tránh hiệu ứng xem trước.
+
+```sh
+node scripts/replay_chang2_proxy.cjs
+node scripts/capture_chang2_comparison.cjs
+python3 scripts/build_chang2_evidence.py
+```
+
+`proxy-study.json` lưu lựa chọn theo từng ca và quy tắc. Số ca trong bảng
+là số cặp ca × quy tắc, gộp các lần chạy lặp của cùng một điều kiện. Một
+ca có thể xuất hiện trong nhiều quy tắc. Thời gian từ lúc giao diện mở
+ca đến khi trình duyệt tự động chọn nút là chỉ số thao tác kỹ thuật.
+Cách tư duy được trình bày như hai quy trình tác vụ. Chưa đo tốc độ suy
+nghĩ hoặc thời gian rà thực tế của chuyên viên.
