@@ -3,33 +3,32 @@ from io import BytesIO
 import argparse
 import json
 from pathlib import Path
+import os
 
 from pypdf import PdfWriter
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_JUSTIFY
+from document_format import register_document_fonts, page_number
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / 'reports/final/ossdd_transfer_20261118'
-PDF = ROOT / 'output/pdf'
+PDF = Path(os.environ.get('SONARNET_CHANG1_PDF_DIR', str(ROOT / 'output/pdf')))
 NAVY, TEAL, MIST = '#102B40', '#007F86', '#EAF4F6'
 
 
 def main(fonts):
     data = json.loads((RESULTS / 'results.json').read_text())
     check = json.loads((RESULTS / 'sensitivity_exclude_flagged_chip.json').read_text())
-    for name, filename in [('DV', 'DejaVuSans.ttf'), ('DV-Bold', 'DejaVuSans-Bold.ttf')]:
-        pdfmetrics.registerFont(TTFont(name, str(fonts / filename)))
-    pdfmetrics.registerFontFamily('DV', normal='DV', bold='DV-Bold')
+    register_document_fonts('DV','DV-Bold')
     body = ParagraphStyle('BodyVI', fontName='DV', fontSize=10.2, leading=15.2,
-                          textColor=colors.HexColor(NAVY), spaceAfter=9)
+                          textColor=colors.black, spaceAfter=9)
     note = ParagraphStyle('NoteVI', parent=body, fontSize=8.2, leading=11.5)
     label = ParagraphStyle('LabelVI', parent=body, fontName='DV-Bold', fontSize=9,
-                           textColor=colors.HexColor(TEAL), spaceAfter=7)
-    title = ParagraphStyle('TitleVI', parent=body, fontName='DV-Bold', fontSize=21, leading=28)
+                           textColor=colors.black, spaceAfter=7)
+    title = ParagraphStyle('TitleVI', parent=body, fontName='DV-Bold', fontSize=15, leading=19)
     story = [Paragraph('CHẶNG 1 / PHỤ LỤC / 18.11.2026', label),
              Paragraph('Khi đổi nguồn ảnh SAR', title)]
 
@@ -55,8 +54,8 @@ def main(fonts):
                        num(m['mAP@0.5'], 4), num(m['false_positive'], 0), num(m['latency_ms_median'])])
     table = Table([[Paragraph(v, note) for v in row] for row in values],
                   colWidths=[128, 67, 62, 65, 75, 78], hAlign='LEFT')
-    table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.HexColor(MIST)),
-        ('LINEBELOW', (0, 0), (-1, -1), .4, colors.HexColor('#D6E3E8')),
+    table.setStyle(TableStyle([('GRID',(0,0),(-1,-1),.45,colors.black),
+        ('TEXTCOLOR',(0,0),(-1,-1),colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'), ('BOTTOMPADDING', (0, 0), (-1, -1), 6)]))
     story.extend([table, Spacer(1, 10)])
     add(f'<b>Giảm việc rà điểm, nhưng bỏ sót còn nhiều.</b> Trong {num(ym["n_ground_truth"],0)} nhãn, YOLO '

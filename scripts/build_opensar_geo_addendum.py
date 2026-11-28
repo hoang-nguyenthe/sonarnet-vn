@@ -7,9 +7,9 @@ from pathlib import Path
 from pypdf import PdfReader, PdfWriter
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_JUSTIFY
+from document_format import register_document_fonts, page_number
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,22 +25,20 @@ def build(fonts, base, output):
     result = json.loads((REPORT/'results.json').read_text())
     gallery = json.loads((REPORT/'gallery.json').read_text())
     m = result['models']['yolo']['metrics']
-    for name,file in [('DV','DejaVuSans.ttf'),('DV-Bold','DejaVuSans-Bold.ttf')]:
-        pdfmetrics.registerFont(TTFont(name,str(fonts/file)))
-    pdfmetrics.registerFontFamily('DV',normal='DV',bold='DV-Bold')
-    body=ParagraphStyle('body',fontName='DV',fontSize=10.3,leading=15.7,textColor=colors.HexColor(NAVY),spaceAfter=8)
+    register_document_fonts('DV','DV-Bold')
+    body=ParagraphStyle('body',fontName='DV',fontSize=10.3,leading=15.7,textColor=colors.black,spaceAfter=8)
     small=ParagraphStyle('small',parent=body,fontSize=8.7,leading=12.5)
-    label=ParagraphStyle('label',parent=body,textColor=colors.HexColor(TEAL),fontName='DV-Bold',fontSize=9,spaceAfter=8)
-    title=ParagraphStyle('title',parent=body,fontName='DV-Bold',fontSize=22,leading=28,spaceAfter=13)
+    label=ParagraphStyle('label',parent=body,textColor=colors.black,fontName='DV-Bold',fontSize=9,spaceAfter=8)
+    title=ParagraphStyle('title',parent=body,fontName='DV-Bold',fontSize=15,leading=19,spaceAfter=13)
     sub=ParagraphStyle('sub',parent=body,fontName='DV-Bold',fontSize=12,leading=16,spaceBefore=8)
     story=[]
     def add(s,style=body):
         story.append(Paragraph(s,style))
     def table(vals,widths):
         tab=Table([[Paragraph(str(v),small) for v in row] for row in vals],colWidths=widths,hAlign='LEFT')
-        tab.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor(MIST)),
+        tab.setStyle(TableStyle([('GRID',(0,0),(-1,-1),.45,colors.black),
             ('VALIGN',(0,0),(-1,-1),'TOP'),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7),
-            ('LINEBELOW',(0,0),(-1,-1),.4,colors.HexColor('#D6E3E8'))]))
+            ('TEXTCOLOR',(0,0),(-1,-1),colors.black)]))
         story.extend([tab,Spacer(1,10)])
 
     add('CHẶNG 1 / PHỤ LỤC / 18.11.2026',label)
@@ -98,9 +96,7 @@ def build(fonts, base, output):
         'contains modified Copernicus Sentinel data. Footprint ASF và đường bờ GSHHG. Protocol, checksum, dự đoán và mã tái lập nằm trong ZIP.',small)
     base_pages=len(PdfReader(base).pages)
     def footer(c,doc):
-        c.setFillColor(colors.HexColor(TEAL)); c.setFont('DV',8)
-        c.drawString(56,26,'SONARNET-VN  /  BẰNG CHỨNG KỸ THUẬT')
-        c.drawRightString(540,26,str(base_pages+doc.page))
+        page_number(c,base_pages+doc.page,'DV')
     pages=BytesIO()
     SimpleDocTemplate(pages,pagesize=A4,leftMargin=55,rightMargin=55,topMargin=42,bottomMargin=43).build(story,onFirstPage=footer,onLaterPages=footer)
     pages.seek(0)

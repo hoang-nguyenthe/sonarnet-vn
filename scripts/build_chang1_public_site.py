@@ -20,6 +20,7 @@ MATCH = f'{FINAL}/multiscene_sar_ais_20261119/results.json'
 SAMPLE = f'{FINAL}/export_verification/sample_evidence.zip'
 PDF = 'output/pdf/SonarNet_Bao_cao_Chang1_Giu_cap_AIS_20261118.pdf'
 SUBMISSION_PDF = 'output/pdf/SonarNet_Bao_cao_Chang1_20261120.pdf'
+STANDARD_PDF = 'output/pdf/SonarNet_Bao_cao_Chang1_Quy_cach_20261128.pdf'
 DIMENSIONS = f'{TRANSFER}/ais-box-dimensions/results.json'
 
 
@@ -108,8 +109,12 @@ def export(output, repository, revision):
     if sample['data_status'] != 'MISSING_DATA' or len(sample['detections']) != 1:
         raise ValueError('The sample no longer represents the published missing-AIS case')
     media['ho-so-mau.zip'] = sample_zip
-    updated_report = subprocess.check_output(git + ['ls-tree', '-r', commit, '--', SUBMISSION_PDF])
-    media['bao-cao-chang-1.pdf'] = read(SUBMISSION_PDF if updated_report else PDF)
+    for report in (STANDARD_PDF, SUBMISSION_PDF, PDF):
+        if subprocess.check_output(git + ['ls-tree', '-r', commit, '--', report]):
+            media['bao-cao-chang-1.pdf'] = read(report)
+            break
+    else:
+        raise ValueError('The evidence revision contains no Chặng 1 report')
     dimensions = read_json(DIMENSIONS)['totals'] if subprocess.check_output(
         git + ['ls-tree', '-r', commit, '--', DIMENSIONS]
     ) else None
@@ -172,6 +177,16 @@ def export(output, repository, revision):
     (output / 'data').mkdir()
     for name in ('index.html', 'style.css', 'app.js'):
         (output / name).write_bytes(read(f'web/chang1/{name}'))
+    has_library = subprocess.check_output(git + ['ls-tree', commit, '--', 'web/tai-lieu'])
+    if has_library:
+        document_assets = subprocess.check_output(
+            git + ['ls-tree', '-rz', '--name-only', commit, '--', 'web/tai-lieu', 'web/chang2'],
+            text=True,
+        ).split('\0')
+        for path in filter(None, document_assets):
+            target = output / Path(path).relative_to('web')
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(read(path))
     (output / '.nojekyll').touch()
     for name, contents in media.items():
         (output / 'data' / name).write_bytes(contents)

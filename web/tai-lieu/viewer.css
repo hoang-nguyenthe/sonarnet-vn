@@ -1,0 +1,133 @@
+.document-library {
+  margin: 0;
+  background: #f3f7f8;
+  color: #102a37;
+  font: 1rem/1.5 system-ui, sans-serif;
+}
+.library-header {
+  padding: 1rem max(1.25rem, calc((100vw - 66rem) / 2));
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem 1.25rem;
+  flex-wrap: wrap;
+  background: #102a37;
+  color: #fff;
+}
+.library-header a { color: inherit; }
+.library-header > a { font-weight: 700; text-decoration: none; }
+.library-header nav { display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; }
+.library-shell { max-width: 66rem; margin: 0 auto; padding: 2.5rem 1.25rem; }
+.library-shell h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); line-height: 1.08; margin: 0; }
+.library-shell > p { margin: .7rem 0 1.65rem; }
+.document-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+.document-card {
+  background: #fff;
+  border: 1px solid #cddce0;
+  border-radius: .7rem;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.document-card h2 { font-size: 1.2rem; line-height: 1.25; margin: 0; }
+.document-meta { color: #4b636e; margin: .5rem 0 .8rem; }
+.document-card .document-actions { margin-top: auto; }
+.document-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.document-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: .4rem .75rem;
+  border: 1px solid #175c65;
+  border-radius: .45rem;
+  background: #175c65;
+  color: #fff;
+  font: inherit;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+}
+.document-button.secondary { background: #fff; color: #174954; border-color: #adc5ca; }
+.document-button:hover { filter: brightness(.92); }
+.document-button:disabled { opacity: .44; cursor: default; }
+.document-button:focus-visible, .sonarnet-document-viewer input:focus-visible {
+  outline: 3px solid #247daa;
+  outline-offset: 2px;
+}
+.sonarnet-document-viewer {
+  box-sizing: border-box;
+  position: fixed;
+  width: min(65rem, 96vw);
+  max-width: 96vw;
+  height: min(60rem, 94dvh);
+  max-height: 94dvh;
+  padding: 0;
+  border: 1px solid #adc5ca;
+  border-radius: .8rem;
+  background: #dde7eb;
+  color: #102a37;
+  font: 1rem/1.35 system-ui, sans-serif;
+  overflow: hidden;
+}
+.sonarnet-document-viewer[open] { display: grid; grid-template-rows: auto minmax(0, 1fr); }
+.sonarnet-document-viewer::backdrop { background: rgb(10 29 39 / 72%); }
+.sonarnet-document-viewer .document-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .6rem 1rem;
+  background: #f5fafd;
+  border-bottom: 1px solid #adc5ca;
+  padding: .75rem 1rem;
+}
+.sonarnet-document-viewer h2 { color: inherit; margin: 0; font: 700 1.1rem/1.25 system-ui, sans-serif; }
+.sonarnet-document-viewer .document-toolbar > .document-actions { justify-content: flex-end; }
+.document-page-controls { display: flex; align-items: center; gap: .42rem; }
+.document-page-controls button { min-width: 2.4rem; padding-inline: .55rem; }
+.document-page-controls input {
+  box-sizing: border-box;
+  width: 3.2rem;
+  min-height: 2.4rem;
+  padding: .3rem;
+  border: 1px solid #adc5ca;
+  border-radius: .35rem;
+  color: inherit;
+  background: white;
+  font: inherit;
+  text-align: center;
+}
+.sonarnet-document-viewer .document-page {
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: .85rem;
+}
+.sonarnet-document-viewer .document-page img {
+  display: block;
+  width: min(100%, 55rem);
+  height: auto;
+  max-width: none;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 2px 10px #17343e22;
+}
+.sonarnet-document-viewer .document-page-enlarged img { width: min(165%, 82rem); }
+.sonarnet-document-viewer [hidden] { display: none !important; }
+.document-screen-reader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+@media (max-width: 35rem) {
+  .sonarnet-document-viewer { height: 96dvh; max-height: 96dvh; }
+  .sonarnet-document-viewer .document-toolbar { gap: .45rem; padding: .55rem; }
+  .sonarnet-document-viewer .document-toolbar > .document-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  .sonarnet-document-viewer .document-page { padding: .3rem; }
+}

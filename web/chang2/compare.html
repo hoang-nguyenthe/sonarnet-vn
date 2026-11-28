@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>So sánh có và không có gợi ý AI · SonarNet</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="compare.css?v=2">
+  <script src="review-bank-200.js" defer></script>
+  <script src="cases.js" defer></script>
+  <script src="review-view.js" defer></script>
+  <script src="hint-explanations.js" defer></script>
+  <script src="hint-audit.js" defer></script>
+  <script src="compare-data.js" defer></script>
+  <script src="compare.js?v=2" defer></script>
+</head>
+<body>
+<header><div><a href="index.html">SonarNet</a><span>Chặng 2 · So sánh giao diện</span></div><div><a href="evidence.html#do-goi-y">Kết quả đối chứng</a><a href="../tai-lieu/index.html">Tài liệu</a></div></header>
+<main>
+  <section class="compare-intro">
+    <h1>Cùng một ca AIS, hai cách rà</h1>
+    <p>Hai bên dùng cùng quỹ đạo, tốc độ, thời gian và nút quyết định. Bên phải hiển thị thêm đề xuất của mô hình. Chọn ca, thử quyết định ở từng bên rồi đối chiếu với kết quả mô phỏng.</p>
+    <div class="case-picker">
+      <label for="demo-case">Tình huống minh họa</label>
+      <div class="case-controls">
+        <select id="demo-case"></select>
+        <a href="#tat-ca-ca" id="table-link">Xem bảng 200 ca</a>
+      </div>
+    </div>
+    <div id="case-examples" class="links" aria-label="Ca minh họa nổi bật"></div>
+    <p class="muted" id="bank-description"></p>
+  </section>
+  <div id="compare-panels" class="compare-pair">
+    <article class="compare-mode" data-mode="control">
+      <div class="mode-heading"><h2>Không có gợi ý AI</h2><p data-case-number></p></div>
+      <p class="decision-question">Ca này có nên được ưu tiên để rà thêm dấu hiệu câu hoặc kéo lưới?</p>
+      <div class="evidence-grid">
+        <figure><figcaption>Quỹ đạo tương đối</figcaption><svg data-track viewBox="0 0 340 198" role="img" aria-label="Đồ thị quỹ đạo Đông và Bắc, đơn vị mét"></svg></figure>
+        <figure><figcaption>Tốc độ theo thời gian</figcaption><svg data-speed viewBox="0 0 340 198" role="img" aria-label="Đồ thị tốc độ theo phút, đơn vị hải lý trên giờ"></svg></figure>
+      </div>
+      <p data-observations class="observations"></p>
+      <p data-hint class="notice" hidden></p>
+      <div class="answers" aria-label="Quyết định không có gợi ý AI">
+        <button type="button" data-answer="priority" aria-pressed="false">Ưu tiên rà</button>
+        <button type="button" class="secondary" data-answer="not_priority" aria-pressed="false">Chưa ưu tiên</button>
+        <button type="button" class="secondary" data-answer="insufficient" aria-pressed="false">Chưa đủ dữ liệu</button>
+      </div>
+      <p class="decision-feedback" data-feedback aria-live="polite" hidden></p>
+    </article>
+    <article class="compare-mode assisted" data-mode="ai">
+      <div class="mode-heading"><h2>Có gợi ý AI</h2><p data-case-number></p></div>
+      <p class="decision-question">Ca này có nên được ưu tiên để rà thêm dấu hiệu câu hoặc kéo lưới?</p>
+      <div class="evidence-grid">
+        <figure><figcaption>Quỹ đạo tương đối</figcaption><svg data-track viewBox="0 0 340 198" role="img" aria-label="Đồ thị quỹ đạo Đông và Bắc, đơn vị mét"></svg></figure>
+        <figure><figcaption>Tốc độ theo thời gian</figcaption><svg data-speed viewBox="0 0 340 198" role="img" aria-label="Đồ thị tốc độ theo phút, đơn vị hải lý trên giờ"></svg></figure>
+      </div>
+      <p data-observations class="observations"></p>
+      <p data-hint class="notice"></p>
+      <details class="hint-audit" data-hint-audit>
+        <summary>Vì sao AI gợi ý?</summary>
+        <div data-audit-content></div>
+      </details>
+      <div class="answers" aria-label="Quyết định có gợi ý AI">
+        <button type="button" data-answer="priority" aria-pressed="false">Ưu tiên rà</button>
+        <button type="button" class="secondary" data-answer="not_priority" aria-pressed="false">Chưa ưu tiên</button>
+        <button type="button" class="secondary" data-answer="insufficient" aria-pressed="false">Chưa đủ dữ liệu</button>
+      </div>
+      <p class="decision-feedback" data-feedback aria-live="polite" hidden></p>
+    </article>
+  </div>
+  <section class="review-meaning" id="ket-qua-ca">
+    <h2>Kết quả ca đang xem</h2>
+    <details id="case-verdict" class="hint-audit">
+      <summary>Đối chiếu với nhãn mô phỏng</summary>
+      <p id="example-explanation" class="notice" aria-live="polite"></p>
+    </details>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Chỉ số</th><th scope="col">Không gợi ý</th><th scope="col">Có gợi ý</th></tr></thead>
+      <tbody id="case-metrics"></tbody>
+    </table></div>
+    <details>
+      <summary>Xem quyết định của 8 quy tắc</summary>
+      <div class="table-wrap"><table>
+        <thead><tr><th scope="col">Quy tắc</th><th scope="col">Không gợi ý</th><th scope="col">Có gợi ý</th></tr></thead>
+        <tbody id="case-rules"></tbody>
+      </table></div>
+    </details>
+  </section>
+  <section id="tat-ca-ca">
+    <h2 id="case-table-heading">Đối chiếu đủ 200 ca</h2>
+    <p>Mỗi ca có 8 quyết định của quy tắc ở mỗi chế độ. Bấm mã ca để mở hai giao diện. Thời gian là trung vị của 16 lần bấm tự động ở mỗi chế độ.</p>
+    <div class="case-tools">
+      <div class="case-picker">
+      <label for="case-filter">Lọc theo tác động</label>
+      <select id="case-filter">
+        <option value="all">Tất cả ca</option>
+        <option value="changed">Ca có quy tắc đổi đúng hoặc đổi sai</option>
+        <option value="conflict">Ca có gợi ý ưu tiên sai</option>
+        <option value="stable">Ca giữ nguyên đúng/sai ở cả 8 quy tắc</option>
+      </select></div>
+      <div class="case-picker"><label for="case-scenario">Chất lượng AIS</label>
+      <select id="case-scenario"><option value="all">Tất cả mức</option></select></div>
+      <div class="case-picker"><label for="case-search">Mã ca</label>
+      <input type="search" id="case-search" placeholder="Ví dụ C016"></div>
+    </div>
+    <p id="filter-count" aria-live="polite" class="muted"></p>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Ca</th><th scope="col">Nhãn mô phỏng</th><th scope="col">AI gợi ý ưu tiên</th><th scope="col">Ưu tiên không/có</th><th scope="col">Lỗi không/có</th><th scope="col">ms không/có</th></tr></thead>
+      <tbody id="all-case-rows"></tbody>
+    </table></div>
+    <div class="links table-navigation" aria-label="Chuyển trang các ca">
+      <button type="button" id="prev-cases">Trang trước</button>
+      <span id="case-page" aria-live="polite"></span>
+      <button type="button" id="next-cases">Trang sau</button>
+    </div>
+    <p class="muted">Lỗi gồm bỏ sót ở ca câu hoặc kéo lưới và cờ nhầm ở ca quá cảnh hoặc neo đậu.</p>
+    <div class="links"><a href="review-cases.csv" id="case-csv" download>Tải CSV từng ca</a><a href="proxy-study.json" id="case-json" download>Tải dữ liệu chạy tự động</a></div>
+  </section>
+  <section>
+    <h2>Kết luận về thời gian và thao tác</h2>
+    <div class="meaning-grid">
+      <div><h3>Tự hình thành giả thuyết</h3><p>Đọc hướng đi, tốc độ và số bản tin để tự cân nhắc dấu hiệu khai thác. Nếu bằng chứng còn mơ hồ, chọn “Chưa đủ dữ liệu”.</p></div>
+      <div><h3>Kiểm chứng giả thuyết do AI đưa ra</h3><p>Dùng gợi ý làm điểm bắt đầu. Kiểm tra lại cả hai đồ thị trước khi quyết định, nhất là khi gợi ý mâu thuẫn với tín hiệu quan sát.</p></div>
+    </div>
+    <p id="timing-summary" class="notice"></p>
+    <p>Cả hai chế độ cần một lần bấm để ghi nhận lựa chọn. Khi gợi ý phù hợp, người rà có thể đi thẳng vào kiểm chứng giả thuyết. Khi gợi ý mâu thuẫn hoặc dữ liệu thưa, cần đối chiếu lại quỹ đạo, tốc độ và số bản tin.</p>
+    <div class="links"><a href="evidence.html#do-goi-y">Xem số liệu bỏ sót và thời gian thao tác tự động</a><a href="study.html">Thử quy trình 16 ca</a></div>
+  </section>
+</main>
+<footer>Các ca minh họa dùng quỹ đạo và nhãn mô phỏng.</footer>
+</body>
+</html>

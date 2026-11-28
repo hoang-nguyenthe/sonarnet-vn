@@ -1,0 +1,1166 @@
+{
+  "source": "https://github.com/GlobalFishingWatch/training-data/tree/58815d23bb0924d03fc4cad99953613e3c36d28f",
+  "license": "CC BY 4.0",
+  "release": {
+    "purse_seines": {
+      "file": "pybossa_project_3_Purse_seines.measures.labels.npz",
+      "sha256": "65f08ef20383adb3fc78d72793c192ecff3e63ca6b930e140ca60cf70d2f5f49"
+    },
+    "longlines": {
+      "file": "kristina_longliner_Drifting_longlines.measures.labels.npz",
+      "sha256": "e322bd8703186accabeec5fa10ccb18f66cd7041e7519012e359a6b01216b262"
+    },
+    "trawlers": {
+      "file": "kristina_trawl_Trawlers.measures.labels.npz",
+      "sha256": "b1aba8244c3af7abaa49ab0fda39d060e3d907f7f9591f9cf79af67c9d55db20"
+    }
+  },
+  "suites": {
+    "9": {
+      "min_bins": 9,
+      "windows": 1940,
+      "positive": 642,
+      "vessels": 23,
+      "cohorts": {
+        "purse_seines": {
+          "windows": 690,
+          "positive": 178,
+          "scored_vessels": 13,
+          "input_vessels": 15,
+          "input_rows": 39256,
+          "deduplicated_rows": 18045,
+          "messages": 18045,
+          "valid_messages": 18043,
+          "trips": 15,
+          "start_utc": "2015-01-01T05:39:50+00:00",
+          "end_utc": "2015-12-29T18:55:02+00:00",
+          "excluded_sparse_windows": 2113,
+          "excluded_tied_windows": 12,
+          "window_minutes": 120,
+          "bin_minutes": 10,
+          "minimum_bins": 9,
+          "models": {
+            "denmark_to_gfw": {
+              "tn": 152,
+              "fp": 360,
+              "fn": 26,
+              "tp": 152,
+              "recall": 0.8539325842696629,
+              "precision": 0.296875,
+              "macro_f1": 0.4405797101449275
+            },
+            "denmark_augmented_to_gfw": {
+              "tn": 145,
+              "fp": 367,
+              "fn": 8,
+              "tp": 170,
+              "recall": 0.9550561797752809,
+              "precision": 0.3165735567970205,
+              "macro_f1": 0.45580735054419264
+            },
+            "gfw_held_vessel": {
+              "tn": 482,
+              "fp": 30,
+              "fn": 47,
+              "tp": 131,
+              "recall": 0.7359550561797753,
+              "precision": 0.8136645962732919,
+              "macro_f1": 0.8494470089175656
+            },
+            "denmark_aligned": {
+              "tn": 148,
+              "fp": 364,
+              "fn": 18,
+              "tp": 160,
+              "recall": 0.898876404494382,
+              "precision": 0.3053435114503817,
+              "macro_f1": 0.4462093134659506
+            },
+            "denmark_aligned_balanced": {
+              "tn": 151,
+              "fp": 361,
+              "fn": 21,
+              "tp": 157,
+              "recall": 0.8820224719101124,
+              "precision": 0.3030888030888031,
+              "macro_f1": 0.44633494656180683
+            },
+            "denmark_native_balanced": {
+              "tn": 160,
+              "fp": 352,
+              "fn": 34,
+              "tp": 144,
+              "recall": 0.8089887640449438,
+              "precision": 0.2903225806451613,
+              "macro_f1": 0.44027874681618345
+            },
+            "synthetic_only_101": {
+              "tn": 356,
+              "fp": 156,
+              "fn": 117,
+              "tp": 61,
+              "recall": 0.34269662921348315,
+              "precision": 0.28110599078341014,
+              "macro_f1": 0.5158516995437897
+            },
+            "synthetic_only_203": {
+              "tn": 364,
+              "fp": 148,
+              "fn": 121,
+              "tp": 57,
+              "recall": 0.3202247191011236,
+              "precision": 0.2780487804878049,
+              "macro_f1": 0.5139203511317242
+            },
+            "synthetic_only_307": {
+              "tn": 353,
+              "fp": 159,
+              "fn": 121,
+              "tp": 57,
+              "recall": 0.3202247191011236,
+              "precision": 0.2638888888888889,
+              "macro_f1": 0.5026822211468168
+            },
+            "synthetic_only_409": {
+              "tn": 360,
+              "fp": 152,
+              "fn": 119,
+              "tp": 59,
+              "recall": 0.33146067415730335,
+              "precision": 0.2796208530805687,
+              "macro_f1": 0.514940375980223
+            },
+            "synthetic_only_503": {
+              "tn": 357,
+              "fp": 155,
+              "fn": 126,
+              "tp": 52,
+              "recall": 0.29213483146067415,
+              "precision": 0.25120772946859904,
+              "macro_f1": 0.4938589049141813
+            },
+            "gfw_held_gear_multisource": {
+              "tn": 466,
+              "fp": 46,
+              "fn": 125,
+              "tp": 53,
+              "recall": 0.29775280898876405,
+              "precision": 0.5353535353535354,
+              "macro_f1": 0.6138198742517126
+            }
+          }
+        },
+        "longlines": {
+          "windows": 42,
+          "positive": 0,
+          "scored_vessels": 3,
+          "input_vessels": 9,
+          "input_rows": 133950,
+          "deduplicated_rows": 36282,
+          "messages": 36282,
+          "valid_messages": 36281,
+          "trips": 9,
+          "start_utc": "2012-06-01T00:14:25+00:00",
+          "end_utc": "2013-12-31T23:14:16+00:00",
+          "excluded_sparse_windows": 8247,
+          "excluded_tied_windows": 0,
+          "window_minutes": 120,
+          "bin_minutes": 10,
+          "minimum_bins": 9,
+          "models": {
+            "denmark_to_gfw": {
+              "tn": 5,
+              "fp": 37,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.10638297872340426
+            },
+            "denmark_augmented_to_gfw": {
+              "tn": 5,
+              "fp": 37,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.10638297872340426
+            },
+            "gfw_held_vessel": {
+              "tn": 40,
+              "fp": 2,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.4878048780487805
+            },
+            "denmark_aligned": {
+              "tn": 5,
+              "fp": 37,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.10638297872340426
+            },
+            "denmark_aligned_balanced": {
+              "tn": 5,
+              "fp": 37,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.10638297872340426
+            },
+            "denmark_native_balanced": {
+              "tn": 5,
+              "fp": 37,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.10638297872340426
+            },
+            "synthetic_only_101": {
+              "tn": 39,
+              "fp": 3,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.48148148148148145
+            },
+            "synthetic_only_203": {
+              "tn": 40,
+              "fp": 2,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.4878048780487805
+            },
+            "synthetic_only_307": {
+              "tn": 38,
+              "fp": 4,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.475
+            },
+            "synthetic_only_409": {
+              "tn": 41,
+              "fp": 1,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.4939759036144578
+            },
+            "synthetic_only_503": {
+              "tn": 38,
+              "fp": 4,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.475
+            },
+            "gfw_held_gear_multisource": {
+              "tn": 39,
+              "fp": 3,
+              "fn": 0,
+              "tp": 0,
+              "recall": 0.0,
+              "precision": 0.0,
+              "macro_f1": 0.48148148148148145
+            }
+          }
+        },
+        "trawlers": {
+          "windows": 1208,
+          "positive": 464,
+          "scored_vessels": 7,
+          "input_vessels": 7,
+          "input_rows": 323958,
+          "deduplicated_rows": 125774,
+          "messages": 125774,
+          "valid_messages": 125743,
+          "trips": 7,
+          "start_utc": "2012-01-02T03:28:29+00:00",
+          "end_utc": "2015-10-31T16:36:14+00:00",
+          "excluded_sparse_windows": 30578,
+          "excluded_tied_windows": 0,
+          "window_minutes": 120,
+          "bin_minutes": 10,
+          "minimum_bins": 9,
+          "models": {
+            "denmark_to_gfw": {
+              "tn": 157,
+              "fp": 587,
+              "fn": 114,
+              "tp": 350,
+              "recall": 0.7543103448275862,
+              "precision": 0.37353255069370334,
+              "macro_f1": 0.4045013589870712
+            },
+            "denmark_augmented_to_gfw": {
+              "tn": 156,
+              "fp": 588,
+              "fn": 81,
+              "tp": 383,
+              "recall": 0.8254310344827587,
+              "precision": 0.3944387229660144,
+              "macro_f1": 0.42592036143166145
+            },
+            "gfw_held_vessel": {
+              "tn": 699,
+              "fp": 45,
+              "fn": 22,
+              "tp": 442,
+              "recall": 0.9525862068965517,
+              "precision": 0.9075975359342916,
+              "macro_f1": 0.9419070279892192
+            },
+            "denmark_aligned": {
+              "tn": 162,
+              "fp": 582,
+              "fn": 159,
+              "tp": 305,
+              "recall": 0.6573275862068966,
+              "precision": 0.3438556933483653,
+              "macro_f1": 0.377871373317626
+            },
+            "denmark_aligned_balanced": {
+              "tn": 163,
+              "fp": 581,
+              "fn": 198,
+              "tp": 266,
+              "recall": 0.5732758620689655,
+              "precision": 0.3140495867768595,
+              "macro_f1": 0.3504098629418323
+            },
+            "denmark_native_balanced": {
+              "tn": 163,
+              "fp": 581,
+              "fn": 153,
+              "tp": 311,
+              "recall": 0.6702586206896551,
+              "precision": 0.3486547085201794,
+              "macro_f1": 0.3831246173540379
+            },
+            "synthetic_only_101": {
+              "tn": 655,
+              "fp": 89,
+              "fn": 20,
+              "tp": 444,
+              "recall": 0.9568965517241379,
+              "precision": 0.8330206378986866,
+              "macro_f1": 0.9069286789190687
+            },
+            "synthetic_only_203": {
+              "tn": 672,
+              "fp": 72,
+              "fn": 63,
+              "tp": 401,
+              "recall": 0.8642241379310345,
+              "precision": 0.8477801268498943,
+              "macro_f1": 0.8823226342758057
+            },
+            "synthetic_only_307": {
+              "tn": 626,
+              "fp": 118,
+              "fn": 52,
+              "tp": 412,
+              "recall": 0.8879310344827587,
+              "precision": 0.7773584905660378,
+              "macro_f1": 0.8547119566909192
+            },
+            "synthetic_only_409": {
+              "tn": 665,
+              "fp": 79,
+              "fn": 23,
+              "tp": 441,
+              "recall": 0.9504310344827587,
+              "precision": 0.8480769230769231,
+              "macro_f1": 0.9125562065676522
+            },
+            "synthetic_only_503": {
+              "tn": 643,
+              "fp": 101,
+              "fn": 45,
+              "tp": 419,
+              "recall": 0.9030172413793104,
+              "precision": 0.8057692307692308,
+              "macro_f1": 0.8748353544987963
+            },
+            "gfw_held_gear_multisource": {
+              "tn": 679,
+              "fp": 65,
+              "fn": 242,
+              "tp": 222,
+              "recall": 0.47844827586206895,
+              "precision": 0.7735191637630662,
+              "macro_f1": 0.703413666662668
+            }
+          }
+        }
+      },
+      "models": {
+        "denmark_to_gfw": {
+          "tn": 314,
+          "fp": 984,
+          "fn": 140,
+          "tp": 502,
+          "recall": 0.7819314641744548,
+          "precision": 0.33781965006729475,
+          "macro_f1": 0.4151259999313352
+        },
+        "denmark_augmented_to_gfw": {
+          "tn": 306,
+          "fp": 992,
+          "fn": 89,
+          "tp": 553,
+          "recall": 0.8613707165109035,
+          "precision": 0.3579288025889968,
+          "macro_f1": 0.43360203705999395
+        },
+        "gfw_held_vessel": {
+          "tn": 1221,
+          "fp": 77,
+          "fn": 69,
+          "tp": 573,
+          "recall": 0.8925233644859814,
+          "precision": 0.8815384615384615,
+          "macro_f1": 0.9152913422751351
+        },
+        "denmark_aligned": {
+          "tn": 315,
+          "fp": 983,
+          "fn": 177,
+          "tp": 465,
+          "recall": 0.7242990654205608,
+          "precision": 0.32113259668508287,
+          "macro_f1": 0.3984656919087969
+        },
+        "denmark_aligned_balanced": {
+          "tn": 319,
+          "fp": 979,
+          "fn": 219,
+          "tp": 423,
+          "recall": 0.6588785046728972,
+          "precision": 0.3017118402282454,
+          "macro_f1": 0.3806944391150676
+        },
+        "denmark_native_balanced": {
+          "tn": 328,
+          "fp": 970,
+          "fn": 187,
+          "tp": 455,
+          "recall": 0.7087227414330218,
+          "precision": 0.3192982456140351,
+          "macro_f1": 0.4010413956505601
+        },
+        "synthetic_only_101": {
+          "tn": 1050,
+          "fp": 248,
+          "fn": 137,
+          "tp": 505,
+          "recall": 0.7866043613707165,
+          "precision": 0.6706507304116865,
+          "macro_f1": 0.784542379726387
+        },
+        "synthetic_only_203": {
+          "tn": 1076,
+          "fp": 222,
+          "fn": 184,
+          "tp": 458,
+          "recall": 0.7133956386292835,
+          "precision": 0.6735294117647059,
+          "macro_f1": 0.7670859065149944
+        },
+        "synthetic_only_307": {
+          "tn": 1017,
+          "fp": 281,
+          "fn": 173,
+          "tp": 469,
+          "recall": 0.7305295950155763,
+          "precision": 0.6253333333333333,
+          "macro_f1": 0.7456873452341353
+        },
+        "synthetic_only_409": {
+          "tn": 1066,
+          "fp": 232,
+          "fn": 142,
+          "tp": 500,
+          "recall": 0.778816199376947,
+          "precision": 0.6830601092896175,
+          "macro_f1": 0.7892801091064124
+        },
+        "synthetic_only_503": {
+          "tn": 1038,
+          "fp": 260,
+          "fn": 171,
+          "tp": 471,
+          "recall": 0.7336448598130841,
+          "precision": 0.6443228454172366,
+          "macro_f1": 0.7570851143382651
+        },
+        "gfw_held_gear_multisource": {
+          "tn": 1184,
+          "fp": 114,
+          "fn": 367,
+          "tp": 275,
+          "recall": 0.42834890965732086,
+          "precision": 0.7069408740359897,
+          "macro_f1": 0.6823157443913992
+        }
+      },
+      "gfw_folds": [
+        {
+          "fold": 1,
+          "windows": 818,
+          "test_vessels": 1,
+          "tn": 485,
+          "fp": 35,
+          "fn": 1,
+          "tp": 297,
+          "recall": 0.9966442953020134,
+          "precision": 0.8945783132530121,
+          "macro_f1": 0.9535359272933825
+        },
+        {
+          "fold": 2,
+          "windows": 288,
+          "test_vessels": 4,
+          "tn": 248,
+          "fp": 10,
+          "fn": 0,
+          "tp": 30,
+          "recall": 1.0,
+          "precision": 0.75,
+          "macro_f1": 0.9186900056465274
+        },
+        {
+          "fold": 3,
+          "windows": 278,
+          "test_vessels": 6,
+          "tn": 172,
+          "fp": 14,
+          "fn": 35,
+          "tp": 57,
+          "recall": 0.6195652173913043,
+          "precision": 0.8028169014084507,
+          "macro_f1": 0.7873522846126227
+        },
+        {
+          "fold": 4,
+          "windows": 278,
+          "test_vessels": 6,
+          "tn": 189,
+          "fp": 12,
+          "fn": 14,
+          "tp": 63,
+          "recall": 0.8181818181818182,
+          "precision": 0.84,
+          "macro_f1": 0.8822954663887441
+        },
+        {
+          "fold": 5,
+          "windows": 278,
+          "test_vessels": 6,
+          "tn": 127,
+          "fp": 6,
+          "fn": 19,
+          "tp": 126,
+          "recall": 0.8689655172413793,
+          "precision": 0.9545454545454546,
+          "macro_f1": 0.9100707788258737
+        }
+      ],
+      "gfw_to_denmark": {
+        "tn": 179,
+        "fp": 65,
+        "fn": 183,
+        "tp": 972,
+        "recall": 0.8415584415584415,
+        "precision": 0.9373191899710704,
+        "macro_f1": 0.738810194888102
+      }
+    },
+    "5": {
+      "min_bins": 5,
+      "windows": 5846,
+      "positive": 1960,
+      "vessels": 26,
+      "cohorts": {
+        "purse_seines": {
+          "windows": 1981,
+          "positive": 482,
+          "scored_vessels": 14,
+          "input_vessels": 15,
+          "input_rows": 39256,
+          "deduplicated_rows": 18045,
+          "messages": 18045,
+          "valid_messages": 18043,
+          "trips": 15,
+          "start_utc": "2015-01-01T05:39:50+00:00",
+          "end_utc": "2015-12-29T18:55:02+00:00",
+          "excluded_sparse_windows": 794,
+          "excluded_tied_windows": 40,
+          "window_minutes": 120,
+          "bin_minutes": 10,
+          "minimum_bins": 5,
+          "models": {
+            "denmark_to_gfw": {
+              "tn": 563,
+              "fp": 936,
+              "fn": 65,
+              "tp": 417,
+              "recall": 0.8651452282157677,
+              "precision": 0.3082039911308204,
+              "macro_f1": 0.49194001094017614
+            },
+            "denmark_augmented_to_gfw": {
+              "tn": 531,
+              "fp": 968,
+              "fn": 32,
+              "tp": 450,
+              "recall": 0.9336099585062241,
+              "precision": 0.31734837799717913,
+              "macro_f1": 0.4943590790749911
+            },
+            "gfw_held_vessel": {
+              "tn": 1372,
+              "fp": 127,
+              "fn": 118,
+              "tp": 364,
+              "recall": 0.7551867219917012,
+              "precision": 0.7413441955193483,
+              "macro_f1": 0.8331171128670833
+            },
+            "denmark_aligned": {
+              "tn": 509,
+              "fp": 990,
+              "fn": 30,
+              "tp": 452,
+              "recall": 0.9377593360995851,
+              "precision": 0.31345353675450766,
+              "macro_f1": 0.48468189636001213
+            },
+            "denmark_aligned_balanced": {
+              "tn": 527,
+              "fp": 972,
+              "fn": 36,
+              "tp": 446,
+              "recall": 0.9253112033195021,
+              "precision": 0.3145275035260931,
+              "macro_f1": 0.49031395170759096
+            },
+            "denmark_native_balanced": {
+              "tn": 587,
+              "fp": 912,
+              "fn": 94,
+              "tp": 388,
+              "recall": 0.8049792531120332,
+              "precision": 0.29846153846153844,
+              "macro_f1": 0.4869989394454226
+            },
+            "synthetic_only_101": {
+              "tn": 965,
+              "fp": 534,
+              "fn": 315,
+              "tp": 167,
+              "recall": 0.34647302904564314,
+              "precision": 0.23823109843081314,
+              "macro_f1": 0.4884137370089705
+            },
+            "synthetic_only_203": {
+              "tn": 989,
+              "fp": 510,
+              "fn": 325,
+              "tp": 157,
+              "recall": 0.3257261410788382,
+              "precision": 0.2353823088455772,
+              "macro_f1": 0.488222497994361
+            },
+            "synthetic_only_307": {
+              "tn": 962,
+              "fp": 537,
+              "fn": 327,
+              "tp": 155,
+              "recall": 0.3215767634854772,
+              "precision": 0.2239884393063584,
+              "macro_f1": 0.47707747244823884
+            },
+            "synthetic_only_409": {
+              "tn": 980,
+              "fp": 519,
+              "fn": 321,
+              "tp": 161,
+              "recall": 0.33402489626556015,
+              "precision": 0.23676470588235293,
+              "macro_f1": 0.48855421686746986
+            },
+            "synthetic_only_503": {
+              "tn": 967,
+              "fp": 532,
+              "fn": 341,
+              "tp": 141,
+              "recall": 0.2925311203319502,
+              "precision": 0.20950965824665677,
+              "macro_f1": 0.46657382517731644
+            },
+            "gfw_held_gear_multisource": {
+              "tn": 1333,
+              "fp": 166,
+              "fn": 302,
+              "tp": 180,
+              "recall": 0.37344398340248963,
+              "precision": 0.5202312138728323,
+              "macro_f1": 0.6427263394467412
+            }
+          }
+        },
+        "longlines": {
+          "windows": 193,
+          "positive": 60,
+          "scored_vessels": 5,
+          "input_vessels": 9,
+          "input_rows": 133950,
+          "deduplicated_rows": 36282,
+          "messages": 36282,
+          "valid_messages": 36281,
+          "trips": 9,
+          "start_utc": "2012-06-01T00:14:25+00:00",
+          "end_utc": "2013-12-31T23:14:16+00:00",
+          "excluded_sparse_windows": 8096,
+          "excluded_tied_windows": 0,
+          "window_minutes": 120,
+          "bin_minutes": 10,
+          "minimum_bins": 5,
+          "models": {
+            "denmark_to_gfw": {
+              "tn": 41,
+              "fp": 92,
+              "fn": 41,
+              "tp": 19,
+              "recall": 0.31666666666666665,
+              "precision": 0.17117117117117117,
+              "macro_f1": 0.3018087855297158
+            },
+            "denmark_augmented_to_gfw": {
+              "tn": 39,
+              "fp": 94,
+              "fn": 36,
+              "tp": 24,
+              "recall": 0.4,
+              "precision": 0.2033898305084746,
+              "macro_f1": 0.3223314606741573
+            },
+            "gfw_held_vessel": {
+              "tn": 130,
+              "fp": 3,
+              "fn": 24,
+              "tp": 36,
+              "recall": 0.6,
+              "precision": 0.9230769230769231,
+              "macro_f1": 0.8165980361102312
+            },
+            "denmark_aligned": {
+              "tn": 39,
+              "fp": 94,
+              "fn": 28,
+              "tp": 32,
+              "recall": 0.5333333333333333,
+              "precision": 0.25396825396825395,
+              "macro_f1": 0.3670430107526882
+            },
+            "denmark_aligned_balanced": {
+              "tn": 39,
+              "fp": 94,
+              "fn": 30,
+              "tp": 30,
+              "recall": 0.5,
+              "precision": 0.24193548387096775,
+              "macro_f1": 0.35611278519156264
+            },
+            "denmark_native_balanced": {
+              "tn": 41,
+              "fp": 92,
+              "fn": 46,
+              "tp": 14,
+              "recall": 0.23333333333333334,
+              "precision": 0.1320754716981132,
+              "macro_f1": 0.2707009857612267
+            },
+            "synthetic_only_101": {
+              "tn": 122,
+              "fp": 11,
+              "fn": 22,
+              "tp": 38,
+              "recall": 0.6333333333333333,
+              "precision": 0.7755102040816326,
+              "macro_f1": 0.789057066207399
+            },
+            "synthetic_only_203": {
+              "tn": 125,
+              "fp": 8,
+              "fn": 34,
+              "tp": 26,
+              "recall": 0.43333333333333335,
+              "precision": 0.7647058823529411,
+              "macro_f1": 0.704677936461673
+            },
+            "synthetic_only_307": {
+              "tn": 122,
+              "fp": 11,
+              "fn": 35,
+              "tp": 25,
+              "recall": 0.4166666666666667,
+              "precision": 0.6944444444444444,
+              "macro_f1": 0.6811063218390805
+            },
+            "synthetic_only_409": {
+              "tn": 124,
+              "fp": 9,
+              "fn": 20,
+              "tp": 40,
+              "recall": 0.6666666666666666,
+              "precision": 0.8163265306122449,
+              "macro_f1": 0.8146259066671082
+            },
+            "synthetic_only_503": {
+              "tn": 121,
+              "fp": 12,
+              "fn": 23,
+              "tp": 37,
+              "recall": 0.6166666666666667,
+              "precision": 0.7551020408163265,
+              "macro_f1": 0.7762726459775444
+            },
+            "gfw_held_gear_multisource": {
+              "tn": 130,
+              "fp": 3,
+              "fn": 18,
+              "tp": 42,
+              "recall": 0.7,
+              "precision": 0.9333333333333333,
+              "macro_f1": 0.8626334519572953
+            }
+          }
+        },
+        "trawlers": {
+          "windows": 3672,
+          "positive": 1418,
+          "scored_vessels": 7,
+          "input_vessels": 7,
+          "input_rows": 323958,
+          "deduplicated_rows": 125774,
+          "messages": 125774,
+          "valid_messages": 125743,
+          "trips": 7,
+          "start_utc": "2012-01-02T03:28:29+00:00",
+          "end_utc": "2015-10-31T16:36:14+00:00",
+          "excluded_sparse_windows": 28108,
+          "excluded_tied_windows": 6,
+          "window_minutes": 120,
+          "bin_minutes": 10,
+          "minimum_bins": 5,
+          "models": {
+            "denmark_to_gfw": {
+              "tn": 622,
+              "fp": 1632,
+              "fn": 381,
+              "tp": 1037,
+              "recall": 0.731311706629055,
+              "precision": 0.3885350318471338,
+              "macro_f1": 0.4447046315857006
+            },
+            "denmark_augmented_to_gfw": {
+              "tn": 605,
+              "fp": 1649,
+              "fn": 276,
+              "tp": 1142,
+              "recall": 0.8053596614950634,
+              "precision": 0.40917233966320316,
+              "macro_f1": 0.46430581085643546
+            },
+            "gfw_held_vessel": {
+              "tn": 2042,
+              "fp": 212,
+              "fn": 101,
+              "tp": 1317,
+              "recall": 0.9287729196050776,
+              "precision": 0.8613472858077175,
+              "macro_f1": 0.9113026982104203
+            },
+            "denmark_aligned": {
+              "tn": 610,
+              "fp": 1644,
+              "fn": 452,
+              "tp": 966,
+              "recall": 0.6812411847672779,
+              "precision": 0.3701149425287356,
+              "macro_f1": 0.42377782542707676
+            },
+            "denmark_aligned_balanced": {
+              "tn": 611,
+              "fp": 1643,
+              "fn": 559,
+              "tp": 859,
+              "recall": 0.6057827926657263,
+              "precision": 0.34332533972821744,
+              "macro_f1": 0.39757891474346746
+            },
+            "denmark_native_balanced": {
+              "tn": 639,
+              "fp": 1615,
+              "fn": 496,
+              "tp": 922,
+              "recall": 0.6502115655853314,
+              "precision": 0.36342136381553014,
+              "macro_f1": 0.42167382462559205
+            },
+            "synthetic_only_101": {
+              "tn": 1953,
+              "fp": 301,
+              "fn": 133,
+              "tp": 1285,
+              "recall": 0.9062059238363893,
+              "precision": 0.8102143757881463,
+              "macro_f1": 0.8777629826897471
+            },
+            "synthetic_only_203": {
+              "tn": 1993,
+              "fp": 261,
+              "fn": 337,
+              "tp": 1081,
+              "recall": 0.7623413258110014,
+              "precision": 0.8055141579731744,
+              "macro_f1": 0.8264397905759162
+            },
+            "synthetic_only_307": {
+              "tn": 1916,
+              "fp": 338,
+              "fn": 303,
+              "tp": 1115,
+              "recall": 0.7863187588152327,
+              "precision": 0.7673778389538886,
+              "macro_f1": 0.8167142878167648
+            },
+            "synthetic_only_409": {
+              "tn": 1975,
+              "fp": 279,
+              "fn": 124,
+              "tp": 1294,
+              "recall": 0.9125528913963329,
+              "precision": 0.8226319135410044,
+              "macro_f1": 0.8863413120132277
+            },
+            "synthetic_only_503": {
+              "tn": 1928,
+              "fp": 326,
+              "fn": 257,
+              "tp": 1161,
+              "recall": 0.8187588152327221,
+              "precision": 0.7807666442501682,
+              "macro_f1": 0.8339878226903689
+            },
+            "gfw_held_gear_multisource": {
+              "tn": 2068,
+              "fp": 186,
+              "fn": 439,
+              "tp": 979,
+              "recall": 0.6904090267983075,
+              "precision": 0.8403433476394849,
+              "macro_f1": 0.8133791761898175
+            }
+          }
+        }
+      },
+      "models": {
+        "denmark_to_gfw": {
+          "tn": 1226,
+          "fp": 2660,
+          "fn": 487,
+          "tp": 1473,
+          "recall": 0.7515306122448979,
+          "precision": 0.35639970965400436,
+          "macro_f1": 0.4607205039163901
+        },
+        "denmark_augmented_to_gfw": {
+          "tn": 1175,
+          "fp": 2711,
+          "fn": 344,
+          "tp": 1616,
+          "recall": 0.8244897959183674,
+          "precision": 0.3734689161081581,
+          "macro_f1": 0.47442963741606214
+        },
+        "gfw_held_vessel": {
+          "tn": 3544,
+          "fp": 342,
+          "fn": 243,
+          "tp": 1717,
+          "recall": 0.8760204081632653,
+          "precision": 0.8338999514327343,
+          "macro_f1": 0.889100018752967
+        },
+        "denmark_aligned": {
+          "tn": 1158,
+          "fp": 2728,
+          "fn": 510,
+          "tp": 1450,
+          "recall": 0.7397959183673469,
+          "precision": 0.34705600765916705,
+          "macro_f1": 0.44473168029570276
+        },
+        "denmark_aligned_balanced": {
+          "tn": 1177,
+          "fp": 2709,
+          "fn": 625,
+          "tp": 1335,
+          "recall": 0.6811224489795918,
+          "precision": 0.3301186943620178,
+          "macro_f1": 0.4292786290621068
+        },
+        "denmark_native_balanced": {
+          "tn": 1267,
+          "fp": 2619,
+          "fn": 636,
+          "tp": 1324,
+          "recall": 0.6755102040816326,
+          "precision": 0.3357849353284301,
+          "macro_f1": 0.4431560940566568
+        },
+        "synthetic_only_101": {
+          "tn": 3040,
+          "fp": 846,
+          "fn": 470,
+          "tp": 1490,
+          "recall": 0.7602040816326531,
+          "precision": 0.6378424657534246,
+          "macro_f1": 0.7578672552378708
+        },
+        "synthetic_only_203": {
+          "tn": 3107,
+          "fp": 779,
+          "fn": 696,
+          "tp": 1264,
+          "recall": 0.6448979591836734,
+          "precision": 0.6186979931473323,
+          "macro_f1": 0.7198469336318739
+        },
+        "synthetic_only_307": {
+          "tn": 3000,
+          "fp": 886,
+          "fn": 665,
+          "tp": 1295,
+          "recall": 0.6607142857142857,
+          "precision": 0.5937643282897753,
+          "macro_f1": 0.7100247656673572
+        },
+        "synthetic_only_409": {
+          "tn": 3079,
+          "fp": 807,
+          "fn": 465,
+          "tp": 1495,
+          "recall": 0.7627551020408163,
+          "precision": 0.6494352736750652,
+          "macro_f1": 0.7651753610895498
+        },
+        "synthetic_only_503": {
+          "tn": 3016,
+          "fp": 870,
+          "fn": 621,
+          "tp": 1339,
+          "recall": 0.6831632653061225,
+          "precision": 0.606156631960163,
+          "macro_f1": 0.7220840338449416
+        },
+        "gfw_held_gear_multisource": {
+          "tn": 3531,
+          "fp": 355,
+          "fn": 759,
+          "tp": 1201,
+          "recall": 0.6127551020408163,
+          "precision": 0.7718508997429306,
+          "macro_f1": 0.7734551193426082
+        }
+      },
+      "gfw_folds": [
+        {
+          "fold": 1,
+          "windows": 1835,
+          "test_vessels": 1,
+          "tn": 959,
+          "fp": 77,
+          "fn": 15,
+          "tp": 784,
+          "recall": 0.981226533166458,
+          "precision": 0.9105691056910569,
+          "macro_f1": 0.9494035844872025
+        },
+        {
+          "fold": 2,
+          "windows": 1004,
+          "test_vessels": 5,
+          "tn": 612,
+          "fp": 23,
+          "fn": 42,
+          "tp": 327,
+          "recall": 0.8861788617886179,
+          "precision": 0.9342857142857143,
+          "macro_f1": 0.9295849873380299
+        },
+        {
+          "fold": 3,
+          "windows": 997,
+          "test_vessels": 6,
+          "tn": 757,
+          "fp": 12,
+          "fn": 20,
+          "tp": 208,
+          "recall": 0.9122807017543859,
+          "precision": 0.9454545454545454,
+          "macro_f1": 0.9539364257992977
+        },
+        {
+          "fold": 4,
+          "windows": 1007,
+          "test_vessels": 6,
+          "tn": 564,
+          "fp": 183,
+          "fn": 67,
+          "tp": 193,
+          "recall": 0.7423076923076923,
+          "precision": 0.5132978723404256,
+          "macro_f1": 0.7127479438800193
+        },
+        {
+          "fold": 5,
+          "windows": 1003,
+          "test_vessels": 8,
+          "tn": 652,
+          "fp": 47,
+          "fn": 99,
+          "tp": 205,
+          "recall": 0.6743421052631579,
+          "precision": 0.8134920634920635,
+          "macro_f1": 0.8183602083850161
+        }
+      ],
+      "gfw_to_denmark": {
+        "tn": 173,
+        "fp": 71,
+        "fn": 128,
+        "tp": 1027,
+        "recall": 0.8891774891774892,
+        "precision": 0.9353369763205829,
+        "macro_f1": 0.7732678548886907
+      }
+    }
+  }
+}

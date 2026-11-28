@@ -1,0 +1,130 @@
+{
+  "version": 2,
+  "bank_sha256": "4d7f3e2f8e395376a895e624909ce202868daba4ec31ed0394da0e34e947cfca",
+  "qa_fixture_only": false,
+  "measures": {
+    "misses": "Insufficient evidence on a positive case counts as a miss.",
+    "timing": "Exclude hidden-tab and sub-250 ms timings, retaining their decisions.",
+    "min_valid_timing_per_condition": 6,
+    "min_case_ms": 250
+  },
+  "groups": {
+    "specialists_self_reported": {
+      "n": 0,
+      "n_timing_pairs": 0,
+      "n_timing_pairs_any_valid": 0,
+      "median_paired_delta_seconds": null,
+      "median_paired_delta_seconds_any_valid": null,
+      "median_paired_time_percent": null,
+      "median_paired_missed": null,
+      "median_paired_false_flags": null,
+      "directions": {
+        "time": {
+          "decreased": 0,
+          "increased": 0,
+          "unchanged": 0,
+          "two_sided_exact_sign_p": null
+        },
+        "missed": {
+          "decreased": 0,
+          "increased": 0,
+          "unchanged": 0,
+          "two_sided_exact_sign_p": null
+        },
+        "false_flags": {
+          "decreased": 0,
+          "increased": 0,
+          "unchanged": 0,
+          "two_sided_exact_sign_p": null
+        }
+      },
+      "layouts": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "control": {
+        "n": 0,
+        "positive": 0,
+        "missed": 0,
+        "false_flags": 0,
+        "insufficient": 0,
+        "timing_excluded": 0,
+        "timing_valid": 0,
+        "timing_hidden_tab": 0,
+        "timing_too_fast": 0
+      },
+      "ai": {
+        "n": 0,
+        "positive": 0,
+        "missed": 0,
+        "false_flags": 0,
+        "insufficient": 0,
+        "timing_excluded": 0,
+        "timing_valid": 0,
+        "timing_hidden_tab": 0,
+        "timing_too_fast": 0
+      }
+    },
+    "other_pilot": {
+      "n": 0,
+      "n_timing_pairs": 0,
+      "n_timing_pairs_any_valid": 0,
+      "median_paired_delta_seconds": null,
+      "median_paired_delta_seconds_any_valid": null,
+      "median_paired_time_percent": null,
+      "median_paired_missed": null,
+      "median_paired_false_flags": null,
+      "directions": {
+        "time": {
+          "decreased": 0,
+          "increased": 0,
+          "unchanged": 0,
+          "two_sided_exact_sign_p": null
+        },
+        "missed": {
+          "decreased": 0,
+          "increased": 0,
+          "unchanged": 0,
+          "two_sided_exact_sign_p": null
+        },
+        "false_flags": {
+          "decreased": 0,
+          "increased": 0,
+          "unchanged": 0,
+          "two_sided_exact_sign_p": null
+        }
+      },
+      "layouts": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "control": {
+        "n": 0,
+        "positive": 0,
+        "missed": 0,
+        "false_flags": 0,
+        "insufficient": 0,
+        "timing_excluded": 0,
+        "timing_valid": 0,
+        "timing_hidden_tab": 0,
+        "timing_too_fast": 0
+      },
+      "ai": {
+        "n": 0,
+        "positive": 0,
+        "missed": 0,
+        "false_flags": 0,
+        "insufficient": 0,
+        "timing_excluded": 0,
+        "timing_valid": 0,
+        "timing_hidden_tab": 0,
+        "timing_too_fast": 0
+      }
+    }
+  },
+  "paired": []
+}

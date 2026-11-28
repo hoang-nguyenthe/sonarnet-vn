@@ -1,0 +1,406 @@
+{
+  "tile": {
+    "id": "4048",
+    "day": "2020-05-11",
+    "labels": [
+      [
+        194.0,
+        89.0,
+        217.0,
+        100.0
+      ],
+      [
+        178.0,
+        285.0,
+        219.0,
+        302.0
+      ]
+    ],
+    "iou_minimum": 0.5,
+    "models": {
+      "adapted_slc_vv": {
+        "confidence_threshold": 0.025,
+        "predictions": [
+          {
+            "index": 0,
+            "box": [
+              179.36676025390625,
+              282.9901123046875,
+              209.90594482421875,
+              299.53253173828125
+            ],
+            "confidence": 0.1183418482542038,
+            "overlap_with_label": [
+              0.0,
+              0.5852099061012268
+            ],
+            "status": "matched"
+          },
+          {
+            "index": 1,
+            "box": [
+              191.08197021484375,
+              88.27628326416016,
+              212.6787109375,
+              100.97797393798828
+            ],
+            "confidence": 0.05285661667585373,
+            "overlap_with_label": [
+              0.638391375541687,
+              0.0
+            ],
+            "status": "matched"
+          },
+          {
+            "index": 2,
+            "box": [
+              173.578369140625,
+              281.09515380859375,
+              214.15277099609375,
+              301.2779541015625
+            ],
+            "confidence": 0.03827502951025963,
+            "overlap_with_label": [
+              0.0,
+              0.6345542073249817
+            ],
+            "status": "duplicate"
+          },
+          {
+            "index": 3,
+            "box": [
+              190.79412841796875,
+              87.77154541015625,
+              218.5582275390625,
+              103.58578491210938
+            ],
+            "confidence": 0.03000151552259922,
+            "overlap_with_label": [
+              0.5762203931808472,
+              0.0
+            ],
+            "status": "duplicate"
+          },
+          {
+            "index": 4,
+            "box": [
+              0.1671886444091797,
+              12.144567489624023,
+              21.00841522216797,
+              28.981027603149414
+            ],
+            "confidence": 0.02501215599477291,
+            "overlap_with_label": [
+              0.0,
+              0.0
+            ],
+            "status": "no_overlap"
+          },
+          {
+            "index": 5,
+            "box": [
+              310.8922119140625,
+              41.40496063232422,
+              337.84130859375,
+              59.28484344482422
+            ],
+            "confidence": 0.014805620536208153,
+            "overlap_with_label": [
+              0.0,
+              0.0
+            ],
+            "status": "below_confidence"
+          },
+          {
+            "index": 6,
+            "box": [
+              183.787841796875,
+              85.29598236083984,
+              217.150634765625,
+              102.47864532470703
+            ],
+            "confidence": 0.013403842225670815,
+            "overlap_with_label": [
+              0.4413342773914337,
+              0.0
+            ],
+            "status": "below_confidence"
+          },
+          {
+            "index": 7,
+            "box": [
+              315.11761474609375,
+              46.7647705078125,
+              339.36322021484375,
+              61.02049255371094
+            ],
+            "confidence": 0.011352842673659325,
+            "overlap_with_label": [
+              0.0,
+              0.0
+            ],
+            "status": "below_confidence"
+          }
+        ],
+        "original_counts": {
+          "id": "4048",
+          "scene_id": "S1B_IW_SLC__1SDV_20200511T062006_20200511T062033_021530_028E04_7727",
+          "false_positive_indices": [
+            2,
+            3,
+            4
+          ],
+          "false_negative_indices": [],
+          "matched_indices": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ]
+        },
+        "iou_sensitivity": {
+          "0.30": {
+            "true_positive": 2,
+            "false_positive": 3,
+            "false_negative": 0
+          },
+          "0.50": {
+            "true_positive": 2,
+            "false_positive": 3,
+            "false_negative": 0
+          },
+          "0.75": {
+            "true_positive": 0,
+            "false_positive": 5,
+            "false_negative": 2
+          }
+        }
+      },
+      "reference_ls_ssdd": {
+        "confidence_threshold": 0.1,
+        "predictions": [
+          {
+            "index": 0,
+            "box": [
+              186.0287628173828,
+              284.066650390625,
+              203.30557250976562,
+              297.73590087890625
+            ],
+            "confidence": 0.2461978793144226,
+            "overlap_with_label": [
+              0.0,
+              0.30855128169059753
+            ],
+            "status": "below_iou"
+          },
+          {
+            "index": 1,
+            "box": [
+              184.65573120117188,
+              281.9534606933594,
+              205.32284545898438,
+              298.3273010253906
+            ],
+            "confidence": 0.03817041218280792,
+            "overlap_with_label": [
+              0.0,
+              0.3624344766139984
+            ],
+            "status": "below_confidence"
+          },
+          {
+            "index": 2,
+            "box": [
+              86.7748031616211,
+              11.436132431030273,
+              103.80241394042969,
+              24.058582305908203
+            ],
+            "confidence": 0.01949290558695793,
+            "overlap_with_label": [
+              0.0,
+              0.0
+            ],
+            "status": "below_confidence"
+          },
+          {
+            "index": 3,
+            "box": [
+              198.73974609375,
+              88.17591857910156,
+              209.0670928955078,
+              98.01588439941406
+            ],
+            "confidence": 0.018983133137226105,
+            "overlap_with_label": [
+              0.3560474216938019,
+              0.0
+            ],
+            "status": "below_confidence"
+          },
+          {
+            "index": 4,
+            "box": [
+              85.81904602050781,
+              10.062276840209961,
+              105.94340515136719,
+              25.502254486083984
+            ],
+            "confidence": 0.013934878632426262,
+            "overlap_with_label": [
+              0.0,
+              0.0
+            ],
+            "status": "below_confidence"
+          },
+          {
+            "index": 5,
+            "box": [
+              377.0206298828125,
+              118.49391174316406,
+              401.38214111328125,
+              137.92996215820312
+            ],
+            "confidence": 0.013083376921713352,
+            "overlap_with_label": [
+              0.0,
+              0.0
+            ],
+            "status": "below_confidence"
+          },
+          {
+            "index": 6,
+            "box": [
+              387.93988037109375,
+              120.60896301269531,
+              399.744384765625,
+              134.923095703125
+            ],
+            "confidence": 0.012099644169211388,
+            "overlap_with_label": [
+              0.0,
+              0.0
+            ],
+            "status": "below_confidence"
+          }
+        ],
+        "original_counts": {
+          "id": "4048",
+          "scene_id": "S1B_IW_SLC__1SDV_20200511T062006_20200511T062033_021530_028E04_7727",
+          "false_positive_indices": [
+            0
+          ],
+          "false_negative_indices": [
+            0,
+            1
+          ],
+          "matched_indices": []
+        },
+        "iou_sensitivity": {
+          "0.30": {
+            "true_positive": 1,
+            "false_positive": 0,
+            "false_negative": 1
+          },
+          "0.50": {
+            "true_positive": 0,
+            "false_positive": 1,
+            "false_negative": 2
+          },
+          "0.75": {
+            "true_positive": 0,
+            "false_positive": 1,
+            "false_negative": 2
+          }
+        }
+      }
+    }
+  },
+  "comparison": [
+    {
+      "cohort": "diagnostic",
+      "method": "adapted_slc_vv",
+      "true_positive": 51,
+      "false_positive": 211,
+      "n_ground_truth": 147,
+      "precision": 0.1947,
+      "recall": 0.3469,
+      "benchmark_unmatched_per_km2": 0.08094071742961129
+    },
+    {
+      "cohort": "diagnostic",
+      "method": "reference_ls_ssdd",
+      "true_positive": 3,
+      "false_positive": 36,
+      "n_ground_truth": 147,
+      "precision": 0.0769,
+      "recall": 0.0204,
+      "benchmark_unmatched_per_km2": 0.01380979065149766
+    },
+    {
+      "cohort": "diagnostic",
+      "method": "review-budget",
+      "true_positive": 36,
+      "false_positive": 93,
+      "n_ground_truth": 147,
+      "precision": 0.2791,
+      "recall": 0.2449,
+      "benchmark_unmatched_per_km2": 0.03567529251636896
+    },
+    {
+      "cohort": "diagnostic",
+      "method": "coastal-budget",
+      "true_positive": 37,
+      "false_positive": 92,
+      "n_ground_truth": 147,
+      "precision": 0.2868,
+      "recall": 0.2517,
+      "benchmark_unmatched_per_km2": 0.03529168722049402
+    },
+    {
+      "cohort": "north_sea",
+      "method": "adapted_slc_vv",
+      "true_positive": 69,
+      "false_positive": 943,
+      "n_ground_truth": 146,
+      "precision": 0.0682,
+      "recall": 0.4726,
+      "benchmark_unmatched_per_km2": 0.3674023096753778
+    },
+    {
+      "cohort": "north_sea",
+      "method": "guard_ring_cfar",
+      "true_positive": 0,
+      "false_positive": 1,
+      "n_ground_truth": 146,
+      "precision": 0.0,
+      "recall": 0.0,
+      "benchmark_unmatched_per_km2": 0.00038961008449138685
+    },
+    {
+      "cohort": "north_sea",
+      "method": "review-budget",
+      "true_positive": 20,
+      "false_positive": 108,
+      "n_ground_truth": 146,
+      "precision": 0.1562,
+      "recall": 0.137,
+      "benchmark_unmatched_per_km2": 0.04207788912506978
+    },
+    {
+      "cohort": "north_sea",
+      "method": "coastal-budget",
+      "true_positive": 21,
+      "false_positive": 107,
+      "n_ground_truth": 146,
+      "precision": 0.1641,
+      "recall": 0.1438,
+      "benchmark_unmatched_per_km2": 0.04168827904057839
+    }
+  ]
+}

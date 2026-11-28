@@ -7,10 +7,12 @@ from pathlib import Path
 
 from pypdf import PdfReader, PdfWriter
 from reportlab.lib.colors import HexColor
+from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_JUSTIFY
+from document_format import register_document_fonts, page_number
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Paragraph, Table, TableStyle
 
@@ -34,13 +36,11 @@ def coast(m):
 
 
 def build(args):
-    for font, file in [('Body', 'DejaVuSans.ttf'), ('Heavy', 'DejaVuSans-Bold.ttf')]:
-        pdfmetrics.registerFont(TTFont(font, str(args.font/file)))
-    pdfmetrics.registerFontFamily('Body', normal='Body', bold='Heavy')
-    normal = ParagraphStyle('body', fontName='Body', fontSize=10, leading=15, textColor=INK)
-    muted = ParagraphStyle('muted', parent=normal, fontSize=9, leading=13, textColor=DIM)
-    sub = ParagraphStyle('subtitle', parent=normal, fontName='Heavy', fontSize=12.7, leading=17, textColor=TEAL)
-    title = ParagraphStyle('title', parent=sub, fontSize=23, leading=29, textColor=INK)
+    register_document_fonts('Body','Heavy')
+    normal = ParagraphStyle('body', fontName='Body', fontSize=10.5, leading=14.5, textColor=colors.black, alignment=TA_JUSTIFY)
+    muted = ParagraphStyle('muted', parent=normal, fontSize=9, leading=13, textColor=colors.black)
+    sub = ParagraphStyle('subtitle', parent=normal, fontName='Heavy', fontSize=12.3, leading=16, textColor=colors.black)
+    title = ParagraphStyle('title', parent=sub, fontSize=17, leading=21, textColor=colors.black)
     cell = ParagraphStyle('cell', parent=normal, fontSize=8.2, leading=11)
     text_source = EVIDENCE/'results.json'
     test = json.loads(text_source.read_text())['evaluation']
@@ -95,8 +95,7 @@ def build(args):
 
     def table(values, widths, y):
         t = Table([[Paragraph(str(v), cell) for v in row] for row in values], colWidths=widths)
-        t.setStyle(TableStyle([('BACKGROUND', (0,0), (-1,0), PALE),
-            ('ROWBACKGROUNDS', (0,1), (-1,-1), [WHITE, HexColor('#f5f8f8')]),
+        t.setStyle(TableStyle([('GRID',(0,0),(-1,-1),.45,colors.black),
             ('TOPPADDING', (0,0), (-1,-1), 6), ('BOTTOMPADDING', (0,0), (-1,-1), 6),
             ('VALIGN', (0,0), (-1,-1), 'TOP')]))
         _, h = t.wrap(501, 700)
@@ -110,35 +109,27 @@ def build(args):
         return text(heading, 772, title)-10
 
     def footer(number):
-        c.setStrokeColor(HexColor('#c5dbdf'))
-        c.line(47, 48, 548, 48)
-        c.setFillColor(DIM)
-        c.setFont('Body', 8)
-        c.drawString(47, 32, 'SONARNET VIỆT NAM  /  CHẶNG 1  /  20.11.2026')
-        c.drawRightString(548, 32, f'Bản cập nhật {number}/{total_update_pages}')
+        page_number(c,number,'Body')
         c.showPage()
 
-    c.setFillColor(INK)
-    c.rect(0, 651, A4[0], A4[1]-651, stroke=0, fill=1)
-    c.setFillColor(HexColor('#a6e5dd'))
-    c.setFont('Heavy', 9.4)
-    c.drawString(47, 800, 'SONARNET VIỆT NAM  /  VÒNG CHUNG KẾT  /  BẢNG C')
-    c.setFillColor(WHITE)
-    c.setFont('Heavy', 26)
-    c.drawString(47, 752, 'Báo cáo cải tiến Chặng 1')
-    c.setFont('Body', 12)
-    c.drawString(47, 716, 'Ảnh SAR thật, ghép AIS có điều kiện, kết quả đo được')
-    c.setFillColor(HexColor('#a6e5dd'))
-    c.setFont('Body', 9)
-    c.drawString(47, 684, 'Đề riêng phiên bản 1  ·  Hạn 23:59 ngày 26/11/2026 (giờ Việt Nam)')
+    c.setFillColor(colors.black)
+    c.setFont('Heavy', 10)
+    c.drawCentredString(A4[0]/2, 790, 'SONARNET VIỆT NAM  /  VÒNG CHUNG KẾT  /  BẢNG C')
+    c.setFont('Heavy', 17)
+    c.drawCentredString(A4[0]/2, 759, 'BÁO CÁO CẢI TIẾN CHẶNG 1')
+    c.setFont('Body', 11)
+    c.drawCentredString(A4[0]/2, 723, 'Ảnh SAR thật, ghép AIS có điều kiện, kết quả đo được')
+    c.setFont('Body', 10)
+    c.drawCentredString(A4[0]/2, 692, 'Đề riêng phiên bản 1 · Hạn 23:59 ngày 26/11/2026 (giờ Việt Nam)')
     y = text('Một điểm trên bản đồ chỉ hữu ích khi người xem mở được ảnh nguồn, biết phần nào đã được kiểm tra và biết vì sao hệ thống giữ lại hay từ chối cặp ghép.', 628)
     for i,(label, value) in enumerate([
             ('Nhãn SAR khớp · ba cảnh', f"{fraction(old)} → {fraction(new)}"),
             ('Nhãn khớp trong 500 m từ bờ', f"{coast(old)} → {coast(new)}"),
             ('Ghép AIS sai · ngày giữ riêng', '32 → 0')]):
         x = 47+169*i
-        c.setFillColor(PALE)
-        c.roundRect(x, 513, 163, 62, 8, stroke=0, fill=1)
+        c.setStrokeColor(colors.black)
+        c.setLineWidth(.45)
+        c.rect(x, 513, 163, 62, stroke=1, fill=0)
         text(label, 562, muted, x+10, 148)
         text(value, 542, sub, x+10, 148)
     y = 493
@@ -608,17 +599,22 @@ def build(args):
     b.seek(0)
     writer = PdfWriter()
     writer.append(b, outline_item='Kết quả cải tiến và thao tác kiểm tra')
-    prior = PdfReader(args.base)
-    if len(prior.pages) != 14:
-        raise ValueError('Unexpected technical appendix version')
-    writer.append(prior, pages=list(range(2, 9))+list(range(10, 14)),
-                  outline_item='Phụ lục: các phép đo và nguồn kỹ thuật trước')
+    if not args.updates_only:
+        if args.base is None:
+            raise ValueError('Specify a base technical appendix or use --updates-only.')
+        prior = PdfReader(args.base)
+        if len(prior.pages) != 14:
+            raise ValueError('Unexpected technical appendix version')
+        writer.append(prior, pages=list(range(2, 9))+list(range(10, 14)),
+                      outline_item='Phụ lục: các phép đo và nguồn kỹ thuật trước')
     writer.add_metadata({'/Title':'SonarNet Việt Nam - Báo cáo cải tiến Chặng 1', '/Subject':'SLC VV và độ tin cậy ghép AIS'})
     writer.write(args.output)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ('font','base','output'):
+    for name in ('font','output'):
         parser.add_argument('--'+name, required=True, type=Path)
+    parser.add_argument('--base', type=Path)
+    parser.add_argument('--updates-only', action='store_true')
     build(parser.parse_args())
