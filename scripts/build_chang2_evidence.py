@@ -1,5 +1,5 @@
 """Build the Vietnamese report, web evidence and reproducibility bundle."""
-from collections import defaultdict
+from collections import Counter, defaultdict
 from hashlib import file_digest
 from html import escape
 import json
@@ -238,7 +238,80 @@ def tile_rows(sar):
     ]
 
 
-def pdf_report(raw, behavior, fusion, study, external, proxy, robust, transfer, sar):
+FUSION_DEEP = {
+    'mixed_quality':'AIS hỗn hợp', 'near_crossing':'Hai tàu sát nhau',
+    'keep_two_crossing_tracks_when_separated':'Tàu cắt hướng, còn tách vị trí',
+    'unlabeled_clutter_near_track':'Điểm nhiễu cạnh tàu',
+    'sparse_one_sided':'Bản tin một phía',
+    'position_bias':'Lệch vị trí',
+    'position_bias_beyond_guard':'Lệch vượt vùng bảo vệ',
+    'size_noise':'Nhiễu đo kích thước',
+}
+SIZE_DEEP = {'valid':'Khai báo đúng','plus_30':'+30%','plus_60':'+60%','plus_80':'+80%',
+             'plus_125':'+125%','minus_45':'−45%','missing':'Thiếu khai báo'}
+TRACK_DEEP = {**SCENARIOS,'block_gap':'Mất liên tục'}
+MODEL_DEEP = {
+    'speed_clean_400':'Tốc độ · sạch · 400', 'speed_mixed_400':'Tốc độ · hỗn hợp · 400',
+    'history_clean_48':'Quỹ đạo · sạch · 48','history_mixed_48':'Quỹ đạo · hỗn hợp · 48',
+    'history_clean_400':'Quỹ đạo · sạch · 400','history_mixed_400':'Quỹ đạo · hỗn hợp · 400',
+    'history_clean_800':'Quỹ đạo · sạch · 800','history_mixed_800':'Quỹ đạo · hỗn hợp · 800',
+}
+
+
+def pp(value):
+    return fst(100*value,2)
+
+
+def fusion_deep_rows(deep):
+    rows = [['Kịch bản','Tuyến tính đúng','Kalman đúng','Chỉ tuyến tính đúng',
+             'Chỉ Kalman đúng','Ghép sai¹']]
+    for r in deep['fusion_paired']:
+        rows.append([FUSION_DEEP.get(r['scenario'],'Tất cả'),count(r['correct_0']),
+                     count(r['correct_1']),count(r['only_linear']),count(r['only_kalman']),
+                     f"{r['wrong_0']} → {r['wrong_1']}"])
+    return rows
+
+
+def size_deep_rows(deep):
+    counts = defaultdict(Counter)
+    for r in deep['paired_size_noise']:
+        counts[r['category']].update({k:r[k] for k in ('n','flagged_light','flagged_heavy',
+                                                       'only_light','only_heavy')})
+    rows=[['Chiều dài khai báo','Cặp đúng chung','Cờ · nhiễu 9%','Cờ · nhiễu 33%',
+           'Chỉ cờ 9%','Chỉ cờ 33%']]
+    for key,wording in SIZE_DEEP.items():
+        c=counts[key]
+        rows.append([wording,*[count(c[k]) for k in ('n','flagged_light','flagged_heavy',
+                                                     'only_light','only_heavy')]])
+    return rows
+
+
+def gate_deep_rows(deep):
+    groups = defaultdict(Counter)
+    keys=('passed_clean_truth','passed_bad_size_truth','passed_missing_truth','passed_wrong_identity')
+    for r in deep['fusion_joint']:
+        groups[r['kalman'],r['size_check']].update({k:r[k] for k in keys})
+    return [['Cấu hình','Đúng tàu + khai đúng','Đúng tàu + khai lệch','Thiếu chiều dài','Sai danh tính¹']]+[
+        [label(k,t),*[count(groups[k,t][x]) for x in keys]]
+        for k,t in ((False,False),(False,True),(True,False),(True,True))
+    ]
+
+
+def behavior_deep_rows(deep):
+    sets=defaultdict(list)
+    for r in deep['behavior']:
+        sets[r['model'],r['scenario']].append(r['macro_f1'])
+    return [['Đầu vào · tập học · số mẫu',*TRACK_DEEP.values()]]+[
+        [display,*[fst(mean(sets[model,key])) for key in TRACK_DEEP]]
+        for model,display in MODEL_DEEP.items()
+    ]
+
+
+def measured_contrast(deep, scenario, contrast):
+    return next(r for r in deep['behavior_contrasts'] if (r['scenario'],r['contrast'])==(scenario,contrast))
+
+
+def pdf_report(study, external, proxy, robust, transfer, sar, deep):
     base=Path('/System/Library/Fonts/Supplemental')
     pdfmetrics.registerFont(TTFont('ArabicFreeNormal',str(base/'Arial.ttf')))
     pdfmetrics.registerFont(TTFont('ArabicFreeBold',str(base/'Arial Bold.ttf')))
@@ -269,59 +342,70 @@ def pdf_report(raw, behavior, fusion, study, external, proxy, robust, transfer, 
           ('TOPPADDING',(0,0),(-1,-1),6),('BOTTOMPADDING',(0,0),(-1,-1),6),
           ('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f5f9f9')])]))
         story.extend([tbl,Spacer(1,8)])
-    page('Kiểm chứng mô-đun hành vi','SONARNET VIỆT NAM  ·  CHUNG KẾT AI 2026  ·  CHẶNG 2, PHIÊN BẢN 1')
-    p('Một gợi ý hành vi chỉ có ích khi quỹ đạo đủ chất lượng, cặp SAR–AIS đủ căn cứ và người rà có thể kiểm tra lại. Đội chạy các cấu hình bật/tắt trên cùng ca, rồi dùng một bài thử đối chứng để đo thao tác của người rà.')
-    h('Kết quả chính')
-    table([['Đối chứng','Kết quả','Điều cần giữ khi đọc'],
-           ['Ghép bằng Kalman','1.229 → 1.239 cặp đúng, 3 → 0 cặp sai','4.800 mục tiêu mô phỏng cho mỗi cấu hình. Cùng quy tắc ghép và từ chối.'],
-           ['Đối chiếu kích thước','393/418 trường hợp mâu thuẫn được phát hiện, 23 cờ nhầm','Tính ở những cặp Kalman đã ghép đúng. Khi kích thước radar nhiễu mạnh, còn 25/110 trường hợp bị bỏ sót.'],
-           ['Huấn luyện với chuỗi nhiễu','Macro-F1 0,236 → 0,883 trong kịch bản chồng lấn','Giữ 400 mẫu huấn luyện, cùng 5 seed và cùng tập chấm. Mô phỏng.'],
-          ],[142,152,207])
-    h('Phạm vi xác nhận')
-    specialist=study['specialists_self_reported']
-    pilot=study['other_pilot']
-    p(f"<b>Đối chứng mô hình.</b> Năm seed, bốn kịch bản ghép, bốn kịch bản hành vi. Có số đếm theo seed, ma trận nhầm lẫn, mã chạy và dữ liệu ca thử.")
-    if specialist['n']:
-        p(f"<b>Khảo sát.</b> Có {specialist['n']} phiếu của người tự khai chuyên môn liên quan và {pilot['n']} phiếu nhóm thử nghiệm khác. Kết quả theo cặp ở trang 5.")
-    else:
-        p(f"<b>Khảo sát.</b> Có {specialist['n']} phiếu chuyên viên hoàn chỉnh và {pilot['n']} phiếu nhóm thử nghiệm khác. Bài thử đã chạy qua kiểm tra trình duyệt. Kết quả kiểm tra tự động được loại khỏi số liệu người tham gia.")
+    total=deep['fusion_paired'][0]
+    headline=measured_contrast(deep,'overlap','mix_given_history_400')
     coverage=external['coverage']
-    p(f"<b>Đối chứng AIS thật.</b> {count(coverage['scored_windows'])} cửa sổ từ {coverage['scored_vessels']} tàu. Mô hình chỉ học mô phỏng đạt macro-F1 trung bình {fst(mean(row['macro_f1'] for row in external['synthetic_only']))}. Mô hình học AIS thật với toàn quỹ đạo đạt {fst(external['vessel_held_out']['history']['macro_f1'])} khi tách tàu để chấm. Kết quả và giới hạn ở trang 4.")
-    p(f"<b>Thử tự động.</b> {proxy['sessions']} phiên trình duyệt kiểm tra {proxy['browser_decisions']} thao tác với các quy tắc giả lập. Số liệu người tham gia được tính từ phiếu thật.",caption)
-    gfw=transfer['suites']['9']['models']
-    p(f"<b>Kiểm tra chuyển nguồn.</b> Macro-F1 của mô hình học Đan Mạch khi chấm trên Global Fishing Watch là {fst(gfw['denmark_to_gfw']['macro_f1'])}. Khi học cùng nguồn và tách tàu để chấm, kết quả là {fst(gfw['gfw_held_vessel']['macro_f1'])}. Xem phần kiểm tra mở rộng ở trang 7–8.",caption)
-    h('Mở kết quả và thử trực tiếp')
-    p(f'<link href="{PAGE}" color="#00675c">Ứng dụng Chặng 2</link>  ·  <link href="{PAGE}evidence.html" color="#00675c">Minh chứng và tệp tải</link>  ·  <link href="{SOURCE}" color="#00675c">Mã nguồn</link>')
+    specialist=study['specialists_self_reported']
+    page('Kiểm chứng mô-đun hành vi','SONARNET VIỆT NAM  ·  CHUNG KẾT AI 2026  ·  CHẶNG 2  ·  ĐỀ PHIÊN BẢN 1')
+    p('Một nhận định hành vi đi qua ba bước có thể mắc lỗi riêng. SonarNet phải ghép đúng tàu, nhìn được kích thước đủ tin cậy và đọc được tín hiệu từ chuỗi AIS. Báo cáo kiểm tra từng bước trên cùng ca và kiểm tra mô hình hành vi trên hai nguồn AIS công khai.')
+    table([['Yêu cầu của BTC','Thiết kế đối chứng','Minh chứng'],
+           ['Tách Kalman',f"Bật/tắt trên {count(total['scenes'])} cảnh mô phỏng, cùng dữ liệu và luật ghép.",
+            f"{count(total['correct_0'])} → {count(total['correct_1'])} cặp đúng. Bật Kalman giúp đúng ở {count(total['only_kalman'])} ca và làm mất {count(total['only_linear'])} ca đúng."],
+           ['Tách kích thước','Bật/tắt sau khi đã ghép. Chấm theo mức lệch khai báo và nhiễu đo.',
+            'Bảng độ nhạy và số cặp được qua bước kiểm tra kích thước.'],
+           ['Tách dữ liệu hành vi','Đổi đầu vào, chất lượng và lượng dữ liệu trên cùng mẫu chấm.',
+            f"Kiểm thử 10 seed. Khi tín hiệu chồng lấn và đủ 400 mẫu học, macro-F1 tăng {fst(headline['mean'])} khi đưa chuỗi nhiễu vào tập học."],
+           ['Khảo sát chuyên viên','Thử chéo A/B. Báo thời gian, bỏ sót, cờ nhầm.',
+            f"{specialist['n']} phiếu chuyên viên hợp lệ. Có {proxy['sessions']} phiên kiểm tra tự động giao diện."],
+          ],[110,196,195])
+    h('Đối chứng bằng dữ liệu AIS có nhãn')
+    p(f"Chấm nhị phân trên {count(coverage['scored_windows'])} cửa sổ AIS Đan Mạch và {count(transfer['suites']['9']['windows'])} cửa sổ của Global Fishing Watch. Đối chứng này giúp đo khả năng chuyển nguồn. SonarNet còn thiếu nhãn bốn lớp xác minh ở Việt Nam và đánh giá thao tác với chuyên viên.")
+    p(f'<link href="{PAGE}evidence.html#ablation" color="#00675c">Mở bảng đối chứng đầy đủ</link>  ·  <link href="{PAGE}study.html" color="#00675c">Mở khảo sát</link>  ·  <link href="{SOURCE}" color="#00675c">Mã nguồn</link>')
     story.append(PageBreak())
 
-    page('Kalman và kích thước','ĐỐI CHỨNG 2 × 2  ·  CÙNG DỮ LIỆU THEO TỪNG SEED')
-    p('Dùng 5 seed (101, 203, 307, 409, 503), mỗi seed có 60 lượt cho mỗi kịch bản. Mỗi lượt có bốn mục tiêu. Cấu hình tuyến tính và Kalman dùng cùng điểm radar, bản tin AIS, ngưỡng tuổi, bất định và cạnh tranh. Kiểm kích thước diễn ra sau khi ghép. Bật/tắt bước này chỉ tác động tới trạng thái dùng khi rà.')
-    table([['Cấu hình','Đúng','Sai','Từ chối','Phát hiện mâu thuẫn¹','Cờ nhầm¹']]
-          +[[label(k,s), count(v['id_correct']),v['id_wrong'],count(v['id_abstained']),
-             f"{v['mod_mismatch_true']}/{v['mismatches_on_valid_pairs']}",v['mod_mismatch_false']]
-            for (k,s),v in fusion['all'].items()],[144,52,42,63,116,84])
-    p('¹ Chấm mâu thuẫn kích thước trên các cặp ghép đúng. Mâu thuẫn là kích thước khai báo bị nhân 2,25 trong mô phỏng. Cờ nhầm là cặp không bị đổi kích thước nhưng thuật toán báo mâu thuẫn. Ngưỡng chênh lệch tương đối 0,42 được giữ từ hệ thống gốc.',caption)
-    h('Cặp ghép qua từng tình huống')
-    rows=[['Kịch bản','Tuyến tính đúng/sai','Kalman đúng/sai','Từ chối tuyến tính → Kalman']]
-    for scenario, wording in FUSION.items():
-        before,after=fusion[scenario][False,True],fusion[scenario][True,True]
-        rows.append([wording,f"{before['id_correct']} / {before['id_wrong']}",
-                     f"{after['id_correct']} / {after['id_wrong']}",
-                     f"{before['id_abstained']} → {after['id_abstained']}"])
-    table(rows,[146,107,104,144])
-    p('Mức tăng Kalman tập trung ở AIS hỗn hợp và nhiễu kích thước. Ở nhóm tàu cắt nhau và lệch vị trí, hai bộ ước lượng cùng giữ 300 cặp đúng và từ chối 900 trường hợp mỗi nhóm. Bộ ghép ưu tiên giữ ca bất định để rà tiếp.')
-    p('Ở kịch bản hộp radar nhiễu mạnh, kiểm kích thước trên cặp Kalman ghép đúng phát hiện 85/110 mâu thuẫn, bỏ sót 25 và tạo 23 cờ nhầm. Kích thước vì vậy phù hợp để yêu cầu rà thêm.')
+    page('Kalman có cải thiện ghép tàu?', 'THỬ GHÉP CẶP  ·  8 KỊCH BẢN  ·  10 SEED')
+    p(f"Mỗi seed sinh 90 cảnh mỗi kịch bản. Hai cấu hình dùng đúng cùng bản tin AIS, phát hiện SAR, luật từ chối và ngưỡng. Mỗi dòng chấm 3.600 mục tiêu, có thêm điểm nhiễu trong kịch bản riêng. Kích thước chỉ xem sau bước ghép.")
+    table(fusion_deep_rows(deep),[153,73,61,75,70,69])
+    p('¹ Ghép sai gồm nhầm tàu và gán AIS vào điểm nhiễu. Các cột chỉ tuyến tính đúng hoặc chỉ Kalman đúng lấy từ cùng từng mục tiêu. Ca được cả hai ghép đúng chỉ tính một lần trong cột của từng cấu hình.',caption)
+    ci=total['delta_correct_rate']['ci_95']
+    p(f"Trên {count(total['targets'])} mục tiêu, chênh lệch tỷ lệ ghép đúng là {pp(total['delta_correct_rate']['mean'])} điểm phần trăm. Khoảng bootstrap 95% theo seed là [{pp(ci[0])}, {pp(ci[1])}]. Khoảng này mô tả độ ổn định trên trình sinh ca thử.")
+    sparse=next(r for r in deep['fusion_paired'] if r['scenario']=='sparse_one_sided')
+    crossing=next(r for r in deep['fusion_paired'] if r['scenario']=='keep_two_crossing_tracks_when_separated')
+    p(f"<b>Kết quả phụ thuộc kịch bản.</b> Bản tin một phía có {count(sparse['correct_0'])} → {count(sparse['correct_1'])} cặp đúng. Khi tàu cắt hướng nhưng còn tách vị trí, số cặp đúng giảm {count(crossing['correct_0'])} → {count(crossing['correct_1'])}. Ngưỡng bất định và lý do từ chối cần được kiểm tra riêng theo tình huống.")
+    p(f'<link href="{PAGE}fusion-paired-scenes.csv" color="#00675c">Tải kết quả theo từng cảnh</link>',caption)
     story.append(PageBreak())
 
-    page('Dữ liệu huấn luyện hành vi','XGBOOST  ·  BỐN LỚP HÀNH VI  ·  5 SEED ĐỘC LẬP')
-    p('Mỗi seed sinh riêng 400 quỹ đạo học và 240 quỹ đạo chấm (60 mỗi lớp). Các phương án dùng cùng quỹ đạo chấm. So tốc độ mới nhất với đặc trưng toàn chuỗi, giảm số mẫu học xuống 48 và đối chiếu tăng cường nhiễu ở cùng 400 mẫu. Biến thể 800 gồm các bản gốc và biến thể nhiễu của 400 quỹ đạo học.')
-    story.append(Image(str(WEB/'behavior.png'),width=499,height=202))
-    p('Đường và thanh dọc lần lượt là trung bình và độ lệch chuẩn giữa 5 seed. Kịch bản làm mất 60% bản tin là kỳ vọng của cơ chế lấy mẫu, có ràng buộc giữ tối thiểu 5 mốc. Nhóm cửa sổ ngắn và tín hiệu chồng lấn gồm 9–19 mốc trước khi loại ngẫu nhiên. Kịch bản chồng lấn thêm nhiễu vị trí, hướng, hệ số và độ lệch tốc độ báo.',caption)
-    table([['Dữ liệu học · số hàng','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
-         +[[label,*[fst(behavior[s,m]['mean']) for s in SCENARIOS]] for m,label in MODELS.items()],
-          [168,75,83,87,88])
-    p('Ở kịch bản chồng lấn, bản có nhiễu 400 mẫu đạt 0,883 (độ lệch chuẩn 0,021), so với 0,236 (0,033) khi học trên quỹ đạo sạch. Theo quy tắc giản lược ưu tiên rà hai lớp khai thác, số mẫu dương bị mô hình bỏ sót giảm từ 38 xuống 8 trên 600 mẫu, và số gợi ý ưu tiên nhầm giảm từ 503 xuống 2.')
+    page('Kích thước phát hiện được mức lệch nào?', 'CÙNG CẶP GHÉP  ·  7 MỨC KHAI BÁO  ·  HAI MỨC NHIỄU ĐO')
+    p('Kiểm kích thước sau khi đã khóa cặp SAR–AIS. Hệ thống đánh cờ khi sai lệch tuyệt đối chia cho chiều dài lớn hơn đạt ít nhất 0,42. Thử sáu mức khai báo có số đo và một tình huống thiếu số đo, với nhiễu độ dài mô phỏng 9% và 33% trên cùng cặp, dùng cùng độ lệch chuẩn hóa cho mỗi phép đo.')
+    table(size_deep_rows(deep),[118,79,80,80,72,72])
+    p('Tính trên cặp Kalman ghép đúng. Dòng khai báo đúng là số cờ nhầm. Dòng thiếu khai báo ghi số ca được đánh dấu thiếu dữ liệu. Các mức lệch nhẹ có thể nằm dưới ngưỡng dù cặp đã ghép đúng.',caption)
+    paired_valid=[r for r in deep['paired_size_noise'] if r['category']=='valid']
+    valid_n=sum(r['n'] for r in paired_valid)
+    heavy_fp=sum(r['flagged_heavy'] for r in paired_valid)
+    light_fp=sum(r['flagged_light'] for r in paired_valid)
+    p(f"Trên cùng {count(valid_n)} cặp khai báo đúng, nhiễu đo mạnh làm số cờ nhầm tăng "
+      f"{count(light_fp)} → {count(heavy_fp)} ({fst(100*heavy_fp/valid_n,1)}%). "
+      "Độ dài radar cần đủ tin cậy để dùng cờ này khi rà.")
+    h('Ảnh hưởng lên bước rà tiếp')
+    table(gate_deep_rows(deep),[139,94,94,83,91])
+    p('Các cột đếm cặp qua bước kiểm theo trạng thái AIS_OK. ¹ Có cả cặp ghép nhầm tàu và cặp gán vào điểm nhiễu. Bật kích thước không thay đổi MMSI đã ghép. Dòng kích thước không xác nhận chiều dài vật lý ngoài hiện trường.',caption)
+    p(f'<link href="{PAGE}paired-size-noise.csv" color="#00675c">Đối chứng hai mức nhiễu trên cùng cặp</link>  ·  <link href="{PAGE}size-by-factor.csv" color="#00675c">Chi tiết bật/tắt theo kịch bản</link>',caption)
     story.append(PageBreak())
+
+    page('Dữ liệu nào giúp đọc hành vi?', 'SO SÁNH ĐẦU VÀO, CHẤT LƯỢNG VÀ LƯỢNG DỮ LIỆU HỌC')
+    p('Ở mỗi seed có 800 quỹ đạo học độc lập. Dùng các tập con lồng nhau 48, 400 và 800. Phương án hỗn hợp giữ nguyên danh sách quỹ đạo, với 25% sạch và 25% ở mỗi mức nhiễu học. Chấm cùng 240 quỹ đạo riêng mỗi seed ở năm điều kiện.')
+    table(behavior_deep_rows(deep),[149,70,67,78,69,68])
+    p('Các ô là macro-F1 trung bình qua 10 seed. “Mất liên tục” loại một đoạn 55 mốc trước khi làm thưa phần còn lại. Kiểu nhiễu này không được dùng để huấn luyện.',caption)
+    for scenario,text in (('overlap','Tín hiệu chồng lấn'),('block_gap','Mất liên tục')):
+        item=measured_contrast(deep,scenario,'mix_given_history_400')
+        lo,hi=item['ci_95']
+        p(f"<b>{text}.</b> Giữ nguyên 400 quỹ đạo và thêm nhiễu vào tập học cho chênh macro-F1 {fst(item['mean'])}, khoảng bootstrap theo seed [{fst(lo)}, {fst(hi)}]. Bỏ sót {item['miss_before']} → {item['miss_after']} trên 1.200 ca khai thác. Cờ nhầm {item['fp_before']} → {item['fp_after']}.")
+    vol_clean=measured_contrast(deep,'overlap','volume_clean_48_400')
+    vol_mixed=measured_contrast(deep,'overlap','volume_mixed_48_400')
+    p(f"<b>Tăng số mẫu phụ thuộc chất lượng tập học.</b> Trong kịch bản chồng lấn, tăng 48 → 400 quỹ đạo làm macro-F1 đổi {fst(vol_clean['mean'])} nếu học sạch và +{fst(vol_mixed['mean'])} nếu học hỗn hợp. Tệp JSON lưu ma trận nhầm lẫn và F1 từng lớp.")
+    p(f'<link href="{PAGE}deep-ablation.json" color="#00675c">Mở các chênh lệch theo cặp và khoảng bất định</link>',caption)
+    story.append(PageBreak())
+
     page('Đối chứng bằng AIS thật','ĐAN MẠCH  ·  PHÂN LOẠI NHỊ PHÂN  ·  TÁCH THEO TÀU')
     p(f"Tệp của Song Wu chứa {count(coverage['messages'])} bản ghi AIS có nhãn gán thủ công và {coverage['trips']} mã chuyến phân biệt. Sau lọc và lấy mẫu, chấm {count(coverage['scored_windows'])} cửa sổ dài hai giờ thuộc {coverage['scored_vessels']} tàu, gồm {count(coverage['fishing_windows'])} cửa sổ khai thác và {count(coverage['sailing_windows'])} cửa sổ di chuyển.")
     p('Mô hình bốn lớp đã học mô phỏng được giữ nguyên, gộp câu và kéo lưới thành khai thác. Ba biến thể nhị phân học AIS thật dùng cùng năm lượt chia theo tàu và cùng bộ chấm. Mỗi tàu chỉ xuất hiện trong tập chấm một lần, ngoài tập huấn luyện của lượt đó.')
@@ -342,18 +426,20 @@ def pdf_report(raw, behavior, fusion, study, external, proxy, robust, transfer, 
     table([['Mã','Lượt 1','Lượt 2'],['R01','A · không gợi ý','B · có gợi ý'],
            ['R02','B · có gợi ý','A · không gợi ý'],['R03','A · có gợi ý','B · không gợi ý'],
            ['R04','B · không gợi ý','A · có gợi ý']],[100,200,201])
-    p('<b>Chỉ số.</b> Tính trung vị thời gian mỗi điều kiện và chênh lệch có gợi ý trừ không gợi ý trong từng người. Bỏ thời gian của ca đổi tab, giữ đáp án để tính lỗi. Bỏ sót là ca dương được chọn chưa ưu tiên hoặc chưa đủ dữ liệu. Ghi riêng cờ ưu tiên nhầm.')
-    counts=[['Nhóm','Người rà','Bỏ sót không / có AI','Chênh thời gian²']]
+    p('<b>Chỉ số.</b> Đo chênh trung vị thời gian có AI trừ không AI trong từng người. Tính khi có ít nhất sáu ca đo hợp lệ mỗi lượt. Loại thời gian đổi tab và dưới 250 ms, vẫn giữ quyết định. Bỏ sót là ca dương được chọn chưa ưu tiên hoặc chưa đủ dữ liệu. Cờ nhầm là ưu tiên ca âm.')
+    counts=[['Nhóm','Phiếu / cặp thời gian','Bỏ sót không / có AI','Cờ nhầm không / có AI','Chênh thời gian²']]
     for key, wording in (('specialists_self_reported','Chuyên viên tự khai'),('other_pilot','Thử nghiệm sơ bộ')):
         item=study[key]
         c,a=item['control'],item['ai']
         delta=item['median_paired_delta_seconds']
-        counts.append([wording,item['n'],f"{c['missed']}/{c['positive']} · {a['missed']}/{a['positive']}" if item['n'] else 'Chưa có phiếu',
+        counts.append([wording,f"{item['n']} / {item['n_timing_pairs']}",
+                       f"{c['missed']}/{c['positive']} · {a['missed']}/{a['positive']}" if item['n'] else 'Chưa có phiếu',
+                       f"{c['false_flags']} · {a['false_flags']}" if item['n'] else 'Chưa có phiếu',
                        fst(delta,2)+' giây' if delta is not None else 'Chưa ước tính'])
-    table(counts,[151,61,150,139])
+    table(counts,[124,83,107,97,90])
     p('² Chênh lệch tính theo từng người, rồi lấy trung vị giữa những người có hai điều kiện hợp lệ. Bài thử tăng cường ca khó và có ba gợi ý sai về mức ưu tiên trên 16 ca. Kết quả, khi có, phản ánh thao tác với bộ ca này. Nghề và kinh nghiệm do người tham gia tự khai.',caption)
     h('Giới hạn khi dùng ngoài hiện trường')
-    p('Chuỗi AIS ngoài thực địa có mất tín hiệu, sai số và hành vi hỗn hợp. Kết quả trên AIS thật ở trang 4 chỉ có nhãn nhị phân từ tập Đan Mạch. Tiếp theo cần bộ ca có nhãn đối chiếu độc lập ở Việt Nam và đánh giá thao tác với chuyên viên thật.')
+    p('Chuỗi AIS ngoài thực địa có mất tín hiệu, sai số và hành vi hỗn hợp. Đối chứng AIS thật có nhãn nhị phân từ Đan Mạch và Global Fishing Watch. Tiếp theo cần bộ ca có nhãn đối chiếu độc lập ở Việt Nam và đánh giá thao tác với chuyên viên thật.')
     p(f'<link href="{PAGE}study.html" color="#00675c">Mở bài thử</link>  ·  <link href="{PAGE}{ZIP}" color="#00675c">Tải dữ liệu, giao thức và mã tái lập</link>',caption)
 
     story.append(PageBreak())
@@ -433,25 +519,29 @@ def html_table(rows):
     return '<div class="table-wrap"><table>'+''.join(rendered)+'</table></div>'
 
 
-def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar):
+def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar,deep):
     behavior_table=html_table([['Dữ liệu học','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
         +[[name,*[fst(behavior[s,m]['mean'])+' ± '+fst(behavior[s,m]['sd']) for s in SCENARIOS]]
           for m,name in MODELS.items()])
     fusion_table=html_table([['Cấu hình','Cặp đúng','Cặp sai','Từ chối','Mâu thuẫn đúng / tổng¹','Cờ nhầm¹']]
        +[[label(k,s),count(v['id_correct']),v['id_wrong'],count(v['id_abstained']),
           f"{v['mod_mismatch_true']}/{v['mismatches_on_valid_pairs']}",v['mod_mismatch_false']] for (k,s),v in fusion['all'].items()])
-    study_rows=[['Nhóm','Số phiếu','Bỏ sót không / có AI','Chênh giây có − không AI']]
+    study_rows=[['Nhóm','Số phiếu','Cặp thời gian hợp lệ','Bỏ sót không / có AI','Cờ nhầm không / có AI','Chênh giây có − không AI']]
     for key,name in (('specialists_self_reported','Chuyên viên tự khai'),('other_pilot','Thử nghiệm sơ bộ')):
         row=study[key]
         before,after=row['control'],row['ai']
         misses=f"{before['missed']}/{before['positive']} · {after['missed']}/{after['positive']}" if row['n'] else 'Chưa có phiếu'
         delta=row['median_paired_delta_seconds']
-        study_rows.append([name,row['n'],misses,fst(delta,2) if delta is not None else 'Chưa ước tính'])
+        false_flags=f"{before['false_flags']} · {after['false_flags']}" if row['n'] else 'Chưa có phiếu'
+        study_rows.append([name,row['n'],row['n_timing_pairs'],misses,false_flags,
+                           fst(delta,2) if delta is not None else 'Chưa ước tính'])
     coverage=external['coverage']
     held=external['vessel_held_out']
     ci=held['paired_vessel_bootstrap']['macro_f1_delta_ci']
     gfw=transfer['suites']['9']
     relaxed=transfer['suites']['5']
+    total=deep['fusion_paired'][0]
+    highlight=measured_contrast(deep,'overlap','mix_given_history_400')
     durations=html_table([['Độ dài','Cửa sổ','Recall','Macro-F1']]+[
         [f"{row['duration_minutes']} phút",count(row['windows']),fst(row['recall']),fst(row['macro_f1'])]
         for row in robust['duration']
@@ -461,9 +551,24 @@ def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar):
 <title>Minh chứng Chặng 2 · SonarNet Việt Nam</title><link rel="stylesheet" href="style.css"></head>
 <body><header><div><a href="./">SonarNet Việt Nam</a><span>Chung kết AI 2026 · Bảng C</span></div><a href="study.html">Thử rà quỹ đạo</a></header>
 <main><section><h1>Kiểm chứng mô-đun hành vi</h1><p>Đề Chặng 2 yêu cầu tách đóng góp của bộ ước lượng Kalman, đối chiếu kích thước và dữ liệu hành vi, rồi kiểm tra ảnh hưởng của gợi ý AI lên thao tác rà.</p>
-<div class="stats"><div class="stat"><strong>5 seed</strong>4 kịch bản ghép và 4 mức chất lượng quỹ đạo</div><div class="stat"><strong>3 → 0</strong>cặp ghép sai trên 4.800 mục tiêu mô phỏng</div><div class="stat"><strong>0,236 → 0,883</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
-<div class="links"><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div></section>
-<section><h2>Kalman và kiểm tra kích thước</h2>{fusion_table}
+<div class="stats"><div class="stat"><strong>10 seed</strong>8 kịch bản ghép, 5 điều kiện hành vi</div><div class="stat"><strong>{count(total['correct_0'])} → {count(total['correct_1'])}</strong>cặp đúng trên cùng {count(total['targets'])} mục tiêu mô phỏng</div><div class="stat"><strong>+{fst(highlight['mean'])}</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
+<div class="links"><a href="#ablation">Đối chứng chính</a><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div></section>
+<section id="ablation"><h2>Đối chứng Kalman trên cùng từng ca</h2>
+<p>10 seed, 8 kịch bản và 90 cảnh mỗi kịch bản ở mỗi seed. Cùng bản tin, cùng điểm SAR và cùng luật ghép, thay cách ước lượng vị trí. Hai cột “chỉ đúng” cho biết từng phương pháp cứu hay làm mất bao nhiêu ca.</p>
+{html_table(fusion_deep_rows(deep))}
+<p class="muted">Ghép sai gồm nhầm tàu và gán AIS vào điểm nhiễu. Kích thước được chấm sau ghép.</p>
+<p><a href="fusion-paired-scenes.csv" download>Tải đối chứng theo từng cảnh</a></p></section>
+<section><h2>Đối chứng kích thước sau khi ghép</h2>
+{html_table(size_deep_rows(deep))}
+<p class="muted">Dòng khai báo đúng đếm cờ nhầm. Dòng thiếu khai báo đếm số cặp bị đánh dấu thiếu dữ liệu. Cả hai mức nhiễu đo 9% và 33% dùng đúng cùng cặp ghép, cùng chiều dài và cùng độ lệch chuẩn hóa.</p>
+<h3>Cặp qua kiểm tra kích thước</h3>{html_table(gate_deep_rows(deep))}
+<p><a href="paired-size-noise.csv" download>Tải so sánh hai mức nhiễu theo cặp</a> · <a href="size-by-factor.csv" download>Tải kết quả bật/tắt theo kịch bản</a></p></section>
+<section><h2>Đối chứng đầu vào, chất lượng và lượng dữ liệu hành vi</h2>
+<p>Chấm cùng 240 quỹ đạo mỗi seed ở năm điều kiện. Nhóm hỗn hợp giữ nguyên tập quỹ đạo, thay chất lượng quan sát. Nhóm 48, 400 và 800 có số quỹ đạo học độc lập khác nhau.</p>
+{html_table(behavior_deep_rows(deep))}
+<p class="muted">Chỉ số là macro-F1 trung bình qua 10 seed trên bốn lớp mô phỏng. Đối chứng ngoài mô phỏng được báo riêng trên AIS có nhãn nhị phân.</p>
+<p><a href="behavior-factorial.csv" download>Tải kết quả theo seed</a> · <a href="deep-ablation.json" download>Tải ma trận nhầm lẫn và khoảng bootstrap</a></p></section>
+<section><h2>Kalman và kích thước · đợt kiểm tra ban đầu</h2>{fusion_table}
 <p class="muted">¹ Trên cặp ghép đúng. Kịch bản hộp radar nhiễu mạnh có 85/110 mâu thuẫn được phát hiện, 25 bỏ sót và 23 cờ nhầm với Kalman và kiểm kích thước. Dữ liệu mô phỏng.</p>
 <p><a href="fusion.csv" download>Tải CSV ghép và kích thước theo từng seed</a></p></section>
 <section><h2>Dữ liệu huấn luyện hành vi</h2><img class="chart" src="behavior.png" width="1305" height="530" alt="Biểu đồ F1 qua bốn mức chất lượng, so quỹ đạo sạch, quỹ đạo thêm nhiễu và chỉ tốc độ cuối">
@@ -475,7 +580,7 @@ def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar):
 <p>Mô hình học mô phỏng được giữ nguyên. Các biến thể học AIS thật chấm theo 5 lượt tách tàu, dùng cùng bộ lọc và cửa sổ chấm. Khoảng 95% bootstrap theo tàu của chênh macro-F1 giữa toàn quỹ đạo và chuỗi tốc độ là [{fst(ci[0])}, {fst(ci[1])}].</p>
 <p class="muted">Phạm vi gồm hai trạng thái khai thác và di chuyển tại Đan Mạch. Cần thêm nhãn bốn lớp ở Việt Nam, dữ liệu SAR–AIS đối chứng và đánh giá với chuyên viên thật.</p>
 <p><a href="{external['dataset']}">Dữ liệu gốc và giấy phép CC BY 4.0</a> · <a href="real-ais.json" download>Tải kết quả theo seed và tàu giữ riêng</a></p></section>
-<section><h2>Rà với và không có gợi ý AI</h2><p>Hai lượt, mỗi lượt 8 ca mô phỏng, đổi thứ tự và điều kiện theo mã người rà. Thời lượng, ca bỏ sót và cờ nhầm được tính từ phiếu thực tế.</p>{html_table(study_rows)}
+<section><h2>Rà với và không có gợi ý AI</h2><p>Hai lượt, mỗi lượt 8 ca mô phỏng, đổi thứ tự và điều kiện theo mã người rà. Thời lượng, ca bỏ sót và cờ nhầm được tính từ phiếu thực tế. Chênh thời gian cần ít nhất sáu ca đo hợp lệ trong mỗi điều kiện. Đổi tab hoặc thao tác dưới 250 ms chỉ loại khỏi phép đo thời gian.</p>{html_table(study_rows)}
 <p><a href="study.html">Mở bài thử và tải phiếu sau hai lượt</a> · <a href="study-summary.json" download>Tải số liệu khảo sát</a></p></section>
 <section id="mo-phong"><h2>Đối chứng thao tác tự động</h2>
 <p>{proxy['sessions']} phiên trình duyệt, {proxy['browser_decisions']} quyết định, {len(proxy['policies'])} quy tắc giả lập. Mỗi dòng gộp lặp và so cùng {proxy['unique_cases']} ca mô phỏng ở từng điều kiện.</p>
@@ -519,14 +624,17 @@ def main():
     transfer=json.loads((OUT/'gfw-transfer.json').read_text())
     robustness_plot(robust)
     sar=json.loads((OUT/'sar-tile-4048.json').read_text())
-    pdf_report(raw,behavior,fusion,groups,external,proxy,robust,transfer,sar)
-    web_report(behavior,fusion,groups,external,proxy,robust,transfer,sar)
+    deep=json.loads((OUT/'deep-ablation.json').read_text())
+    pdf_report(groups,external,proxy,robust,transfer,sar,deep)
+    web_report(behavior,fusion,groups,external,proxy,robust,transfer,sar,deep)
     import shutil
     for name in ('behavior.csv','fusion.csv','study-summary.json','real-ais.json','proxy-study.json',
-                 'ais-robustness.json','gfw-transfer.json','sar-tile-4048.json'):
+                 'ais-robustness.json','gfw-transfer.json','sar-tile-4048.json','deep-ablation.json','fusion-paired-scenes.csv',
+                 'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv'):
         shutil.copyfile(OUT/name,WEB/name)
-    files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json','sar-tile-4048.json')]
-    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py')]
+    files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json','sar-tile-4048.json','deep-ablation.json','fusion-paired-scenes.csv',
+                                       'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv')]
+    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py','deep_ablation_chang2.py')]
     files += [(WEB/file,file) for file in (REPORT,'behavior.png','robustness.png')]
     with ZipFile(WEB/ZIP,'w',compression=ZIP_DEFLATED) as archive:
         for source,name in files:

@@ -29,7 +29,7 @@ Có thể bỏ hai tên phiếu để sinh báo cáo **0 người tham gia**. C�
 
 - Chọn chuyên viên hàng hải, thủy sản, giám sát tàu hoặc phân tích SAR/AIS. Mã R01–R04 luân phiên thứ tự và điều kiện. Nếu có hai chuyên viên đầu tiên, ưu tiên R01 và R03. Nhóm sinh viên hoặc thành viên đội báo riêng nếu tham gia.
 - Hai lượt có cùng 8 ca mỗi lượt, mỗi lượt gồm hai ca mỗi lớp và bốn ca dương tính theo nhãn mô phỏng. Cả hai lượt có cùng loại đồ thị kiểm tra. Lượt có AI thêm gợi ý từ mô hình huấn luyện với 800 hàng của seed 101, chạy trên quỹ đạo mô phỏng độc lập. Ba gợi ý không khớp nhãn ưu tiên theo thiết kế để có thể quan sát lỗi theo gợi ý. Đây là bộ ca đối chứng có chủ đích, không dùng để ước lượng tần suất sai trên toàn bộ luồng hoạt động.
-- Mỗi ca có ba lựa chọn. Ca dương được đánh dấu chưa ưu tiên hoặc chưa đủ dữ liệu đều tính là bỏ sót. Ca âm được đánh dấu ưu tiên là cờ nhầm. Tính trung vị thời gian cho mỗi người và mỗi điều kiện, sau đó tính chênh theo cặp. Khi người dùng đổi tab, thời gian của ca đó bị loại và lựa chọn vẫn được giữ. Thời gian nghỉ giữa hai lượt không tính.
+- Mỗi ca có ba lựa chọn. Ca dương được đánh dấu chưa ưu tiên hoặc chưa đủ dữ liệu đều tính là bỏ sót. Ca âm được đánh dấu ưu tiên là cờ nhầm. Tính trung vị thời gian cho mỗi người và mỗi điều kiện, sau đó tính chênh theo cặp. Khi người dùng đổi tab hoặc thao tác dưới 250 ms, thời gian của ca đó bị loại và lựa chọn vẫn được giữ. Phân tích chính yêu cầu ít nhất 6 thời lượng hợp lệ mỗi lượt. Phân tích độ nhạy dùng tất cả người có ít nhất một thời lượng hợp lệ mỗi lượt. Thời gian nghỉ giữa hai lượt không tính.
 - Bài thử ghi phiếu trong trình duyệt và người tham gia tải JSON. Không cần tên hoặc thông tin định danh. Nhóm chuyên môn khai trong phiếu. Chỉ tổng hợp phiếu thực tế có đồng ý và đủ 16 ca. Kiểm thử trình duyệt dùng tệp đánh dấu riêng và bị loại khỏi kết quả nộp.
 - Giới hạn gồm cỡ mẫu, độ khó khác nhau giữa các ca, hiệu ứng thứ tự và thiếu nhãn hành vi bốn lớp và bộ ca đã xác nhận ở Việt Nam. Kết quả người tham gia chỉ áp dụng cho bộ ca và điều kiện đo này.
 
@@ -151,3 +151,64 @@ Mỗi nhãn chỉ dùng một lần. Trong `sar-tile-4048.json`, `duplicate` là
 nhau khi xem ảnh. Bảng độ nhạy IoU 0,30, 0,50 và 0,75 mô tả riêng ô 4048.
 Kết quả chính của tập ảnh giữ IoU 0,50. Các bảng SAR này đo phát hiện hộp,
 tách với đánh giá ghép SAR–AIS và nhãn hành vi của Chặng 2.
+
+## Đối chứng chính mở rộng theo đề BTC
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=src:scripts python3 scripts/deep_ablation_chang2.py
+```
+
+**Kalman.** Dùng 10 seed độc lập và 90 cảnh cho mỗi trong tám kịch bản. Có
+28.800 mục tiêu trong 7.200 cảnh. Kịch bản điểm nhiễu có thêm 900 điểm không
+phải mục tiêu. Cả hai bộ ước lượng nhận chính xác cùng dữ liệu và các ngưỡng
+ghép giữ nguyên. Mỗi mục tiêu thuộc một trong bốn nhóm, chỉ đúng tuyến tính,
+chỉ đúng Kalman, cả hai đúng hoặc cả hai chưa đúng. Báo riêng nhầm tàu và gán
+AIS vào điểm nhiễu trong JSON. Bootstrap 4.000 lần ở cấp seed giữ cặp dữ
+liệu cùng nhau và tránh đếm các mục tiêu cùng cảnh như mẫu độc lập.
+
+**Kích thước.** Ghép danh tính trước khi bấm bật hoặc tắt bước kích thước.
+Thử tỷ lệ khai báo 1,00, 1,30, 1,60, 1,80, 2,25 và 0,55; có nhóm thiếu khai
+báo. Các mức được gán ngẫu nhiên độc lập độ dài thật. Cả hai cấu hình dùng
+cùng sai số đo và khai báo. Nhiễu chiều dài có độ lệch chuẩn 9% ở bảy kịch
+bản và 33% ở kịch bản nhiễu đo trong thử bật/tắt. Phép thử bổ sung áp cả
+hai mức vào cùng từng cặp đã ghép đúng, nhân cùng số chuẩn hóa với 0,09
+hoặc 0,33. Nhờ đó số ca đủ điều kiện trùng nhau và đọc được ca chỉ cờ ở
+một mức. Tỷ lệ cờ đo có điều kiện trên cặp ghép đúng.
+Sai lệch tương đối là chênh tuyệt đối chia cho giá trị lớn hơn. Ngưỡng 0,42
+lấy từ hệ thống hiện tại. Báo số ca đúng tàu và khai đúng qua kiểm tra cùng
+số ca khai lệch, thiếu số đo hoặc nhầm danh tính đi qua. Một cờ kích thước
+chỉ làm thay đổi trạng thái bằng chứng.
+
+**Dữ liệu hành vi.** Dùng 800 quỹ đạo huấn luyện độc lập mỗi seed. Mỗi lớp
+chọn lồng nhau 12, 100 hoặc 200 quỹ đạo, cho tổng 48, 400 hoặc 800. So sạch
+và hỗn hợp trên cùng tập con. Hỗn hợp có 25% sạch và 25% mỗi kiểu mất bản tin,
+cửa sổ ngắn và tín hiệu chồng lấn. So riêng tốc độ mới nhất và đặc trưng
+chuỗi ở cùng 400 mẫu, với cả điều kiện sạch và hỗn hợp. Mỗi seed dùng
+240 quỹ đạo chấm độc lập, xuất hiện qua năm biến thể. “Mất liên tục” loại
+55 mốc liền trước khi giảm mật độ các mốc còn lại, được giữ ngoài huấn luyện.
+Lưu ma trận nhầm lẫn, F1 bốn lớp, bỏ sót và cờ nhầm. Khoảng bootstrap
+được tính trên chênh lệch giữa hai cấu hình ghép theo seed. Số ca mô phỏng
+không đại diện tần suất ngoài thực địa.
+
+**Khảo sát.** Luân phiên bốn bố trí để hai tập ca và thứ tự làm bài cùng
+xuất hiện ở mỗi điều kiện. Phân tích theo người tham gia. Thời gian là chênh
+lệch trung vị giây trong từng người, kèm tỷ lệ phần trăm so với lượt không
+AI. Báo số người nhanh hơn và chậm hơn, số bỏ sót, cờ nhầm, số ca chưa đủ
+dữ liệu và số thời lượng bị loại theo lý do. Nếu có ít nhất năm chênh lệch
+khác 0, báo phép thử dấu hai phía như phân tích khám phá. Số chuyên viên
+hiện có là 0. Phiên trình duyệt tự động chỉ kiểm tra quy trình và đo các
+quy tắc giả lập.
+
+### Nội dung mời chuyên viên thực hiện bài thử
+
+Mời anh/chị tham gia thử quy trình rà AIS của SonarNet trong Chung kết AI
+2026. Bài thử có hai lượt, mỗi lượt tám tình huống mô phỏng. Mỗi lượt dùng
+một nhóm ca khác nhau và một lượt có gợi ý bổ sung. Hệ thống ghi lựa chọn
+và thời gian cho từng ca. Anh/chị có thể dừng bất kỳ lúc nào. Phiếu dùng mã
+người rà và nhóm chuyên môn tự khai.
+
+1. Mở [bài thử](https://hoang-nguyenthe.github.io/sonarnet-vn/chang2/study.html).
+2. Nhập mã do đội gửi và chọn nhóm chuyên môn. Làm bài trong cùng một tab.
+3. Tải phiếu JSON sau hai lượt và gửi lại đội để tổng hợp. Mỗi người dùng
+   một mã. Đội phân lần lượt R01, R02, R03, R04 để phủ cả bốn bố trí.
+4. Đội chỉ công bố kết quả tổng hợp. Các phiếu gốc do người điều phối giữ.
