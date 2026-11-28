@@ -1,10 +1,17 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Minh chứng Chặng 2 · SonarNet Việt Nam</title><link rel="stylesheet" href="style.css"></head>
+<title>Minh chứng Chặng 2 · SonarNet Việt Nam</title><link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../tai-lieu/viewer.css">
+<script src="../tai-lieu/documents.js" defer></script><script src="../tai-lieu/viewer.js" defer></script></head>
 <body><header><div><a href="./">SonarNet Việt Nam</a><span>Chung kết AI 2026 · Bảng C</span></div><a href="study.html">Thử rà quỹ đạo</a></header>
 <main><section><h1>Kiểm chứng mô-đun hành vi</h1><p>Đề Chặng 2 yêu cầu tách đóng góp của bộ ước lượng Kalman, đối chiếu kích thước và dữ liệu hành vi, rồi kiểm tra ảnh hưởng của gợi ý AI lên thao tác rà.</p>
 <div class="stats"><div class="stat"><strong>10 seed</strong>8 kịch bản ghép, 5 điều kiện hành vi</div><div class="stat"><strong>9.361 → 10.822</strong>cặp đúng trên cùng 28.800 mục tiêu mô phỏng</div><div class="stat"><strong>+0,640</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
-<div class="links"><a href="#ablation">Đối chứng chính</a><a href="#chuoi-ra">Kiểm tra đầu ra</a><a href="SonarNet_Bao_cao_cai_tien_Chang2.pdf">Đọc báo cáo PDF</a><a href="SonarNet_Minh_chung_Chang2.zip">Tải bộ minh chứng ZIP</a><a href="https://github.com/hoang-nguyenthe/sonarnet-vn/tree/chang-2">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div></section>
+<div class="links"><a href="#ablation">Đối chứng chính</a><a href="#chuoi-ra">Kiểm tra đầu ra</a><a href="../tai-lieu/index.html">Thư viện tài liệu</a><a href="SonarNet_Minh_chung_Chang2.zip" download>Tải bộ minh chứng ZIP</a><a href="https://github.com/hoang-nguyenthe/sonarnet-vn/tree/chang-2">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div>
+<h2>Báo cáo cải tiến Chặng 2</h2>
+<div class="document-actions">
+  <a class="document-button" href="SonarNet_Bao_cao_cai_tien_Chang2.pdf" data-document="bao-cao-chang-2" aria-label="Xem báo cáo cải tiến Chặng 2">Xem</a>
+  <a class="document-button secondary" href="SonarNet_Bao_cao_cai_tien_Chang2.pdf" download aria-label="Tải về báo cáo cải tiến Chặng 2">Tải về</a>
+</div></section>
 <section id="ablation"><h2>Đối chứng Kalman trên cùng từng ca</h2>
 <p>10 seed, 8 kịch bản và 90 cảnh mỗi kịch bản ở mỗi seed. Cùng bản tin, cùng điểm SAR và cùng luật ghép, thay cách ước lượng vị trí. Hai cột “chỉ đúng” cho biết từng phương pháp cứu hay làm mất bao nhiêu ca.</p>
 <div class="table-wrap"><table><tr><th>Kịch bản</th><th>Tuyến tính đúng</th><th>Kalman đúng</th><th>Chỉ tuyến tính đúng</th><th>Chỉ Kalman đúng</th><th>Ghép sai¹</th></tr><tr><td>Tất cả</td><td>9.361</td><td>10.822</td><td>376</td><td>1.837</td><td>13 → 0</td></tr><tr><td>AIS hỗn hợp</td><td>947</td><td>952</td><td>41</td><td>46</td><td>7 → 0</td></tr><tr><td>Hai tàu sát nhau</td><td>900</td><td>900</td><td>0</td><td>0</td><td>0 → 0</td></tr><tr><td>Tàu cắt hướng, còn tách vị trí</td><td>2.058</td><td>1.845</td><td>288</td><td>75</td><td>0 → 0</td></tr><tr><td>Điểm nhiễu cạnh tàu</td><td>1.800</td><td>1.800</td><td>0</td><td>0</td><td>0 → 0</td></tr><tr><td>Bản tin một phía</td><td>900</td><td>2.571</td><td>0</td><td>1.671</td><td>0 → 0</td></tr><tr><td>Lệch vị trí</td><td>900</td><td>900</td><td>0</td><td>0</td><td>0 → 0</td></tr><tr><td>Lệch vượt vùng bảo vệ</td><td>900</td><td>900</td><td>0</td><td>0</td><td>0 → 0</td></tr><tr><td>Nhiễu đo kích thước</td><td>956</td><td>954</td><td>47</td><td>45</td><td>6 → 0</td></tr></table></div>
