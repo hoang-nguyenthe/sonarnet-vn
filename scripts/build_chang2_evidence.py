@@ -1,5 +1,6 @@
 """Build the Vietnamese report, web evidence and reproducibility bundle."""
 from collections import Counter, defaultdict
+import csv
 from hashlib import file_digest
 from html import escape
 import json
@@ -362,14 +363,79 @@ def proxy_comparison(proxy):
     }
 
 
+DECISIONS=('priority','not_priority','insufficient')
+REVIEW_LABELS={'cau':'Câu','keo_luoi':'Kéo lưới','neo_dau':'Neo đậu/trôi','qua_canh':'Quá cảnh'}
+REVIEW_SCENARIOS={'short_noisy':'Cửa sổ ngắn, có nhiễu','overlap':'Tín hiệu chồng lấn'}
+
+
+def comparison_data(proxy, bank):
+    times={r['id']:r for r in proxy['paired_case_times']}
+    policies={row['name']:{case['id']:case for case in row['per_case']} for row in proxy['policies']}
+    cases=[]
+    for case in bank:
+        ident=case['id']
+        truth=bool(case['priority'])
+        rule_rows=[{'name':name,'control':pairs[ident]['control'],'ai':pairs[ident]['ai']}
+                   for name,pairs in policies.items()]
+        counts={k:dict(Counter(row[k] for row in rule_rows)) for k in ('control','ai')}
+        errors={k:sum((row[k]=='priority')!=truth for row in rule_rows) for k in ('control','ai')}
+        transitions=Counter()
+        for row in rule_rows:
+            a,b=((row[k]=='priority')==truth for k in ('control','ai'))
+            if a!=b:
+                transitions['improved' if b else 'worsened']+=1
+        cases.append(dict(id=ident,reference=REVIEW_LABELS[case['reference_class']],
+            scenario=case['scenario'],scenario_label=REVIEW_SCENARIOS[case['scenario']],
+            priority=truth,hint_priority=case['hint_priority'],hint_class=case['hint_class'],
+            messages=len(case['speed_kn']),duration_minutes=case['elapsed_min'][-1],
+            counts=counts,errors=errors,improved=transitions['improved'],worsened=transitions['worsened'],
+            timing=times[ident],rules=rule_rows))
+    return {'cases':cases, 'timing':proxy['browser_click_time_ms'],
+            'rules_per_case':len(policies),'sessions':proxy['sessions'],
+            'browser_decisions':proxy['browser_decisions']}
+
+
+def ms_text(value):
+    return f"{value:g}".replace(".",",")
+
+
+def comparison_case_rows(comparison):
+    rows=[['Ca','Nhãn mô phỏng','Gợi ý ưu tiên','Ưu tiên K / C',
+           'Lỗi K / C','Trung vị K / C (ms)']]
+    for r in comparison['cases']:
+        n=r['counts']
+        rows.append([r['id'],r['reference'],'Có' if r['hint_priority'] else 'Không',
+                     f"{n['control'].get('priority',0)}/{n['ai'].get('priority',0)}",
+                     f"{r['errors']['control']}/{r['errors']['ai']}",
+                     f"{ms_text(r['timing']['control']['median_ms'])}/{ms_text(r['timing']['ai']['median_ms'])}"])
+    return rows
+
+
+def comparison_group_rows(comparison):
+    groups=[
+        ('Cửa sổ ngắn, có nhiễu', lambda r:r['scenario']=='short_noisy'),
+        ('Tín hiệu chồng lấn', lambda r:r['scenario']=='overlap'),
+        ('Gợi ý ưu tiên đúng', lambda r:r['priority']==r['hint_priority']),
+        ('Gợi ý ưu tiên sai', lambda r:r['priority']!=r['hint_priority']),
+    ]
+    rows=[['Nhóm ca','Số ca','Lỗi K / C','Đổi đúng','Đổi sai']]
+    for name,in_group in groups:
+        cases=[r for r in comparison['cases'] if in_group(r)]
+        a,b=(sum(r['errors'][m] for r in cases) for m in ('control','ai'))
+        rows.append([name,len(cases),f"{a}/{b}",sum(r['improved'] for r in cases),
+                     sum(r['worsened'] for r in cases)])
+    return rows
+
+
 def proxy_time_rows(proxy):
     data=proxy['browser_click_time_ms']
     return [['Thao tác tự động','Không gợi ý','Có gợi ý'],
-            ['Trung vị',*[f"{data[k]['median_ms']:g} ms" for k in ('control','ai')]],
+            ['Trung vị',*[f"{ms_text(data[k]['median_ms'])} ms" for k in ('control','ai')]],
+            ['Phân vị 90',*[f"{ms_text(data[k]['p90_ms'])} ms" for k in ('control','ai')]],
             ['Khoảng quan sát',*[f"{data[k]['min_ms']}–{data[k]['max_ms']} ms" for k in ('control','ai')]]]
 
 
-def pdf_report(external, proxy, robust, transfer, sar, deep, chain):
+def pdf_report(external, proxy, robust, transfer, sar, deep, chain, review):
     base=Path('/System/Library/Fonts/Supplemental')
     pdfmetrics.registerFont(TTFont('ArabicFreeNormal',str(base/'Arial.ttf')))
     pdfmetrics.registerFont(TTFont('ArabicFreeBold',str(base/'Arial Bold.ttf')))
@@ -507,7 +573,7 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain):
            ['Kiểm tra','Đối chiếu tốc độ, đổi hướng và số bản tin.','Đối chiếu gợi ý với cùng dữ liệu, nhất là khi có mâu thuẫn.'],
            ['Quyết định','Chọn ưu tiên, chưa ưu tiên hoặc chưa đủ dữ liệu.','Giữ ba lựa chọn và quyền quyết định của người rà.']],[102,200,199])
     p(f"Ở Q16, gợi ý câu phù hợp nhãn và giúp {comparison['example_rescues']} trong 8 quy tắc tự động đổi sang đúng ưu tiên. Q02 minh họa nguy cơ bỏ sót khi gợi ý chưa ưu tiên một ca dương. Q08 minh họa nguy cơ cờ nhầm khi gợi ý ưu tiên một ca âm.")
-    p(f'<link href="{PAGE}compare.html" color="#00675c">Thử ba tình huống trên hai giao diện</link>',caption)
+    p(f'<link href="{PAGE}compare.html" color="#00675c">Thử đủ 16 ca trên hai giao diện</link>',caption)
 
     story.append(PageBreak())
     page('Ảnh hưởng đến bỏ sót và thao tác','32 PHIÊN TRÌNH DUYỆT TỰ ĐỘNG  ·  8 QUY TẮC GIẢ LẬP')
@@ -519,6 +585,28 @@ def pdf_report(external, proxy, robust, transfer, sar, deep, chain):
     p(f'<link href="{PAGE}proxy-study.json" color="#00675c">Tải dữ liệu chạy tự động theo ca và quy tắc</link>',caption)
 
     story.append(PageBreak())
+    page('Kết quả từng ca AIS','16 CA MÔ PHỎNG  ·  CÙNG 8 QUY TẮC Ở HAI CHẾ ĐỘ')
+    p('K là không gợi ý, C là có gợi ý. Cột ưu tiên đếm số quy tắc chọn đưa ca vào hàng rà. Cột lỗi đếm bỏ sót ở ca câu hoặc kéo lưới và cờ nhầm ở ca quá cảnh hoặc neo đậu. Trung vị thời gian bấm tự động tính trên 16 lượt mỗi chế độ cho mỗi ca.')
+    table(comparison_case_rows(review),[45,115,78,75,66,122])
+    p('Q15 và Q16 tạo toàn bộ 7 quyết định cứu bỏ sót. Q02 tạo 2 bỏ sót mới, Q08 tạo 1 cờ nhầm mới. Q06 và Q12 mỗi ca bớt 2 cờ nhầm. Q14 vẫn bị cả 8 quy tắc bỏ sót ở cả hai chế độ.')
+    p(f'<link href="{PAGE}compare.html#tat-ca-ca" color="#00675c">Mở bảng 16 ca và chọn ca cần xem</link>',caption)
+    story.append(PageBreak())
+
+    page('Kết luận về thời gian và cách rà','SO SÁNH NGANG CA, QUY TẮC VÀ VỊ TRÍ LƯỢT')
+    table(comparison_group_rows(review),[187,63,78,88,85])
+    p('Hai dòng đầu phân nhóm theo chất lượng AIS. Hai dòng cuối phân nhóm theo độ khớp của gợi ý ưu tiên với nhãn. Một ca nằm trong một nhóm chất lượng và một nhóm độ đúng. Tổng giữa hai cách phân nhóm có phần trùng.')
+    dt=review['timing']
+    diff=dt['delta']
+    p(f"<b>Thời gian thao tác.</b> Ghép {diff['n']} cặp lần bấm theo cùng ca, quy tắc và vị trí lượt. Trung vị chênh có AI trừ không AI là {ms_text(diff['median_ms'])} ms. Có {dt['faster_with_ai']} cặp nhanh hơn, {dt['tied']} cặp bằng và {dt['slower_with_ai']} cặp chậm hơn. Các phiên chạy tuần tự với trình tự đọc giao diện và bấm nút như nhau.")
+    table([['Tình huống','Tác vụ cần thực hiện','Ý nghĩa về thời gian và lỗi'],
+        ['Hai chế độ','Xem hai đồ thị và bấm một trong ba lựa chọn.','Cùng số lần bấm để ghi quyết định.'],
+        ['AI khớp dấu hiệu','Đọc đề xuất và kiểm chứng trên cùng biểu đồ.','Có thể giảm công tự hình thành giả thuyết ban đầu.'],
+        ['AI mâu thuẫn hoặc AIS thưa','Kiểm tra số bản tin, tốc độ và hướng trước khi quyết định.','Có thể cần thêm công đối chiếu. Gợi ý sai đem lại nguy cơ bỏ sót hoặc cờ nhầm.']],
+        [122,173,206])
+    p('Kết quả thời gian mô tả thao tác kỹ thuật của bản chạy tự động. Mức rút ngắn suy nghĩ của người rà thực tế vẫn chưa được đo.')
+    p(f'<link href="{PAGE}review-cases.csv" color="#00675c">Tải bảng 16 ca</link>  ·  <link href="{PAGE}proxy-study.json" color="#00675c">Tải 256 cặp thời gian gốc</link>',caption)
+    story.append(PageBreak())
+
     page('Khi bản tin AIS bị thiếu','ĐAN MẠCH  ·  5 LẦN CHIA NHÓM  ·  25 LƯỢT GIỮ RIÊNG TÀU')
     p('Mỗi lần chia đánh giá trên cùng 1.155 cửa sổ khai thác. Hai phép thử giữ nhãn tham chiếu, rồi xóa ba mốc 10 phút liên tiếp hoặc xóa ngẫu nhiên khoảng một nửa các mốc. XGBoost tăng cường chỉ học thêm bản sao làm thưa từ các tàu thuộc tập huấn luyện.')
     story.append(Image(str(WEB/'robustness.png'),width=499,height=182))
@@ -584,7 +672,7 @@ def html_table(rows):
     return '<div class="table-wrap"><table>'+''.join(rendered)+'</table></div>'
 
 
-def web_report(behavior,fusion,external,proxy,robust,transfer,sar,deep,chain):
+def web_report(behavior,fusion,external,proxy,robust,transfer,sar,deep,chain,review):
     behavior_table=html_table([['Dữ liệu học','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
         +[[name,*[fst(behavior[s,m]['mean'])+' ± '+fst(behavior[s,m]['sd']) for s in SCENARIOS]]
           for m,name in MODELS.items()])
@@ -646,12 +734,15 @@ def web_report(behavior,fusion,external,proxy,robust,transfer,sar,deep,chain):
 <p><a href="{external['dataset']}">Dữ liệu gốc và giấy phép CC BY 4.0</a> · <a href="real-ais.json" download>Tải kết quả theo seed và tàu giữ riêng</a></p></section>
 <section id="do-goi-y"><h2>So sánh có và không có gợi ý AI</h2>
 <p>Hai bên cùng dữ liệu AIS và ba lựa chọn. Người rà tự dựng giả thuyết ở bên không AI. Ở bên có AI, đề xuất tạo một điểm bắt đầu để đối chiếu lại với hai đồ thị.</p>
-<p><a href="compare.html"><strong>Mở hai giao diện cạnh nhau và thử ba tình huống</strong></a></p>
+<p><a href="compare.html"><strong>Mở hai giao diện cạnh nhau trên đủ 16 ca</strong></a></p>
 <h3>Bỏ sót và cờ nhầm trong mô phỏng</h3>
 <p>{proxy['sessions']} phiên trình duyệt tự động, {proxy['browser_decisions']} lượt chọn, {len(proxy['policies'])} quy tắc và {proxy['unique_cases']} ca mô phỏng. Bảng gộp các lần lặp của cùng một ca và quy tắc.</p>
 {html_table(proxy_rows(proxy))}
 <p>Bỏ sót {comparison['missed'][0]} → {comparison['missed'][1]} trên {comparison['positive_pairs']} cặp ca dương × quy tắc. Có {comparison['rescued']} quyết định được sửa và {comparison['new_misses']} bỏ sót mới. Cờ nhầm {comparison['flags'][0]} → {comparison['flags'][1]} trên {comparison['negative_pairs']} cặp ca âm × quy tắc. Có {comparison['resolved_flags']} cờ được bỏ và {comparison['new_flags']} cờ mới.</p>
 <h3>Thời gian thao tác tự động</h3>{html_table(proxy_time_rows(proxy))}
+<p>Ghép {review['timing']['delta']['n']} cặp lần bấm theo cùng ca, quy tắc và vị trí lượt. Trung vị chênh có AI trừ không AI là {ms_text(review['timing']['delta']['median_ms'])} ms. Cả hai bên giữ hai đồ thị và một lần bấm để ghi quyết định.</p>
+<h3>Khi nào gợi ý đổi đúng, khi nào đổi sai?</h3>{html_table(comparison_group_rows(review))}
+<p><a href="compare.html#tat-ca-ca">Mở 16 ca có thể chọn và tám quy tắc của mỗi ca</a> · <a href="review-cases.csv" download>Tải bảng từng ca</a></p>
 <p class="muted">Thời gian tính từ khi giao diện mở ca đến khi trình duyệt tự động bấm nút. Chưa đo thời gian tư duy hay tốc độ của chuyên viên. Các kết quả lỗi áp dụng cho bộ ca và quy tắc mô phỏng này.</p>
 <p><a href="proxy-study.json" download>Tải kết quả theo ca và quy tắc</a></p></section>
 <section id="kiem-thu-bo-sung"><h2>Độ bền khi mất bản tin</h2>
@@ -693,8 +784,12 @@ def main():
     sar=json.loads((OUT/'sar-tile-4048.json').read_text())
     deep=json.loads((OUT/'deep-ablation.json').read_text())
     chain=json.loads((OUT/'chain-ablation.json').read_text())
-    pdf_report(external,proxy,robust,transfer,sar,deep,chain)
-    web_report(behavior,fusion,external,proxy,robust,transfer,sar,deep,chain)
+    review=comparison_data(proxy,json.loads((OUT/'study-cases.json').read_text()))
+    (WEB/'compare-data.js').write_text('window.SONARNET_COMPARISON='+json.dumps(review,ensure_ascii=False)+";\n")
+    with (WEB/'review-cases.csv').open('w',newline='',encoding='utf-8-sig') as out:
+        csv.writer(out,lineterminator='\n').writerows(comparison_case_rows(review))
+    pdf_report(external,proxy,robust,transfer,sar,deep,chain,review)
+    web_report(behavior,fusion,external,proxy,robust,transfer,sar,deep,chain,review)
     import shutil
     for name in ('behavior.csv','fusion.csv','study-summary.json','real-ais.json','proxy-study.json',
                  'ais-robustness.json','gfw-transfer.json','sar-tile-4048.json','deep-ablation.json','fusion-paired-scenes.csv',
@@ -703,7 +798,7 @@ def main():
     files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json','sar-tile-4048.json','deep-ablation.json','fusion-paired-scenes.csv',
                                        'size-by-factor.csv','paired-size-noise.csv','behavior-factorial.csv','chain-ablation.csv','chain-ablation.json')]
     files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py','deep_ablation_chang2.py','chain_ablation_chang2.py','capture_chang2_comparison.cjs')]
-    files += [(WEB/file,file) for file in (REPORT,'behavior.png','robustness.png','review-comparison.png')]
+    files += [(WEB/file,file) for file in (REPORT,'behavior.png','robustness.png','review-comparison.png','review-cases.csv','compare-data.js')]
     with ZipFile(WEB/ZIP,'w',compression=ZIP_DEFLATED) as archive:
         for source,name in files:
             archive.write(source,name)

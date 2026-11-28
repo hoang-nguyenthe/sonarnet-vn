@@ -260,3 +260,25 @@ ca có thể xuất hiện trong nhiều quy tắc. Thời gian từ lúc giao d
 ca đến khi trình duyệt tự động chọn nút là chỉ số thao tác kỹ thuật.
 Cách tư duy được trình bày như hai quy trình tác vụ. Chưa đo tốc độ suy
 nghĩ hoặc thời gian rà thực tế của chuyên viên.
+
+## Phân tích theo ca và thời gian bấm ghép cặp
+
+Trang so sánh hiển thị cả 16 ca và 8 quy tắc cho từng ca. Bảng lọc
+được ca có gợi ý ưu tiên sai hoặc ca có quy tắc đổi đúng/sai. Số
+lỗi là bỏ sót ở ca dương và cờ nhầm ở ca âm. Lựa chọn “Chưa đủ dữ
+liệu” được giữ riêng trong bảng quyết định. Ở ca dương, lựa chọn
+đó tính vào bỏ sót vì ca chưa được đưa lên hàng ưu tiên ngay.
+
+Chạy tuần tự 32 phiên bằng cùng trình duyệt. Cả hai điều kiện dùng
+cùng một lần đọc trạng thái giao diện và một lần bấm để ghi nhận
+lựa chọn. Ghép thời gian theo cùng ca, quy tắc và vị trí lượt, được
+256 cặp với 16 cặp cho mỗi ca. Chênh thời gian là có gợi ý trừ không
+gợi ý. Báo trung vị, phân vị 90 và khoảng quan sát của thời gian
+bấm tự động. Tệp proxy-study.json có các cặp thời gian gốc, còn
+review-cases.csv là bảng tóm tắt theo ca.
+
+Hai nhóm chất lượng (cửa sổ ngắn, tín hiệu chồng lấn) và hai nhóm
+độ đúng của gợi ý được báo riêng. Một ca xuất hiện ở cả hai cách
+phân nhóm. 8 quy tắc dùng chung bộ 16 ca; số lần chạy lặp không phải
+số người rà độc lập. Gợi ý có thể thay đổi công hình thành hoặc
+kiểm chứng giả thuyết. Thời gian suy nghĩ thực tế chưa được đo.

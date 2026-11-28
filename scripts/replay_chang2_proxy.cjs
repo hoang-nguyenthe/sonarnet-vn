@@ -56,11 +56,13 @@ async function session(browser, profile, index, layout) {
     for (let block=0; block<2; block++) {
       if (block) await page.locator('#continue').click();
       for (let i=0; i<8; i++) {
-        const id = (await page.locator('#case-title').textContent()).slice(3);
+        const {id, hint} = await page.evaluate(()=>{
+          const field=document.getElementById('hint');
+          const suggested=field.textContent.startsWith('Gợi ý mô hình: ưu tiên rà');
+          return {id:document.getElementById('case-title').textContent.slice(3),
+            hint:field.hidden ? null : suggested};
+        });
         const {speed_kn, east_m, north_m} = cases.get(id);
-        const hint = await page.locator('#hint').isVisible()
-          ? (await page.locator('#hint').textContent()).startsWith('Gợi ý mô hình: ưu tiên rà')
-          : null;
         const decision = decide({speed_kn, east_m, north_m}, hint, profile);
         expected.set(id, {decision, condition:hint === null ? 'control' : 'ai'});
         await page.locator('[data-answer="'+decision+'"]').click();
@@ -116,6 +118,33 @@ function pairedPolicy(runs, index) {
   return {...profiles[index], ...outputs, per_case};
 }
 
+function quantile(sorted,p) {
+  const index=(sorted.length-1)*p, left=Math.floor(index);
+  return sorted[left]+(sorted[Math.ceil(index)]-sorted[left])*(index-left);
+}
+
+function timing(values) {
+  assert.ok(values.length);
+  const sorted=[...values].sort((a,b)=>a-b);
+  return {n:sorted.length, median_ms:quantile(sorted,.5), min_ms:sorted[0],
+    max_ms:sorted.at(-1), p90_ms:quantile(sorted,.9)};
+}
+
+function pairedTimings(runs) {
+  const groups=new Map();
+  for (const run of runs) for (const r of run.responses) {
+    const key=[run.profile,r.case_id,r.block].join('/');
+    if (!groups.has(key)) groups.set(key,{profile:run.profile,id:r.case_id,block:r.block});
+    const row=groups.get(key);
+    assert.ok(!(r.condition in row));
+    row[r.condition]=r.time_ms;
+  }
+  return [...groups.values()].map(row=>{
+    assert.ok('control' in row && 'ai' in row);
+    return {...row, delta_ms:row.ai-row.control};
+  });
+}
+
 async function main() {
   const chrome = process.env.SONARNET_CHROME;
   const browser = await chromium.launch(chrome ? {executablePath:chrome} : {});
@@ -123,21 +152,29 @@ async function main() {
     const jobs = profiles.flatMap((profile, index) =>
       Array.from({length:4}, (_, layout) => ({profile, index, layout})));
     const runs = [];
-    for (let i=0; i<jobs.length; i+=4) {
-      runs.push(...await Promise.all(jobs.slice(i,i+4).map(
-        job => session(browser, job.profile, job.index, job.layout))));
+    for (const job of jobs) {
+      runs.push(await session(browser,job.profile,job.index,job.layout));
     }
     const all = runs.flatMap(r => r.responses);
     const policies = profiles.map((_, i) => pairedPolicy(runs, i));
+    const pairs = pairedTimings(runs);
+    function summarize(times) {
+      return {control:timing(times.map(row=>row.control)), ai:timing(times.map(row=>row.ai)),
+        delta:timing(times.map(row=>row.delta_ms)),
+        faster_with_ai:times.filter(row=>row.delta_ms<0).length,
+        tied:times.filter(row=>row.delta_ms===0).length,
+        slower_with_ai:times.filter(row=>row.delta_ms>0).length};
+    }
+    assert.equal(pairs.length*2,all.length);
     const result = {
       evidence_type:'browser_simulation_only', human_survey_responses:0,
       sessions:runs.length, browser_decisions:all.length, unique_cases:cases.size,
       chrome_version:browser.version(),
-      browser_click_time_ms:{unit:'automation telemetry only', ...Object.fromEntries(
-        ['control','ai'].map(condition => {
-          const sorted=all.filter(r=>r.condition===condition).map(r=>r.time_ms).sort((a,b)=>a-b);
-          return [condition, {median_ms:(sorted[127]+sorted[128])/2, min_ms:sorted[0], max_ms:sorted.at(-1)}];
-        }))},
+      browser_click_time_ms:{unit:'automation telemetry only', ...summarize(pairs)},
+      paired_case_times:[...cases.keys()].map(id=>({
+        id, ...summarize(pairs.filter(p=>p.id===id))
+      })),
+      timing_pairs:pairs,
       policies,
       browser_runs:runs.map(({profile, layout, responses}) => ({
         profile, layout,

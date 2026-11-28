@@ -21,3 +21,8 @@
 .meaning-grid h3{font-size:1rem;margin:.25rem 0 .35rem}
 .meaning-grid p{margin:0}
 @media(max-width:760px){.compare-pair,.meaning-grid{grid-template-columns:1fr}}
+.case-controls{display:flex;gap:.8rem;align-items:center}.case-controls a{white-space:nowrap}
+.compare-mode .answers [aria-pressed="false"]:not(:focus){outline:0}
+#ket-qua-ca details{margin-top:.9rem}#ket-qua-ca summary{cursor:pointer;font-weight:700;margin-bottom:.45rem}
+#tat-ca-ca tbody th,#ket-qua-ca tbody th{background:transparent;color:var(--ink);font-weight:650}
+@media(max-width:520px){.case-controls{align-items:flex-start;flex-direction:column;gap:.3rem}#tat-ca-ca th,#tat-ca-ca td{padding:.43rem .5rem}}

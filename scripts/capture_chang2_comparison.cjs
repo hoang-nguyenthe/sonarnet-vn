@@ -26,7 +26,9 @@ const source=process.argv[2] || pathToFileURL(path.join(web,'compare.html')).hre
         await picker.selectOption('Q16');
         await pair.screenshot({path:path.join(web,'review-comparison.png'),animations:'disabled'});
       }
-      for(const id of ['Q16','Q02','Q08']){
+      const ids=await picker.locator('option').evaluateAll(options=>options.map(o=>o.value));
+      assert.equal(ids.length,16);
+      for(const id of ids){
         await picker.selectOption(id);
         assert.equal(await a.locator('[data-case-number]').textContent(),'Ca '+id);
         assert.equal(await b.locator('[data-case-number]').textContent(),'Ca '+id);
@@ -39,11 +41,23 @@ const source=process.argv[2] || pathToFileURL(path.join(web,'compare.html')).hre
         await b.getByRole('button',{name:'Ưu tiên rà',exact:true}).click();
         assert.match(await a.locator('[data-feedback]').textContent(),/Chưa đủ dữ liệu/);
         assert.match(await b.locator('[data-feedback]').textContent(),/Ưu tiên rà/);
+        assert.equal(await page.locator('#case-rules tr').count(),8);
+        assert.match(await page.locator('#case-metrics').textContent(),/16 lượt/);
       }
+      const filter=page.getByLabel('Lọc theo tác động');
+      for(const [mode,n] of [['all',16],['changed',6],['conflict',3],['stable',10]]){
+        await filter.selectOption(mode);
+        assert.equal(await page.locator('#all-case-rows tr').count(),n);
+      }
+      await filter.selectOption('all');
+      await page.locator('#all-case-rows a').first().click();
+      assert.equal(await picker.inputValue(),ids[0]);
+      assert.equal(await a.locator('[data-case-number]').textContent(),'Ca '+ids[0]);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
       assert.deepEqual(errors,[]);
       await page.close();
     }
-    console.log('Verified three cases, both conditions, desktop and mobile.');
+    console.log('Verified 16 cases, both conditions, filter counts, desktop and mobile.');
   }finally{
     await browser.close();
   }
