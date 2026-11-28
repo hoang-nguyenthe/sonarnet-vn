@@ -122,7 +122,77 @@ def proxy_rows(proxy):
     ]
 
 
-def pdf_report(raw, behavior, fusion, study, external, proxy):
+ROBUST_MODELS={
+    'xgboost':'XGBoost gốc',
+    'augmented':'Học thêm chuỗi thiếu',
+    'quality_routed':'Chọn theo chất lượng',
+    'nested_macro':'Chọn mô hình theo F1',
+    'nested_recall':'Chọn mô hình theo recall',
+}
+ROBUST_SCENARIOS={'clean':'Dữ liệu gốc','gap':'Khuyết 3 mốc liền','half':'Khuyết khoảng 1/2 mốc'}
+TRANSFER_MODELS={
+    'synthetic':'Chỉ học mô phỏng · 5 seed',
+    'denmark_to_gfw':'Học ở Đan Mạch',
+    'denmark_augmented_to_gfw':'Đan Mạch + chuỗi thiếu',
+    'denmark_aligned':'Tính lại tốc độ và hướng từ tọa độ',
+    'denmark_aligned_balanced':'Tính lại và cân bằng nhãn học',
+    'denmark_native_balanced':'Kênh gốc và cân bằng nhãn học',
+    'gfw_held_gear_multisource':'Học đa nguồn, giữ riêng nhóm nghề',
+    'gfw_held_vessel':'Học trên GFW, giữ riêng tàu',
+}
+
+
+def robustness_summary(robust):
+    groups=defaultdict(list)
+    for row in robust['repeated_results']:
+        groups[row['model'],row['scenario']].append(row)
+    return groups
+
+
+def robustness_rows(robust):
+    groups=robustness_summary(robust)
+    rows=[['Cấu hình',*ROBUST_SCENARIOS.values()]]
+    for key,name in ROBUST_MODELS.items():
+        results=[groups[key,scenario] for scenario in ROBUST_SCENARIOS]
+        rows.append([name,*[f"{fst(mean(r['fn'] for r in vals),1)} / {fst(mean(r['fp'] for r in vals),1)}"
+                            for vals in results]])
+    return rows
+
+
+def transfer_rows(transfer):
+    base=transfer['suites']['9']['models']
+    rows=[['Huấn luyện / cách chấm','Macro-F1','Recall','Precision','Bỏ sót','Cờ nhầm']]
+    for key,label in TRANSFER_MODELS.items():
+        group=[m for name,m in base.items() if name.startswith('synthetic_only_')] if key=='synthetic' else [base[key]]
+        scores=[fst(mean(row[k] for row in group)) for k in ('macro_f1','recall','precision')]
+        errors=[fst(mean(row[k] for row in group),1 if len(group)>1 else 0) for k in ('fn','fp')]
+        rows.append([label,*scores,*errors])
+    return rows
+
+
+def robustness_plot(robust):
+    groups=robustness_summary(robust)
+    fig,ax=plt.subplots(figsize=(9.0,3.4))
+    x=range(len(ROBUST_SCENARIOS))
+    styles=[('xgboost','#5b7480'),('augmented','#b06030'),('quality_routed','#00786e')]
+    for j,(model,color) in enumerate(styles):
+        sample=[[r['fn'] for r in groups[model,case]] for case in ROBUST_SCENARIOS]
+        heights=[mean(vals) for vals in sample]
+        rect=ax.bar([i+(j-1)*.24 for i in x],heights,width=.21,yerr=[stdev(vals) for vals in sample],
+                    capsize=3,color=color,label=ROBUST_MODELS[model])
+        ax.bar_label(rect,labels=[fst(value,1) for value in heights],label_type='center',
+                     color='white',fontsize=9,fontweight='bold')
+    ax.set(xticks=list(x),xticklabels=list(ROBUST_SCENARIOS.values()),
+           ylabel='Ca khai thác bỏ sót',ylim=(0,83))
+    ax.spines[['top','right']].set_visible(False)
+    ax.set_axisbelow(True)
+    ax.grid(axis='y',alpha=.2)
+    ax.legend(loc='upper center',bbox_to_anchor=(.5,1.18),ncol=3,frameon=False,fontsize=9)
+    fig.savefig(WEB/'robustness.png',dpi=145,bbox_inches='tight',facecolor='white')
+    plt.close(fig)
+
+
+def pdf_report(raw, behavior, fusion, study, external, proxy, robust, transfer):
     base=Path('/System/Library/Fonts/Supplemental')
     pdfmetrics.registerFont(TTFont('ArabicFreeNormal',str(base/'Arial.ttf')))
     pdfmetrics.registerFont(TTFont('ArabicFreeBold',str(base/'Arial Bold.ttf')))
@@ -172,6 +242,8 @@ def pdf_report(raw, behavior, fusion, study, external, proxy):
     coverage=external['coverage']
     p(f"<b>Đối chứng AIS thật.</b> {count(coverage['scored_windows'])} cửa sổ từ {coverage['scored_vessels']} tàu. Mô hình chỉ học mô phỏng đạt macro-F1 trung bình {fst(mean(row['macro_f1'] for row in external['synthetic_only']))}. Mô hình học AIS thật với toàn quỹ đạo đạt {fst(external['vessel_held_out']['history']['macro_f1'])} khi tách tàu để chấm. Kết quả và giới hạn ở trang 4.")
     p(f"<b>Thử tự động.</b> {proxy['sessions']} phiên trình duyệt kiểm tra {proxy['browser_decisions']} thao tác với các quy tắc giả lập. Số liệu người tham gia được tính từ phiếu thật.",caption)
+    gfw=transfer['suites']['9']['models']
+    p(f"<b>Kiểm tra chuyển nguồn.</b> Macro-F1 của mô hình học Đan Mạch khi chấm trên Global Fishing Watch là {fst(gfw['denmark_to_gfw']['macro_f1'])}. Khi học cùng nguồn và tách tàu để chấm, kết quả là {fst(gfw['gfw_held_vessel']['macro_f1'])}. Xem phần kiểm tra mở rộng ở trang 7–8.",caption)
     h('Mở kết quả và thử trực tiếp')
     p(f'<link href="{PAGE}" color="#00675c">Ứng dụng Chặng 2</link>  ·  <link href="{PAGE}evidence.html" color="#00675c">Minh chứng và tệp tải</link>  ·  <link href="{SOURCE}" color="#00675c">Mã nguồn</link>')
     story.append(PageBreak())
@@ -249,6 +321,35 @@ def pdf_report(raw, behavior, fusion, study, external, proxy):
     p('Số ca bỏ sót gồm cả lựa chọn chưa ưu tiên và chưa đủ dữ liệu ở ca dương. Cờ nhầm là ưu tiên ở ca âm. Số liệu thời gian trong JSON đo thao tác tự động của trình duyệt. Ước tính thời gian chuyên viên cần phiếu do người thật thực hiện.')
     p(f'<link href="{PAGE}proxy-study.json" color="#00675c">Tải kết quả kiểm tra tự động</link>  ·  <link href="{PAGE}study.html" color="#00675c">Mở khảo sát người tham gia</link>',caption)
 
+    story.append(PageBreak())
+    page('Khi bản tin AIS bị thiếu','ĐAN MẠCH  ·  5 LẦN CHIA NHÓM  ·  25 LƯỢT GIỮ RIÊNG TÀU')
+    p('Mỗi lần chia đánh giá trên cùng 1.155 cửa sổ khai thác. Hai phép thử giữ nhãn tham chiếu, rồi xóa ba mốc 10 phút liên tiếp hoặc xóa ngẫu nhiên khoảng một nửa các mốc. XGBoost tăng cường chỉ học thêm bản sao làm thưa từ các tàu thuộc tập huấn luyện.')
+    story.append(Image(str(WEB/'robustness.png'),width=499,height=182))
+    p('Các cột cho biết số bỏ sót trung bình và độ lệch chuẩn trên năm lần chia. Quy tắc chọn chất lượng dùng mô hình học chuỗi thiếu khi có dưới 9 mốc hoặc khoảng trống bên trong dài hơn 30 phút.',caption)
+    table(robustness_rows(robust),[175,103,110,113])
+    rows=robustness_summary(robust)
+    base, quality=rows['xgboost','half'], rows['quality_routed','half']
+    missed_before, missed_after=(mean(row['fn'] for row in x) for x in (base,quality))
+    flags_extra=mean(row['fp'] for row in quality)-mean(row['fp'] for row in base)
+    p(f"Ở nhóm mất khoảng nửa số mốc, chọn theo chất lượng giảm bỏ sót {fst(missed_before,1)} → {fst(missed_after,1)} trên 1.155 ca dương và tăng trung bình {fst(flags_extra,1)} cờ nhầm.")
+    p('Mỗi ô là số ca bỏ sót / số cờ nhầm trung bình. Hai cách chọn mô hình cuối dùng Logistic, Extra Trees hoặc HistGradientBoosting, chọn mô hình và ngưỡng trên 3 fold bên trong. Quy tắc ưu tiên recall nhắm precision ít nhất 0,95 trong vòng chọn.')
+    h('Độ dài cửa sổ')
+    p('Macro-F1 trên cửa sổ 60, 120 và 240 phút lần lượt là '
+      + ' · '.join(fst(row['macro_f1']) for row in robust['duration'])
+      + '. Các độ dài tạo tập cửa sổ riêng. So sánh này mô tả độ nhạy theo cách lấy mẫu.')
+    p(f'<link href="{PAGE}ais-robustness.json" color="#00675c">Số liệu năm lần chia, từng ngưỡng và từng lượt giữ riêng tàu</link>',caption)
+    story.append(PageBreak())
+
+    page('Thử chuyển giữa hai nguồn AIS','GLOBAL FISHING WATCH  ·  TÀU LƯỚI VÂY, CÂU DÂY VÀ LƯỚI KÉO')
+    gfw=transfer['suites']['9']
+    p(f"Đối chứng ngoài nguồn Đan Mạch dùng {count(gfw['windows'])} cửa sổ từ {gfw['vessels']} tàu trong tập có nhãn của Global Fishing Watch. Tất cả cấu hình được chấm trên cùng {count(gfw['positive'])} cửa sổ dương và {count(gfw['windows']-gfw['positive'])} cửa sổ âm. Hai dòng cuối cho phép học từ một phần dữ liệu GFW theo giới hạn đã nêu.")
+    table(transfer_rows(transfer),[186,62,54,61,68,70])
+    p('Nhóm học thuần Đan Mạch, bản tăng cường và các bản chuẩn hóa đều giữ toàn bộ GFW ngoài tập học. Tính lại tốc độ và hướng từ tọa độ làm macro-F1 giảm nhẹ so với kênh gốc. Đối chứng học đa nguồn giữ riêng cả nhóm nghề và tất cả mã tàu trong nhóm chấm.')
+    lower=transfer['suites']['5']
+    p(f"Khi yêu cầu tối thiểu 5 mốc thay cho 9, có {count(lower['windows'])} cửa sổ trên {lower['vessels']} tàu. Nhóm câu dây tại ngưỡng 9 không có cửa sổ dương đủ dày. Tại ngưỡng 5 có {lower['cohorts']['longlines']['positive']} cửa sổ dương. Chi tiết theo nhóm nghề có trong JSON.")
+    p('Kết quả học và chấm trong cùng nguồn cho thấy khả năng phân biệt hai trạng thái khi có dữ liệu cùng miền. Khi chuyển nguồn, khác biệt về hoạt động, thiết bị và cách gán nhãn có thể làm số cờ nhầm tăng mạnh. Cần dữ liệu cùng vùng cùng quy trình trước khi dùng cho Việt Nam.')
+    p(f'<link href="{transfer["source"]}" color="#00675c">Global Fishing Watch Training Data · CC BY 4.0</link>  ·  <link href="{PAGE}gfw-transfer.json" color="#00675c">Kết quả chi tiết</link>',caption)
+
     def footer(c,doc):
         c.setFillColor(teal)
         c.rect(0,A4[1]-8,A4[0],8,fill=1,stroke=0)
@@ -271,7 +372,7 @@ def html_table(rows):
     return '<div class="table-wrap"><table>'+''.join(rendered)+'</table></div>'
 
 
-def web_report(behavior,fusion,study,external,proxy):
+def web_report(behavior,fusion,study,external,proxy,robust,transfer):
     behavior_table=html_table([['Dữ liệu học','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
         +[[name,*[fst(behavior[s,m]['mean'])+' ± '+fst(behavior[s,m]['sd']) for s in SCENARIOS]]
           for m,name in MODELS.items()])
@@ -288,13 +389,19 @@ def web_report(behavior,fusion,study,external,proxy):
     coverage=external['coverage']
     held=external['vessel_held_out']
     ci=held['paired_vessel_bootstrap']['macro_f1_delta_ci']
+    gfw=transfer['suites']['9']
+    relaxed=transfer['suites']['5']
+    durations=html_table([['Độ dài','Cửa sổ','Recall','Macro-F1']]+[
+        [f"{row['duration_minutes']} phút",count(row['windows']),fst(row['recall']),fst(row['macro_f1'])]
+        for row in robust['duration']
+    ])
     html=f"""<!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Minh chứng Chặng 2 · SonarNet Việt Nam</title><link rel="stylesheet" href="style.css"></head>
 <body><header><div><a href="./">SonarNet Việt Nam</a><span>Chung kết AI 2026 · Bảng C</span></div><a href="study.html">Thử rà quỹ đạo</a></header>
 <main><section><h1>Kiểm chứng mô-đun hành vi</h1><p>Đề Chặng 2 yêu cầu tách đóng góp của bộ ước lượng Kalman, đối chiếu kích thước và dữ liệu hành vi, rồi kiểm tra ảnh hưởng của gợi ý AI lên thao tác rà.</p>
 <div class="stats"><div class="stat"><strong>5 seed</strong>4 kịch bản ghép và 4 mức chất lượng quỹ đạo</div><div class="stat"><strong>3 → 0</strong>cặp ghép sai trên 4.800 mục tiêu mô phỏng</div><div class="stat"><strong>0,236 → 0,883</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
-<div class="links"><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a></div></section>
+<div class="links"><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a></div></section>
 <section><h2>Kalman và kiểm tra kích thước</h2>{fusion_table}
 <p class="muted">¹ Trên cặp ghép đúng. Kịch bản hộp radar nhiễu mạnh có 85/110 mâu thuẫn được phát hiện, 25 bỏ sót và 23 cờ nhầm với Kalman và kiểm kích thước. Dữ liệu mô phỏng.</p>
 <p><a href="fusion.csv" download>Tải CSV ghép và kích thước theo từng seed</a></p></section>
@@ -313,7 +420,20 @@ def web_report(behavior,fusion,study,external,proxy):
 <p>{proxy['sessions']} phiên trình duyệt, {proxy['browser_decisions']} quyết định, {len(proxy['policies'])} quy tắc giả lập. Mỗi dòng gộp lặp và so cùng {proxy['unique_cases']} ca mô phỏng ở từng điều kiện.</p>
 {html_table(proxy_rows(proxy))}
 <p class="muted">Thời gian trong tệp JSON là thời gian thao tác của trình duyệt tự động. Kết quả khảo sát người tham gia chỉ nhận phiếu thật.</p>
-<p><a href="proxy-study.json" download>Tải kết quả kiểm tra tự động</a></p></section></main>
+<p><a href="proxy-study.json" download>Tải kết quả kiểm tra tự động</a></p></section>
+<section id="kiem-thu-bo-sung"><h2>Độ bền khi mất bản tin</h2>
+<p>Năm lần chia theo tàu, tổng 25 lượt giữ riêng tàu. Mỗi lần chấm cùng 1.155 cửa sổ khai thác qua dữ liệu gốc và hai kịch bản thiếu bản tin.</p>
+<img class="chart" src="robustness.png" alt="Số cửa sổ khai thác bị bỏ sót với ba phương án XGBoost khi làm thiếu dữ liệu">
+{html_table(robustness_rows(robust))}
+<p class="muted">Mỗi ô là số ca bỏ sót / số cờ nhầm trung bình. Quy tắc chọn chất lượng dùng mô hình học chuỗi thiếu khi có dưới 9 mốc hoặc khoảng trống bên trong dài hơn 30 phút.</p>
+<h3>Độ dài cửa sổ</h3>{durations}
+<p><a href="ais-robustness.json" download>Tải số liệu theo lần chia và cấu hình</a></p></section>
+<section id="gfw"><h2>Kiểm tra trên Global Fishing Watch</h2>
+<p>{count(gfw['windows'])} cửa sổ từ {gfw['vessels']} tàu, bao gồm {count(gfw['positive'])} cửa sổ khai thác. Cùng điều kiện 9 mốc tối thiểu trong mỗi cửa sổ 2 giờ.</p>
+{html_table(transfer_rows(transfer))}
+<p>Hai dòng cuối dùng một phần GFW để học. Phương án đa nguồn giữ riêng toàn bộ nhóm nghề đang chấm và từng tàu trong nhóm đó. Phương án cùng nguồn giữ riêng tàu, các nhóm nghề vẫn có thể xuất hiện trong tập học.</p>
+<p class="muted">Ngưỡng 5 mốc cho {count(relaxed['windows'])} cửa sổ từ {relaxed['vessels']} tàu. Nhánh câu dây chỉ có đủ ví dụ dương ở điều kiện này. Khác biệt giữa nguồn có thể làm cờ nhầm tăng.</p>
+<p><a href="{transfer['source']}">Nguồn dữ liệu Global Fishing Watch · CC BY 4.0</a> · <a href="gfw-transfer.json" download>Tải kết quả theo nguồn và nhóm nghề</a></p></section></main>
 <footer>SonarNet Việt Nam · Chặng 2 · 28/11/2026</footer></body></html>"""
     (WEB/'evidence.html').write_text(html)
 
@@ -326,14 +446,18 @@ def main():
     figure(behavior)
     external=json.loads((OUT/'real-ais.json').read_text())
     proxy=json.loads((OUT/'proxy-study.json').read_text())
-    pdf_report(raw,behavior,fusion,groups,external,proxy)
-    web_report(behavior,fusion,groups,external,proxy)
+    robust=json.loads((OUT/'ais-robustness.json').read_text())
+    transfer=json.loads((OUT/'gfw-transfer.json').read_text())
+    robustness_plot(robust)
+    pdf_report(raw,behavior,fusion,groups,external,proxy,robust,transfer)
+    web_report(behavior,fusion,groups,external,proxy,robust,transfer)
     import shutil
-    for name in ('behavior.csv','fusion.csv','study-summary.json','real-ais.json','proxy-study.json'):
+    for name in ('behavior.csv','fusion.csv','study-summary.json','real-ais.json','proxy-study.json',
+                 'ais-robustness.json','gfw-transfer.json'):
         shutil.copyfile(OUT/name,WEB/name)
-    files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json')]
-    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs')]
-    files += [(WEB/file,file) for file in (REPORT,'behavior.png')]
+    files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json')]
+    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py')]
+    files += [(WEB/file,file) for file in (REPORT,'behavior.png','robustness.png')]
     with ZipFile(WEB/ZIP,'w',compression=ZIP_DEFLATED) as archive:
         for source,name in files:
             archive.write(source,name)

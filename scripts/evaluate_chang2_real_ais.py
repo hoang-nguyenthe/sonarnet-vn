@@ -20,17 +20,26 @@ BIN_MINUTES = 10
 MIN_BINS = 9
 
 
-def windows(path):
+def windows(path, window_minutes=WINDOW_MINUTES, minimum_bins=MIN_BINS):
     raw = pd.read_csv(path, usecols=[
         'id', 't', 'longitude', 'latitude', 'bearing', 'euc_speed', 'label'
     ])
     raw['t'] = pd.to_datetime(raw['t'], utc=True)
-    raw['positive'] = raw['label'].str.endswith('-fishing')
+    raw['positive'] = raw['label'].str.endswith('-fishing').astype(float)
     masks = raw['label'].str.endswith(('-fishing', '-sailing'), na=False)
+    tracks, truth, vessel, stable, audit = grouped_windows(
+        raw[masks], window_minutes, minimum_bins
+    )
+    audit['messages'] = len(raw)
+    audit['manual_label_counts'] = {str(k): int(v) for k, v in raw['label'].value_counts().items()}
+    return tracks, truth, vessel, stable, audit
+
+
+def grouped_windows(raw, window_minutes=WINDOW_MINUTES, minimum_bins=MIN_BINS):
     kinematic = raw['euc_speed'].between(0, 40) & raw['bearing'].between(0, 360)
-    valid = raw[masks & kinematic & raw['latitude'].between(-90, 90)
+    valid = raw[kinematic & raw['latitude'].between(-90, 90)
                 & raw['longitude'].between(-180, 180)].copy()
-    valid['window'] = valid['t'].dt.floor(f'{WINDOW_MINUTES}min')
+    valid['window'] = valid['t'].dt.floor(f'{window_minutes}min')
     valid['bin'] = valid['t'].dt.floor(f'{BIN_MINUTES}min')
     direction = np.radians(valid['bearing'])
     valid['sin'], valid['cos'] = np.sin(direction), np.cos(direction)
@@ -42,7 +51,7 @@ def windows(path):
     tracks, truth, vessel, stable = [], [], [], []
     sparse = tied = 0
     for (trip, _), block in bins.groupby(level=['id', 'window'], sort=True):
-        if len(block) < MIN_BINS:
+        if len(block) < minimum_bins:
             sparse += 1
             continue
         vote = (block.positive_share > .5).sum() - (block.positive_share < .5).sum()
@@ -54,19 +63,21 @@ def windows(path):
                           (block.positive_share < .5).mean()) >= .8)
         vessel.append(trip.rsplit('-', 1)[0])
         time = block.index.get_level_values('bin')
+        lons = block.lon.to_numpy()
+        if np.any(np.abs(np.diff(lons)) > 180):
+            lons = np.degrees(np.unwrap(np.radians(lons)))
         tracks.append(Track(
             mmsi=0, behaviour='unlabeled', times_s=(time - time[0]).total_seconds().to_numpy(),
-            lats=block.lat.to_numpy(), lons=block.lon.to_numpy(),
+            lats=block.lat.to_numpy(), lons=lons,
             speeds_kn=block.speed.to_numpy(),
             courses_deg=np.degrees(np.arctan2(block.sin, block.cos)).to_numpy() % 360,
         ))
     audit = {
         'messages': len(raw), 'valid_messages': len(valid),
-        'manual_label_counts': {str(k): int(v) for k, v in raw['label'].value_counts().items()},
         'trips': raw['id'].nunique(), 'start_utc': raw['t'].min().isoformat(),
         'end_utc': raw['t'].max().isoformat(), 'excluded_sparse_windows': sparse,
-        'excluded_tied_windows': tied, 'window_minutes': WINDOW_MINUTES,
-        'bin_minutes': BIN_MINUTES, 'minimum_bins': MIN_BINS,
+        'excluded_tied_windows': tied, 'window_minutes': window_minutes,
+        'bin_minutes': BIN_MINUTES, 'minimum_bins': minimum_bins,
     }
     return tracks, np.asarray(truth), np.asarray(vessel), np.asarray(stable), audit
 

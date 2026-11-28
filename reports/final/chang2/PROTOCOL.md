@@ -84,3 +84,58 @@ Bốn ngưỡng và hai trọng số gợi ý tạo 8 quy tắc giả lập. M�
 bố trí. Kết quả theo quy tắc gộp hai lần lặp của mỗi bộ ca trong mỗi điều kiện.
 Số liệu phiên và thời gian trong `proxy-study.json` đo trình duyệt tự động. Tệp
 này có đánh dấu `browser_simulation_only` và không chứa phiếu chuyên viên.
+
+## Kiểm thử độ bền và độ dài cửa sổ
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=src:scripts python3 scripts/stress_chang2_real_ais.py 128_fishing_trajs.csv
+```
+
+- Năm seed cho năm cách chia theo tàu, mỗi cách chia có năm lượt chấm ngoài tập
+  học. Một cửa sổ xuất hiện một lần trong từng lần chia. Các lần chia dùng lại
+  cùng tàu và cùng cửa sổ, nên độ lệch giữa chúng là độ nhạy khi chia dữ liệu.
+- Xóa 3 mốc 10 phút liên tiếp ở bên trong cửa sổ hoặc lấy ngẫu nhiên khoảng một
+  nửa số mốc. Giữ nguyên nhãn của cửa sổ trước khi xóa. Chỉ tạo biến thể từ tập
+  huấn luyện cho phương án XGBoost tăng cường. Tập chấm được làm thưa độc lập.
+- Quy tắc theo chất lượng dùng XGBoost tăng cường khi dưới 9 mốc hoặc có khoảng
+  trống bên trong lớn hơn 30 phút. Quy tắc được thử sau khi xem kết quả tăng cường
+  ban đầu, nên cần kiểm tra trên tập mới trước khi đưa vào vận hành.
+- Ba họ mô hình so sánh là Logistic, Extra Trees và HistGradientBoosting. Dùng
+  3 fold theo tàu bên trong để chọn họ mô hình và ngưỡng. Mục tiêu chọn chính là
+  macro-F1 tối đa hoặc recall tối đa khi precision ít nhất 0,95 ở vòng trong.
+  Tàu chấm của vòng ngoài không đi vào các bước chọn.
+- Cửa sổ 60, 120 và 240 phút có ngưỡng quan sát tương ứng 5, 9 và 18 mốc. Các
+  độ dài cho ra số cửa sổ và nhãn khác nhau. Giá trị là phân tích độ nhạy, không
+  phải phép thay đổi độ dài trên một tập mẫu ghép cặp.
+
+## Đối chứng chuyển nguồn Global Fishing Watch
+
+Dùng [Global Fishing Watch Training Data](https://github.com/GlobalFishingWatch/training-data/tree/58815d23bb0924d03fc4cad99953613e3c36d28f)
+(CC BY 4.0), chấm trên quỹ đạo và nhãn đã được phát hành trong tập huấn luyện
+lịch sử. Các bộ con đại diện tàu lưới vây, câu dây và lưới kéo. Nhãn phân số
+thể hiện mức độ đồng thuận trong dữ liệu đã công bố. Dùng trung bình nhãn trong
+mỗi ô 10 phút và đa số theo ô của cửa sổ, bỏ trường hợp hòa. Chỉ dùng tọa độ,
+thời gian, tốc độ và hướng, bỏ các đặc trưng tính sẵn của GFW. Loại bản ghi
+trùng, tốc độ/hướng không hợp lệ. Không công bố mã tàu, tọa độ và bản ghi gốc.
+
+```sh
+mkdir -p gfw
+base='https://media.githubusercontent.com/media/GlobalFishingWatch/training-data/58815d23bb0924d03fc4cad99953613e3c36d28f/data/labeled'
+curl -fL "$base/pybossa_project_3_Purse_seines.measures.labels.npz" -o gfw/gfw-purse-seines.npz
+curl -fL "$base/kristina_longliner_Drifting_longlines.measures.labels.npz" -o gfw/gfw-longlines.npz
+curl -fL "$base/kristina_trawl_Trawlers.measures.labels.npz" -o gfw/gfw-trawlers.npz
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=src:scripts python3 scripts/transfer_chang2_gfw.py 128_fishing_trajs.csv gfw
+```
+
+- So sánh mô hình gốc học mô phỏng với mô hình chỉ học Đan Mạch giữ toàn bộ GFW
+  ngoài tập học. Cấu hình chuẩn hóa đặt cùng công thức tốc độ và hướng từ
+  chênh vị trí giữa các mốc. Khi cân bằng nhãn, lặp ngẫu nhiên lớp thiểu số
+  trong tập học đến số hàng bằng lớp đa số, không tái cân bằng tập chấm.
+- Bổ sung 5 lượt giữ riêng tàu trong GFW và một phép giữ riêng nhóm nghề, học
+  bằng Đan Mạch cùng hai nhóm nghề còn lại. Ở phép giữ nghề, loại mã tàu thuộc
+  nhóm chấm khỏi mọi nhóm GFW dùng để học. Các phương án chuẩn hóa và học đa
+  nguồn là đối chứng khám phá sau khi thấy lỗi chuyển nguồn ban đầu.
+- Kết quả chính dùng tối thiểu 9/12 mốc, độ nhạy dùng 5/12. Nhóm câu dây
+  gần như không đại diện ở ngưỡng cao. Các số đếm và nhãn của hai nguồn khác
+  nhau về thời điểm, nghề và mật độ bản tin. Nhãn AIS từ chuyên gia và cộng
+  tác viên là nhãn tham chiếu, chưa xác nhận bằng nhật ký cho các ca của SonarNet.
