@@ -1,6 +1,7 @@
 """Display published benchmark counts without loading the inference stack."""
 from __future__ import annotations
 
+from html import escape
 import json
 from pathlib import Path
 
@@ -10,6 +11,40 @@ SAR_RESULTS = 'reports/final/opensar_adaptation_20261118/results.json'
 AIS_RESULTS = 'reports/final/ais_preserve_proposal_20261118/held_out.json'
 MULTISCALE_RESULTS = 'reports/final/sar_multiscale_20261118/results.json'
 FINE_TUNED_RESULTS = 'reports/final/sar_finetune_640_20261118/results.json'
+
+
+COMPARISON_CARD_STYLE = '''<style>
+.chang1-results {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.chang1-result {border:1px solid #7995aa44;border-radius:23px;padding:clamp(18px,2.7vw,33px);
+    background:linear-gradient(155deg,#fff,#edf6f9);color:#122b41;min-width:0}
+.chang1-result h3 {margin:0;color:#183751!important;font-size:clamp(17px,2.3vw,22px)!important}
+.chang1-result-value {display:flex;flex-wrap:wrap;gap:.24em;align-items:baseline;
+    margin:.38em 0;font-size:clamp(29px,5.1vw,58px);font-weight:720;letter-spacing:-.075em;
+    line-height:1.12;font-variant-numeric:tabular-nums}
+.chang1-result-value strong {color:#006457}
+.chang1-result-arrow {color:#3f6478;font-size:.57em;letter-spacing:0}
+.chang1-result p {font-size:14px;color:#304f62;margin:9px 0 0;line-height:1.55}
+.chang1-result .chang1-scope {margin:0;color:#3b5a71;font-size:12px}
+.chang1-result .chang1-review {padding-top:10px;border-top:1px solid #a4bfc977}
+@media(max-width:680px) {.chang1-results {grid-template-columns:1fr;gap:11px}}
+.st-key-recall_retest_metrics [data-testid="stMetricValue"] {
+    font-size:clamp(22px,3.5vw,40px);white-space:normal;line-height:1.14}
+</style>'''
+
+
+def render_comparison_cards(cards):
+    rendered = []
+    for title, scope, before, after, result, limitation in cards:
+        title, scope, before, after, result, limitation = map(escape, (
+            title, scope, str(before), str(after), result, limitation,
+        ))
+        rendered.append(f'''<article class="chang1-result">
+<h3>{title}</h3><p class="chang1-scope">{scope}</p>
+<div class="chang1-result-value"><span>{before}</span> <span class="chang1-result-arrow">→</span> <strong>{after}</strong></div>
+<p>{result}</p><p class="chang1-review">{limitation}</p></article>''')
+    st.markdown(COMPARISON_CARD_STYLE +
+                '<div class="chang1-results">' + ''.join(rendered) + '</div>',
+                unsafe_allow_html=True)
 
 
 def format_number(value: int) -> str:
@@ -41,43 +76,19 @@ def render_evaluation_summary(root: Path, *, detailed=False) -> bool:
     ais_count = format_number(new_ais['targets'])
 
     st.subheader('Kết quả trước và sau cải tiến')
-    st.markdown(
-        f'''<style>
-.chang1-results {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}
-.chang1-result {{border:1px solid #7995aa44;border-radius:23px;padding:clamp(18px,2.7vw,33px);
-    background:linear-gradient(155deg,#fff,#edf6f9);color:#122b41;min-width:0}}
-.chang1-result h3 {{margin:0;color:#183751!important;font-size:clamp(17px,2.3vw,22px)!important}}
-.chang1-result-value {{display:flex;flex-wrap:wrap;gap:.24em;align-items:baseline;
-    margin:.38em 0;font-size:clamp(29px,5.1vw,58px);font-weight:720;letter-spacing:-.075em;
-    line-height:1.12;font-variant-numeric:tabular-nums}}
-.chang1-result-value strong {{color:#006457}}
-.chang1-result-arrow {{color:#3f6478;font-size:.57em;letter-spacing:0}}
-.chang1-result p {{font-size:14px;color:#304f62;margin:9px 0 0;line-height:1.55}}
-.chang1-result .chang1-scope {{margin:0;color:#3b5a71;font-size:12px}}
-.chang1-result .chang1-review {{padding-top:10px;border-top:1px solid #a4bfc977}}
-@media(max-width:680px) {{.chang1-results {{grid-template-columns:1fr;gap:11px}}}}
-.st-key-recall_retest_metrics [data-testid="stMetricValue"] {{
-    font-size:clamp(22px,3.5vw,40px);white-space:normal;line-height:1.14}}
-</style>
-<div class="chang1-results">
-<article class="chang1-result">
-<h3>Tìm được nhiều mục tiêu SAR hơn</h3>
-<p class="chang1-scope">Sentinel-1 SLC VV · {scenes['diagnostic']['scenes']} cảnh đối chiếu</p>
-<div class="chang1-result-value"><span>{old_hits}/{targets}</span> <span class="chang1-result-arrow">→</span> <strong>{new_hits}/{targets}</strong></div>
-<p>Recall {rate(old_hits, targets)} → {rate(new_hits, targets)}.
-Nhãn khớp trong 500 m từ bờ tăng từ {old_coast['matched']}/{old_coast['labels']} lên {new_coast['matched']}/{new_coast['labels']}.</p>
-<p class="chang1-review">Điểm không khớp nhãn tăng từ {old_sar['false_positive']} lên {new_sar['false_positive']}.</p>
-</article>
-<article class="chang1-result">
-<h3>Giảm ghép sai mã AIS</h3>
-<p class="chang1-scope">Phát lại {ais_count} bản tin NOAA giữ riêng · 13/12/2024</p>
-<div class="chang1-result-value"><span>{old_errors}</span> <span class="chang1-result-arrow">→</span> <strong>{new_errors}</strong></div>
-<p>Số cặp ghép sai mã khi giữ nguyên đối tác đề xuất rồi kiểm tra chất lượng.</p>
-<p class="chang1-review">Số cặp ghép đúng giảm từ {before_correct} xuống {after_correct}.</p>
-</article>
-</div>''',
-        unsafe_allow_html=True,
-    )
+    render_comparison_cards((
+        ('Tìm được nhiều mục tiêu SAR hơn',
+         f"Sentinel-1 SLC VV · {scenes['diagnostic']['scenes']} cảnh đối chiếu",
+         f'{old_hits}/{targets}', f'{new_hits}/{targets}',
+         f"Recall {rate(old_hits, targets)} → {rate(new_hits, targets)}. "
+         f"Nhãn khớp trong 500 m từ bờ tăng từ {old_coast['matched']}/{old_coast['labels']} "
+         f"lên {new_coast['matched']}/{new_coast['labels']}.",
+         f"Điểm không khớp nhãn tăng từ {old_sar['false_positive']} lên {new_sar['false_positive']}."),
+        ('Giảm ghép sai mã AIS', f'Phát lại {ais_count} bản tin NOAA giữ riêng · 13/12/2024',
+         old_errors, new_errors,
+         'Số cặp ghép sai mã khi giữ nguyên đối tác đề xuất rồi kiểm tra chất lượng.',
+         f'Số cặp ghép đúng giảm từ {before_correct} xuống {after_correct}.'),
+    ))
     st.caption(
         'SAR được chấm theo nhãn ảnh (IoU ≥ 0,50). Phép thử AIS dùng bản tin cùng nguồn bị giữ lại làm mốc. '
         'Hai phép đo chưa xác nhận hiệu quả nghiệp vụ tại vùng biển Việt Nam.'

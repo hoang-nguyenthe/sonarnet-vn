@@ -1,0 +1,38 @@
+{
+  "kalman": {
+    "correct_0": 9361,
+    "correct_1": 10822,
+    "targets": 28800,
+    "scenes": 7200,
+    "only_linear": 376,
+    "only_kalman": 1837
+  },
+  "seeds": 10,
+  "ais": {
+    "speed_snapshot": 0.6712492911465171,
+    "speed_history": 0.9008315111034144,
+    "history": 0.9201241588689761
+  },
+  "review": {
+    "cases": 200,
+    "rules": 8,
+    "positive_pairs": 800,
+    "missed": [
+      132,
+      29
+    ],
+    "false_flags": [
+      54,
+      33
+    ]
+  },
+  "clicks": {
+    "pairs": 3200,
+    "medians": [
+      32,
+      32
+    ],
+    "paired_delta": 0
+  },
+  "source": "https://github.com/hoang-nguyenthe/sonarnet-vn/tree/ff49ad08987aff58ef5e21262e699936b33de6eb/reports/final/chang2"
+}
