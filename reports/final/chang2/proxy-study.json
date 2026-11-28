@@ -1,0 +1,817 @@
+{
+  "evidence_type": "browser_simulation_only",
+  "human_survey_responses": 0,
+  "sessions": 32,
+  "browser_decisions": 512,
+  "unique_cases": 16,
+  "chrome_version": "158.0.8127.38",
+  "browser_click_time_ms": {
+    "unit": "automation telemetry only",
+    "control": {
+      "median_ms": 33,
+      "min_ms": 29,
+      "max_ms": 83
+    },
+    "ai": {
+      "median_ms": 33,
+      "min_ms": 29,
+      "max_ms": 89
+    }
+  },
+  "policies": [
+    {
+      "name": "Nhạy · AI nhẹ",
+      "cutoff": 1.2,
+      "hintWeight": 0.65,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 1,
+        "false_flags": 2,
+        "insufficient": 1
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 1,
+        "false_flags": 2,
+        "insufficient": 0
+      }
+    },
+    {
+      "name": "Nhạy · AI mạnh",
+      "cutoff": 1.2,
+      "hintWeight": 1.45,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 1,
+        "false_flags": 2,
+        "insufficient": 1
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 1,
+        "false_flags": 3,
+        "insufficient": 0
+      }
+    },
+    {
+      "name": "Cân bằng · AI nhẹ",
+      "cutoff": 1.8,
+      "hintWeight": 0.65,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 2,
+        "false_flags": 2,
+        "insufficient": 1
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 1,
+        "false_flags": 2,
+        "insufficient": 0
+      }
+    },
+    {
+      "name": "Cân bằng · AI mạnh",
+      "cutoff": 1.8,
+      "hintWeight": 1.45,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 2,
+        "false_flags": 2,
+        "insufficient": 1
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 1,
+        "false_flags": 2,
+        "insufficient": 0
+      }
+    },
+    {
+      "name": "Thận trọng · AI nhẹ",
+      "cutoff": 2.4,
+      "hintWeight": 0.65,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 2,
+        "false_flags": 2,
+        "insufficient": 0
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 1,
+        "false_flags": 2,
+        "insufficient": 0
+      }
+    },
+    {
+      "name": "Thận trọng · AI mạnh",
+      "cutoff": 2.4,
+      "hintWeight": 1.45,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 2,
+        "false_flags": 2,
+        "insufficient": 0
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 2,
+        "false_flags": 0,
+        "insufficient": 3
+      }
+    },
+    {
+      "name": "Chọn lọc · AI nhẹ",
+      "cutoff": 3,
+      "hintWeight": 0.65,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 3,
+        "false_flags": 2,
+        "insufficient": 1
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 2,
+        "false_flags": 2,
+        "insufficient": 0
+      }
+    },
+    {
+      "name": "Chọn lọc · AI mạnh",
+      "cutoff": 3,
+      "hintWeight": 1.45,
+      "control": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 3,
+        "false_flags": 2,
+        "insufficient": 1
+      },
+      "ai": {
+        "decisions": 16,
+        "positive": 8,
+        "missed": 2,
+        "false_flags": 0,
+        "insufficient": 0
+      }
+    }
+  ],
+  "browser_runs": [
+    {
+      "profile": 0,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 0,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 0,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 0,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 1,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 1,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 2,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 1,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 2,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 1,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 2,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 2,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 2,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 2,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 3,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 3,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 3,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 3,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 4,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 4,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 4,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 4,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 5,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 1
+        }
+      }
+    },
+    {
+      "profile": 5,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 2
+        }
+      }
+    },
+    {
+      "profile": 5,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 2
+        }
+      }
+    },
+    {
+      "profile": 5,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 1
+        }
+      }
+    },
+    {
+      "profile": 6,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 6,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 3,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 6,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 3,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 6,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 2,
+          "false_flags": 1,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 7,
+      "layout": 2,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 7,
+      "layout": 3,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 3,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 7,
+      "layout": 4,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 3,
+          "false_flags": 1,
+          "insufficient": 1
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 0
+        }
+      }
+    },
+    {
+      "profile": 7,
+      "layout": 1,
+      "counts": {
+        "control": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 0,
+          "false_flags": 1,
+          "insufficient": 0
+        },
+        "ai": {
+          "decisions": 8,
+          "positive": 4,
+          "missed": 1,
+          "false_flags": 0,
+          "insufficient": 0
+        }
+      }
+    }
+  ]
+}

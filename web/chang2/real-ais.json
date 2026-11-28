@@ -1,0 +1,345 @@
+{
+  "dataset": "https://doi.org/10.5281/zenodo.7283281",
+  "license": "CC BY 4.0",
+  "source_csv_md5": "c5953081f511e228b19e46ca85fe304f",
+  "scope": "Manually annotated Danish AIS; fishing vs sailing; no local field survey.",
+  "coverage": {
+    "messages": 1026279,
+    "valid_messages": 1026265,
+    "manual_label_counts": {
+      "02-fishing": 764388,
+      "03-sailing": 129645,
+      "01-sailing": 120589,
+      "04-fishing": 11133,
+      "05-sailing": 524
+    },
+    "trips": 123,
+    "start_utc": "2021-11-14T00:00:03+00:00",
+    "end_utc": "2021-11-20T23:59:53+00:00",
+    "excluded_sparse_windows": 217,
+    "excluded_tied_windows": 21,
+    "window_minutes": 120,
+    "bin_minutes": 10,
+    "minimum_bins": 9,
+    "scored_windows": 1399,
+    "scored_vessels": 84,
+    "fishing_windows": 1155,
+    "sailing_windows": 244,
+    "stable_windows": 1273,
+    "mixed_windows": 126
+  },
+  "synthetic_only": [
+    {
+      "seed": 101,
+      "tn": 40,
+      "fp": 204,
+      "fn": 172,
+      "tp": 983,
+      "recall": 0.8510822510822511,
+      "precision": 0.8281381634372368,
+      "macro_f1": 0.5074460275368181
+    },
+    {
+      "seed": 203,
+      "tn": 94,
+      "fp": 150,
+      "fn": 300,
+      "tp": 855,
+      "recall": 0.7402597402597403,
+      "precision": 0.8507462686567164,
+      "macro_f1": 0.5431687565308254
+    },
+    {
+      "seed": 307,
+      "tn": 79,
+      "fp": 165,
+      "fn": 280,
+      "tp": 875,
+      "recall": 0.7575757575757576,
+      "precision": 0.8413461538461539,
+      "macro_f1": 0.529644866026738
+    },
+    {
+      "seed": 409,
+      "tn": 64,
+      "fp": 180,
+      "fn": 209,
+      "tp": 946,
+      "recall": 0.819047619047619,
+      "precision": 0.8401420959147424,
+      "macro_f1": 0.5385214839261684
+    },
+    {
+      "seed": 503,
+      "tn": 57,
+      "fp": 187,
+      "fn": 317,
+      "tp": 838,
+      "recall": 0.7255411255411255,
+      "precision": 0.817560975609756,
+      "macro_f1": 0.4766366794335085
+    }
+  ],
+  "vessel_held_out": {
+    "training_majority": {
+      "tn": 0,
+      "fp": 244,
+      "fn": 0,
+      "tp": 1155,
+      "recall": 1.0,
+      "precision": 0.825589706933524,
+      "macro_f1": 0.4522317932654659
+    },
+    "speed_snapshot": {
+      "tn": 97,
+      "fp": 147,
+      "fn": 95,
+      "tp": 1060,
+      "recall": 0.9177489177489178,
+      "precision": 0.8782104391052196,
+      "macro_f1": 0.6712492911465171
+    },
+    "speed_history": {
+      "tn": 201,
+      "fp": 43,
+      "fn": 36,
+      "tp": 1119,
+      "recall": 0.9688311688311688,
+      "precision": 0.9629948364888123,
+      "macro_f1": 0.9008315111034144
+    },
+    "history": {
+      "tn": 206,
+      "fp": 38,
+      "fn": 25,
+      "tp": 1130,
+      "recall": 0.9783549783549783,
+      "precision": 0.9674657534246576,
+      "macro_f1": 0.9201241588689761
+    },
+    "history_on_stable": {
+      "tn": 180,
+      "fp": 25,
+      "fn": 21,
+      "tp": 1047,
+      "recall": 0.9803370786516854,
+      "precision": 0.976679104477612,
+      "macro_f1": 0.9326020901431794
+    },
+    "history_on_mixed": {
+      "tn": 26,
+      "fp": 13,
+      "fn": 4,
+      "tp": 83,
+      "recall": 0.9540229885057471,
+      "precision": 0.8645833333333334,
+      "macro_f1": 0.8303635067712045
+    },
+    "folds": [
+      {
+        "fold": 1,
+        "test_vessels": 16,
+        "test_windows": 278,
+        "test_positives": 232,
+        "speed_snapshot": {
+          "tn": 22,
+          "fp": 24,
+          "fn": 13,
+          "tp": 219,
+          "recall": 0.9439655172413793,
+          "precision": 0.9012345679012346,
+          "macro_f1": 0.7326575698505523
+        },
+        "speed_history": {
+          "tn": 36,
+          "fp": 10,
+          "fn": 1,
+          "tp": 231,
+          "recall": 0.9956896551724138,
+          "precision": 0.9585062240663901,
+          "macro_f1": 0.922107032782292
+        },
+        "history": {
+          "tn": 39,
+          "fp": 7,
+          "fn": 1,
+          "tp": 231,
+          "recall": 0.9956896551724138,
+          "precision": 0.9705882352941176,
+          "macro_f1": 0.9449777337951508
+        }
+      },
+      {
+        "fold": 2,
+        "test_vessels": 17,
+        "test_windows": 281,
+        "test_positives": 239,
+        "speed_snapshot": {
+          "tn": 16,
+          "fp": 26,
+          "fn": 19,
+          "tp": 220,
+          "recall": 0.9205020920502092,
+          "precision": 0.8943089430894309,
+          "macro_f1": 0.6614004552148882
+        },
+        "speed_history": {
+          "tn": 37,
+          "fp": 5,
+          "fn": 9,
+          "tp": 230,
+          "recall": 0.9623430962343096,
+          "precision": 0.9787234042553191,
+          "macro_f1": 0.905686612965094
+        },
+        "history": {
+          "tn": 37,
+          "fp": 5,
+          "fn": 8,
+          "tp": 231,
+          "recall": 0.9665271966527197,
+          "precision": 0.9788135593220338,
+          "macro_f1": 0.9116031457955233
+        }
+      },
+      {
+        "fold": 3,
+        "test_vessels": 17,
+        "test_windows": 281,
+        "test_positives": 226,
+        "speed_snapshot": {
+          "tn": 20,
+          "fp": 35,
+          "fn": 14,
+          "tp": 212,
+          "recall": 0.9380530973451328,
+          "precision": 0.8582995951417004,
+          "macro_f1": 0.6729220609544624
+        },
+        "speed_history": {
+          "tn": 51,
+          "fp": 4,
+          "fn": 7,
+          "tp": 219,
+          "recall": 0.9690265486725663,
+          "precision": 0.9820627802690582,
+          "macro_f1": 0.9390779904211917
+        },
+        "history": {
+          "tn": 52,
+          "fp": 3,
+          "fn": 4,
+          "tp": 222,
+          "recall": 0.9823008849557522,
+          "precision": 0.9866666666666667,
+          "macro_f1": 0.9607079363176925
+        }
+      },
+      {
+        "fold": 4,
+        "test_vessels": 17,
+        "test_windows": 280,
+        "test_positives": 232,
+        "speed_snapshot": {
+          "tn": 22,
+          "fp": 26,
+          "fn": 29,
+          "tp": 203,
+          "recall": 0.875,
+          "precision": 0.8864628820960698,
+          "macro_f1": 0.6625692938057364
+        },
+        "speed_history": {
+          "tn": 45,
+          "fp": 3,
+          "fn": 15,
+          "tp": 217,
+          "recall": 0.9353448275862069,
+          "precision": 0.9863636363636363,
+          "macro_f1": 0.8967551622418879
+        },
+        "history": {
+          "tn": 45,
+          "fp": 3,
+          "fn": 9,
+          "tp": 223,
+          "recall": 0.9612068965517241,
+          "precision": 0.9867256637168141,
+          "macro_f1": 0.9280760339070127
+        }
+      },
+      {
+        "fold": 5,
+        "test_vessels": 17,
+        "test_windows": 279,
+        "test_positives": 226,
+        "speed_snapshot": {
+          "tn": 17,
+          "fp": 36,
+          "fn": 20,
+          "tp": 206,
+          "recall": 0.911504424778761,
+          "precision": 0.8512396694214877,
+          "macro_f1": 0.629059829059829
+        },
+        "speed_history": {
+          "tn": 32,
+          "fp": 21,
+          "fn": 4,
+          "tp": 222,
+          "recall": 0.9823008849557522,
+          "precision": 0.9135802469135802,
+          "macro_f1": 0.8328981097721664
+        },
+        "history": {
+          "tn": 33,
+          "fp": 20,
+          "fn": 3,
+          "tp": 223,
+          "recall": 0.9867256637168141,
+          "precision": 0.9176954732510288,
+          "macro_f1": 0.8462662609903931
+        }
+      }
+    ],
+    "features": [
+      "speed_mean",
+      "speed_std",
+      "speed_median",
+      "speed_p10",
+      "speed_p90",
+      "speed_max",
+      "speed_cv",
+      "turn_abs_mean",
+      "turn_abs_std",
+      "turn_abs_p90",
+      "turn_sign_changes",
+      "stop_fraction",
+      "moving_fraction",
+      "straightness",
+      "radius_gyration_m",
+      "path_length_m",
+      "net_displacement_m",
+      "bbox_diag_m",
+      "area_coverage_ratio",
+      "accel_abs_mean",
+      "accel_abs_std",
+      "course_autocorr_lag1",
+      "course_spectral_peak",
+      "course_spectral_ratio",
+      "speed_autocorr_lag1",
+      "n_points"
+    ],
+    "paired_vessel_bootstrap": {
+      "macro_f1_delta_ci": [
+        0.0013361791891342567,
+        0.040168549752651606
+      ],
+      "recall_delta_ci": [
+        -0.0008285520234952743,
+        0.02330535918152273
+      ],
+      "valid_bootstrap_draws": 2000
+    }
+  }
+}

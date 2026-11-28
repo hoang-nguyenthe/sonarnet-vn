@@ -31,8 +31,56 @@ Có thể bỏ hai tên phiếu để sinh báo cáo **0 người tham gia**. C�
 - Hai lượt có cùng 8 ca mỗi lượt, mỗi lượt gồm hai ca mỗi lớp và bốn ca dương tính theo nhãn mô phỏng. Cả hai lượt có cùng loại đồ thị kiểm tra. Lượt có AI thêm gợi ý từ mô hình huấn luyện với 800 hàng của seed 101, chạy trên quỹ đạo mô phỏng độc lập. Ba gợi ý không khớp nhãn ưu tiên theo thiết kế để có thể quan sát lỗi theo gợi ý. Đây là bộ ca đối chứng có chủ đích, không dùng để ước lượng tần suất sai trên toàn bộ luồng hoạt động.
 - Mỗi ca có ba lựa chọn. Ca dương được đánh dấu chưa ưu tiên hoặc chưa đủ dữ liệu đều tính là bỏ sót. Ca âm được đánh dấu ưu tiên là cờ nhầm. Tính trung vị thời gian cho mỗi người và mỗi điều kiện, sau đó tính chênh theo cặp. Khi người dùng đổi tab, thời gian của ca đó bị loại và lựa chọn vẫn được giữ. Thời gian nghỉ giữa hai lượt không tính.
 - Bài thử ghi phiếu trong trình duyệt và người tham gia tải JSON. Không cần tên hoặc thông tin định danh. Nhóm chuyên môn khai trong phiếu. Chỉ tổng hợp phiếu thực tế có đồng ý và đủ 16 ca. Kiểm thử trình duyệt dùng tệp đánh dấu riêng và bị loại khỏi kết quả nộp.
-- Giới hạn gồm cỡ mẫu, độ khó khác nhau giữa các ca, hiệu ứng thứ tự và thiếu nhãn hành vi ngoài thực địa. Kết quả người tham gia chỉ áp dụng cho bộ ca và điều kiện đo này.
+- Giới hạn gồm cỡ mẫu, độ khó khác nhau giữa các ca, hiệu ứng thứ tự và thiếu nhãn hành vi bốn lớp và bộ ca đã xác nhận ở Việt Nam. Kết quả người tham gia chỉ áp dụng cho bộ ca và điều kiện đo này.
 
 ## Kê khai AI
 
-OpenAI Codex hỗ trợ viết công cụ chạy đối chứng, bài thử trên web, kiểm thử và trình bày báo cáo. Chỉ số lấy từ mã chạy và phiếu thu thực tế. Tái sử dụng trình sinh hành vi, bộ trích đặc trưng, Kalman, ghép AIS và XGBoost của SonarNet. Không dùng AI để tạo phiếu chuyên viên.
+OpenAI Codex hỗ trợ viết công cụ chạy đối chứng, bài thử trên web, kiểm thử và trình bày báo cáo. Chỉ số lấy từ mã chạy, AIS có nguồn đối chiếu và phiếu do người tham gia thực hiện. Tái sử dụng trình sinh hành vi, bộ trích đặc trưng, Kalman, ghép AIS và XGBoost của SonarNet. Không dùng AI để tạo phiếu chuyên viên.
+
+## Đối chứng bằng AIS thật
+
+Song Wu (2022), *Dataset for Semantic Segmentation of Fishing Trajectories*, Zenodo,
+[DOI 10.5281/zenodo.7283281](https://doi.org/10.5281/zenodo.7283281), CC BY 4.0.
+Dữ liệu liên quan bài báo [MDM 2022](https://doi.org/10.1109/MDM55031.2022.00092).
+Tác giả gán nhãn thủ công trên quỹ đạo AIS của Đan Mạch. Trang của tác giả mô tả 128 quỹ đạo. SonarNet đếm được 123 giá trị mã chuyến phân biệt trong CSV gốc và dùng số đếm trực tiếp khi lập báo cáo. Dữ liệu gốc có thông tin
+định danh tàu. Gói minh chứng chỉ có số liệu nhóm và hướng dẫn tải bản gốc.
+
+```sh
+curl -fL 'https://zenodo.org/records/7283281/files/128_fishing_trajs.csv' -o 128_fishing_trajs.csv
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=src:scripts python3 scripts/evaluate_chang2_real_ais.py 128_fishing_trajs.csv
+```
+
+- Script xác minh MD5 công bố của Zenodo. Lọc các điểm thiếu nhãn khai thác hoặc
+  di chuyển, vị trí ngoài miền hợp lệ, hướng ngoài 0–360 độ hoặc tốc độ ngoài 0–40
+  hải lý/giờ. Chia mỗi chuyến thành cửa sổ UTC hai giờ không chồng lấn, cần ít
+  nhất 9/12 ô 10 phút có quan sát. Lấy trung vị vị trí và tốc độ, tính hướng
+  trung bình vòng tròn. Tên tàu, vùng biển và thời gian tuyệt đối không đi vào mô hình.
+- Nhãn mỗi ô là trạng thái của đa số bản ghi. Nhãn cửa sổ là trạng thái chiếm
+  nhiều ô hơn. Bỏ cửa sổ hòa. Giữ các cửa sổ hỗn hợp để chấm chính, báo thêm nhóm
+  có ít nhất 80% ô đồng thuận và nhóm còn lại. Cách này chấm trạng thái trội
+  của cửa sổ, chưa đo ranh giới sự kiện theo phút. Cửa sổ thiếu bản tin nhiều
+  bị loại theo tiêu chí trước khi chấm, nên kết quả tập trung vào AIS đủ dày.
+- Giữ nguyên huấn luyện mô phỏng 800 hàng theo 5 seed và quy đổi dự đoán câu/kéo
+  lưới thành khai thác. Sau đó, thử ba mô hình nhị phân cùng cấu hình XGBoost học
+  AIS thật, lần lượt với tốc độ ở ô cuối, đặc trưng chuỗi tốc độ và toàn quỹ đạo.
+  Dùng cùng 5 fold theo mã tàu tách từ mã chuyến. Tàu chấm không có trong tập
+  huấn luyện của fold. Không dò ngưỡng hoặc siêu tham số trên tập chấm. Bootstrap
+  mô tả 2.000 lần theo tàu từ dự đoán ngoài tập học, không huấn luyện lại mô hình
+  trong mỗi lần lấy mẫu.
+- Kết quả hai lớp tại Đan Mạch. Nhãn do người gán từ quỹ đạo, chưa đối chiếu với
+  nhật ký khai thác hoặc quan sát trực tiếp. Mô hình AIS nhị phân được đánh giá
+  như một phương án nghiên cứu và chưa đưa vào demo sản xuất.
+
+## Kiểm tra thao tác tự động
+
+Với Node.js, Playwright và Chromium, chạy từ thư mục gốc:
+
+```sh
+node scripts/replay_chang2_proxy.cjs
+```
+
+Có thể đặt `SONARNET_PLAYWRIGHT_PATH` và `SONARNET_CHROME` để dùng bản cài sẵn.
+Bốn ngưỡng và hai trọng số gợi ý tạo 8 quy tắc giả lập. Mỗi quy tắc chạy đủ bốn
+bố trí. Kết quả theo quy tắc gộp hai lần lặp của mỗi bộ ca trong mỗi điều kiện.
+Số liệu phiên và thời gian trong `proxy-study.json` đo trình duyệt tự động. Tệp
+này có đánh dấu `browser_simulation_only` và không chứa phiếu chuyên viên.
