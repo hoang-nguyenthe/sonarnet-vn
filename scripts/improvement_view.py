@@ -395,7 +395,14 @@ def render_slc_adaptation(root: Path):
             if image['cohort'] == cohort:
                 with st.expander('Mở ảnh kiểm tra và hộp dự đoán'):
                     st.image(str(directory/image['file']), use_container_width=True,
-                             caption=image['selection'] + ' · Lam: nhãn · Cam: dự đoán khớp · Đỏ: dự đoán không khớp.')
+                             caption=image['selection'] + ' · Lam: nhãn · Cam: dự đoán ghép được · Đỏ: dự đoán chưa ghép.')
+                    st.caption('Chấm theo IoU từ 0,50. IoU là diện tích giao chia cho diện tích hợp. '
+                               'Mỗi nhãn chỉ ghép với một dự đoán. Khung đỏ có thể chồng lên nhãn '
+                               'dưới ngưỡng, trùng với nhãn đã ghép hoặc nằm ngoài nhãn.')
+                    if image['id'] == '4048':
+                        st.caption('Ô 4048: khung đỏ của LS-SSDD ở tàu phía dưới có IoU 0,309. '
+                                   'SLC VV ghép được cả hai nhãn. Ba khung đỏ gồm hai hộp trùng '
+                                   'trên nhãn đã ghép và một hộp ngoài nhãn.')
     a, b = st.columns(2)
     a.download_button('Tải kết quả kiểm thử SLC', path.read_bytes(), 'sonarnet-slc-vv.json', 'application/json')
     b.download_button('Tải kết quả giới hạn rà soát', budget_path.read_bytes(),

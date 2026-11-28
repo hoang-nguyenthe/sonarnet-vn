@@ -192,7 +192,53 @@ def robustness_plot(robust):
     plt.close(fig)
 
 
-def pdf_report(raw, behavior, fusion, study, external, proxy, robust, transfer):
+SAR_NAMES={
+    'reference_ls_ssdd':'YOLO học LS-SSDD',
+    'adapted_slc_vv':'YOLO học SLC VV',
+    'guard_ring_cfar':'CFAR vòng nền',
+    'review-budget':'Giới hạn danh sách rà',
+    'coastal-budget':'Giới hạn có ưu tiên ven bờ',
+}
+FUTURE=[
+    ('Nhãn AIS ở Việt Nam',
+     'Mô hình học Đan Mạch đạt F1 0,415 khi chuyển sang GFW. Tập Đan Mạch chỉ có hai trạng thái.',
+     'Thu quỹ đạo có nhật ký hoặc quan sát độc lập, hai người gán nhãn bốn lớp. Giữ riêng tàu, ngày và vùng chấm. Báo macro-F1 và recall từng lớp, kể cả ca chuyển trạng thái.'),
+    ('Mất bản tin',
+     'Khi mất nửa số mốc, tăng cường làm giảm bỏ sót và tăng cờ nhầm.',
+     'Kiểm tra trên mất tín hiệu tự nhiên. Đo recall, cờ nhầm và tỷ lệ trả “chưa đủ dữ liệu” theo số mốc và khoảng trống.'),
+    ('Hộp SAR và khối lượng rà',
+     'Một dự đoán có thể đúng vùng tàu nhưng IoU thấp hoặc lặp trên cùng một nhãn.',
+     'Giữ IoU 0,50 làm chuẩn. Đo thêm sai số tâm theo mét và phân loại hộp trùng, sai kích thước, điểm ngoài nhãn. Chọn ngưỡng và lọc trùng trên cảnh phát triển riêng.'),
+    ('Ghép SAR–AIS và kích thước',
+     'Bật Kalman giảm lỗi ghép trong mô phỏng. Nhiễu kích thước vẫn tạo cờ nhầm.',
+     'Đối chiếu cảnh SAR và AIS/VMS đồng thời với nhãn tàu độc lập. Báo ghép sai, từ chối, sai số vị trí và cờ kích thước theo khoảng cách tới bờ.'),
+    ('Thời gian người rà',
+     '32 phiên chỉ đo thao tác của trình duyệt tự động. Cần phiếu chuyên viên để đo tác động ở người.',
+     'Dùng bài thử chéo với các mã luân phiên A/B. Đo thời gian trong từng người, bỏ sót và cờ nhầm. Báo số phiếu và độ bất định của chênh lệch.'),
+]
+
+
+def sar_rows(sar):
+    titles={'diagnostic':'3 cảnh đối chiếu','north_sea':'Cảnh Biển Bắc giữ riêng'}
+    return [['Tập ảnh','Phương pháp','Khớp / tổng','Bỏ sót','Ngoài cặp khớp','Precision']]+[
+        [titles[row['cohort']],SAR_NAMES[row['method']],
+         f"{row['true_positive']}/{row['n_ground_truth']}",
+         row['n_ground_truth']-row['true_positive'],row['false_positive'],
+         fst(row['precision'])] for row in sar['comparison']
+    ]
+
+
+def tile_rows(sar):
+    reasons={'matched':'Được ghép một–một','duplicate':'Hộp trùng trên nhãn đã ghép',
+             'below_iou':'Chồng lên nhãn dưới ngưỡng','no_overlap':'Không chồng nhãn nào'}
+    return [['Mô hình','Hộp theo thứ tự điểm','IoU lớn nhất','Kết quả']]+[
+        [SAR_NAMES[model],row['index']+1,fst(max(row['overlap_with_label'])),reasons[row['status']]]
+        for model,data in sar['tile']['models'].items()
+        for row in data['predictions'] if row['status'] in reasons
+    ]
+
+
+def pdf_report(raw, behavior, fusion, study, external, proxy, robust, transfer, sar):
     base=Path('/System/Library/Fonts/Supplemental')
     pdfmetrics.registerFont(TTFont('ArabicFreeNormal',str(base/'Arial.ttf')))
     pdfmetrics.registerFont(TTFont('ArabicFreeBold',str(base/'Arial Bold.ttf')))
@@ -350,6 +396,21 @@ def pdf_report(raw, behavior, fusion, study, external, proxy, robust, transfer):
     p('Kết quả học và chấm trong cùng nguồn cho thấy khả năng phân biệt hai trạng thái khi có dữ liệu cùng miền. Khi chuyển nguồn, khác biệt về hoạt động, thiết bị và cách gán nhãn có thể làm số cờ nhầm tăng mạnh. Cần dữ liệu cùng vùng cùng quy trình trước khi dùng cho Việt Nam.')
     p(f'<link href="{transfer["source"]}" color="#00675c">Global Fishing Watch Training Data · CC BY 4.0</link>  ·  <link href="{PAGE}gfw-transfer.json" color="#00675c">Kết quả chi tiết</link>',caption)
 
+    story.append(PageBreak())
+    page('Vì sao có khung chồng mà vẫn trượt?','OPEN SAR INSIGHT  ·  Ô 4048  ·  11/05/2020 UTC')
+    p('IoU là diện tích giao chia cho diện tích hợp của hai khung. Chấm ở IoU từ 0,50, sau khi lọc theo điểm dự đoán. Mỗi nhãn chỉ được ghép một lần. Trường hợp ô 4048, LS-SSDD có hộp phủ vào tàu phía dưới nhưng đạt IoU 0,309. SLC VV ghép đủ hai nhãn và còn hai hộp trùng, một hộp ngoài nhãn.')
+    table(tile_rows(sar),[104,105,83,209])
+    p('Ngưỡng IoU 0,30 cho LS-SSDD một hộp khớp ở ô này. Kết quả chính vẫn dùng ngưỡng 0,50 đã khóa. Bảng dưới báo toàn bộ tập ảnh, tránh suy rộng từ một ví dụ.',caption)
+    table(sar_rows(sar),[92,139,60,48,85,77])
+    p(f'<link href="https://huggingface.co/datasets/opensar-insight/vessel-detection-dataset" color="#00675c">Nguồn OpenSAR Insight</link>  ·  <link href="{PAGE}sar-tile-4048.json" color="#00675c">Tọa độ hộp, điểm dự đoán và phép chấm tái lập</link>',caption)
+    story.append(PageBreak())
+
+    page('Giới hạn và cách kiểm chứng tiếp','TỪ KẾT QUẢ ĐỐI CHỨNG ĐẾN PHÉP THỬ NGOÀI HIỆN TRƯỜNG')
+    table([['Phần cần kiểm chứng','Giới hạn đã quan sát','Thí nghiệm hoặc dữ liệu cần có'],*FUTURE],
+          [100,153,248])
+    p('Ưu tiên xác nhận độ bền và độ chuyển vùng trên dữ liệu giữ riêng trước khi thay mô hình vận hành. Báo riêng kết quả kỹ thuật, đánh giá chuyên viên và bằng chứng trực tiếp từ thực địa.')
+    p(f'<link href="{PAGE}evidence.html#gioi-han" color="#00675c">Bảng đối chiếu và dữ liệu tải về</link>',caption)
+
     def footer(c,doc):
         c.setFillColor(teal)
         c.rect(0,A4[1]-8,A4[0],8,fill=1,stroke=0)
@@ -372,7 +433,7 @@ def html_table(rows):
     return '<div class="table-wrap"><table>'+''.join(rendered)+'</table></div>'
 
 
-def web_report(behavior,fusion,study,external,proxy,robust,transfer):
+def web_report(behavior,fusion,study,external,proxy,robust,transfer,sar):
     behavior_table=html_table([['Dữ liệu học','Đủ bản tin','Mất bản tin','Cửa sổ ngắn','Chồng lấn']]
         +[[name,*[fst(behavior[s,m]['mean'])+' ± '+fst(behavior[s,m]['sd']) for s in SCENARIOS]]
           for m,name in MODELS.items()])
@@ -401,7 +462,7 @@ def web_report(behavior,fusion,study,external,proxy,robust,transfer):
 <body><header><div><a href="./">SonarNet Việt Nam</a><span>Chung kết AI 2026 · Bảng C</span></div><a href="study.html">Thử rà quỹ đạo</a></header>
 <main><section><h1>Kiểm chứng mô-đun hành vi</h1><p>Đề Chặng 2 yêu cầu tách đóng góp của bộ ước lượng Kalman, đối chiếu kích thước và dữ liệu hành vi, rồi kiểm tra ảnh hưởng của gợi ý AI lên thao tác rà.</p>
 <div class="stats"><div class="stat"><strong>5 seed</strong>4 kịch bản ghép và 4 mức chất lượng quỹ đạo</div><div class="stat"><strong>3 → 0</strong>cặp ghép sai trên 4.800 mục tiêu mô phỏng</div><div class="stat"><strong>0,236 → 0,883</strong>macro-F1 khi tín hiệu chồng lấn, cùng 400 mẫu học</div></div>
-<div class="links"><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a></div></section>
+<div class="links"><a href="{REPORT}">Đọc báo cáo PDF</a><a href="{ZIP}">Tải bộ minh chứng ZIP</a><a href="{SOURCE}">Mã nguồn Chặng 2</a><a href="#kiem-thu-bo-sung">Xem kiểm thử bổ sung</a><a href="#sar-4048">Giải thích ô SAR 4048</a><a href="#gioi-han">Giới hạn và hướng tiếp theo</a></div></section>
 <section><h2>Kalman và kiểm tra kích thước</h2>{fusion_table}
 <p class="muted">¹ Trên cặp ghép đúng. Kịch bản hộp radar nhiễu mạnh có 85/110 mâu thuẫn được phát hiện, 25 bỏ sót và 23 cờ nhầm với Kalman và kiểm kích thước. Dữ liệu mô phỏng.</p>
 <p><a href="fusion.csv" download>Tải CSV ghép và kích thước theo từng seed</a></p></section>
@@ -433,7 +494,15 @@ def web_report(behavior,fusion,study,external,proxy,robust,transfer):
 {html_table(transfer_rows(transfer))}
 <p>Hai dòng cuối dùng một phần GFW để học. Phương án đa nguồn giữ riêng toàn bộ nhóm nghề đang chấm và từng tàu trong nhóm đó. Phương án cùng nguồn giữ riêng tàu, các nhóm nghề vẫn có thể xuất hiện trong tập học.</p>
 <p class="muted">Ngưỡng 5 mốc cho {count(relaxed['windows'])} cửa sổ từ {relaxed['vessels']} tàu. Nhánh câu dây chỉ có đủ ví dụ dương ở điều kiện này. Khác biệt giữa nguồn có thể làm cờ nhầm tăng.</p>
-<p><a href="{transfer['source']}">Nguồn dữ liệu Global Fishing Watch · CC BY 4.0</a> · <a href="gfw-transfer.json" download>Tải kết quả theo nguồn và nhóm nghề</a></p></section></main>
+<p><a href="{transfer['source']}">Nguồn dữ liệu Global Fishing Watch · CC BY 4.0</a> · <a href="gfw-transfer.json" download>Tải kết quả theo nguồn và nhóm nghề</a></p></section>
+<section id="sar-4048"><h2>Vì sao hai hộp chồng mà vẫn trượt?</h2>
+<p>Ở ô OpenSAR Insight 4048, khung dự đoán LS-SSDD trên tàu phía dưới chồng lên nhãn với IoU 0,309. Ngưỡng chấm chính là 0,50. Bên SLC VV, hai dự đoán đã được ghép vào hai nhãn, hai hộp khác trùng lên chính các nhãn đã ghép và một hộp nằm ngoài cả hai nhãn.</p>
+{html_table(tile_rows(sar))}
+<p class="muted">IoU là phần diện tích giao chia cho diện tích hợp. Mỗi nhãn được ghép một lần theo thứ tự điểm dự đoán. Chấm mô tả ở IoU 0,30 cho LS-SSDD khớp 1/2 nhãn ở ô này.</p>
+<h3>So sánh toàn bộ tập ảnh</h3>{html_table(sar_rows(sar))}
+<p><a href="sar-tile-4048.json" download>Tải tọa độ và IoU của từng hộp</a></p></section>
+<section id="gioi-han"><h2>Giới hạn và phép thử tiếp theo</h2>
+{html_table([['Phần cần kiểm chứng','Giới hạn đã quan sát','Thí nghiệm hoặc dữ liệu cần có'],*FUTURE])}</section></main>
 <footer>SonarNet Việt Nam · Chặng 2 · 28/11/2026</footer></body></html>"""
     (WEB/'evidence.html').write_text(html)
 
@@ -449,14 +518,15 @@ def main():
     robust=json.loads((OUT/'ais-robustness.json').read_text())
     transfer=json.loads((OUT/'gfw-transfer.json').read_text())
     robustness_plot(robust)
-    pdf_report(raw,behavior,fusion,groups,external,proxy,robust,transfer)
-    web_report(behavior,fusion,groups,external,proxy,robust,transfer)
+    sar=json.loads((OUT/'sar-tile-4048.json').read_text())
+    pdf_report(raw,behavior,fusion,groups,external,proxy,robust,transfer,sar)
+    web_report(behavior,fusion,groups,external,proxy,robust,transfer,sar)
     import shutil
     for name in ('behavior.csv','fusion.csv','study-summary.json','real-ais.json','proxy-study.json',
-                 'ais-robustness.json','gfw-transfer.json'):
+                 'ais-robustness.json','gfw-transfer.json','sar-tile-4048.json'):
         shutil.copyfile(OUT/name,WEB/name)
-    files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json')]
-    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py')]
+    files=[(OUT/file,file) for file in ('behavior.csv','fusion.csv','results.json','study-cases.json','study-summary.json','PROTOCOL.md','real-ais.json','proxy-study.json','ais-robustness.json','gfw-transfer.json','sar-tile-4048.json')]
+    files += [(ROOT/'scripts'/f,'scripts/'+f) for f in ('evaluate_chang2.py','score_chang2_study.py','evaluate_chang2_real_ais.py','replay_chang2_proxy.cjs','stress_chang2_real_ais.py','transfer_chang2_gfw.py','audit_chang2_sar_tile.py')]
     files += [(WEB/file,file) for file in (REPORT,'behavior.png','robustness.png')]
     with ZipFile(WEB/ZIP,'w',compression=ZIP_DEFLATED) as archive:
         for source,name in files:

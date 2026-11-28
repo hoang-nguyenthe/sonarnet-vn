@@ -139,3 +139,15 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONPATH=src:scripts python3 scripts/
   gần như không đại diện ở ngưỡng cao. Các số đếm và nhãn của hai nguồn khác
   nhau về thời điểm, nghề và mật độ bản tin. Nhãn AIS từ chuyên gia và cộng
   tác viên là nhãn tham chiếu, chưa xác nhận bằng nhật ký cho các ca của SonarNet.
+
+## Phân tích ô SAR 4048
+
+Tái lập bằng `PYTHONPATH=src python3 scripts/audit_chang2_sar_tile.py`. Script lấy
+hai nhãn tàu từ manifest OpenSAR, dùng nguyên các ngưỡng điểm đã khóa và đối
+chiếu các cặp khớp với tệp lỗi lưu ở Chặng 1. Thứ tự ưu tiên theo điểm dự đoán.
+Mỗi nhãn chỉ dùng một lần. Trong `sar-tile-4048.json`, `duplicate` là hộp có IoU
+ít nhất 0,50 với nhãn đã ghép. `below_iou` là hộp có phần giao nhưng dưới 0,50.
+`no_overlap` là hộp có IoU bằng 0 với mọi nhãn chấm. Các lỗi này có ý nghĩa khác
+nhau khi xem ảnh. Bảng độ nhạy IoU 0,30, 0,50 và 0,75 mô tả riêng ô 4048.
+Kết quả chính của tập ảnh giữ IoU 0,50. Các bảng SAR này đo phát hiện hộp,
+tách với đánh giá ghép SAR–AIS và nhãn hành vi của Chặng 2.
