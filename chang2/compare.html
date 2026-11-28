@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="compare.css">
   <script src="cases.js" defer></script>
   <script src="review-view.js" defer></script>
+  <script src="compare-data.js" defer></script>
   <script src="compare.js" defer></script>
 </head>
 <body>
@@ -15,14 +16,13 @@
 <main>
   <section class="compare-intro">
     <h1>Cùng một ca AIS, hai cách rà</h1>
-    <p>Hai bên dùng cùng quỹ đạo, tốc độ, thời gian và nút quyết định. Bên phải hiển thị thêm đề xuất của mô hình. Chọn một tình huống rồi thử quyết định ở từng bên.</p>
+    <p>Hai bên dùng cùng quỹ đạo, tốc độ, thời gian và nút quyết định. Bên phải hiển thị thêm đề xuất của mô hình. Chọn bất kỳ ca nào trong bộ 16 ca, thử quyết định ở từng bên rồi đối chiếu với kết quả mô phỏng.</p>
     <div class="case-picker">
       <label for="demo-case">Tình huống minh họa</label>
-      <select id="demo-case">
-        <option value="Q16">Q16 · Gợi ý đúng</option>
-        <option value="Q02">Q02 · Nguy cơ bỏ sót</option>
-        <option value="Q08">Q08 · Nguy cơ cờ nhầm</option>
-      </select>
+      <div class="case-controls">
+        <select id="demo-case"></select>
+        <a href="#tat-ca-ca">Xem bảng 16 ca</a>
+      </div>
     </div>
   </section>
   <div id="compare-panels" class="compare-pair">
@@ -59,13 +59,49 @@
       <p class="decision-feedback" data-feedback aria-live="polite" hidden></p>
     </article>
   </div>
-  <section class="review-meaning">
-    <h2>Cách đọc hai bên</h2>
+  <section class="review-meaning" id="ket-qua-ca">
+    <h2>Kết quả ca đang xem</h2>
+    <p id="example-explanation" class="notice" aria-live="polite"></p>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Chỉ số</th><th scope="col">Không gợi ý</th><th scope="col">Có gợi ý</th></tr></thead>
+      <tbody id="case-metrics"></tbody>
+    </table></div>
+    <details>
+      <summary>Xem quyết định của 8 quy tắc</summary>
+      <div class="table-wrap"><table>
+        <thead><tr><th scope="col">Quy tắc</th><th scope="col">Không gợi ý</th><th scope="col">Có gợi ý</th></tr></thead>
+        <tbody id="case-rules"></tbody>
+      </table></div>
+    </details>
+  </section>
+  <section id="tat-ca-ca">
+    <h2>Đối chiếu đủ 16 ca</h2>
+    <p>Mỗi ca có 8 quyết định của quy tắc ở mỗi chế độ. Bấm mã ca để mở hai giao diện. Thời gian là trung vị của 16 lần bấm tự động ở mỗi chế độ.</p>
+    <div class="case-picker">
+      <label for="case-filter">Lọc theo tác động</label>
+      <select id="case-filter">
+        <option value="all">Tất cả ca</option>
+        <option value="changed">Ca có quy tắc đổi đúng hoặc đổi sai</option>
+        <option value="conflict">Ca có gợi ý ưu tiên sai</option>
+        <option value="stable">Ca giữ nguyên đúng/sai ở cả 8 quy tắc</option>
+      </select>
+    </div>
+    <p id="filter-count" aria-live="polite" class="muted"></p>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Ca</th><th scope="col">Nhãn mô phỏng</th><th scope="col">AI gợi ý ưu tiên</th><th scope="col">Ưu tiên không/có</th><th scope="col">Lỗi không/có</th><th scope="col">ms không/có</th></tr></thead>
+      <tbody id="all-case-rows"></tbody>
+    </table></div>
+    <p class="muted">Lỗi gồm bỏ sót ở ca câu hoặc kéo lưới và cờ nhầm ở ca quá cảnh hoặc neo đậu.</p>
+    <div class="links"><a href="review-cases.csv" download>Tải CSV từng ca</a><a href="proxy-study.json" download>Tải dữ liệu chạy tự động</a></div>
+  </section>
+  <section>
+    <h2>Kết luận về thời gian và thao tác</h2>
     <div class="meaning-grid">
       <div><h3>Tự hình thành giả thuyết</h3><p>Đọc hướng đi, tốc độ và số bản tin để tự cân nhắc dấu hiệu khai thác. Nếu bằng chứng còn mơ hồ, chọn “Chưa đủ dữ liệu”.</p></div>
       <div><h3>Kiểm chứng giả thuyết do AI đưa ra</h3><p>Dùng gợi ý làm điểm bắt đầu. Kiểm tra lại cả hai đồ thị trước khi quyết định, nhất là khi gợi ý mâu thuẫn với tín hiệu quan sát.</p></div>
     </div>
-    <p id="example-explanation" class="notice" aria-live="polite"></p>
+    <p id="timing-summary" class="notice"></p>
+    <p>Cả hai chế độ cần một lần bấm để ghi nhận lựa chọn. Khi gợi ý phù hợp, người rà có thể đi thẳng vào kiểm chứng giả thuyết. Khi gợi ý mâu thuẫn hoặc dữ liệu thưa, cần đối chiếu lại quỹ đạo, tốc độ và số bản tin.</p>
     <div class="links"><a href="evidence.html#do-goi-y">Xem số liệu bỏ sót và thời gian thao tác tự động</a><a href="study.html">Thử quy trình 16 ca</a></div>
   </section>
 </main>

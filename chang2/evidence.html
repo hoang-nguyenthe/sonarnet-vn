@@ -41,12 +41,15 @@
 <p><a href="https://doi.org/10.5281/zenodo.7283281">Dữ liệu gốc và giấy phép CC BY 4.0</a> · <a href="real-ais.json" download>Tải kết quả theo seed và tàu giữ riêng</a></p></section>
 <section id="do-goi-y"><h2>So sánh có và không có gợi ý AI</h2>
 <p>Hai bên cùng dữ liệu AIS và ba lựa chọn. Người rà tự dựng giả thuyết ở bên không AI. Ở bên có AI, đề xuất tạo một điểm bắt đầu để đối chiếu lại với hai đồ thị.</p>
-<p><a href="compare.html"><strong>Mở hai giao diện cạnh nhau và thử ba tình huống</strong></a></p>
+<p><a href="compare.html"><strong>Mở hai giao diện cạnh nhau trên đủ 16 ca</strong></a></p>
 <h3>Bỏ sót và cờ nhầm trong mô phỏng</h3>
 <p>32 phiên trình duyệt tự động, 512 lượt chọn, 8 quy tắc và 16 ca mô phỏng. Bảng gộp các lần lặp của cùng một ca và quy tắc.</p>
 <div class="table-wrap"><table><tr><th>Quy tắc mô phỏng</th><th>Bỏ sót không / có AI</th><th>Cờ nhầm không / có AI</th><th>Chưa đủ dữ liệu không / có AI</th></tr><tr><td>Nhạy · AI nhẹ</td><td>1 / 1</td><td>2 / 2</td><td>1 / 0</td></tr><tr><td>Nhạy · AI mạnh</td><td>1 / 1</td><td>2 / 3</td><td>1 / 0</td></tr><tr><td>Cân bằng · AI nhẹ</td><td>2 / 1</td><td>2 / 2</td><td>1 / 0</td></tr><tr><td>Cân bằng · AI mạnh</td><td>2 / 1</td><td>2 / 2</td><td>1 / 0</td></tr><tr><td>Thận trọng · AI nhẹ</td><td>2 / 1</td><td>2 / 2</td><td>0 / 0</td></tr><tr><td>Thận trọng · AI mạnh</td><td>2 / 2</td><td>2 / 0</td><td>0 / 3</td></tr><tr><td>Chọn lọc · AI nhẹ</td><td>3 / 2</td><td>2 / 2</td><td>1 / 0</td></tr><tr><td>Chọn lọc · AI mạnh</td><td>3 / 2</td><td>2 / 0</td><td>1 / 0</td></tr></table></div>
 <p>Bỏ sót 16 → 11 trên 64 cặp ca dương × quy tắc. Có 7 quyết định được sửa và 2 bỏ sót mới. Cờ nhầm 16 → 13 trên 64 cặp ca âm × quy tắc. Có 4 cờ được bỏ và 1 cờ mới.</p>
-<h3>Thời gian thao tác tự động</h3><div class="table-wrap"><table><tr><th>Thao tác tự động</th><th>Không gợi ý</th><th>Có gợi ý</th></tr><tr><td>Trung vị</td><td>33 ms</td><td>33 ms</td></tr><tr><td>Khoảng quan sát</td><td>28–82 ms</td><td>28–83 ms</td></tr></table></div>
+<h3>Thời gian thao tác tự động</h3><div class="table-wrap"><table><tr><th>Thao tác tự động</th><th>Không gợi ý</th><th>Có gợi ý</th></tr><tr><td>Trung vị</td><td>33 ms</td><td>33 ms</td></tr><tr><td>Phân vị 90</td><td>35 ms</td><td>36 ms</td></tr><tr><td>Khoảng quan sát</td><td>21–43 ms</td><td>22–79 ms</td></tr></table></div>
+<p>Ghép 256 cặp lần bấm theo cùng ca, quy tắc và vị trí lượt. Trung vị chênh có AI trừ không AI là 0 ms. Cả hai bên giữ hai đồ thị và một lần bấm để ghi quyết định.</p>
+<h3>Khi nào gợi ý đổi đúng, khi nào đổi sai?</h3><div class="table-wrap"><table><tr><th>Nhóm ca</th><th>Số ca</th><th>Lỗi K / C</th><th>Đổi đúng</th><th>Đổi sai</th></tr><tr><td>Cửa sổ ngắn, có nhiễu</td><td>8</td><td>2/0</td><td>2</td><td>0</td></tr><tr><td>Tín hiệu chồng lấn</td><td>8</td><td>30/24</td><td>9</td><td>3</td></tr><tr><td>Gợi ý ưu tiên đúng</td><td>13</td><td>24/13</td><td>11</td><td>0</td></tr><tr><td>Gợi ý ưu tiên sai</td><td>3</td><td>8/11</td><td>0</td><td>3</td></tr></table></div>
+<p><a href="compare.html#tat-ca-ca">Mở 16 ca có thể chọn và tám quy tắc của mỗi ca</a> · <a href="review-cases.csv" download>Tải bảng từng ca</a></p>
 <p class="muted">Thời gian tính từ khi giao diện mở ca đến khi trình duyệt tự động bấm nút. Chưa đo thời gian tư duy hay tốc độ của chuyên viên. Các kết quả lỗi áp dụng cho bộ ca và quy tắc mô phỏng này.</p>
 <p><a href="proxy-study.json" download>Tải kết quả theo ca và quy tắc</a></p></section>
 <section id="kiem-thu-bo-sung"><h2>Độ bền khi mất bản tin</h2>
