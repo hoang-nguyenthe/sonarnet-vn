@@ -5,6 +5,7 @@ import base64
 from io import BytesIO
 import html
 import json
+import sqlite3
 from urllib.parse import quote
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -13,9 +14,10 @@ import folium
 from folium.plugins import Fullscreen
 import pandas as pd
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageDraw
 from branca.element import Element, MacroElement, Template
 from streamlit.components.v1 import html as embed
+from manager_decisions import DECISION_COLORS, PENDING, database_path, latest_revision, point_decisions, read_snapshot
 from map_raster import overlay_source
 from map_experience import add_observation_cluster, add_radar_control
 from coverage_status import coverage_rows, waiting_cells
@@ -127,16 +129,21 @@ def published_yolo_result(root: Path, record: dict):
     return dict(detections=candidates, tiles=tiles, generated_at=report['generated_at'])
 
 
-def candidate_crop(root, candidate):
+def candidate_crop(root, candidate, *, image_bytes=None, outline=False):
     """Small source-image evidence that remains legible on a phone."""
-    with Image.open(root / candidate['asset_dir'] / 'sar.png') as image:
+    source = BytesIO(image_bytes) if image_bytes is not None else root / candidate['asset_dir'] / 'sar.png'
+    with Image.open(source) as image:
         x1, y1, x2, y2 = candidate['bbox_px']
         cx, cy = (x1 + x2) / 2, (y1 + y2) / 2
         half = max(48, (x2-x1)/2 + 20, (y2-y1)/2 + 20)
-        crop = image.crop((max(0, int(cx-half)), max(0, int(cy-half)),
-                           min(image.width, int(cx+half)), min(image.height, int(cy+half))))
+        left, top = max(0, int(cx-half)), max(0, int(cy-half))
+        crop = image.crop((left, top, min(image.width, int(cx+half)),
+                           min(image.height, int(cy+half)))).convert('RGB')
+        if outline:
+            rectangle = (x1-left, y1-top, x2-left, y2-top)
+            ImageDraw.Draw(crop).rectangle(rectangle, outline='#26f5df', width=2)
         buffer = BytesIO()
-        crop.convert('RGB').save(buffer, 'JPEG', quality=88)
+        crop.save(buffer, 'JPEG', quality=88)
         return buffer.getvalue()
 
 
@@ -176,7 +183,32 @@ def update_workflow_url():
     )
 
 
-def render(root):
+@st.fragment(run_every=5)
+def watch_decisions(path, revision):
+    """Refresh only when a newer shared decision exists."""
+    try:
+        changed = latest_revision(path) != revision
+    except (OSError, sqlite3.Error):
+        return
+    if changed:
+        st.rerun()
+
+
+def decision_popup(decision):
+    if not decision:
+        return "<span class='marker-status'>Chưa có quyết định</span>"
+    outcome = html.escape(decision['outcome'])
+    # Folium puts the popup in a JavaScript template literal.
+    basis = html.escape(decision['basis']).translate(str.maketrans({
+        chr(96): '&#96;', '$': '&#36;', chr(92): '&#92;',
+    })).replace(chr(10), '<br>')
+    when = html.escape(local_time(decision['decided_at']))
+    return (f"<div class='marker-status'>{outcome}</div>"
+            f"<div class='vessel-popup-meta'>Quản lý SonarNet · {when}</div>"
+            f"<div style='overflow-wrap:anywhere'>{basis}</div>")
+
+
+def render(root, *, open_manager=None):
     from scan_view import render_scan
     # Start with the nationwide context so a first-time visitor immediately
     # sees the published Sentinel‑1 coverage.  The focused YOLO review remains
@@ -225,12 +257,30 @@ def render(root):
         help="Các vùng ảnh được hệ thống đánh dấu để bạn kiểm tra; chưa xác nhận là tàu.",
     )
     yolo_result = None
-    illustrative = st.toggle('Hồ sơ minh họa (dữ liệu giả lập)', value=False,
+    illustrative = st.toggle('Hồ sơ minh họa (dữ liệu giả lập)', value=False, key='panorama_illustrative',
                              help='Hồ sơ và AIS dùng dữ liệu mẫu; ảnh radar giữ nguyên nguồn thật.')
     if illustrative:
         st.warning('CHẾ ĐỘ MÔ PHỎNG: tên tàu, chủ tàu và AIS được tạo giả lập. Không phải danh tính của điểm ảnh SAR đang xem.')
     yolo_result = published_yolo_result(root, record)
     visible_candidates = yolo_result['detections'] if yolo_result else []
+    decisions = {}
+    if yolo_enabled and visible_candidates and not illustrative:
+        path = database_path(root)
+        try:
+            revision, snapshot = read_snapshot(path)
+        except (OSError, sqlite3.Error):
+            st.warning('Hiện chưa đọc được trạng thái quyết định. Ảnh nguồn vẫn có thể xem.')
+        else:
+            decisions = point_decisions(yolo_result, snapshot)
+            watch_decisions(path, revision)
+        st.caption(f'{len(decisions)} điểm đã có quyết định · tự kiểm tra cập nhật mỗi 5 giây.')
+        decided_only = st.toggle('Chỉ hiện điểm đã có quyết định', key='panorama_decided_only')
+        if decided_only:
+            visible_candidates = [point for point in visible_candidates if point['id'] in decisions]
+            if not visible_candidates:
+                st.info('Khu vực này chưa có điểm đã ghi quyết định.')
+        if decisions:
+            st.caption('Cam · cần bổ sung dữ liệu. Xanh dương · chuyển chuyên viên. Xanh lục · khép lại lượt rà.')
     if illustrative:
         selected_status = st.radio('Lọc tàu theo trạng thái', list(FILTERS), horizontal=True, key='vessel_status_filter')
         visible_candidates = filter_vessels(visible_candidates, selected_status)
@@ -262,6 +312,11 @@ def render(root):
     area_plan = next((area for area in coverage.get('regions', []) if area['key'] == record['key']), None)
     if area_plan and waiting_cells(area_plan):
         st.caption(f"Còn {waiting_cells(area_plan):,} ô ảnh chưa xử lý hoặc cần tải lại. Đây là phần chưa có kết quả, không phải số ô đang chạy. Phạm vi kiểm tra chưa phủ kín khu vực.")
+    focus_id = st.session_state.pop('observation_focus', None)
+    focus = next((point for point in visible_candidates if point['id'] == focus_id), None)
+    if focus:
+        latitude, longitude = focus['latitude'], focus['longitude']
+        bounds = [[latitude-.06, longitude-.06], [latitude+.06, longitude+.06]]
     chart = folium.Map(location=[16, 108], zoom_start=5, zoom_snap=.25, tiles=None, control_scale=True, prefer_canvas=True)
     Fullscreen(position='topleft', title='Toàn màn hình', title_cancel='Thu nhỏ', force_separate_button=True).add_to(chart)
     folium.TileLayer(
@@ -304,9 +359,10 @@ def render(root):
             popup=folium.Popup(details, max_width=320), tooltip="Mở thông tin ô phát hiện",
         ).add_to(dots)
     if yolo_result:
-        from illustrative_vessels import profile, popup as illustrative_popup
         for candidate in visible_candidates:
-            color = profile(candidate)['color'] if illustrative else '#bde8ee'
+            decision = decisions.get(candidate['id'])
+            color = (profile(candidate)['color'] if illustrative else
+                     DECISION_COLORS[decision['outcome']] if decision else '#bde8ee')
             marker_profile = profile(candidate)
             crop_url = popup_crop_url(candidate, root)
             evidence = (f"<img src='{crop_url}' width='104' height='104' alt='Ảnh radar tại vị trí quan sát' loading='lazy'>"
@@ -316,7 +372,7 @@ def render(root):
                 + (f"<div class='vessel-popup-title'>{marker_profile['name']}</div>" if illustrative else f"<div class='vessel-popup-title'>Điểm cần kiểm tra · {candidate['id']}</div>")
                 + evidence
                 + f"<div class='vessel-popup-meta'>{observation_time(candidate)} · {candidate['latitude']:.3f}°, {candidate['longitude']:.3f}°<br>Sentinel-1 · {'Planetary Computer' if candidate.get('source_provider') == 'planetary' else 'Copernicus Data Space'}</div>"
-                + (illustrative_popup(candidate) if illustrative else "<span class='marker-status'>Chưa xác minh</span>")
+                + (illustrative_popup(candidate) if illustrative else decision_popup(decision))
                 + "</div>"
             )
             folium.Marker(
@@ -324,7 +380,8 @@ def render(root):
                 icon=folium.DivIcon(icon_size=(16, 16), icon_anchor=(8, 8),
                     html=f'<span style="display:block;width:12px;height:12px;border-radius:50%;background:{color};border:2px solid #143e55;box-shadow:0 1px 5px #0005"></span>'),
                 popup=folium.Popup(card, max_width=246),
-                tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']}" if illustrative else f"Mở ảnh kiểm tra · {candidate['id']}"),
+                tooltip=(f"{profile(candidate)['name']} · {profile(candidate)['label']}" if illustrative else
+                         f"{decision['outcome'] if decision else PENDING} · {candidate['id']}"),
             ).add_to(candidate_layer)
     # The coastal mask remains part of detector filtering. Do not serialize a
     # union of every national tile's geometry into the public overview; that
@@ -413,6 +470,13 @@ def render(root):
                 if illustrative:
                     st.markdown(illustrative_popup(candidate), unsafe_allow_html=True)
                 else:
+                    decision = decisions.get(chosen)
+                    if decision:
+                        st.write(f"**Hướng xử lý của quản lý · {decision['outcome']}**")
+                        st.text(decision['basis'])
+                        st.caption(f"Quản lý SonarNet · {local_time(decision['decided_at'])}")
+                    else:
+                        st.write(f'**{PENDING}**')
                     st.write('**Thiếu dữ liệu AIS · Đang xác minh.**')
                     st.caption('Chưa có tên tàu, số đăng ký và tín hiệu vị trí cùng thời điểm để đối chiếu.')
                 def open_evidence():
@@ -420,6 +484,9 @@ def render(root):
                     st.session_state['review_tile'] = candidate['tile_key']
                     st.session_state['review_target_id'] = str(candidate['id']).split('/')[-1]
                 st.button('Kiểm tra điểm này', on_click=open_evidence, type='primary')
+                if open_manager and not illustrative:
+                    st.button('Mở điểm trong trang quản lý', on_click=open_manager,
+                              args=(record['key'], chosen))
         with st.expander("Danh sách điểm cần kiểm tra"):
             rows = [
                 {
@@ -427,6 +494,9 @@ def render(root):
                     "Ngày ảnh (UTC)": date_label(item['observation_day_utc']),
                     "Vĩ độ xấp xỉ": round(item["latitude"], 5),
                     "Kinh độ xấp xỉ": round(item["longitude"], 5),
+                    **({} if illustrative else {
+                        "Quyết định quản lý": decisions.get(item['id'], {}).get('outcome', PENDING),
+                    }),
                 }
                 for item in visible_candidates
             ]
