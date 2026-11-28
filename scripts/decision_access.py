@@ -5,6 +5,7 @@ import os
 import time
 
 import streamlit as st
+from streamlit.errors import StreamlitSecretNotFoundError
 
 # SHA-256 of a randomly generated 256-bit access code. The code is stored
 # separately with the site owner. A new deployment can override this verifier.
@@ -13,7 +14,13 @@ SESSION = 'decision_manager_session'
 
 
 def verifier():
-    return os.environ.get('SONARNET_MANAGER_CODE_SHA256', OWNER_CODE_HASH)
+    key = 'SONARNET_MANAGER_CODE_SHA256'
+    if configured := os.environ.get(key):
+        return configured
+    try:
+        return st.secrets.get(key, OWNER_CODE_HASH)
+    except StreamlitSecretNotFoundError:
+        return OWNER_CODE_HASH
 
 
 def manager_is_signed_in():

@@ -95,6 +95,8 @@ def open_manager(region, point_id):
     st.session_state.manager_region = region
     st.session_state.manager_point = point_id
     st.session_state.manager_filter = 'Tất cả'
+    st.session_state.manager_search = ''
+    st.session_state.manager_page = 1
     update_section_url()
 
 
