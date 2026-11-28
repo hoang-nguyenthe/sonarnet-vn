@@ -10,8 +10,8 @@ window.SonarNetDocuments = {
     "title": "Báo cáo cải tiến Chặng 2",
     "pdf": "../chang2/SonarNet_Bao_cao_cai_tien_Chang2.pdf",
     "preview": "xem/bao-cao-chang-2",
-    "pages": 14,
-    "sha256": "127781fc4f96bae910c527f813c6d9f7c7e5807d3edee3a35d097ff677fb9605"
+    "pages": 16,
+    "sha256": "d491b014139a80987ea3a46c8fe1e6c4179ae0767e43e7a770d38dfb385316fa"
   },
   "tai-lap-chang-2": {
     "title": "Hướng dẫn tái lập Chặng 2",
